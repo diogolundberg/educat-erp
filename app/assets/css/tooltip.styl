@@ -1,0 +1,29 @@
+[data-tip]
+  position relative
+  &::before, &::after
+    position absolute
+    left 50%
+    opacity 0
+    transition all .3s ease
+    z-index -100
+  &::before
+    content ""
+    bottom 100%
+    margin-left -0.5em
+    border solid 0.5em
+    border-color #555 transparent transparent
+  &::after
+    content attr(data-tip)
+    text-transform none
+    font-weight 200
+    font-size 14px
+    bottom 140%
+    width 100px
+    margin-left -60px
+    padding 8px 12px
+    border-radius 3px
+    background #555
+    color white
+  &:hover::after, &:hover::before, &:focus::after, &:focus::before
+    opacity 1
+    z-index 100
