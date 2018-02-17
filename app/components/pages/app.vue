@@ -14,6 +14,10 @@
         <Modal v-if="modal" @hide="modal = false">
           I'm a modal<br>
         </Modal>
+
+        <Spinner active class="my2">
+          Blurred text
+        </Spinner>
       </Tab>
       <Tab title="Inputs" class="px3">
       </Tab>
