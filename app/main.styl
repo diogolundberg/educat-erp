@@ -2,6 +2,7 @@
 @import("https://fonts.googleapis.com/css?family=Open+Sans")
 
 $black-100 = rgba(black, .1)
+$black-200 = rgba(black, .2)
 $black-400 = rgba(black, .4)
 $blue-primary = rgb(69, 192, 245)
 $green-primary = rgb(19, 183, 175)
@@ -9,6 +10,8 @@ $green-primary = rgb(19, 183, 175)
 body
   font-family "Open Sans", "Helvetica", "Arial", sans-serif
   font-size 12px
+input
+  outline none
 .bg-mask
   background-color $black-400
 .round-50
@@ -35,6 +38,8 @@ body
   box-shadow inset 0 -2px 0 0 $blue-primary
 .inset-left, .h-inset-left:hover
   box-shadow inset 2px 0 0 0 $blue-primary
+.h275
+  line-height 2.5rem
 .fill
   top 0
   bottom 0
@@ -45,6 +50,13 @@ body
   @keyframes spin
     100%
       transform rotate(360deg)
+input:valid ~ .nudge, input:focus ~ .nudge, .nudge.active
+  transform translate(-12%, -50%) scale(0.75)
+.input-line
+  background linear-gradient($blue-primary, $blue-primary) center bottom/0 2px no-repeat,
+    linear-gradient($black-200, $black-200) center bottom/100% 1px no-repeat
+  &:focus, &:hover, &.active
+    background-size 100% 2px, 100% 1px
 
 // Shame
 

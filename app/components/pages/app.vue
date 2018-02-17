@@ -19,7 +19,8 @@
           Blurred text
         </Spinner>
       </Tab>
-      <Tab title="Inputs" class="px3">
+      <Tab title="Inputs" class="px3 py2">
+        <InputBox v-model="text" label="Name" />
       </Tab>
       <Tab title="Complex Inputs" class="px3">
       </Tab>
@@ -42,6 +43,7 @@
         tag: null,
         page: 1,
         modal: false,
+        text: "",
       };
     },
   };
