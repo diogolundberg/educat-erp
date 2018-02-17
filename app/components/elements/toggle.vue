@@ -1,9 +1,8 @@
 <template>
-  <div class="inline-block toggle round-50 bg-silver transition align-middle
+  <div class="inline-block toggle round50 bg-silver transition align-middle
     pointer" :class="{ 'bg-blue': value }" @click="$emit('input', !value)">
-    <div class="relative left-0 round-50 col-6 height-100
-      bg-white transition"
-      :class="{ 'left-50': value }" />
+    <div class="relative left-0 round50 col-6 h100 bg-white transition"
+      :class="{ 'l50': value }" />
   </div>
 </template>
 
@@ -18,3 +17,10 @@
     },
   };
 </script>
+
+<style lang="stylus" scoped>
+  .toggle
+    width 4em
+    height 2em
+    padding 2px
+</style>

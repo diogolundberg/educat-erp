@@ -1,5 +1,5 @@
 <template>
-  <a class="btn upcase raised rounded transition"
+  <a class="btn upcase shadow0 rounded transition"
     @click="$emit('click')">
     {{ label }}
     <slot />

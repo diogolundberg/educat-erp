@@ -1,9 +1,8 @@
 <template>
-  <transition enter-class="invisible slideup-ch"
-    leave-to-class="invisible slideup-ch">
+  <transition enter-class="op0 y200-ch" leave-to-class="op0 y200-ch">
     <div class="fixed fill bg-mask transition" @click.self="$emit('hide')">
-      <div class="transition rounded-bottom shadow p2 bg-white
-        max-width-2 mx-auto will-transform">
+      <div class="transition rounded-bottom shadow1 p2 bg-white
+        max-width-2 mx-auto xy0">
         <slot />
       </div>
     </div>
