@@ -8,6 +8,7 @@
         <TagGroup v-model="tags" :options="options" class="m2" />
         <ButtonGroup v-model="tag" :options="options" />
         <Pager v-model="page" :records="150" class="m2" />
+        <Toggle v-model="active" />
       </Tab>
       <Tab title="Containers" class="px3 py2">
         <Btn label="Modal" class="btn-primary" @click="modal = true" />
@@ -47,6 +48,7 @@
         page: 1,
         modal: false,
         text: "",
+        active: false,
       };
     },
   };
