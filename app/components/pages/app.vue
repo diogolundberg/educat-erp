@@ -18,6 +18,9 @@
         <Spinner active class="my2">
           Blurred text
         </Spinner>
+        <Card title="Card">
+          This is a card
+        </Card>
       </Tab>
       <Tab title="Inputs" class="px3 py2">
         <InputBox v-model="text" label="Name" />
