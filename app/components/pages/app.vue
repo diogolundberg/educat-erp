@@ -1,9 +1,10 @@
 <template>
   <div>
-    <h1 class="pl3 inset-left">CMMG-UI</h1>
+    <h1 class="pl3">CMMG-UI</h1>
 
     <TabGroup>
-      <Tab title="Buttons" class="px3">
+      <Tab title="Buttons" class="px3 py2">
+        <Btn label="Button" />
       </Tab>
       <Tab title="Containers" class="px3">
       </Tab>
