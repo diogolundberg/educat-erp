@@ -6,6 +6,7 @@
       <Tab title="Buttons" class="px3">
         <Btn label="Button" class="btn-primary my2" />
         <TagGroup v-model="tags" :options="options" class="m2" />
+        <ButtonGroup v-model="tag" :options="options" />
       </Tab>
       <Tab title="Containers" class="px3">
       </Tab>
@@ -28,7 +29,8 @@
           { id: 1, name: "One" },
           { id: 2, name: "Two" },
         ],
-        tags: []
+        tags: [],
+        tag: null
       };
     },
   };
