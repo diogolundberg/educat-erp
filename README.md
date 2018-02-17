@@ -53,3 +53,29 @@ yarn build
 ```
 
 O produto desta compilação será disponibilizada na pasta `dist`.
+
+## Arquitetura
+
+#### Javascript
+
+Estamos utilizando o Vue.js de forma tradicional, com a diferença de estar usando um autoloader baseado no plugin do Babel import-glob. Os componentes são carregados no escopo global do Vue.js, o que permite que possam ser usados em toda a aplicação. Isso garante mais agilidade
+
+Para gerenciar os URLs, estamos utilizando o Vue-Router.
+
+O Vuex é o storage global, que faz a comunicação com o backend utilizando a biblioteca Axios.
+
+#### CSS
+
+Estamos usando a metodologia Atomic CSS, que tem como objetivo a utilização de classes utilitárias mais simples e mais genéricas, evitando assim repetição e inchaço do CSS
+
+O framework escolhido foi o BassCSS, pelo tamanho e pelas escolhas de nomeclatura das classes.
+
+#### Componentes
+
+Os componentes Vue.js ficam na pasta app/components, que é subdividida em três outras pastas:
+
+ - `Elements` - Elementos de design que não são específicos da aplicação. São utilizados primariamente para garantir consistência no design e na usabilidade. Não contem regras de negócio ou acesso a dados (exceto se o mesmo for feito de maneira parametrizável).
+
+ - `Partials` - Elementos reutilizáveis de página específicos da aplicação. Por exemplo, contem regras de negócio ou acesso a dados. Contem vários elements.
+
+ - `Pages` - Páginas completas, que possuem um URL no router, e são compostas por Partials e por Elements.
