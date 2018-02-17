@@ -1,19 +1,24 @@
 @import("ace-css/css/ace")
 @import("https://fonts.googleapis.com/css?family=Open+Sans")
 
+$black-100 = rgba(black, .1)
+$black-400 = rgba(black, .4)
+$blue-primary = rgb(69, 192, 245)
+$green-primary = rgb(19, 183, 175)
+
 body
   font-family "Open Sans", "Helvetica", "Arial", sans-serif
   font-size 12px
 .bg-mask
-  background-color rgba(black, .4)
+  background-color $black-400
 .round-50
   border-radius 50px
 .upcase
   text-transform uppercase
 .shadow
-  box-shadow 0 2px 4px 0 rgba(black, .1)
+  box-shadow 0 2px 4px 0 $black-100
 .raised
-  box-shadow 0 0 2px 0 rgba(black, .1)
+  box-shadow 0 0 2px 0 $black-100
 .transition
   transition all .5s ease
 .invisible
@@ -27,7 +32,9 @@ body
 .slideup, .slideup-ch > div
   transform translateY(-200%)
 .inset-bottom, .h-inset-bottom:hover
-  box-shadow inset 0 -2px 0 0 blue
+  box-shadow inset 0 -2px 0 0 $blue-primary
+.inset-left, .h-inset-left:hover
+  box-shadow inset 2px 0 0 0 $blue-primary
 .fill
   top 0
   bottom 0
