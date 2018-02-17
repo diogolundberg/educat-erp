@@ -1,0 +1,50 @@
+@import("ace-css/css/ace")
+
+body
+  -webkit-font-smoothing antialiased
+  font-family "Helvetica", "Arial", sans-serif
+  background #f7f8f9
+  font-size 12px
+.bg-mask
+  background-color rgba(black, .4)
+.round-50
+  border-radius 50px
+.upcase
+  text-transform uppercase
+.shadow
+  box-shadow 0 2px 4px 0 rgba(black, .1)
+.raised
+  box-shadow 0 0 2px 0 rgba(black, .1)
+.transition
+  transition all .5s ease
+.invisible
+  opacity 0
+.blur
+  filter blur(4px)
+.pointer
+  cursor pointer
+.transform0
+  will-change transform
+.slideup, .slideup-ch > div
+  transform translateY(-200%)
+.inset-bottom, .h-inset-bottom:hover
+  box-shadow inset 0 -2px 0 0 blue
+.fill
+  top 0
+  bottom 0
+  left 0
+  right 0
+.spin
+  animation spin 1s infinite linear
+  @keyframes spin
+    100%
+      transform rotate(360deg)
+
+// Shame
+
+.spinner
+  margin auto
+  width 2rem
+  height 2rem
+  border 0.25rem solid #666
+  border-top-color #fff
