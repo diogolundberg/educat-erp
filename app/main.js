@@ -1,3 +1,6 @@
 import Vue from "vue";
+import * as Components from "./components/**/*.vue";
 
-new Vue({ render(h) { return h("h1", "CMMG-UI"); } }).$mount("main");
+Object.values(Components).map(a => a.name && Vue.component(a.name, a));
+
+new Vue({ render(h) { return h("App"); } }).$mount("main");
