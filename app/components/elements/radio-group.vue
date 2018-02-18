@@ -1,7 +1,7 @@
 <template>
-  <span class="inline-block">
-    <span v-for="option in options" :key="option[idField]"
-      @click="$emit('input', option[idField])" class="pointer inline-block">
+  <span :is="container">
+    <span :is="container" v-for="option in options" :key="option[idField]"
+      @click="$emit('input', option[idField])" class="pointer my2">
       <span class="inline-block align-middle check circle bg-white shadow0">
         <div class="block w100 h100 circle bg-blue transition"
           v-if="option[idField] == value" />
@@ -45,5 +45,5 @@
   .check
     width 2em
     height 2em
-    padding 4px
+    padding 6px
 </style>
