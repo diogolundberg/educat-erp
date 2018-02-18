@@ -5,7 +5,7 @@
       <div class="block relative left-0 round50 col-6 h100 bg-white transition"
         :class="{ 'l50': value }" />
     </span>
-    <span class="ml1 bold upcase" v-if="label">
+    <span class="mx1 bold upcase" v-if="label">
       {{ label }}
     </span>
   </span>
