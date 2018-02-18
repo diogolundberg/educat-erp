@@ -29,7 +29,7 @@
         <Accordion title="Accordion">The content</Accordion>
       </Tab>
       <Tab title="Inputs" class="px3 py2">
-        <InputBox v-model="text" label="Name" />
+        <InputBox v-model="text" label="Name" hint="Tell us your name" />
       </Tab>
       <Tab title="Complex Inputs" class="px3">
       </Tab>

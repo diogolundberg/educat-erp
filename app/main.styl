@@ -74,7 +74,7 @@ input:valid ~ .nudge, input:focus ~ .nudge, .nudge.active
 .input-line
   background linear-gradient($blue-primary, $blue-primary) center bottom/0 2px no-repeat,
     linear-gradient($black-200, $black-200) center bottom/100% 1px no-repeat
-  &:focus, &:hover, &.active
+  &:focus, &:hover:not(:disabled), &.active
     background-size 100% 2px, 100% 1px
 
 @keyframes spin
