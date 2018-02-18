@@ -10,6 +10,7 @@
         <Pager v-model="page" :records="150" class="m2" />
         <Toggle v-model="active" label="A toggle" />
         <Checkbox v-model="active" label="A checkbox" />
+        <RadioGroup v-model="tag" :options="options" />
       </Tab>
       <Tab title="Containers" class="px3 py2">
         <Btn label="Modal" class="btn-primary" @click="modal = true" />
