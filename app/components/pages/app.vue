@@ -24,6 +24,9 @@
         <Card title="Card">
           This is a card
         </Card>
+        <Accordion title="Accordion">The content</Accordion>
+        <Accordion title="Accordion">The content</Accordion>
+        <Accordion title="Accordion">The content</Accordion>
       </Tab>
       <Tab title="Inputs" class="px3 py2">
         <InputBox v-model="text" label="Name" />
