@@ -1,9 +1,14 @@
 <template>
-  <div class="inline-block toggle round50 bg-silver transition align-middle
-    pointer" :class="{ 'bg-blue': value }" @click="$emit('input', !value)">
-    <div class="relative left-0 round50 col-6 h100 bg-white transition"
-      :class="{ 'l50': value }" />
-  </div>
+  <span class="inline-block pointer" @click="$emit('input', !value)">
+    <span class="inline-block align-middle toggle round50 bg-silver transition"
+      :class="{ 'bg-blue': value }">
+      <div class="block relative left-0 round50 col-6 h100 bg-white transition"
+        :class="{ 'l50': value }" />
+    </span>
+    <span class="ml1 bold upcase" v-if="label">
+      {{ label }}
+    </span>
+  </span>
 </template>
 
 <script>
@@ -12,6 +17,10 @@
     props: {
       value: {
         type: Boolean,
+        default: false,
+      },
+      label: {
+        type: String,
         default: false,
       },
     },
