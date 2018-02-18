@@ -1,10 +1,12 @@
 @import("ace-css/css/ace")
 @import("./assets/css/tooltip.styl")
 
+$black-50 = rgba(black, .03)
 $black-100 = rgba(black, .1)
 $black-200 = rgba(black, .2)
 $black-400 = rgba(black, .4)
 $blue-primary = rgb(69, 192, 245)
+$blue-shadow = rgb(90, 100, 110)
 $green-primary = rgb(19, 183, 175)
 
 body
@@ -19,10 +21,14 @@ input
 
 .bg-mask
   background-color $black-400
+.bg-silver
+  background-color $black-50
 .bg-blue
   background-color $blue-primary
 .bg-green
   background-color $green-primary
+.gray
+  color $blue-shadow
 .round50
   border-radius 50px
 .upcase

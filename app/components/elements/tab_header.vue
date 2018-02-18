@@ -2,7 +2,7 @@
   <div class="flex pl3">
     <span v-for="tab in tabs" :key="tab.id">
       <a @click="$emit('input', tab.id)"
-        class="btn upcase input-line border-none transition"
+        class="btn upcase input-line border-none transition gray"
         :class="{ 'active': value === tab.id }">
         {{ tab.name }}
       </a>

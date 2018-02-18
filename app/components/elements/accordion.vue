@@ -1,12 +1,13 @@
 <template>
-  <div class="border-bottom border-silver">
-    <div class="p1 h4 pointer block flex justify-between"
+  <div class="my2">
+    <div class="px2 py1 bg-silver gray pointer flex justify-between
+      items-center"
       @click="show = !show">
-      <div>{{ title }}</div>
-      <div class="bold">{{ show ? '-' : '+' }}</div>
+      <div class="h6 upcase bold">{{ title }}</div>
+      <div class="h4 bold">{{ show ? '-' : '+' }}</div>
     </div>
-    <transition enter-class="y0 op0" leave-to-class="y0 op0">
-      <div v-if="show" class="p1 transition truncate">
+    <transition enter-class="y20 op0" leave-to-class="y20 op0">
+      <div v-if="show" class="p2 transition truncate">
         <slot />
       </div>
     </transition>
