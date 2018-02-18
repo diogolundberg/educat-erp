@@ -1,7 +1,9 @@
 <template>
   <div>
     <TabHeader v-model="tab" :tabs="tabs" :class="headerClass" />
-    <slot />
+    <div class="px3 py2">
+      <slot />
+    </div>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex pl3">
+  <div class="flex">
     <span v-for="tab in tabs" :key="tab.id">
       <a @click="$emit('input', tab.id)"
         class="btn upcase input-line border-none transition gray"
