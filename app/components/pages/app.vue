@@ -32,6 +32,7 @@
       </Tab>
       <Tab title="Other" class="px3 py2">
         <Btn label="Hover me" class="btn-primary" data-tip="Tooltip!" />
+        <Progress value="50" />
       </Tab>
     </TabGroup>
   </div>
