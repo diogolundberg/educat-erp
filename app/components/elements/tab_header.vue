@@ -1,9 +1,9 @@
 <template>
-  <div class="flex border-bottom pl3">
+  <div class="flex pl3">
     <span v-for="tab in tabs" :key="tab.id">
       <a @click="$emit('input', tab.id)"
-        class="btn upcase h-inset-bottom border-none"
-        :class="{ 'inset-bottom': value === tab.id }">
+        class="btn upcase input-line border-none transition"
+        :class="{ 'active': value === tab.id }">
         {{ tab.name }}
       </a>
     </span>
