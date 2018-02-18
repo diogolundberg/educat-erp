@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TabHeader v-model="tab" :tabs="tabs" />
+    <TabHeader v-model="tab" :tabs="tabs" :class="headerClass" />
     <slot />
   </div>
 </template>
@@ -8,6 +8,12 @@
 <script>
   export default {
     name: "TabGroup",
+    props: {
+      headerClass: {
+        type: String,
+        required: false,
+      },
+    },
     data() {
       return {
         tab: 0,
