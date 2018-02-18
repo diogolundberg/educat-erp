@@ -27,6 +27,9 @@
         <Accordion title="Accordion">The content</Accordion>
         <Accordion title="Accordion">The content</Accordion>
         <Accordion title="Accordion">The content</Accordion>
+        <Fieldset title="Fieldset">
+          The fieldset's content
+        </Fieldset>
       </Tab>
       <Tab title="Inputs" class="px3 py2">
         <InputBox v-model="text" label="Name" hint="Tell us your name" />
