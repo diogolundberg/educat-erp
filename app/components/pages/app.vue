@@ -29,7 +29,7 @@
           <Btn label="Yellow" class="btn-primary bg-yellow" />
 
           <div class="flex flex-column">
-            <TagGroup v-model="tag" :options="tags" class="my1" />
+            <TagGroup v-model="tags" :options="options" class="my1" />
             <ButtonGroup v-model="tag" :options="options" class="my1" />
             <Pager v-model="page" :records="150" class="my1" />
           </div>
@@ -59,11 +59,11 @@
           <Card>
             <Stepper v-model="step">
               <Step :index="1" title="Step 1" description="My description">
-                <InputBox label="Name" />
+                <InputBox label="Name" value="" />
                 <Btn label="Continue" class="btn-primary" @click="step = 2" />
               </Step>
               <Step :index="2" title="Step 2" description="My description">
-                <InputBox label="E-mail" />
+                <InputBox label="E-mail" value="" />
                 <Btn label="Continue" class="btn-primary" @click="step = 3" />
               </Step>
               <Step :index="3" title="Step 3" description="My description">
