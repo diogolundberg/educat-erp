@@ -1,6 +1,6 @@
 <template>
   <div class="relative mb2">
-    <input type="text" required :disabled="disabled"
+    <input type="text" :value="value" required :disabled="disabled"
       class="m0 py15 border-none input-line transition h4 col-12"
       @input="$emit('input', $event.target.value)">
     <label class="py15 absolute top-0 transition h5 nudge gray">
