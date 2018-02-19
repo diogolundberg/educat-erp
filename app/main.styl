@@ -8,6 +8,8 @@ $black-400 = rgba(black, .4)
 $blue-primary = rgb(69, 192, 245)
 $blue-shadow = rgb(90, 100, 110)
 $green-primary = rgb(19, 183, 175)
+$red-primary = rgb(255, 80, 70)
+$yellow-primary = rgb(255, 190, 0)
 
 body
   font-family "Roboto", "Helvetica", "Arial", sans-serif
@@ -16,9 +18,6 @@ input
   outline none
 .btn-primary
   background-color $blue-primary
-  &:hover
-    background-color darken($blue-primary, 20)
-
 .thin
   font-weight 200
 .bg-mask
@@ -29,6 +28,10 @@ input
   background-color $blue-primary
 .bg-green
   background-color $green-primary
+.bg-red
+  background-color $red-primary
+.bg-yellow
+  background-color $yellow-primary
 .gray
   color $blue-shadow
 .round50
