@@ -55,6 +55,24 @@
             Blurred text
           </Spinner>
         </Fieldset>
+        <Fieldset title="Steppers" class="col-6">
+          <Card>
+            <Stepper v-model="step">
+              <Step :index="1" title="Step 1" description="My description">
+                <InputBox label="Name" />
+                <Btn label="Continue" class="btn-primary" @click="step = 2" />
+              </Step>
+              <Step :index="2" title="Step 2" description="My description">
+                <InputBox label="E-mail" />
+                <Btn label="Continue" class="btn-primary" @click="step = 3" />
+              </Step>
+              <Step :index="3" title="Step 3" description="My description">
+                <h3>You're done!</h3>
+                <Btn label="Reset" class="btn-primary" @click="step = 1" />
+              </Step>
+            </Stepper>
+          </Card>
+        </Fieldset>
         <Fieldset title="Special" class="col-6">
           <Btn label="Modal" class="btn-primary" @click="modal = true" />
           <Modal v-if="modal" @hide="modal = false">
@@ -87,6 +105,7 @@
         modal: false,
         text: "",
         active: false,
+        step: 1,
       };
     },
   };
