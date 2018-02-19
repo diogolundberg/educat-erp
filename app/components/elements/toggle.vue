@@ -26,10 +26,3 @@
     },
   };
 </script>
-
-<style lang="stylus" scoped>
-  .toggle
-    width 4em
-    height 2em
-    padding 2px
-</style>

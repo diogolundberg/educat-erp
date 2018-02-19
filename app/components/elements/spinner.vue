@@ -18,12 +18,3 @@
     },
   };
 </script>
-
-<style lang="stylus" scoped>
-  .spinner
-    margin auto
-    width 2rem
-    height 2rem
-    border 0.1rem solid #333
-    border-top-color #eee
-</style>

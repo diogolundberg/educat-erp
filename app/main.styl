@@ -16,6 +16,9 @@ body
   font-size 14px
 input
   outline none
+
+// Helpers
+
 .flex-pr2 > *
   padding-right 2em
 .btn-primary
@@ -93,3 +96,20 @@ input:valid ~ .nudge, input:focus ~ .nudge, .nudge.active
 @keyframes spin
   100%
     transform rotate(360deg)
+
+// Specific CSS
+
+.spinner
+  margin auto
+  width 2rem
+  height 2rem
+  border 0.1rem solid #333
+  border-top-color #eee
+.toggle
+  width 4em
+  height 2em
+  padding 2px
+.progress
+  width 200px
+  height 1.5em
+  padding 2px
