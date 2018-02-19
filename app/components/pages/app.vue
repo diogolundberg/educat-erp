@@ -2,44 +2,70 @@
   <div>
     <h1 class="pl3">CMMG-UI</h1>
 
-    <TabGroup>
-      <Tab title="Buttons" class="px3 py2">
-        <Btn label="Button" class="btn-primary" />
-        <TagGroup v-model="tags" :options="options" class="m2" />
-        <ButtonGroup v-model="tag" :options="options" />
-        <Pager v-model="page" :records="150" class="m2" />
-        <Toggle v-model="active" label="A toggle" />
-        <Checkbox v-model="active" label="A checkbox" />
-        <RadioGroup v-model="tag" :options="options" />
-      </Tab>
-      <Tab title="Containers" class="px3 py2">
-        <Btn label="Modal" class="btn-primary" @click="modal = true" />
-        <Modal v-if="modal" @hide="modal = false">
-          I'm a modal<br>
-        </Modal>
+    <TabGroup headerClass="justify-end border-bottom">
+      <Tab title="Home" class="flex flex-wrap flex-pr2">
+        <Fieldset title="Typography" class="col-6">
+          <h1>Heading Level One</h1>
+          <h2>Heading Level Two</h2>
+          <h3>Heading Level Three</h3>
+          <h4>Heading Level Four</h4>
+          <h5>Heading Level Five</h5>
+          <h6>Heading Level Six</h6>
+          <p>Normal Paragraph</p>
+        </Fieldset>
+        <Fieldset title="Colors" class="col-6">
+          <div class="inline-block m1 p4 circle bg-blue"></div>
+          <div class="inline-block m1 p4 circle bg-green"></div>
+          <div class="inline-block m1 p4 circle bg-red"></div>
+          <div class="inline-block m1 p4 circle bg-yellow"></div>
+          <div class="inline-block m1 p4 circle bg-silver"></div>
+          <div class="inline-block m1 p4 circle bg-gray"></div>
+        </Fieldset>
+        <Fieldset title="Button and Selectors" class="col-6 mr">
+          <a href="#">A link</a>
+          <Btn label="A Button" />
+          <Btn label="Blue" class="btn-primary" />
+          <Btn label="Red" class="btn-primary bg-red" />
+          <Btn label="Yellow" class="btn-primary bg-yellow" />
 
-        <Spinner active class="my2">
-          Blurred text
-        </Spinner>
-        <Card title="Card">
-          This is a card
-        </Card>
-        <Accordion title="Accordion">The content</Accordion>
-        <Accordion title="Accordion">The content</Accordion>
-        <Accordion title="Accordion">The content</Accordion>
-        <Fieldset title="Fieldset">
-          The fieldset's content
+          <div class="flex flex-column">
+            <TagGroup v-model="tag" :options="tags" class="my1" />
+            <ButtonGroup v-model="tag" :options="options" class="my1" />
+            <Pager v-model="page" :records="150" class="my1" />
+          </div>
+        </Fieldset>
+        <Fieldset title="Inputs" class="col-6">
+          <InputBox value="A value" label="An input" hint="This is an input" />
+          <div class="flex flex-column">
+            <Toggle v-model="active" label="A toggle" class="my1" />
+            <Checkbox v-model="active" label="A checkbox" class="my1" />
+            <RadioGroup v-model="tag" :options="options" class="my1" />
+          </div>
+        </Fieldset>
+        <Fieldset title="Containers" class="col-6">
+          <Card title="Card">
+            This is a card
+          </Card>
+          <Accordion title="Accordion">The content</Accordion>
+          <Accordion title="Another accordion">The content</Accordion>
+          Here's a spinner:
+          <Spinner active class="my2">
+            Blurred text
+          </Spinner>
+        </Fieldset>
+        <Fieldset title="Special" class="col-6">
+          <Btn label="Modal" class="btn-primary" @click="modal = true" />
+          <Modal v-if="modal" @hide="modal = false">
+            I'm a modal<br>
+          </Modal>
+          <Btn label="Hover me" class="btn-primary" data-tip="Tooltip!" />
+          <Progress value="50" />
         </Fieldset>
       </Tab>
-      <Tab title="Inputs" class="px3 py2">
-        <InputBox v-model="text" label="Name" hint="Tell us your name" />
-      </Tab>
-      <Tab title="Complex Inputs" class="px3">
-      </Tab>
-      <Tab title="Other" class="px3 py2">
-        <Btn label="Hover me" class="btn-primary" data-tip="Tooltip!" />
-        <Progress value="50" />
-      </Tab>
+      <Tab title="Classes" />
+      <Tab title="Students" />
+      <Tab title="Back Office" />
+      <Tab title="Accounts" />
     </TabGroup>
   </div>
 </template>
