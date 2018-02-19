@@ -59,7 +59,7 @@
             I'm a modal<br>
           </Modal>
           <Btn label="Hover me" class="btn-primary" data-tip="Tooltip!" />
-          <Progress value="50" />
+          <Progress :value="50" />
         </Fieldset>
       </Tab>
       <Tab title="Classes" />
