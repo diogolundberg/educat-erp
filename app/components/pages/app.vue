@@ -43,6 +43,8 @@
           </div>
         </Fieldset>
         <Fieldset title="Containers" class="col-6">
+          <Alert message="This is an alert" />
+          <Alert message="This is an error" type="error" />
           <Card title="Card">
             This is a card
           </Card>
