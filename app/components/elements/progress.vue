@@ -1,8 +1,8 @@
 <template>
-  <span class="inline-block align-middle round50 bg-white shadow0 progress">
+  <div class="align-middle round50 bg-white shadow0 y1 p2x">
     <div class="bg-blue round50 h100 transition"
       :style="{ width }" />
-  </span>
+  </div>
 </template>
 
 <script>

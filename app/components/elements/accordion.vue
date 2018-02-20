@@ -6,7 +6,7 @@
       <div class="h6 upcase bold">{{ title }}</div>
       <div class="h4 bold">{{ show ? '-' : '+' }}</div>
     </div>
-    <transition enter-class="y20 op0" leave-to-class="y20 op0">
+    <transition enter-class="op0" leave-to-class="op0">
       <div v-if="show" class="p2 transition truncate">
         <slot />
       </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="top-border p2 white mb2" :class="bgClass">
+  <div class="border-top-grey border4 p2 white mb2" :class="bgClass">
     {{ message }}
   </div>
 </template>

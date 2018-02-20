@@ -19,8 +19,6 @@ input
 
 // Helpers
 
-.flex-pr2 > *
-  padding-right 2em
 .btn-primary
   background-color $blue-primary
 .thin
@@ -39,45 +37,52 @@ input
   background-color $yellow-primary
 .gray
   color $blue-shadow
+.border-top-silver
+  border-top-color $black-50
+.border-top-grey
+  border-top solid $black-100
+.border4
+  border-width 4px
 .round50
   border-radius 50px
-.upcase
-  text-transform uppercase
-.shadow1
-  box-shadow 0 2px 4px 0 $black-100
 .shadow0
   box-shadow 0 0 2px 0 $black-100
-.transition
-  transition all .25s ease
+.shadow1
+  box-shadow 0 2px 4px 0 $black-100
+.shadow2
+  box-shadow 2px 2px 12px 1px $black-200
 .op0
   opacity 0
-.blur
-  filter blur(4px)
-.pointer
-  cursor pointer
-.xy0
-  will-change transform
-.y200, .y200-ch > div
-  transform translateY(-200%)
-.y20
-  transform translateY(-20%)
-.inset-left, .h-inset-left:hover
-  box-shadow inset 2px 0 0 0 $blue-primary
 .l50
   left 50%
 .h100
   height 100%
+.y1
+  height 1rem
+.y2
+  height 2rem
+.x2
+  width 2rem
+.x4
+  width 4rem
+.p2x
+  padding 2px
+.p4x
+  padding 4px
+.p6x
+  padding 6px
 .w100
   width 100%
-.py15
-  padding-top: 0.75em
-  padding-bottom: 0.75em
-.iso
-  width 2rem
-  height 2rem
-  padding 4px
-.top-border
-  border-top: solid 4px $black-100
+.m-auto
+  margin auto
+.upcase
+  text-transform uppercase
+.transition
+  transition all .25s ease
+.blur
+  filter blur(4px)
+.pointer
+  cursor pointer
 .fill
   top 0
   bottom 0
@@ -85,31 +90,17 @@ input
   right 0
 .spin
   animation spin 1s infinite linear
-input:valid ~ .nudge, input:focus ~ .nudge, .nudge.active
+  @keyframes spin
+    100%
+      transform rotate(360deg)
+input:valid ~ .nudge
+input:focus ~ .nudge
+.nudge.active
   transform translate(-12%, -50%) scale(0.75)
 .input-line
   background linear-gradient($blue-primary, $blue-primary) center bottom/0 2px no-repeat,
     linear-gradient($black-200, $black-200) center bottom/100% 1px no-repeat
-  &:focus, &:hover:not(:disabled), &.active
+  &:focus:not(:disabled)
+  &:hover:not(:disabled)
+  &.active
     background-size 100% 2px, 100% 1px
-
-@keyframes spin
-  100%
-    transform rotate(360deg)
-
-// Specific CSS
-
-.spinner
-  margin auto
-  width 2rem
-  height 2rem
-  border 0.1rem solid #333
-  border-top-color #eee
-.toggle
-  width 4em
-  height 2em
-  padding 2px
-.progress
-  width 200px
-  height 1.5em
-  padding 2px

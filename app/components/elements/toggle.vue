@@ -1,6 +1,6 @@
 <template>
   <span class="inline-block pointer" @click="$emit('input', !value)">
-    <span class="inline-block align-middle toggle round50 bg-silver transition"
+    <span class="inline-block align-middle y2 x4 p2x round50 bg-silver transition"
       :class="{ 'bg-blue': value }">
       <div class="block relative left-0 round50 col-6 h100 bg-white transition"
         :class="{ 'l50': value }" />

@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="flex items-center">
-      <div class="iso circle bg-blue white bold center">{{ index }}</div>
-      <div class="ml2 inline-block">
+      <div class="mr2 x2 y2 p4x circle bg-blue white bold center">
+        {{ index }}
+      </div>
+      <div>
         <strong>{{ title }}</strong>
-        <small class="block">{{ description }}</small>
       </div>
     </div>
     <div class="ml2 pl3 py2 border-gray border-left">
@@ -18,10 +19,6 @@
     name: "Step",
     props: {
       title: {
-        type: String,
-        required: true,
-      },
-      description: {
         type: String,
         required: true,
       },

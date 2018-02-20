@@ -1,6 +1,8 @@
 <template>
   <div class="relative">
-    <div v-if="active" class="absolute fill circle spin spinner" />
+    <div class="absolute fill x2 y2 circle spin m-auto border
+      border-top-silver"
+      v-if="active" />
     <div class="transition" :class="{ blur: active }">
       <slot />
     </div>
