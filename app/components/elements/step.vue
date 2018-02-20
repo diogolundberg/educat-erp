@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="flex items-center">
-      <div class="mr2 x2 y2 p4x circle bg-blue white bold center">
+    <div class="flex items-baseline">
+      <div class="mr2 x2 y2 p4x circle bg-blue white h4 center">
         {{ index }}
       </div>
       <div>
@@ -22,14 +22,14 @@
         type: String,
         required: true,
       },
-      index: {
-        type: Number,
-        required: true,
-      },
     },
     computed: {
       visible() {
         return this.$parent.value === this.index;
+      },
+      index() {
+        return this.$parent.$slots.default.filter(s => s.tag)
+          .indexOf(this.$vnode) + 1;
       },
     },
   };
