@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow0 rounded bg-white p2">
+  <div class="shadow1 rounded bg-white p2">
     <h2 class="m0 mb1 thin" v-if="title">
       {{ title }}
     </h2>
