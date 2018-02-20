@@ -1,14 +1,16 @@
 <template>
   <span :is="container">
     <span :is="container" v-for="option in options" :key="option[idField]"
-      @click="$emit('input', option[idField])" class="pointer my2">
-      <span class="inline-block align-middle x2 y2 p6x circle bg-white shadow0">
+      @click="$emit('input', option[idField])" class="pointer my2"
+      role="radiogroup">
+      <span class="inline-block align-middle x2 y2 p6x circle bg-white shadow0"
+        role="radio" :aria-checked="option[idField] == value">
         <div class="block w100 h100 circle bg-blue transition"
           v-if="option[idField] == value" />
       </span>
-      <span class="mx1 bold upcase">
+      <label class="mx1 bold upcase">
         {{ option[labelField] }}
-      </span>
+      </label>
     </span>
   </span>
 </template>
