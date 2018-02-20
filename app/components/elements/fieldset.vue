@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h5 class="pb1 upcase border-silver border-bottom">{{ title }}</h5>
+    <h5 class="pb1 upcase border-gray border2 border-bottom">
+      {{ title }}
+    </h5>
     <div class="py2" :class="innerClass">
       <slot />
     </div>
