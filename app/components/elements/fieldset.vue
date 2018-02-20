@@ -1,7 +1,7 @@
 <template>
   <div>
     <h5 class="pb1 upcase border-silver border-bottom">{{ title }}</h5>
-    <div class="py2">
+    <div class="py2" :class="innerClass">
       <slot />
     </div>
   </div>
@@ -12,6 +12,10 @@
     name: "Fieldset",
     props: {
       title: {
+        type: String,
+        required: false,
+      },
+      innerClass: {
         type: String,
         required: false,
       },
