@@ -28,7 +28,8 @@
               </Fieldset>
               <Fieldset title="Endereço">
                 <div class="flex gutters">
-                  <InputBox label="CEP" class="col-12 sm-col-3" />
+                  <InputBox label="CEP" class="col-12 sm-col-3"
+                    mask="#####-###" />
                   <InputBox label="Estado" class="col-12 sm-col-3" />
                   <InputBox label="Cidade" class="col-12 sm-col-3" />
                   <InputBox label="Tipo de Endereço" class="col-12 sm-col-3" />
@@ -157,6 +158,7 @@
         text: "",
         active: false,
         step: 1,
+        cep: null,
       };
     },
   };
