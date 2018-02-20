@@ -1,5 +1,6 @@
 .DS_Store
 .cache
+.netlify
 log
 tmp
 public
