@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex items-baseline">
-      <div class="mr2 x2 y2 p4x circle bg-blue white h4 center">
+      <div class="mr2 x2 y2 p4x circle bg-blue bold white h4 center shadow1">
         {{ index }}
       </div>
       <div>

@@ -6,7 +6,7 @@
       <Tab title="Matricula">
         <Stepper class="max-width-3 m-auto">
           <Step title="Seus Dados">
-            <Card>
+            <Card title="Seus Dados">
               <Fieldset title="Dados Pessoais">
                 <div class="flex gutters">
                   <InputBox label="Nome" class="col-12 sm-col-6" />

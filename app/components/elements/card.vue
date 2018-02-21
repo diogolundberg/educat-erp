@@ -1,9 +1,11 @@
 <template>
-  <div class="shadow1 rounded bg-white p2">
-    <h2 class="m0 mb1 thin" v-if="title">
+  <div class="shadow2 bg-white">
+    <h2 class="m0 p3 bg-blue thin white" v-if="title">
       {{ title }}
     </h2>
-    <slot />
+    <div class="p3">
+      <slot />
+    </div>
   </div>
 </template>
 
