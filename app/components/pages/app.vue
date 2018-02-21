@@ -7,6 +7,10 @@
         <Stepper class="max-width-3 m-auto">
           <Step title="Seus Dados">
             <Card title="Seus Dados">
+              <div slot="title" class="center mb4n">
+                <img src="http://i.pravatar.cc/80"
+                  class="rounded border4 border shadow1">
+              </div>
               <Fieldset title="Dados Pessoais">
                 <div class="flex gutters">
                   <InputBox label="Nome" class="col-12 sm-col-6" />
