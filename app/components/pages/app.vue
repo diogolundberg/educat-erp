@@ -11,15 +11,20 @@
                 <img src="http://i.pravatar.cc/80"
                   class="rounded border4 border shadow1">
               </div>
-              <Fieldset title="Dados Pessoais">
+              <Fieldset>
                 <div class="flex gutters">
-                  <InputBox label="Nome" class="col-12 sm-col-6" />
-                  <InputBox label="CPF" class="col-12 sm-col-3" />
-                  <InputBox label="Nascimento" class="col-12 sm-col-3" />
+                  <InputBox label="Nome" class="col-12 sm-col-6"
+                    hint="Seu nome completo" />
+                  <InputBox label="CPF" class="col-12 sm-col-3"
+                    mask="###.###.###-##" hint="Ex: 000.000.000-00" />
+                  <InputBox label="Nascimento" class="col-12 sm-col-3"
+                    mask="##/##/####" />
                 </div>
                 <div class="flex gutters">
-                  <InputBox label="Nacionalidade" class="col-12 sm-col-3" />
-                  <InputBox label="Naturalidade" class="col-12 sm-col-3" />
+                  <InputBox label="Nacionalidade" class="col-12 sm-col-3"
+                    hint="Ex: Brasileiro" />
+                  <InputBox label="Naturalidade" class="col-12 sm-col-3"
+                    hint="Ex: Belo Horizonte" />
                   <InputBox label="Estado Civil" class="col-12 sm-col-3" />
                   <InputBox label="Sexo" />
                 </div>
@@ -27,7 +32,8 @@
               <Fieldset title="Dados de Contato">
                 <div class="flex gutters">
                   <InputBox label="E-mail" class="col-12 sm-col-6" />
-                  <InputBox label="Telefone" class="col-12 sm-col-6" />
+                  <InputBox label="Telefone" class="col-12 sm-col-6"
+                    hint="(##) ####-#####?" />
                 </div>
               </Fieldset>
               <Fieldset title="Endereço">
