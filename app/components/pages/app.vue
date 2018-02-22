@@ -5,9 +5,9 @@
     <TabGroup headerClass="justify-end border-bottom">
       <Tab title="Matricula">
         <Stepper class="max-width-3 m-auto">
-          <Step title="Seus Dados">
+          <Step title="Seus Dados" description="Preencha seus dados pessoais">
             <Card title="Seus Dados">
-              <div slot="title" class="center mb4n">
+              <div slot="title" class="center mb4n mt2">
                 <img src="http://i.pravatar.cc/80"
                   class="rounded border4 border shadow1">
               </div>
@@ -63,10 +63,19 @@
               </div>
             </Card>
           </Step>
-          <Step title="Aprovação da Secretaria" />
-          <Step title="Dados Financeiros" />
-          <Step title="Aprovação do Financeiro" />
-          <Step title="Matrícula Concluída!" />
+          <Step title="Documentação" description="Envie seus documentos
+            online, sem precisar de filas ou agendamento de horário." />
+          <Step title="Dados Financeiros" description="Aqui você insere seus
+            dados de pagamento." />
+          <Step title="Aprovação da Secretaria" description="A secretaria irá
+            analisar seus documentos para aprovar sua matrícula." />
+          <Step title="Aprovação do Financeiro" description="O financeiro irá
+            analisar sua matrícula para aprovar sua matrícula." />
+          <Step title="Agende uma Visita" description="Após a aprovação
+            da secretaria e do financeiro, é hora de agendar um horário
+            para comparecer na CMMG." />
+          <Step title="Matrícula Concluída!" description="Sua matrícula foi
+            concluída!" />
         </Stepper>
       </Tab>
       <Tab title="Style Guide" class="flex flex-wrap">

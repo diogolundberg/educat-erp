@@ -10,6 +10,7 @@
     </div>
     <div class="ml2 pl3 py2 border-gray border-left">
       <slot v-if="visible" />
+      <div v-if="!visible && description">{{ description }}</div>
     </div>
   </div>
 </template>
@@ -19,6 +20,10 @@
     name: "Step",
     props: {
       title: {
+        type: String,
+        required: true,
+      },
+      description: {
         type: String,
         required: true,
       },
