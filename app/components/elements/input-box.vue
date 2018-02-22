@@ -7,7 +7,7 @@
       :for="`fld${_uid}`">
       {{ label }}
     </label>
-    <label v-if="hint" class="gray h6">{{ hint }}</label>
+    <label v-if="hint" class="gray h7">{{ hint }}</label>
   </div>
 </template>
 
