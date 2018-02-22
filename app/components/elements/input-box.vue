@@ -1,5 +1,5 @@
 <template>
-  <div class="mb3 relative">
+  <div class="mb3 relative col-12" :class="`sm-col-${size}`">
     <input type="text" :value="value" required :disabled="disabled"
       class="m0 py2 border-none input-line transition h5 w100"
       @input="changed($event.target)" :id="`fld${_uid}`">
@@ -35,6 +35,10 @@
       },
       mask: {
         type: String,
+        required: false,
+      },
+      size: {
+        type: Number,
         required: false,
       },
     },

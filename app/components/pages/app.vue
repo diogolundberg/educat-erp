@@ -12,50 +12,50 @@
                   class="rounded border4 border shadow1">
               </div>
               <Fieldset>
-                <div class="flex gutters">
-                  <InputBox label="Nome" class="col-12 sm-col-6"
+                <div class="flex gutters flex-wrap">
+                  <InputBox label="Nome" :size="6"
                     hint="Seu nome completo" />
-                  <InputBox label="CPF" class="col-12 sm-col-3"
+                  <InputBox label="CPF" :size="3"
                     mask="###.###.###-##" hint="Ex: 000.000.000-00" />
-                  <InputBox label="Nascimento" class="col-12 sm-col-3"
+                  <InputBox label="Nascimento" :size="3"
                     mask="##/##/####" />
                 </div>
-                <div class="flex gutters">
-                  <InputBox label="Nacionalidade" class="col-12 sm-col-3"
+                <div class="flex gutters flex-wrap">
+                  <InputBox label="Nacionalidade" :size="3"
                     hint="Ex: Brasileiro" />
-                  <InputBox label="Naturalidade" class="col-12 sm-col-3"
+                  <InputBox label="Naturalidade" :size="3"
                     hint="Ex: Belo Horizonte" />
-                  <InputBox label="Estado Civil" class="col-12 sm-col-3" />
-                  <InputBox label="Sexo" />
+                  <InputBox label="Estado Civil" :size="3" />
+                  <InputBox label="Sexo" :size="3" />
                 </div>
               </Fieldset>
               <Fieldset title="Dados de Contato">
-                <div class="flex gutters">
-                  <InputBox label="E-mail" class="col-12 sm-col-6" />
-                  <InputBox label="Telefone" class="col-12 sm-col-6"
+                <div class="flex gutters flex-wrap">
+                  <InputBox label="E-mail" :size="6" />
+                  <InputBox label="Telefone" :size="6"
                     hint="(##) ####-#####?" />
                 </div>
               </Fieldset>
               <Fieldset title="Endereço">
-                <div class="flex gutters">
-                  <InputBox label="CEP" class="col-12 sm-col-3"
+                <div class="flex gutters flex-wrap">
+                  <InputBox label="CEP" :size="3"
                     mask="#####-###" />
-                  <InputBox label="Estado" class="col-12 sm-col-3" />
-                  <InputBox label="Cidade" class="col-12 sm-col-3" />
-                  <InputBox label="Tipo de Endereço" class="col-12 sm-col-3" />
+                  <InputBox label="Estado" :size="3" />
+                  <InputBox label="Cidade" :size="3" />
+                  <InputBox label="Tipo de Endereço" :size="3" />
                 </div>
-                <div class="flex gutters">
+                <div class="flex gutters flex-wrap">
                   <InputBox label="Logradouro" hint="Rua, Avenida, etc."
-                    class="col-12 sm-col-6" />
-                  <InputBox label="Número" class="col-12 sm-col-3" />
-                  <InputBox label="Complemento" class="col-12 sm-col-3" />
+                    :size="6" />
+                  <InputBox label="Número" :size="3" />
+                  <InputBox label="Complemento" :size="3" />
                 </div>
               </Fieldset>
               <Fieldset title="Dados para o Censo">
-                <div class="flex gutters">
-                  <InputBox label="Raça" class="col-12 sm-col-3" />
-                  <InputBox label="Escola" class="col-12 sm-col-3" />
-                  <InputBox label="Nome da Escola" class="col-12 sm-col-6" />
+                <div class="flex gutters flex-wrap">
+                  <InputBox label="Raça" :size="3" />
+                  <InputBox label="Escola" :size="3" />
+                  <InputBox label="Nome da Escola" :size="6" />
                 </div>
               </Fieldset>
               <div class="flex justify-end">
