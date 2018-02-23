@@ -87,6 +87,7 @@
           <h5>Heading Level Five</h5>
           <h6>Heading Level Six</h6>
           <p>Normal Paragraph</p>
+          <Badge>Badge</Badge><Badge>2</Badge>
         </Fieldset>
         <Fieldset title="Colors" class="col-6 pr2">
           <div class="inline-block m1 p4 circle bg-blue" />
