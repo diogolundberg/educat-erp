@@ -1,7 +1,6 @@
 <template>
-  <div class="align-middle round50 bg-white shadow0 y1 p2x">
-    <div class="bg-blue round50 h100 transition"
-      :style="{ width }" />
+  <div class="progress">
+    <div class="bg-blue h100" :style="{ width: `${value / max * 100}%` }" />
   </div>
 </template>
 
@@ -16,12 +15,6 @@
       max: {
         type: Number,
         default: 100,
-      },
-    },
-    computed: {
-      width() {
-        const range = this.value / this.max;
-        return `${range * 100}%`;
       },
     },
   };
