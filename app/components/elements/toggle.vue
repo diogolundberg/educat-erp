@@ -22,7 +22,7 @@
       },
       label: {
         type: String,
-        default: false,
+        default: null,
       },
     },
   };

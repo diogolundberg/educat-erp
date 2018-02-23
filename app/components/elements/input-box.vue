@@ -2,7 +2,7 @@
   <div class="mb3 relative col-12" :class="`sm-col-${size}`">
     <input type="text" :value="value" required :disabled="disabled"
       class="m0 py2 border-none input-line transition h5 w100"
-      @input="changed($event.target)" :id="`fld${_uid}`">
+      @input="changed" ref="input" :id="`fld${_uid}`">
     <label class="py2 absolute top-0 transition h5 nudge gray noclick"
       :for="`fld${_uid}`">
       {{ label }}
@@ -28,6 +28,7 @@
       hint: {
         type: String,
         required: false,
+        default: null,
       },
       disabled: {
         type: Boolean,
@@ -36,16 +37,18 @@
       mask: {
         type: String,
         required: false,
+        default: null,
       },
       size: {
         type: Number,
         required: false,
+        default: 12,
       },
     },
     methods: {
-      changed(target) {
-        target.value = format(target.value, this.mask);
-        this.$emit("input", target.value);
+      changed() {
+        this.$refs.input.value = format(this.$refs.input.value, this.mask);
+        this.$emit("input", this.$refs.input.value);
       },
     },
   };

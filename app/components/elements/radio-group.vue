@@ -20,7 +20,7 @@
     name: "RadioGroup",
     props: {
       value: {
-        type: [ Number, String ],
+        type: [Number, String],
         default: null,
       },
       options: {

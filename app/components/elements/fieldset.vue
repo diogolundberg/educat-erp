@@ -15,11 +15,12 @@
     props: {
       title: {
         type: String,
-        required: false,
+        required: true,
       },
       innerClass: {
         type: String,
         required: false,
+        default: null,
       },
     },
   };

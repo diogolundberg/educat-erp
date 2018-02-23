@@ -20,7 +20,8 @@
     },
     computed: {
       width() {
-        return this.value / this.max * 100 + "%";
+        const range = this.value / this.max;
+        return `${range * 100}%`;
       },
     },
   };

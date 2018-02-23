@@ -20,7 +20,8 @@
       },
       label: {
         type: String,
-        default: false,
+        required: false,
+        default: null,
       },
     },
   };

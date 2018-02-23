@@ -2,7 +2,7 @@
   <div>
     <h1 class="pl3">CMMG-UI</h1>
 
-    <TabGroup headerClass="justify-end border-bottom">
+    <TabGroup header-class="justify-end border-bottom">
       <Tab title="Matricula">
         <Stepper class="max-width-3 m-auto">
           <Step title="Seus Dados" description="Preencha seus dados pessoais">
@@ -89,12 +89,12 @@
           <p>Normal Paragraph</p>
         </Fieldset>
         <Fieldset title="Colors" class="col-6 pr2">
-          <div class="inline-block m1 p4 circle bg-blue"></div>
-          <div class="inline-block m1 p4 circle bg-green"></div>
-          <div class="inline-block m1 p4 circle bg-red"></div>
-          <div class="inline-block m1 p4 circle bg-yellow"></div>
-          <div class="inline-block m1 p4 circle bg-silver"></div>
-          <div class="inline-block m1 p4 circle bg-gray"></div>
+          <div class="inline-block m1 p4 circle bg-blue" />
+          <div class="inline-block m1 p4 circle bg-green" />
+          <div class="inline-block m1 p4 circle bg-red" />
+          <div class="inline-block m1 p4 circle bg-yellow" />
+          <div class="inline-block m1 p4 circle bg-silver" />
+          <div class="inline-block m1 p4 circle bg-gray" />
         </Fieldset>
         <Fieldset title="Button and Selectors" class="col-6 pr2">
           <a href="#">A link</a>
