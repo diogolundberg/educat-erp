@@ -3,6 +3,7 @@
     <div class="relative">
       <input type="text" :value="displayValue" readonly
         class="m0 py2 border-none input-line transition h5 w100"
+        :class="{ error: errors && errors.length }"
         :id="`fld${_uid}`" @focus="focus = true">
       <template v-if="!focus">
         <label class="py2 absolute top-0 transition h5 nudge gray noclick"
