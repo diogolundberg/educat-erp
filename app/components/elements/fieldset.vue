@@ -15,7 +15,8 @@
     props: {
       title: {
         type: String,
-        required: true,
+        required: false,
+        default: null,
       },
       innerClass: {
         type: String,
