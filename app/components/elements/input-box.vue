@@ -25,7 +25,7 @@
     props: {
       value: {
         type: String,
-        required: true,
+        required: false,
       },
       label: {
         type: String,
@@ -58,7 +58,9 @@
     },
     methods: {
       changed() {
-        this.$refs.input.value = format(this.$refs.input.value, this.mask);
+        if (this.mask && this.$refs.input.value.length > this.value.length) {
+          this.$refs.input.value = format(this.$refs.input.value, this.mask);
+        }
         this.$emit("input", this.$refs.input.value);
       },
     },
