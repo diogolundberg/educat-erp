@@ -1,28 +1,30 @@
 <template>
-  <div class="mb3 relative col-12" :class="`sm-col-${size}`">
-    <input type="text" :value="displayValue" readonly
-      class="m0 py2 border-none input-line transition h5 w100"
-      :id="`fld${_uid}`" @focus="focus = true">
-    <template v-if="!focus">
-      <label class="py2 absolute top-0 transition h5 nudge gray noclick"
-        :class="{ active: value }" :for="`fld${_uid}`">
-        {{ label }}
-      </label>
-      <span class="absolute top-0 right-0 py2 noclick gray">▼</span>
-    </template>
-    <Outside v-if="focus" class="absolute top-0 bg-white shadow1 w100"
-      @click="focus = false">
-      <div v-for="opt in options" :key="opt[idField]" @click="pick(opt)"
-        class="p2 pointer h-bg-silver" :class="{ 'bg-silver': choice == opt }">
-        {{ opt[labelField] }}
-      </div>
-    </Outside>
-    <label v-if="hint" class="block gray h7">{{ hint }}</label>
-    <template v-if="errors">
-      <label v-for="error in errors" :key="error" class="block red h7">
-        {{ error }}
-      </label>
-    </template>
+  <div class="mb3 col-12" :class="`sm-col-${size}`">
+    <div class="relative">
+      <input type="text" :value="displayValue" readonly
+        class="m0 py2 border-none input-line transition h5 w100"
+        :id="`fld${_uid}`" @focus="focus = true">
+      <template v-if="!focus">
+        <label class="py2 absolute top-0 transition h5 nudge gray noclick"
+          :class="{ active: value }" :for="`fld${_uid}`">
+          {{ label }}
+        </label>
+        <span class="absolute top-0 right-0 py2 noclick gray">▼</span>
+      </template>
+      <Outside v-if="focus" class="absolute top-0 bg-white shadow1 w100 z2"
+        @click="focus = false">
+        <div v-for="opt in options" :key="opt[idField]" @click="pick(opt)"
+          class="p2 pointer h-bg-silver" :class="{ 'bg-silver': choice == opt }">
+          {{ opt[labelField] }}
+        </div>
+      </Outside>
+      <label v-if="hint" class="block gray h7">{{ hint }}</label>
+      <template v-if="errors">
+        <label v-for="error in errors" :key="error" class="block red h7">
+          {{ error }}
+        </label>
+      </template>
+    </div>
   </div>
 </template>
 
