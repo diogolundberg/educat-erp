@@ -1,5 +1,5 @@
 <template>
-  <span class="rounded shadow1 white bg-blue bold px1 mr1"
+  <span class="rounded shadow1 white bg-blue bold btn-small mr1"
     :class="{ 'bg-green': success, 'bg-red': error, 'bg-yellow': warning }">
     <slot />
   </span>
