@@ -7,7 +7,12 @@
       :for="`fld${_uid}`">
       {{ label }}
     </label>
-    <label v-if="hint" class="gray h7">{{ hint }}</label>
+    <label v-if="hint" class="block gray h7">{{ hint }}</label>
+    <template v-if="errors">
+      <label v-for="error in errors" :key="error" class="block red h7">
+        {{ error }}
+      </label>
+    </template>
   </div>
 </template>
 
@@ -43,6 +48,11 @@
         type: Number,
         required: false,
         default: 12,
+      },
+      errors: {
+        type: Array,
+        required: false,
+        default: null,
       },
     },
     methods: {
