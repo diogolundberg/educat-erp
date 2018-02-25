@@ -129,7 +129,7 @@
             This is an error
           </Alert>
           <Alert info>
-            This is an info message <Badge class="bg-red">2</Badge>
+            This is an info message <Badge warning>And a badge</Badge>
           </Alert>
           <Card title="Card">
             This is a card
