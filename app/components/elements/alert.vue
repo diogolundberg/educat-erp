@@ -1,6 +1,7 @@
 <template>
-  <div class="border-top-grey border4 p2 white mb2" :class="bgClass">
-    {{ message }}
+  <div class="border-top-grey border4 p2 bg-blue white mb2"
+     :class="{ 'bg-green': success, 'bg-red': error, 'bg-yellow': warning }">
+    <slot />
   </div>
 </template>
 
@@ -8,28 +9,25 @@
   export default {
     name: "Alert",
     props: {
-      message: {
-        type: String,
-        required: true,
+      info: {
+        type: Boolean,
+        default: false,
+        required: false,
       },
-      type: {
-        type: String,
-        default: "info",
+      success: {
+        type: Boolean,
+        default: false,
+        required: false,
       },
-    },
-    data() {
-      return {
-        classes: {
-          info: "bg-blue",
-          success: "bg-green",
-          error: "bg-red",
-          warning: "bg-yellow",
-        },
-      };
-    },
-    computed: {
-      bgClass() {
-        return this.classes[this.type];
+      error: {
+        type: Boolean,
+        default: false,
+        required: false,
+      },
+      warning: {
+        type: Boolean,
+        default: false,
+        required: false,
       },
     },
   };

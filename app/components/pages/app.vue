@@ -119,8 +119,18 @@
           </div>
         </Fieldset>
         <Fieldset title="Containers" class="col-6 pr2">
-          <Alert message="This is an alert" />
-          <Alert message="This is an error" type="error" />
+          <Alert success>
+            This is a message
+          </Alert>
+          <Alert warning>
+            This is a warning
+          </Alert>
+          <Alert error>
+            This is an error
+          </Alert>
+          <Alert info>
+            This is an info message <Badge class="bg-red">2</Badge>
+          </Alert>
           <Card title="Card">
             This is a card
           </Card>
