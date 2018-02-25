@@ -17,8 +17,7 @@
                     hint="Seu nome completo" />
                   <InputBox label="CPF" :size="3"
                     mask="###.###.###-##" hint="Ex: 000.000.000-00" />
-                  <InputBox label="Nascimento" :size="3"
-                    mask="##/##/####" />
+                  <InputBox label="Nascimento" :size="3" mask="##/##/####" />
                 </div>
                 <div class="flex gutters flex-wrap">
                   <InputBox label="Nacionalidade" :size="3"
@@ -26,14 +25,15 @@
                   <InputBox label="Naturalidade" :size="3"
                     hint="Ex: Belo Horizonte" />
                   <InputBox label="Estado Civil" :size="3" />
-                  <InputBox label="Sexo" :size="3" />
+                  <DropDown label="Sexo" :size="3" :options="options.gender"
+                    v-model="item.gender" />
                 </div>
               </Fieldset>
               <Fieldset title="Dados de Contato">
                 <div class="flex gutters flex-wrap">
                   <InputBox label="E-mail" :size="6" />
                   <InputBox label="Telefone" :size="6"
-                    hint="(##) ####-#####?" />
+                    mask="(##) ####-#####?" />
                 </div>
               </Fieldset>
               <Fieldset title="Endereço">
@@ -45,7 +45,7 @@
                   <InputBox label="Tipo de Endereço" :size="3" />
                 </div>
                 <div class="flex gutters flex-wrap">
-                  <InputBox label="Logradouro" hint="Rua, Avenida, etc."
+                  <InputBox label="Logradouro" hint="Sua rua, avenida, etc."
                     :size="6" />
                   <InputBox label="Número" :size="3" />
                   <InputBox label="Complemento" :size="3" />
@@ -105,8 +105,8 @@
           <Btn label="Yellow" class="btn-primary bg-yellow" />
 
           <div class="flex flex-column">
-            <TagGroup v-model="tags" :options="options" class="my1" />
-            <ButtonGroup v-model="tag" :options="options" class="my1" />
+            <TagGroup v-model="tags" :options="optionsb" class="my1" />
+            <ButtonGroup v-model="tag" :options="optionsb" class="my1" />
             <Pager v-model="page" :records="150" class="my1" />
           </div>
         </Fieldset>
@@ -115,7 +115,7 @@
           <div class="flex flex-column">
             <Toggle v-model="active" label="A toggle" class="my1" />
             <Checkbox v-model="active" label="A checkbox" class="my1" />
-            <RadioGroup v-model="tag" :options="options" class="my1" />
+            <RadioGroup v-model="tag" :options="optionsb" class="my1" />
           </div>
         </Fieldset>
         <Fieldset title="Containers" class="col-6 pr2">
@@ -167,7 +167,16 @@
     name: "App",
     data() {
       return {
-        options: [
+        item: {
+          gender: null,
+        },
+        options: {
+          gender: [
+            { id: "M", name: "Masculino" },
+            { id: "F", name: "Feminino" },
+          ],
+        },
+        optionsb: [
           { id: 1, name: "One" },
           { id: 2, name: "Two" },
         ],
