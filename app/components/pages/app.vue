@@ -40,7 +40,8 @@
                 <div class="flex gutters flex-wrap">
                   <InputBox label="CEP" :size="3"
                     mask="#####-###" />
-                  <InputBox label="Estado" :size="3" />
+                  <DropDown label="Estado" :size="3" :options="options.uf"
+                    v-model="item.uf" />
                   <InputBox label="Cidade" :size="3" />
                   <InputBox label="Tipo de Endereço" :size="3" />
                 </div>
@@ -179,11 +180,17 @@
       return {
         item: {
           gender: null,
+          uf: null,
         },
         options: {
           gender: [
             { id: "M", name: "Masculino" },
             { id: "F", name: "Feminino" },
+          ],
+          uf: [
+            { id: "MG", name: "MG" },
+            { id: "SP", name: "SP" },
+            { id: "RJ", name: "RJ" },
           ],
         },
         optionsb: [
