@@ -6,7 +6,7 @@
         <Card title="Seus Dados">
           <div slot="title" class="center mb4n mt2">
             <img src="../../assets/img/people.svg"
-              class="rounded border4 border shadow1 avatar bg-white">
+              class="rounded border4 border shadow2 avatar bg-white">
           </div>
           <Fieldset>
             <div class="flex gutters flex-wrap">

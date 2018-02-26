@@ -1,6 +1,6 @@
 <template>
   <span :is="container">
-    <span class="shadow0">
+    <span class="shadow2">
       <Btn v-for="option in options" :key="option[idField]"
         @click="$emit('input', option[idField])" class="not-rounded"
         :class="value === option[idField] ? 'btn-primary' : 'bg-white black'"
