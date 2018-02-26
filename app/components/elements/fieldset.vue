@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h5 class="pb1 upcase border-gray border-bottom" v-if="title">
+    <h5 class="pb1 regular upcase border-gray border-bottom" v-if="title">
       {{ title }}
     </h5>
     <div class="py2" :class="innerClass">

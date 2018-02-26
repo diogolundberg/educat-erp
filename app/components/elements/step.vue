@@ -4,7 +4,7 @@
       <div class="mr2 x2 y2 p4x circle bg-blue bold white h4 center shadow1">
         {{ index }}
       </div>
-      <div class="h4 bold">
+      <div class="h4">
         {{ title }}
       </div>
     </div>
