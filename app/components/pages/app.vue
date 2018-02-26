@@ -29,7 +29,7 @@
           <Fieldset title="Dados de Contato">
             <div class="flex gutters flex-wrap">
               <InputBox label="E-mail" :size="6" />
-              <InputBox label="Telefone" :size="6"
+              <InputBox label="Telefone" :size="6" v-model="item.phone"
                 mask="(##) ####-#####?" />
             </div>
           </Fieldset>
@@ -181,6 +181,7 @@
         item: {
           gender: null,
           cpf: null,
+          phone: null,
           uf: null,
         },
         options: {

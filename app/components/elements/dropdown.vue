@@ -2,15 +2,15 @@
   <div class="mb3 col-12" :class="`sm-col-${size}`">
     <div class="relative">
       <input type="text" :value="displayValue" readonly
-        class="m0 py2 border-none input-line transition h5 w100"
+        class="m0 py15 border-none input-line transition h5 w100"
         :class="{ error: errors && errors.length }"
         :id="`fld${_uid}`" @focus="focus = true" @blur="onBlur">
       <template v-if="!focus">
-        <label class="py2 absolute top-0 transition h5 nudge gray noclick"
+        <label class="py15 absolute top-0 transition h5 nudge gray noclick"
           :class="{ active: value }" :for="`fld${_uid}`">
           {{ label }}
         </label>
-        <span class="absolute top-0 right-0 py2 noclick gray">▼</span>
+        <span class="absolute top-0 right-0 py15 noclick gray">▼</span>
       </template>
       <Outside v-if="focus" class="absolute top-0 bg-white shadow1 w100 z2"
         @click="focus = false">
