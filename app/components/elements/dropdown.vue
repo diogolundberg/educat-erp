@@ -4,7 +4,7 @@
       <input type="text" :value="displayValue" readonly
         class="m0 py2 border-none input-line transition h5 w100"
         :class="{ error: errors && errors.length }"
-        :id="`fld${_uid}`" @focus="focus = true">
+        :id="`fld${_uid}`" @focus="focus = true" @blur="onBlur">
       <template v-if="!focus">
         <label class="py2 absolute top-0 transition h5 nudge gray noclick"
           :class="{ active: value }" :for="`fld${_uid}`">
@@ -88,6 +88,9 @@
         this.$emit("input", option[this.idField]);
         this.focus = false;
       },
+      onBlur() {
+        setTimeout(() => this.focus = false, 50);
+      }
     },
   };
 </script>
