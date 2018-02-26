@@ -3,15 +3,15 @@
     <div class="relative">
       <input type="text" :value="displayValue" readonly
         class="m0 py15 border-none input-line transition h5 w100"
-        :class="{ error: errors && errors.length }"
+        :class="{ error: errors && errors.length }" v-if="!focus"
         :id="`fld${_uid}`" @focus="focus = true" @blur="onBlur">
-      <template v-if="!focus">
-        <label class="py15 absolute top-0 transition h5 nudge gray noclick"
-          :class="{ active: value }" :for="`fld${_uid}`">
-          {{ label }}
-        </label>
-        <span class="absolute top-0 right-0 py15 noclick gray">▼</span>
-      </template>
+      <label class="py15 absolute top-0 left-0 transition h5 nudge gray noclick"
+        :class="{ active: value }" :for="`fld${_uid}`" v-if="!focus">
+        {{ label }}
+      </label>
+      <span class="absolute top-0 right-0 py15 noclick gray" v-if="!focus">
+        ▼
+      </span>
       <Outside v-if="focus" class="absolute top-0 bg-white shadow1 w100 z2"
         @click="focus = false">
         <div v-for="opt in options" :key="opt[idField]" @click="pick(opt)"

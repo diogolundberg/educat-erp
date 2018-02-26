@@ -1,19 +1,21 @@
 <template>
-  <div class="mb3 relative col-12" :class="`sm-col-${size}`">
-    <input type="text" :value="value" required :disabled="disabled"
-      class="m0 py15 border-none input-line transition h5 w100"
-      :class="{ error: errors && errors.length }"
-      @input="changed" ref="input" :id="`fld${_uid}`">
-    <label class="py15 absolute top-0 transition h5 nudge gray noclick"
-      :for="`fld${_uid}`">
-      {{ label }}
-    </label>
-    <label v-if="hint" class="block gray h7">{{ hint }}</label>
-    <template v-if="errors">
-      <label v-for="error in errors" :key="error" class="block red h7">
-        {{ error }}
+  <div class="mb3 col-12" :class="`sm-col-${size}`">
+    <div class="relative">
+      <input type="text" :value="value" required :disabled="disabled"
+        class="m0 py15 border-none input-line transition h5 w100"
+        :class="{ error: errors && errors.length }"
+        @input="changed" ref="input" :id="`fld${_uid}`">
+      <label class="py15 absolute top-0 left-0 transition h5 nudge gray noclick"
+        :for="`fld${_uid}`">
+        {{ label }}
       </label>
-    </template>
+      <label v-if="hint" class="block gray h7">{{ hint }}</label>
+      <template v-if="errors">
+        <label v-for="error in errors" :key="error" class="block red h7">
+          {{ error }}
+        </label>
+      </template>
+    </div>
   </div>
 </template>
 
