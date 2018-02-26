@@ -58,7 +58,8 @@
     },
     methods: {
       changed() {
-        if (this.mask && this.$refs.input.value.length > this.value.length) {
+        if (this.mask &&
+          (!this.value || this.$refs.input.value.length > this.value.length)) {
           this.$refs.input.value = format(this.$refs.input.value, this.mask);
         }
         this.$emit("input", this.$refs.input.value);
