@@ -132,6 +132,9 @@ input:focus ~ .nudge
   &:hover:not(:disabled)
   &.active
     background-size 100% 2px, 100% 1px
+  &:disabled
+    background none
+    border-bottom dotted 1px $black-400
   &.error
     background-image linear-gradient($red-primary, $red-primary),
       linear-gradient($black-400, $black-400)
