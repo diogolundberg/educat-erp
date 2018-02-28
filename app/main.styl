@@ -143,5 +143,8 @@ input:focus ~ .nudge
     background-image linear-gradient($red-primary, $red-primary),
       linear-gradient($black-400, $black-400)
 
-.gutters > *:not(:first-child)
-  padding-left 1rem
+@media (min-width: 40em)
+  .gutters > *:not(:last-child)
+    padding-right 1rem
+  .sm-border-left
+    border-left solid 1px

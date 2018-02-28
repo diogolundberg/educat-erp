@@ -8,7 +8,7 @@
         {{ title }}
       </div>
     </div>
-    <div class="ml2 pl3 py2 border-gray border-left">
+    <div class="sm-ml2 sm-pl3 py2 sm-border-left">
       <slot v-if="visible" />
       <div v-if="!visible && description">{{ description }}</div>
     </div>
