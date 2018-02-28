@@ -3,7 +3,7 @@
     <div class="relative">
       <input type="text" :value="displayValue" readonly
         class="m0 py15 border-none input-line transition h5 w100"
-        :class="{ error: errors && errors.length }" v-if="!focus"
+        :class="{ error: errors && errors.length }"
         :id="`fld${_uid}`" @focus="focus = true" @blur="onBlur">
       <label class="py15 absolute top-0 left-0 transition h5 nudge gray noclick"
         :class="{ active: value }" :for="`fld${_uid}`" v-if="!focus">
@@ -89,7 +89,7 @@
         this.focus = false;
       },
       onBlur() {
-        setTimeout(() => this.focus = false, 50);
+        setTimeout(() => this.focus = false, 150);
       }
     },
   };
