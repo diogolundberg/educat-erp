@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h5 class="pb1 regular upcase border-gray border-bottom" v-if="title">
+    <h3 class="thin" v-if="title">
       {{ title }}
-    </h5>
+    </h3>
     <div class="py2" :class="innerClass">
       <slot />
     </div>
