@@ -1,9 +1,12 @@
 <template>
   <span :is="container">
-    <Btn v-for="option in options" :key="option[idField]"
-      @click="toggle(option)" class="round50 sm-mr1 shadow1"
+    <Btn
+      v-for="option in options"
+      :key="option[idField]"
       :class="has(option) ? 'btn-primary' : 'bg-white black'"
-      :label="option[labelField]" />
+      :label="option[labelField]"
+      class="round50 sm-mr1 shadow1"
+      @click="toggle(option)" />
   </span>
 </template>
 

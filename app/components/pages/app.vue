@@ -2,78 +2,139 @@
   <div>
     <Header />
     <Stepper class="max-width-3 m-auto">
-      <Step title="Seus Dados" description="Preencha seus dados pessoais">
+      <Step
+        title="Seus Dados"
+        description="Preencha seus dados pessoais">
         <Card title="Seus Dados">
-          <div slot="title" class="center mb4n mt2">
-            <img src="../../assets/img/people.svg"
+          <div
+            slot="title"
+            class="center mb4n mt2">
+            <img
+              src="../../assets/img/people.svg"
               class="rounded border4 border shadow2 avatar bg-white">
           </div>
           <Fieldset>
             <div class="flex gutters flex-wrap">
-              <InputBox label="Nome" :size="6"
+              <InputBox
+                :size="6"
+                label="Nome"
                 hint="Seu nome completo" />
-              <InputBox label="CPF" :size="3" v-model="item.cpf"
-                mask="###.###.###-##" hint="Ex: 000.000.000-00" />
-              <InputBox label="Nascimento" :size="3" mask="##/##/####" />
+              <InputBox
+                v-model="item.cpf"
+                :size="3"
+                label="CPF"
+                mask="###.###.###-##"
+                hint="Ex: 000.000.000-00" />
+              <InputBox
+                :size="3"
+                label="Nascimento"
+                mask="##/##/####" />
             </div>
             <div class="flex gutters flex-wrap">
-              <InputBox label="Nacionalidade" :size="3"
+              <InputBox
+                :size="3"
+                label="Nacionalidade"
                 hint="Ex: Brasileiro" />
-              <InputBox label="Naturalidade" :size="3"
+              <InputBox
+                :size="3"
+                label="Naturalidade"
                 hint="Ex: Belo Horizonte" />
-              <InputBox label="Estado Civil" :size="3" />
-              <DropDown label="Sexo" :size="3" :options="options.gender"
-                v-model="item.gender" />
+              <InputBox
+                :size="3"
+                label="Estado Civil" />
+              <DropDown
+                v-model="item.gender"
+                :size="3"
+                :options="options.gender"
+                label="Sexo" />
             </div>
           </Fieldset>
           <Fieldset title="Dados de Contato">
             <div class="flex gutters flex-wrap">
-              <InputBox label="E-mail" :size="6" />
-              <InputBox label="Telefone" :size="6" v-model="item.phone"
+              <InputBox
+                :size="6"
+                label="E-mail" />
+              <InputBox
+                v-model="item.phone"
+                :size="6"
+                label="Telefone"
                 mask="(##) ####-#####?" />
             </div>
           </Fieldset>
           <Fieldset title="Endereço">
             <div class="flex gutters flex-wrap">
-              <InputBox v-model="item.cep" label="CEP" :size="3"
+              <InputBox
+                v-model="item.cep"
+                :size="3"
+                label="CEP"
                 mask="#####-###" />
-              <DropDown label="Estado" :size="3" :options="options.uf"
-                v-model="item.uf" />
-              <InputBox label="Cidade" :size="3" />
-              <InputBox label="Tipo de Endereço" :size="3" />
+              <DropDown
+                v-model="item.uf"
+                :size="3"
+                :options="options.uf"
+                label="Estado" />
+              <InputBox
+                :size="3"
+                label="Cidade" />
+              <InputBox
+                :size="3"
+                label="Tipo de Endereço" />
             </div>
             <div class="flex gutters flex-wrap">
-              <InputBox label="Logradouro" hint="Sua rua, avenida, etc."
-                :size="6" />
-              <InputBox label="Número" :size="3" />
-              <InputBox label="Complemento" :size="3" />
+              <InputBox
+                :size="6"
+                label="Logradouro"
+                hint="Sua rua, avenida, etc." />
+              <InputBox
+                :size="3"
+                label="Número" />
+              <InputBox
+                :size="3"
+                label="Complemento" />
             </div>
           </Fieldset>
           <Fieldset title="Dados para o Censo">
             <div class="flex gutters flex-wrap">
-              <InputBox label="Raça" :size="3" />
-              <InputBox label="Escola" :size="3" />
-              <InputBox label="Nome da Escola" :size="6" />
+              <InputBox
+                :size="3"
+                label="Raça" />
+              <InputBox
+                :size="3"
+                label="Escola" />
+              <InputBox
+                :size="6"
+                label="Nome da Escola" />
             </div>
           </Fieldset>
           <div class="flex justify-end">
-            <Btn label="Enviar para análise" class="btn-primary" />
+            <Btn
+                label="Enviar para análise"
+                class="btn-primary" />
           </div>
         </Card>
       </Step>
-      <Step title="Documentação" description="Envie seus documentos
-        online, sem precisar de filas ou agendamento de horário." />
-      <Step title="Dados Financeiros" description="Aqui você insere seus
-        dados de pagamento." />
-      <Step title="Aprovação da Secretaria" description="A secretaria irá
-        analisar seus documentos para aprovar sua matrícula." />
-      <Step title="Aprovação do Financeiro" description="O financeiro irá
-        analisar sua matrícula para aprovar sua matrícula." />
-      <Step title="Agende uma Visita" description="Após a aprovação
-        da secretaria e do financeiro, é hora de agendar um horário
-        para comparecer na CMMG." />
-      <Step title="Matrícula Concluída!" description="Sua matrícula foi
-        concluída!" />
+      <Step
+        title="Documentação"
+        description="Envie seus documentos online, sem precisar de filas ou
+          agendamento de horário." />
+      <Step
+        title="Dados Financeiros"
+        description="Aqui você insere seus dados de pagamento." />
+      <Step
+        title="Aprovação da Secretaria"
+        description="A secretaria irá analisar seus documentos para aprovar
+          sua matrícula." />
+      <Step
+        title="Aprovação do Financeiro"
+        description="O financeiro irá analisar sua matrícula para aprovar
+          sua matrícula." />
+      <Step
+        title="Agende uma Visita"
+        description="Após a aprovação da secretaria e do financeiro, é hora
+          de agendar um horário para comparecer na CMMG." />
+      <Step
+        title="Matrícula Concluída!"
+        description="Sua matrícula foi concluída!" />
     </Stepper>
   </div>
 </template>

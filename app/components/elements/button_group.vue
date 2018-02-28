@@ -1,10 +1,13 @@
 <template>
   <span :is="container">
     <span class="shadow2">
-      <Btn v-for="option in options" :key="option[idField]"
-        @click="$emit('input', option[idField])" class="not-rounded"
+      <Btn
+        v-for="option in options"
+        :key="option[idField]"
         :class="value === option[idField] ? 'btn-primary' : 'bg-white black'"
-        :label="option[labelField]" />
+        :label="option[labelField]"
+        class="not-rounded"
+        @click="$emit('input', option[idField])" />
     </span>
   </span>
 </template>

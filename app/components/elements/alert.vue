@@ -1,6 +1,7 @@
 <template>
-  <div class="border-top-grey border4 p2 bg-blue white mb2"
-     :class="{ 'bg-green': success, 'bg-red': error, 'bg-yellow': warning }">
+  <div
+    :class="{ 'bg-green': success, 'bg-red': error, 'bg-yellow': warning }"
+    class="border-top-grey border4 p2 bg-blue white mb2">
     <slot />
   </div>
 </template>

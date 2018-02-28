@@ -1,6 +1,8 @@
 <template>
   <span :is="container">
-    <ButtonGroup :options="options" :value="value"
+    <ButtonGroup
+      :options="options"
+      :value="value"
       @input="$emit('input', $event)" />
   </span>
 </template>

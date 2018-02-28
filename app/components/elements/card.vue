@@ -1,9 +1,11 @@
 <template>
   <div class="mb3 shadow0 bg-white">
-    <div class="p3 bg-blue-grad white" v-if="title">
-      <h2 class="m0 thin">{{ title }}</h2>
-      <slot name="title" />
-    </div>
+    <template v-if="title">
+      <div class="p3 bg-blue-grad white">
+        <h2 class="m0 thin">{{ title }}</h2>
+        <slot name="title" />
+      </div>
+    </template>
     <div class="p3">
       <slot />
     </div>

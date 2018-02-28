@@ -1,17 +1,29 @@
 <template>
-  <div class="mb3 col-12" :class="`sm-col-${size}`">
+  <div :class="`mb3 col-12 sm-col-${size}`">
     <div class="relative">
-      <input type="text" :value="value" required :disabled="disabled"
-        class="m0 py15 border-none input-line transition h5 w100"
+      <input
+        ref="input"
+        :value="value"
+        :disabled="disabled"
         :class="{ error: errors && errors.length }"
-        @input="changed" ref="input" :id="`fld${_uid}`">
-      <label class="py15 absolute top-0 left-0 transition h5 nudge gray noclick"
-        :for="`fld${_uid}`">
+        :id="`fld${_uid}`"
+        type="text"
+        required
+        class="m0 py15 border-none input-line transition h5 w100"
+        @input="changed">
+      <label
+        :for="`fld${_uid}`"
+        class="py15 absolute top-0 left-0 transition h5 nudge gray noclick">
         {{ label }}
       </label>
-      <label v-if="hint" class="block gray h7">{{ hint }}</label>
+      <template v-if="hint">
+        <label class="block gray h7">{{ hint }}</label>
+      </template>
       <template v-if="errors">
-        <label v-for="error in errors" :key="error" class="block red h7">
+        <label
+          v-for="error in errors"
+          :key="error"
+          class="block red h7">
           {{ error }}
         </label>
       </template>
@@ -27,7 +39,7 @@
     props: {
       value: {
         type: String,
-        required: false,
+        required: true,
       },
       label: {
         type: String,
@@ -61,7 +73,7 @@
     methods: {
       changed() {
         if (this.mask &&
-          (!this.value || this.$refs.input.value.length > this.value.length)) {
+        (!this.value || this.$refs.input.value.length > this.value.length)) {
           this.$refs.input.value = format(this.$refs.input.value, this.mask);
         }
         this.$emit("input", this.$refs.input.value);

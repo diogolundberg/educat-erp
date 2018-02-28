@@ -1,9 +1,11 @@
 <template>
   <div class="relative">
-    <div class="absolute fill x2 y2 circle spin m-auto border
-      border-top-silver"
-      v-if="active" />
-    <div class="transition" :class="{ blur: active }">
+    <div
+      v-if="active"
+      class="absolute fill x2 y2 circle spin m-auto border border-top-silver" />
+    <div
+      :class="{ blur: active }"
+      class="transition">
       <slot />
     </div>
   </div>

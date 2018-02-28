@@ -1,9 +1,13 @@
 <template>
   <div>
-    <h3 class="thin" v-if="title">
-      {{ title }}
-    </h3>
-    <div class="py2" :class="innerClass">
+    <template v-if="title">
+      <h3 class="thin">
+        {{ title }}
+      </h3>
+    </template>
+    <div
+      :class="innerClass"
+      class="py2">
       <slot />
     </div>
   </div>
