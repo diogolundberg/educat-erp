@@ -161,5 +161,19 @@
 <script>
   export default {
     name: "StyleGuide",
+    data() {
+      return {
+        optionsb: [
+          { id: 1, name: "One" },
+          { id: 2, name: "Two" },
+        ],
+        tags: [],
+        tag: null,
+        page: 1,
+        modal: false,
+        text: "",
+        active: false,
+      };
+    },
   };
 </script>

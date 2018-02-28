@@ -9,6 +9,7 @@ const router = new VueRouter({
   mode: "history",
   routes: [
     { path: "/", component: Vue.component("App") },
+    { path: "/style", component: Vue.component("StyleGuide") },
   ],
 });
 
