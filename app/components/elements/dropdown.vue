@@ -24,7 +24,7 @@
       </span>
       <Outside
         v-if="focus"
-        class="absolute top-0 bg-white shadow1 w100 z2"
+        class="absolute bg-white shadow1 w100 z2"
         @click="focus = false">
         <div
           v-for="opt in options"

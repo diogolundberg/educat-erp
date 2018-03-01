@@ -19,7 +19,7 @@
         class="py2 absolute top-0 left-0 ease h5 dim noclick"
         v-text="label" />
       <template v-if="hint">
-        <label class="block gray h7">{{ hint }}</label>
+        <label class="block dim h7">{{ hint }}</label>
       </template>
       <template v-if="errors">
         <label

@@ -5,7 +5,7 @@
       :key="option[idField]"
       :class="has(option) ? 'btn-primary' : 'bg-white black'"
       :label="option[labelField]"
-      class="round50 sm-mr1 shadow1"
+      class="rounded50 sm-mr1 shadow1"
       @click="toggle(option)" />
   </span>
 </template>

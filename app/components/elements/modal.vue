@@ -5,7 +5,7 @@
     <div
       class="fixed fill bg-dim ease flex z4"
       @click.self="$emit('hide')">
-      <div class="p2 m-auto rounded shadow2 bg-white x500 bounce">
+      <div class="p2 m-auto rounded shadow2 bg-white width-2 bounce">
         <slot />
       </div>
     </div>
