@@ -3,7 +3,7 @@
       enter-class="op0 scale0"
       leave-to-class="op0 scale0">
     <div
-      class="fixed fill bg-mask transition flex z4"
+      class="fixed fill bg-dim ease flex z4"
       @click.self="$emit('hide')">
       <div class="p2 m-auto rounded shadow2 bg-white x500 bounce">
         <slot />

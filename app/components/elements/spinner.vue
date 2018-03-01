@@ -5,7 +5,7 @@
       class="absolute fill x2 y2 circle spin m-auto border border-top-silver" />
     <div
       :class="{ blur: active }"
-      class="transition">
+      class="ease">
       <slot />
     </div>
   </div>

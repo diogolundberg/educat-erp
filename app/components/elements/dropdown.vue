@@ -7,14 +7,14 @@
         :id="`fld${_uid}`"
         type="text"
         readonly
-        class="m0 py15 border-none input-line transition h5 w100"
+        class="m0 py2 border-none input-line ease h5 w100"
         @focus="focus = true"
         @blur="onBlur">
       <label
         v-if="!focus"
         :class="{ active: value }"
         :for="`fld${_uid}`"
-        class="py15 absolute top-0 left-0 transition h5 nudge gray noclick">
+        class="py2 absolute top-0 left-0 ease h5 dim noclick">
         {{ label }}
       </label>
       <span

@@ -12,7 +12,7 @@
         class="inline-block align-middle x2 y2 p6x circle bg-white shadow0"
         role="radio">
         <template v-if="option[idField] == value">
-          <div class="block w100 h100 circle bg-blue transition" />
+          <div class="block w100 h100 circle bg-blue ease" />
         </template>
       </span>
       <label class="mx1 bold upcase pointer">

@@ -5,7 +5,7 @@
       :key="tab.id">
       <a
         :class="{ 'active': value === tab.id }"
-        class="btn upcase input-line border-none transition"
+        class="btn upcase input-line border-none ease"
         @click="$emit('input', tab.id)">
         {{ tab.name }}
       </a>

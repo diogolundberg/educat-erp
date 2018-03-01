@@ -11,7 +11,7 @@
       leave-to-class="op0">
       <div
         v-if="show"
-        class="p2 transition truncate">
+        class="p2 ease truncate">
         <slot />
       </div>
     </transition>

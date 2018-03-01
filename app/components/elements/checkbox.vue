@@ -8,7 +8,7 @@
       role="checkbox">
       <div
         v-if="value"
-        class="block w100 h100 bg-blue transition" />
+        class="block w100 h100 bg-blue ease" />
     </span>
     <label
       v-if="label"
