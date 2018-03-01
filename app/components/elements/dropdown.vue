@@ -14,7 +14,7 @@
       <label
         :class="{ nudge: focus || value }"
         :for="`fld${_uid}`"
-        class="py2 absolute top-0 left-0 ease h5 dim noclick">
+        class="py2 absolute top-0 left-0 bounce h5 dim noclick">
         {{ label }}
       </label>
       <span
