@@ -11,7 +11,7 @@
             class="center mb4n mt2">
             <img
               src="../../assets/img/people.svg"
-              class="rounded border4 border shadow2 avatar bg-white">
+              class="rounded border4 border shadow2 x6 y6 bg-white">
           </div>
           <Fieldset>
             <div class="flex gutters flex-wrap">
