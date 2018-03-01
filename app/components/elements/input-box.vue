@@ -10,12 +10,14 @@
         type="text"
         required
         class="m0 py2 border-none input-line ease h5 w100"
-        @input="changed">
+        @input="changed"
+        @focus="focus = true"
+        @blur="focus = false">
       <label
         :for="`fld${_uid}`"
-        class="py2 absolute top-0 left-0 ease h5 gray noclick"
-        {{ label }}
-      </label>
+        :class="{ nudge: focus || (value && value.length) }"
+        class="py2 absolute top-0 left-0 ease h5 dim noclick"
+        v-text="label" />
       <template v-if="hint">
         <label class="block gray h7">{{ hint }}</label>
       </template>
@@ -69,6 +71,11 @@
         required: false,
         default: null,
       },
+    },
+    data() {
+      return {
+        focus: false,
+      };
     },
     methods: {
       changed() {

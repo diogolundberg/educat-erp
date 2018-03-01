@@ -109,6 +109,8 @@ input
   transition transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275)
 .scale0 > div
   transform scale(0.1)
+.nudge
+  transform translate(-12%, -50%) scale(0.75)
 .blur
   filter blur(4px)
 .pointer
@@ -125,10 +127,6 @@ input
   @keyframes spin
     100%
       transform rotate(360deg)
-input:valid ~ .nudge
-input:focus ~ .nudge
-.nudge.active
-  transform translate(-12%, -50%) scale(0.75)
 .input-line
   background linear-gradient($blue, $blue) center bottom/0 2px no-repeat,
     linear-gradient(rgba(black,.4), rgba(black,.4)) center bottom/100% 1px no-repeat

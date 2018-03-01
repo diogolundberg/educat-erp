@@ -9,17 +9,17 @@
         readonly
         class="m0 py2 border-none input-line ease h5 w100"
         @focus="focus = true"
+        @click="focus = true"
         @blur="onBlur">
       <label
-        v-if="!focus"
-        :class="{ active: value }"
+        :class="{ nudge: focus || value }"
         :for="`fld${_uid}`"
         class="py2 absolute top-0 left-0 ease h5 dim noclick">
         {{ label }}
       </label>
       <span
         v-if="!focus"
-        class="absolute top-0 right-0 py15 noclick gray">
+        class="absolute top-0 right-0 py2 noclick dim">
         ▼
       </span>
       <Outside
