@@ -12,6 +12,7 @@
         @click="focus = true"
         @blur="onBlur">
       <label
+        v-if="!focus"
         :class="{ nudge: focus || value }"
         :for="`fld${_uid}`"
         class="py2 absolute top-0 left-0 bounce h5 dim noclick">
@@ -24,7 +25,7 @@
       </span>
       <Outside
         v-if="focus"
-        class="absolute bg-white shadow1 w100 z2"
+        class="absolute top-0 bg-white shadow1 w100 z2"
         @click="focus = false">
         <div
           v-for="opt in options"
