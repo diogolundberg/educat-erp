@@ -16,9 +16,15 @@
           <Fieldset>
             <div class="flex gutters flex-wrap">
               <InputBox
+                v-model="item.name"
                 :size="6"
                 label="Nome"
                 hint="Seu nome completo" />
+              <InputBox
+                v-model="item.socialName"
+                :size="6"
+                label="Nome Social"
+                hint="Seu nome social" />
               <InputBox
                 v-model="item.cpf"
                 :size="3"
@@ -26,21 +32,14 @@
                 mask="###.###.###-##"
                 hint="Ex: 000.000.000-00" />
               <InputBox
+                v-model="item.birthdate"
                 :size="3"
                 label="Nascimento"
                 mask="##/##/####" />
-            </div>
-            <div class="flex gutters flex-wrap">
-              <InputBox
+              <DropDown
+                v-model="item.maritalStatus"
                 :size="3"
-                label="Nacionalidade"
-                hint="Ex: Brasileiro" />
-              <InputBox
-                :size="3"
-                label="Naturalidade"
-                hint="Ex: Belo Horizonte" />
-              <InputBox
-                :size="3"
+                :options="options.maritalStatus"
                 label="Estado Civil" />
               <DropDown
                 v-model="item.gender"
@@ -48,10 +47,43 @@
                 :options="options.gender"
                 label="Sexo" />
             </div>
+            <div class="flex gutters flex-wrap">
+              <InputBox
+                v-model="item.nationality"
+                :size="3"
+                label="Nacionalidade"
+                hint="Ex: Brasileiro" />
+              <InputBox
+                v-model="item.birthCountry"
+                :size="3"
+                label="País de Origem"
+                hint="Ex: Brasil" />
+              <DropDown
+                v-model="item.birthUF"
+                :size="3"
+                :options="options.uf"
+                label="UF de Nascimento" />
+              <InputBox
+                v-model="item.birthCity"
+                :size="3"
+                label="Naturalidade"
+                hint="Cidade de Nascimento" />
+            </div>
+            <div class="flex gutters flex-wrap">
+              <InputBox
+                v-model="item.graduationYear"
+                :size="6"
+                label="Ano de conclusão do ensino médio" />
+              <InputBox
+                v-model="item.graduationCountry"
+                :size="6"
+                label="País de conclusão do ensino médio" />
+            </div>
           </Fieldset>
           <Fieldset title="Dados de Contato">
             <div class="flex gutters flex-wrap">
               <InputBox
+                v-model="item.email"
                 :size="6"
                 label="E-mail" />
               <InputBox
@@ -74,21 +106,27 @@
                 :options="options.uf"
                 label="Estado" />
               <InputBox
+                v-model="item.city"
                 :size="3"
                 label="Cidade" />
-              <InputBox
+              <DropDown
+                v-model="item.addressType"
                 :size="3"
+                :options="options.addressType"
                 label="Tipo de Endereço" />
             </div>
             <div class="flex gutters flex-wrap">
               <InputBox
+                v-model="item.street"
                 :size="6"
                 label="Logradouro"
                 hint="Sua rua, avenida, etc." />
               <InputBox
+                v-model="item.number"
                 :size="3"
                 label="Número" />
               <InputBox
+                v-model="item.complement"
                 :size="3"
                 label="Complemento" />
             </div>
@@ -96,14 +134,24 @@
           <Fieldset title="Dados para o Censo">
             <div class="flex gutters flex-wrap">
               <InputBox
+                v-model="item.race"
                 :size="3"
                 label="Raça" />
               <InputBox
+                v-model="item.school"
                 :size="3"
                 label="Escola" />
               <InputBox
+                v-model="item.mothersName"
                 :size="6"
-                label="Nome da Escola" />
+                label="Nome completo da mãe" />
+            </div>
+            <div class="flex gutters flex-wrap">
+              <RadioGroup
+                v-model="item.handicaps"
+                label="Possui alguma Deficiência, Transtorno Global do
+                  Desenvolvimento, ou Habilidades/Superdotação?"
+                :options="options.handicaps" />
             </div>
           </Fieldset>
           <div class="flex justify-end">
@@ -149,17 +197,48 @@
           gender: null,
           cpf: null,
           phone: null,
+          maritalStatus: null,
           uf: null,
+          name: null,
+          socialName: null,
+          birthdate: null,
+          nationality: null,
+          birthCountry: null,
+          birthUF: null,
+          birthCity: null,
+          graduationYear: null,
+          graduationCountry: null,
+          email: null,
+          city: null,
+          addressType: null,
+          street: null,
+          number: null,
+          complement: null,
+          race: null,
+          school: null,
+          mothersName: null,
         },
         options: {
           gender: [
             { id: "M", name: "Masculino" },
             { id: "F", name: "Feminino" },
           ],
+          maritalStatus: [
+            { id: "single", name: "Solteiro" },
+            { id: "married", name: "Casado" },
+          ],
           uf: [
             { id: "MG", name: "MG" },
             { id: "SP", name: "SP" },
             { id: "RJ", name: "RJ" },
+          ],
+          addressType: [
+            { id: "house", name: "Casa" },
+          ],
+          handicaps: [
+            { id: "yes", name: "Sim" },
+            { id: "no", name: "Não" },
+            { id: "unknown", name: "Não disponho da informação" },
           ],
         },
         step: 1,
