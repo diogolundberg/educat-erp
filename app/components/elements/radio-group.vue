@@ -1,5 +1,10 @@
 <template>
   <span :is="container">
+    <label
+      v-if="label"
+      class="block my2 dim">
+      {{ label }}
+    </label>
     <span
       v-for="option in options"
       :is="container"
@@ -9,13 +14,13 @@
       @click="$emit('input', option[idField])">
       <span
         :aria-checked="option[idField] == value"
-        class="inline-block align-middle x2 y2 p6x circle bg-white shadow0"
+        class="inline-block align-middle x1 y1 p4x circle bg-white shadow0"
         role="radio">
         <template v-if="option[idField] == value">
           <div class="block w100 h100 circle bg-blue ease" />
         </template>
       </span>
-      <label class="mx1 bold upcase pointer">
+      <label class="mx1 pointer">
         {{ option[labelField] }}
       </label>
     </span>
@@ -45,6 +50,11 @@
       container: {
         type: String,
         default: "span",
+      },
+      label: {
+        type: String,
+        required: false,
+        default: null,
       },
     },
   };
