@@ -1,10 +1,11 @@
 <template>
   <div>
-    <template v-if="title">
-      <h3 class="thin">
-        {{ title }}
-      </h3>
-    </template>
+    <div
+      v-if="title"
+      class="flex">
+      <h3>{{ title }}</h3>
+      <hr class="y0 ml2 flex-auto border-bottom" />
+    </div>
     <div
       :class="innerClass"
       class="py2">
