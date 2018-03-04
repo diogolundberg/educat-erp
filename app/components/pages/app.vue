@@ -1,7 +1,10 @@
 <template>
   <div>
     <Header />
-    <Stepper class="max-width-3 m-auto">
+    <Stepper
+      :value="1"
+      header
+      class="max-width-3 m-auto">
       <Step
         title="Seus Dados"
         description="Preencha seus dados pessoais">

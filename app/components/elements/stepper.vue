@@ -1,5 +1,10 @@
 <template>
   <div :is="container">
+    <StepperHeader
+      v-if="header"
+      v-model="value"
+      :steps="steps"
+      class="mb3" />
     <slot />
   </div>
 </template>
@@ -16,6 +21,20 @@
         type: String,
         default: "div",
       },
+      header: {
+        type: Boolean,
+        default: false,
+        required: false,
+      },
+    },
+    data() {
+      return {
+        steps: [],
+      };
+    },
+    mounted() {
+      this.steps = this.$children.filter(a => a.$options.name === "Step")
+        .map((a, i) => ({ id: i + 1, name: a.title }));
     },
   };
 </script>
