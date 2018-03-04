@@ -1,16 +1,18 @@
 <template>
   <div>
-    <div class="flex items-center">
+    <div
+      v-if="!visible"
+      class="p2 mb3 bg-white shadow2 rounded flex items-center">
       <Ball
         :index="index"
         class="mr2" />
-      <div class="h4">
-        {{ title }}
+      <div class="h5 line-height-3">
+        <div>{{ title }}</div>
+        <small class="dim">{{ description }}</small>
       </div>
     </div>
-    <div class="sm-ml2 sm-pl3 py2 sm-border-left">
-      <slot v-if="visible" />
-      <div v-if="!visible && description">{{ description }}</div>
+    <div class="py2" v-if="visible">
+      <slot />
     </div>
   </div>
 </template>
