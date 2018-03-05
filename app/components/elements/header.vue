@@ -15,10 +15,15 @@
             Listagem
           </router-link>
         </div>
-        <img
-          class="m2 y2 pointer"
-          src="../../assets/img/bell.svg"
+        <a
+          href="#"
+          data-badge="1"
+          class="m2"
           @click="$emit('notifications')">
+          <img
+            class="y2 pointer"
+            src="../../assets/img/bell.svg">
+        </a>
       </div>
     </header>
     <div class="p2 mb4" />
