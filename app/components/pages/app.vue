@@ -155,6 +155,14 @@
                 label="Possui alguma Deficiência, Transtorno Global do
                   Desenvolvimento, ou Habilidades/Superdotação?" />
             </div>
+            <div
+              v-if="item.handicaps == 'yes'"
+              class="flex gutters flex-wrap">
+              <h4>Selecione:</h4>
+              <CheckGroup
+                v-model="item.handicapList"
+                :options="options.handicapList" />
+            </div>
           </Fieldset>
           <div class="flex justify-end">
             <Btn
@@ -243,6 +251,21 @@
             { id: "yes", name: "Sim" },
             { id: "no", name: "Não" },
             { id: "unknown", name: "Não disponho da informação" },
+          ],
+          handicapList: [
+            { id: 1, name: "Cegueira" },
+            { id: 2, name: "Baixa Visão" },
+            { id: 3, name: "Surdez" },
+            { id: 4, name: "Surdocegueira" },
+            { id: 5, name: "Deficiência Auditiva" },
+            { id: 6, name: "Deficiência Física" },
+            { id: 7, name: "Autismos" },
+            { id: 8, name: "Transtorno Degenrativo de Infância" },
+            { id: 9, name: "Altas Habilidades/Superdotação" },
+            { id: 10, name: "Síndrome de Rett" },
+            { id: 11, name: "Deficiência Intelectual" },
+            { id: 12, name: " Sindrome de Aspergers" },
+            { id: 13, name: " Deficiência Múltipla" },
           ],
         },
         step: 1,
