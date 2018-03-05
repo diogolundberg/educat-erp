@@ -3,7 +3,7 @@
     <Stepper
       :value="1"
       header
-      class="max-width-3 m-auto">
+      class="max-width-4 m-auto">
       <Step
         title="Seus Dados"
         description="Preencha seus dados pessoais">

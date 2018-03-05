@@ -1,5 +1,5 @@
 <template>
-  <div class="max-width-3 m-auto">
+  <div class="max-width-4 m-auto">
     <Card title="Matrículas" />
   </div>
 </template>
