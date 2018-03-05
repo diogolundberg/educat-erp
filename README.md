@@ -4,7 +4,8 @@ Este é o frontend do projeto CMMG. Ele é desenvolvido e executado separadament
 
 As duas partes se comunicam exclusivamente via APIs REST.
 
-![screenshot](https://user-images.githubusercontent.com/25377830/36649839-cafb622c-1a7e-11e8-84c7-6d8e5017dc09.png)
+![screenshot](https://user-images.githubusercontent.com/25377830/37004837-96e372b2-20b0-11e8-87d4-a2df5a33b660.png)
+
 
 ## Dependências
 
