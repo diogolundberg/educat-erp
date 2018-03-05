@@ -4,7 +4,7 @@
       v-if="header"
       v-model="value"
       :steps="steps"
-      class="mb3" />
+      class="mb4" />
     <slot />
   </div>
 </template>

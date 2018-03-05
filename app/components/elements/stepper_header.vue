@@ -1,12 +1,10 @@
 <template>
-  <div class="p2 px4 flex items-center justify-between shadow0">
-    <template
-      v-for="(step, index) in steps">
-      <Ball
-        :key="step.id"
-        :index="step.id"
-        :blank="value < step.id"
-        :data-tip="step.name" />
+  <div class="px4 flex items-center justify-between">
+    <template v-for="(step, index) in steps">
+      <StepperItem
+        :active="value >= step.id"
+        :complete="value > step.id"
+        :title="step.name" />
       <hr
         v-if="step.id < steps.length"
         :class="{ 'border-blue border2': value > step.id }"
