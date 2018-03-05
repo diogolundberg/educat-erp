@@ -19,7 +19,7 @@
           href="#"
           data-badge="1"
           class="m2"
-          @click="$emit('notifications')">
+          @click.prevent="$emit('notifications')">
           <img
             class="y2 pointer"
             src="../../assets/img/bell.svg">
