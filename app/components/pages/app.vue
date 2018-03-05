@@ -102,22 +102,6 @@
                 :size="3"
                 label="CEP"
                 mask="#####-###" />
-              <DropDown
-                v-model="item.uf"
-                :size="3"
-                :options="options.uf"
-                label="Estado" />
-              <InputBox
-                v-model="item.city"
-                :size="3"
-                label="Cidade" />
-              <DropDown
-                v-model="item.addressType"
-                :size="3"
-                :options="options.addressType"
-                label="Tipo de Endereço" />
-            </div>
-            <div class="flex gutters flex-wrap">
               <InputBox
                 v-model="item.street"
                 :size="6"
@@ -127,10 +111,26 @@
                 v-model="item.number"
                 :size="3"
                 label="Número" />
+            </div>
+            <div class="flex gutters flex-wrap">
               <InputBox
                 v-model="item.complement"
                 :size="3"
-                label="Complemento" />
+                label="Bairro" />
+              <InputBox
+                v-model="item.city"
+                :size="3"
+                label="Cidade" />
+              <DropDown
+                v-model="item.uf"
+                :size="3"
+                :options="options.uf"
+                label="Estado" />
+              <DropDown
+                v-model="item.addressType"
+                :size="3"
+                :options="options.addressType"
+                label="Tipo de Endereço" />
             </div>
           </Fieldset>
           <Fieldset title="Dados para o Censo">
@@ -195,30 +195,32 @@
     data() {
       return {
         item: {
-          cep: null,
+          cep: "",
           gender: null,
-          cpf: null,
-          phone: null,
           maritalStatus: null,
           uf: null,
-          name: null,
-          socialName: null,
-          birthdate: null,
-          nationality: null,
-          birthCountry: null,
           birthUF: null,
-          birthCity: null,
-          graduationYear: null,
-          graduationCountry: null,
-          email: null,
-          city: null,
-          addressType: null,
-          street: null,
-          number: null,
-          complement: null,
-          race: null,
-          school: null,
-          mothersName: null,
+
+          cpf: "",
+          phone: "",
+          name: "",
+          socialName: "",
+          birthdate: "",
+          nationality: "",
+          birthCountry: "",
+          birthCity: "",
+          graduationYear: "",
+          graduationCountry: "",
+          email: "",
+          city: "",
+          addressType: "",
+          street: "",
+          number: "",
+          complement: "",
+          race: "",
+          school: "",
+          mothersName: "",
+          handicapList: [],
         },
         options: {
           gender: [
