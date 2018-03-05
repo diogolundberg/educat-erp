@@ -4,7 +4,7 @@
       v-if="title"
       class="flex">
       <h3>{{ title }}</h3>
-      <hr class="y0 ml2 flex-auto border-bottom" />
+      <hr class="y0 ml2 flex-auto border-bottom">
     </div>
     <div
       :class="innerClass"

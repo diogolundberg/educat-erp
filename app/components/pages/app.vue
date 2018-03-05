@@ -151,9 +151,9 @@
             <div class="flex gutters flex-wrap">
               <RadioGroup
                 v-model="item.handicaps"
+                :options="options.handicaps"
                 label="Possui alguma Deficiência, Transtorno Global do
-                  Desenvolvimento, ou Habilidades/Superdotação?"
-                :options="options.handicaps" />
+                  Desenvolvimento, ou Habilidades/Superdotação?" />
             </div>
           </Fieldset>
           <div class="flex justify-end">

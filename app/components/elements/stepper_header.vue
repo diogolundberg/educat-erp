@@ -1,14 +1,16 @@
 <template>
   <div class="px4 flex items-center justify-between">
-    <template v-for="(step, index) in steps">
+    <template v-for="step in steps">
       <StepperItem
         :active="value >= step.id"
         :complete="value > step.id"
-        :title="step.name" />
+        :title="step.name"
+        :key="step.id" />
       <hr
         v-if="step.id < steps.length"
         :class="{ 'border-blue border2': value > step.id }"
-        class="flex-auto border-bottom" />
+        :key="step.id"
+        class="flex-auto border-bottom">
     </template>
   </div>
 </template>

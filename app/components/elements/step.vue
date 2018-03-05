@@ -11,7 +11,9 @@
         <small class="dim">{{ description }}</small>
       </div>
     </div>
-    <div class="py2" v-if="visible">
+    <div
+      v-if="visible"
+      class="py2">
       <slot />
     </div>
   </div>

@@ -107,8 +107,8 @@
     },
     methods: {
       pick(option) {
-        this.$emit("input", option[this.idField]);
         this.focus = false;
+        this.$emit("input", option[this.idField]);
       },
       onBlur() {
         setTimeout(() => {
