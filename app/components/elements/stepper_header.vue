@@ -9,7 +9,7 @@
       <hr
         v-if="step.id < steps.length"
         :class="{ 'border-blue border2': value > step.id }"
-        :key="step.id"
+        :key="step.id + '_separator'"
         class="flex-auto border-bottom">
     </template>
   </div>
