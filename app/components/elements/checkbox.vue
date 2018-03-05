@@ -1,10 +1,11 @@
 <template>
   <span
-      class="inline-block"
+      :is="container"
+      class="flex items-center"
       @click="$emit('input', !value)">
     <span
       :aria-checked="value"
-      class="inline-block align-middle x2 y2 p6x bg-white shadow0 pointer"
+      class="inline-block align-middle x1 y1 p2x bg-white shadow0 pointer"
       role="checkbox">
       <div
         v-if="value"
@@ -12,7 +13,7 @@
     </span>
     <label
       v-if="label"
-      class="mx1 bold upcase pointer">
+      class="mx1 pointer">
       {{ label }}
     </label>
   </span>
@@ -30,6 +31,10 @@
         type: String,
         required: false,
         default: null,
+      },
+      container: {
+        type: String,
+        default: "span",
       },
     },
   };
