@@ -6,6 +6,7 @@
     "serve": "parcel app/index.html",
     "deploy": "yarn rebuild && echo '/* /index.html 200' >| dist/_redirects && netlify deploy -p dist",
     "lint": "eslint app/**/*.js app/**/**/*.vue",
+    "esw": "esw ./app --ext .js --ext .vue -w --color",
     "test": "jest",
     "precommit": "npm run lint",
     "prepush": "npm run lint"
