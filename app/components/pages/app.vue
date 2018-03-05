@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header />
     <Stepper
       :value="1"
       header
