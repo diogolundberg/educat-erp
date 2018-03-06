@@ -58,6 +58,8 @@ input
   border-top-color $silver
 .border-top-gray
   border-top solid $gray
+.dots-bottom
+  border-bottom dotted 1px $dim
 .rounded-bookend:first-child
   border-radius 3px 0 0 3px
 .rounded-bookend:last-child
@@ -152,14 +154,10 @@ input
 .input-line
   background linear-gradient($blue, $blue) center bottom/0 2px no-repeat,
     linear-gradient($dim, $dim) center bottom/100% 1px no-repeat
-  &:focus:not(:disabled)
   &:hover:not(:disabled)
   &.active
   &.router-link-exact-active
     background-size 100% 2px, 100% 1px
-  &:disabled
-    background none
-    border-bottom dotted 1px $dim
   &.error
     background-image linear-gradient($red, $red),
       linear-gradient($dim, $dim)

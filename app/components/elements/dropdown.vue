@@ -3,11 +3,17 @@
     <div class="relative">
       <input
         :value="displayValue"
-        :class="{ error: errors && errors.length }"
+        :disabled="disabled"
+        :class="{
+          'active': focus,
+          'error': errors && errors.length,
+          'dots-bottom': disabled,
+          'input-line': !disabled,
+        }"
         :id="`fld${_uid}`"
         type="text"
         readonly
-        class="m0 py2 border-none input-line ease h5 w100"
+        class="m0 py2 border-none ease h5 w100"
         @focus="focus = true"
         @click="focus = true"
         @blur="onBlur">
@@ -85,6 +91,10 @@
         type: Number,
         required: false,
         default: 12,
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
       },
       errors: {
         type: Array,

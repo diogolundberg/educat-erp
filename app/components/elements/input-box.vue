@@ -5,11 +5,16 @@
         ref="input"
         :value="value"
         :disabled="disabled"
-        :class="{ error: errors && errors.length }"
+        :class="{
+          'active': focus,
+          'error': errors && errors.length,
+          'dots-bottom': disabled,
+          'input-line': !disabled,
+        }"
         :id="`fld${_uid}`"
         type="text"
         required
-        class="m0 py2 border-none input-line ease h5 w100"
+        class="m0 py2 ease border-none h5 w100"
         @input="changed"
         @focus="focus = true"
         @blur="focus = false">
