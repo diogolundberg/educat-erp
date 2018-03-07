@@ -1,9 +1,11 @@
 <template>
   <div>
-    <Header @notifications="notifications = !notifications" />
-    <Notifications
-      v-if="notifications"
-      @click="notifications = false" />
+    <template v-if="$route.meta.nav">
+      <Header @notifications="notifications = !notifications" />
+      <Notifications
+        v-if="notifications"
+        @click="notifications = false" />
+    </template>
     <router-view />
   </div>
 </template>

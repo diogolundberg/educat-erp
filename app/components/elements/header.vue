@@ -6,13 +6,20 @@
         <div class="flex flex-auto items-end">
           <router-link
             class="btn upcase input-line border-none ease"
-            to="/">
+            to="/enroll">
             Matrícula
           </router-link>
           <router-link
             class="btn upcase input-line border-none ease"
             to="/list">
             Listagem
+          </router-link>
+        </div>
+        <div class="flex items-end justify-end">
+          <router-link
+            class="btn upcase input-line border-none ease"
+            to="/logout">
+            Logout
           </router-link>
         </div>
         <a
