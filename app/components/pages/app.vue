@@ -166,8 +166,8 @@
           </Fieldset>
           <div class="flex justify-end">
             <Btn
-                label="Enviar para análise"
-                class="btn-primary" />
+              primary
+              label="Enviar para análise" />
           </div>
         </Card>
       </Step>
