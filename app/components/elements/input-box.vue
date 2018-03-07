@@ -12,7 +12,7 @@
           'input-line': !disabled,
         }"
         :id="`fld${_uid}`"
-        type="text"
+        :type="type"
         required
         class="m0 py2 ease border-none h5 w100"
         @input="changed"
@@ -51,6 +51,11 @@
       label: {
         type: String,
         required: true,
+      },
+      type: {
+        type: String,
+        required: false,
+        default: "text",
       },
       hint: {
         type: String,
