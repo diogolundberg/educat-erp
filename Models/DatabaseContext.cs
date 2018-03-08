@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Microsoft.EntityFrameworkCore;
 
 namespace Onboarding.Models
@@ -15,13 +16,34 @@ namespace Onboarding.Models
         {
             foreach (var auditableEntity in ChangeTracker.Entries<BaseModel>())
             {
-                if (auditableEntity.Entity.Id == Guid.Empty)
+                if (auditableEntity.State == EntityState.Added)
                 {
                     auditableEntity.Entity.Id = Guid.NewGuid();
+                    auditableEntity.Entity.Active = true;
+                    auditableEntity.Entity.State = auditableEntity.State.ToString();
+                    auditableEntity.Entity.CommitedBy = "";
+                    auditableEntity.Entity.CommittedAt = DateTime.Now;
                 }
             }
 
-            return base.SaveChanges();
-        } 
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DbSet<AddressType> AddressTypes { get; set; }  
+        public DbSet<CivilStatus> CivilStatus { get; set; }  
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Email> Emails { get; set; }
+        public DbSet<Gender> Genders {get;set;}
+        public DbSet<Nationality> Nationalities { get; set; }
+        public DbSet<PhoneType> PhoneTypes { get; set; }
+        public DbSet<Race> Races { get; set; }
+        public DbSet<School> Schools { get; set; }
     }
 }

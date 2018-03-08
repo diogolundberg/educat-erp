@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Onboarding.Models
 {
-    public class BaseModel
+    public class BaseModel : ICloneable
     {
+        public int ExternalId{ get; set; }
+
         [Key]
         public Guid Id { get; set; }
 
@@ -12,6 +14,13 @@ namespace Onboarding.Models
 
         public string CommitedBy { get; set; }
 
-        public string Action { get; set; }
+        public string State { get; set; }
+
+        public bool Active { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }
