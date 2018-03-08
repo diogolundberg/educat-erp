@@ -19,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Onboarding;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace Onboarding
 {
@@ -34,6 +35,13 @@ namespace Onboarding
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["ONBOARDING_DATABASE_CONNECTION"]));
+
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+            }));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -54,6 +62,11 @@ namespace Onboarding
                 options.Filters.Add(typeof(ValidateModelStateAttribute));
             });
 
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("MyPolicy"));
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "ONBOARDING", Version = "v1" });
@@ -67,6 +80,8 @@ namespace Onboarding
                 app.UseDeveloperExceptionPage();
                 DatabaseInitializer.Seed(app);
             }
+
+            app.UseCors("MyPolicy");
 
             app.UseAuthentication();
 
