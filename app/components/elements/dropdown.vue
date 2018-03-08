@@ -3,12 +3,12 @@
     <div class="relative">
       <input
         :value="displayValue"
-        :disabled="disabled"
+        :disabled="isDisabled"
         :class="{
           'active': focus,
           'error': errors && errors.length,
-          'dots-bottom': disabled,
-          'input-line': !disabled,
+          'dots-bottom': isDisabled,
+          'input-line': !isDisabled,
         }"
         :id="`fld${_uid}`"
         type="text"
@@ -113,6 +113,9 @@
       },
       displayValue() {
         return this.choice && this.choice[this.labelField];
+      },
+      isDisabled() {
+        return this.disabled || !this.options.length;
       },
     },
     methods: {
