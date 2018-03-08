@@ -33,7 +33,7 @@ namespace Onboarding
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["DATABASE_CONNECTION"]));
+            services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["ONBOARDING_DATABASE_CONNECTION"]));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -44,7 +44,7 @@ namespace Onboarding
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = Configuration["SSO_HOST"],
-                    ValidAudience = Configuration["HOST"],
+                    ValidAudience = Configuration["ONBOARDING_HOST"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SECURITY_KEY"]))
                 };
             });
@@ -56,7 +56,7 @@ namespace Onboarding
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "SSO", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "ONBOARDING", Version = "v1" });
             });
         }
 
