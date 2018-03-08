@@ -44,7 +44,7 @@ namespace Onboarding
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = Configuration["SSO_HOST"],
-                    ValidAudience = Configuration["ONBOARDING_HOST"],
+                    ValidAudience = Configuration["HOST"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SECURITY_KEY"]))
                 };
             });
