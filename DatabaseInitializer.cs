@@ -49,6 +49,8 @@ namespace Onboarding
                 {
                     context.Schools.AddRange(new School { ExternalId = 1, Name = "Colégio Padre Eustáquio", State = EntityState.Added.ToString(), Active = true});
                 }                                                                
+
+                context.SaveChanges();
             }
         }
     }
