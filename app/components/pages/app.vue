@@ -39,14 +39,14 @@
                 label="Nascimento"
                 mask="##/##/####" />
               <DropDown
-                v-model="item.maritalStatus"
+                v-model="item.civilStatus"
                 :size="3"
-                :options="options.maritalStatus"
+                :options="options.civilStatus"
                 label="Estado Civil" />
               <DropDown
-                v-model="item.gender"
+                v-model="item.genders"
                 :size="3"
-                :options="options.gender"
+                :options="options.genders"
                 label="Sexo" />
             </div>
             <div class="flex gutters flex-wrap">
@@ -55,15 +55,16 @@
                 :size="3"
                 label="Nacionalidade"
                 hint="Ex: Brasileiro" />
-              <InputBox
+              <DropDown
                 v-model="item.birthCountry"
                 :size="3"
+                :options="options.countries"
                 label="País de Origem"
                 hint="Ex: Brasil" />
               <DropDown
                 v-model="item.birthUF"
                 :size="3"
-                :options="options.uf"
+                :options="options.states"
                 label="UF de Nascimento" />
               <InputBox
                 v-model="item.birthCity"
@@ -76,9 +77,10 @@
                 v-model="item.graduationYear"
                 :size="6"
                 label="Ano de conclusão do ensino médio" />
-              <InputBox
+              <DropDown
                 v-model="item.graduationCountry"
                 :size="6"
+                :options="options.countries"
                 label="País de conclusão do ensino médio" />
             </div>
           </Fieldset>
@@ -124,24 +126,26 @@
               <DropDown
                 v-model="item.uf"
                 :size="3"
-                :options="options.uf"
+                :options="options.states"
                 label="Estado" />
               <DropDown
                 v-model="item.addressType"
                 :size="3"
-                :options="options.addressType"
+                :options="options.addressTypes"
                 label="Tipo de Endereço" />
             </div>
           </Fieldset>
           <Fieldset title="Dados para o Censo">
             <div class="flex gutters flex-wrap">
-              <InputBox
+              <DropDown
                 v-model="item.race"
                 :size="3"
+                :options="options.race"
                 label="Raça" />
-              <InputBox
+              <DropDown
                 v-model="item.school"
                 :size="3"
+                :options="options.school"
                 label="Escola" />
               <InputBox
                 v-model="item.mothersName"
@@ -179,6 +183,8 @@
         title="Dados Financeiros"
         description="Aqui você insere seus dados de pagamento." />
       <Step
+        title="Enviar para a Secretaria" />
+      <Step
         title="Aprovação da Secretaria"
         description="A secretaria irá analisar seus documentos para aprovar
           sua matrícula." />
@@ -205,7 +211,8 @@
         item: {
           cep: "",
           gender: null,
-          maritalStatus: null,
+          civilStatus: null,
+          country: null,
           uf: null,
           birthUF: null,
 
@@ -226,27 +233,21 @@
           number: "",
           complement: "",
           race: "",
-          school: "",
+          school: null,
           mothersName: "",
           handicapList: [],
         },
         options: {
-          gender: [
-            { id: "M", name: "Masculino" },
-            { id: "F", name: "Feminino" },
-          ],
-          maritalStatus: [
-            { id: "single", name: "Solteiro" },
-            { id: "married", name: "Casado" },
-          ],
-          uf: [
-            { id: "MG", name: "MG" },
-            { id: "SP", name: "SP" },
-            { id: "RJ", name: "RJ" },
-          ],
-          addressType: [
-            { id: "house", name: "Casa" },
-          ],
+          genders: [],
+          civilStatus: [],
+          countries: [],
+          states: [],
+          addressTypes: [],
+          nationalities: [],
+          phoneType: [],
+          race: [],
+          school: [],
+
           handicaps: [
             { id: "yes", name: "Sim" },
             { id: "no", name: "Não" },

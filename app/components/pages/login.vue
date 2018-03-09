@@ -3,12 +3,12 @@
     <div class="m-auto width-2 shadow2 bg-white p2 flex flex-column rounded">
       <div class="h1 thin">CMMG</div>
       <InputBox
-        v-model="item.login"
+        v-model="params.username"
         label="Login" />
       <InputBox
-        v-model="item.password"
+        v-model="params.password"
         label="Senha"
-        password />
+        type="password" />
       <Btn
         primary
         label="OK"
@@ -22,8 +22,8 @@
     name: "Login",
     data() {
       return {
-        item: {
-          login: "",
+        params: {
+          username: "",
           password: "",
         },
       };
