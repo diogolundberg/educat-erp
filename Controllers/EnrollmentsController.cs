@@ -20,6 +20,7 @@ namespace Onboarding.Controllers
         private readonly BaseRepository<PhoneType> _phoneTypeRepository;
         private readonly BaseRepository<Race> _RaceRepository;
         private readonly BaseRepository<School> _schoolRepository;
+        private readonly BaseRepository<State> _stateRepository;
 
         public EnrollmentsController(DatabaseContext databaseContext)
         {
@@ -32,22 +33,36 @@ namespace Onboarding.Controllers
             _phoneTypeRepository = new BaseRepository<PhoneType>(_context);
             _RaceRepository = new BaseRepository<Race>(_context);
             _schoolRepository = new BaseRepository<School>(_context);
+            _stateRepository = new BaseRepository<State>(_context);
         }
 
         [HttpGet("")]
         public dynamic Get ()
         {
             return new { 
-                AddressTypes = _addressTypeRepository.List(),
-                CivilStatus = _civilStatusRepository.List(),
-                Countries = _countryRepository.List(),
-                Genders = _genderRepository.List(),
-                Nationalities = _nationalityRepository.List(),
-                PhoneType = _phoneTypeRepository.List(),
-                Race = _RaceRepository.List(),
-                School = _schoolRepository.List(),
-                States = new List<State>() { new State { Name = "MG" } }
+                data = new Enrollment 
+                {
+
+                },
+                options = new 
+                {
+                    AddressTypes = _addressTypeRepository.List(),
+                    CivilStatus = _civilStatusRepository.List(),
+                    Countries = _countryRepository.List(),
+                    Genders = _genderRepository.List(),
+                    Nationalities = _nationalityRepository.List(),
+                    PhoneType = _phoneTypeRepository.List(),
+                    Race = _RaceRepository.List(),
+                    School = _schoolRepository.List(),
+                    States = new List<State>() { new State { Name = "MG" } }
+                }
             };
+        }
+
+        [HttpPost("", Name = "ONBOARDING/ENROLLMENTS/ADD")]
+        public IActionResult Create(Enrollment obj)
+        {
+            return Ok();
         }
     }
 }

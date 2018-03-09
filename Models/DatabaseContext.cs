@@ -45,5 +45,6 @@ namespace Onboarding.Models
         public DbSet<PhoneType> PhoneTypes { get; set; }
         public DbSet<Race> Races { get; set; }
         public DbSet<School> Schools { get; set; }
+        public DbSet<State> States { get; set; }
     }
 }
