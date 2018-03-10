@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace Onboarding.Models
 {
@@ -14,8 +15,10 @@ namespace Onboarding.Models
         [Required]
         public string Name { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Enrollment> OriginCountryEnrollments { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Enrollment> CountryOfGraduationFromHighSchoolEnrollments { get; set; }
     } 
 }
