@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace Onboarding.Models
 {
@@ -22,26 +23,31 @@ namespace Onboarding.Models
 
         public Guid? CivilStatusId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("CivilStatusId")]
         public virtual CivilStatus CivilStatus { get; set; }
 
         public Guid? GenderId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("GenderId")]
         public virtual Gender Gender { get; set; }
 
         public Guid? NationalityId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("NationalityId")]
         public virtual Nationality Nationality { get; set; }   
 
         public Guid? OriginCountryId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("OriginCountryId")]
         public virtual Country OriginCountry { get; set; }
 
         public Guid? BornStateId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("BornStateId")]
         public virtual State BornState { get; set; }
 
@@ -49,6 +55,7 @@ namespace Onboarding.Models
 
         public Guid? CountryOfGraduationFromHighSchoolId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("CountryOfGraduationFromHighSchoolId")]
         public virtual Country CountryOfGraduationFromHighSchool { get; set; }
 
@@ -57,6 +64,7 @@ namespace Onboarding.Models
 
         public Guid? PhoneTypeId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("PhoneTypeId")]
         public virtual PhoneType PhoneType { get; set; }
 
@@ -74,21 +82,25 @@ namespace Onboarding.Models
 
         public Guid? CountryStateId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("CountryStateId")]
         public virtual State CountryState { get; set; }
 
         public Guid? AddressTypeId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("AddressTypeId")]
         public virtual AddressType  AddressType { get; set; }
 
         public Guid? RaceId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("RaceId")]
         public virtual Race Race { get; set; }
 
         public Guid? SchoolId { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("SchoolId")]
         public virtual School School { get; set; } 
 

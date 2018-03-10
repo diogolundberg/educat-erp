@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Data.Entity;
 using Onboarding.Models;
+using Onboarding.ViewModel;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -90,14 +91,14 @@ namespace Onboarding.Controllers
         }
 
         [HttpPatch("{id}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
-        public IActionResult Update(Guid id, Enrollment obj)
+        public IActionResult Update(Guid id, [FromBody]EnrollmentViewModel obj)
         {
             if (obj == null || obj.Id != id)
             {
                 return BadRequest();
             }
 
-            Enrollment enrollment = _enrollmentRepository.GetById(obj.ExternalId);
+            Enrollment enrollment = _enrollmentRepository.GetById(obj.Id);
 
             if (enrollment == null)
             {
