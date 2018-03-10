@@ -67,6 +67,19 @@ namespace Onboarding
                 if (!context.Disabilities.Any())                                                               
                 {
                     disabilityRepository.Add(new Disability { Name = "Cegueira" });
+                    disabilityRepository.Add(new Disability { Name = "Cegueira" });
+                    disabilityRepository.Add(new Disability { Name = "Baixa Visão" });
+                    disabilityRepository.Add(new Disability { Name = "Surdez" });
+                    disabilityRepository.Add(new Disability { Name = "Surdocegueira" });
+                    disabilityRepository.Add(new Disability { Name = "Deficiência Auditiva" });
+                    disabilityRepository.Add(new Disability { Name = "Deficiência Física" });
+                    disabilityRepository.Add(new Disability { Name = "Autismos" });
+                    disabilityRepository.Add(new Disability { Name = "Transtorno Degenrativo de Infância" });
+                    disabilityRepository.Add(new Disability { Name = "Altas Habilidades/Superdotação" });
+                    disabilityRepository.Add(new Disability { Name = "Síndrome de Rett" });
+                    disabilityRepository.Add(new Disability { Name = "Deficiência Intelectual" });
+                    disabilityRepository.Add(new Disability { Name = "Sindrome de Aspergers" });
+                    disabilityRepository.Add(new Disability { Name = "Deficiência Múltipla" });
                 } 
                 
                 context.SaveChanges();

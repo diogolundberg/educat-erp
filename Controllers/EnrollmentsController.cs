@@ -64,8 +64,15 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
+            Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.Id);
+
+            if(enrollment == null)
+            {
+                return NotFound();
+            }
+
             return new { 
-                data = _enrollmentRepository.GetById(enrollmentToken.Id),
+                data = enrollment,
                 options = new 
                 {
                     AddressTypes = _addressTypeRepository.List(),
@@ -73,11 +80,11 @@ namespace Onboarding.Controllers
                     Countries = _countryRepository.List(),
                     Genders = _genderRepository.List(),
                     Nationalities = _nationalityRepository.List(),
-                    PhoneType = _phoneTypeRepository.List(),
-                    Race = _RaceRepository.List(),
-                    School = _schoolRepository.List(),
+                    PhoneTypes = _phoneTypeRepository.List(),
+                    Races = _RaceRepository.List(),
+                    Schools = _schoolRepository.List(),
                     States = _stateRepository.List(),
-                    Disaries = _disabilitiesRepository.List()
+                    Disabilities = _disabilitiesRepository.List()
                 }
             };
         }
