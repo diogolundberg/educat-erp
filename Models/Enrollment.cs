@@ -17,7 +17,7 @@ namespace Onboarding.Models
 
         public string SocialName { get; set; }
 
-        public int Cpf { get; set; }
+        public string Cpf { get; set; }
 
         public DateTime Birthday { get; set; }
 
@@ -45,13 +45,13 @@ namespace Onboarding.Models
         [ForeignKey("OriginCountryId")]
         public virtual Country OriginCountry { get; set; }
 
-        public Guid? BornStateId { get; set; }
+        public Guid? BirthStateId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("BornStateId")]
+        [ForeignKey("BirthStateId")]
         public virtual State BornState { get; set; }
 
-        public int? YearofHighSchoolGraduation { get; set; }
+        public string YearofHighSchoolGraduation { get; set; }
 
         public Guid? CountryOfGraduationFromHighSchoolId { get; set; }
 
@@ -74,7 +74,7 @@ namespace Onboarding.Models
 
         public string Address { get; set; }
 
-        public int? Number { get; set; }
+        public string Number { get; set; }
 
         public string Neighborhood { get; set;  }
 
@@ -104,11 +104,13 @@ namespace Onboarding.Models
         [ForeignKey("SchoolId")]
         public virtual School School { get; set; } 
 
-        public string MotherMom { get; set; }
+        public string MothersName { get; set; }
 
         public DateTimeOffset? SendBy { get; set; }
 
-        public bool? HaveHandicaps { get; set; }
+        public bool? HasHandicaps { get; set; }
+
+        public string BirthCity { get; set; }
 
         public virtual ICollection<EnrollmentDisability> EnrollmentDisabilities { get; set; }
     }
