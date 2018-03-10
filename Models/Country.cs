@@ -7,12 +7,15 @@ namespace Onboarding.Models
     {
         public Country ()
         {
-            Enrollments = new HashSet<Enrollment>();
+            OriginCountryEnrollments = new HashSet<Enrollment>();
+            CountryOfGraduationFromHighSchoolEnrollments = new HashSet<Enrollment>();
         }
 
         [Required]
         public string Name { get; set; }
 
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
+        public virtual ICollection<Enrollment> OriginCountryEnrollments { get; set; }
+
+        public virtual ICollection<Enrollment> CountryOfGraduationFromHighSchoolEnrollments { get; set; }
     } 
 }

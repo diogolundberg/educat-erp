@@ -12,6 +12,15 @@ namespace Onboarding.Models
             
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<EnrollmentDisability>().HasKey(t => new { t.EnrollmentId, t.DisabilityId });
+            modelBuilder.Entity<Enrollment>().HasOne(t => t.CountryOfGraduationFromHighSchool).WithMany(u => u.CountryOfGraduationFromHighSchoolEnrollments);
+            modelBuilder.Entity<Enrollment>().HasOne(t => t.OriginCountry).WithMany(u => u.OriginCountryEnrollments);
+            modelBuilder.Entity<Enrollment>().HasOne(t => t.BornState).WithMany(u => u.BornStateEnrollments);
+            modelBuilder.Entity<Enrollment>().HasOne(t => t.CountryState).WithMany(u => u.CountryStateEnrollments);
+        }
+
         public override int SaveChanges()  
         {
             foreach (var auditableEntity in ChangeTracker.Entries<BaseModel>())
@@ -46,5 +55,6 @@ namespace Onboarding.Models
         public DbSet<Race> Races { get; set; }
         public DbSet<School> Schools { get; set; }
         public DbSet<State> States { get; set; }
+        public DbSet<Disability> Disabilities { get; set; }
     }
 }
