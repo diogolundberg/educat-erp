@@ -2,6 +2,7 @@
   <div
     :class="{ 'bg-green': success, 'bg-red': error, 'bg-yellow': warning }"
     class="border-top-gray border4 p2 bg-blue white mb2">
+    {{ message }}
     <slot />
   </div>
 </template>
@@ -10,6 +11,11 @@
   export default {
     name: "Alert",
     props: {
+      message: {
+        type: String,
+        required: false,
+        default: null,
+      },
       info: {
         type: Boolean,
         default: false,
