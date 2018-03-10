@@ -495,5 +495,28 @@
         step: 1,
       };
     },
+    watch: {
+      data: {
+        deep: true,
+        handler: debounce(function save() { this.save(); }, 2000),
+      },
+    },
+    mounted() {
+      const uri = process.env.URL2;
+      const token = this.$route.params.id;
+      axios.get(`${uri}/api/Enrollments/${token}`).then((response) => {
+        Object.assign(this.data, response.data.data);
+        Object.assign(this.options, response.data.options);
+      }, () => {
+        this.$router.replace("/");
+      });
+    },
+    methods: {
+      save() {
+        const uri = process.env.URL2;
+        const token = this.$route.params.id;
+        axios.patch(`${uri}/api/Enrollments/${token}`, this.data);
+      },
+    },
   };
 </script>
