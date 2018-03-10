@@ -96,6 +96,8 @@ namespace Onboarding.Models
 
         public DateTimeOffset? SendBy { get; set; }
 
+        public bool? HaveHandcaps { get; set; }
+
         public virtual ICollection<EnrollmentDisability> EnrollmentDisabilities { get; set; }
     }
 }
