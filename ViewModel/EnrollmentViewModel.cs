@@ -11,7 +11,7 @@ namespace Onboarding.ViewModel
 
         public string SocialName { get; set; }
 
-        public int Cpf { get; set; }
+        public string Cpf { get; set; }
 
         public DateTime Birthday { get; set; }
 
@@ -25,7 +25,7 @@ namespace Onboarding.ViewModel
 
         public Guid? BornStateId { get; set; }
 
-        public int? YearofHighSchoolGraduation { get; set; }
+        public string YearofHighSchoolGraduation { get; set; }
 
         public Guid? CountryOfGraduationFromHighSchoolId { get; set; }
 
@@ -39,7 +39,7 @@ namespace Onboarding.ViewModel
 
         public string Address { get; set; }
 
-        public int? Number { get; set; }
+        public string Number { get; set; }
 
         public string Neighborhood { get; set;  }
 
