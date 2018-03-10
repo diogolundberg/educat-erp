@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="$route.meta.nav">
+    <template v-if="$route.path != '/'">
       <Header @notifications="notifications = !notifications" />
       <Notifications
         v-if="notifications"

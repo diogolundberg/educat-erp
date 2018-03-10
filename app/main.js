@@ -9,7 +9,11 @@ const router = new VueRouter({
   mode: "history",
   routes: [
     { path: "/", component: Vue.component("Login"), meta: { open: true } },
-    { path: "/enroll", component: Vue.component("App"), meta: { nav: true } },
+    {
+      path: "/enroll/:id",
+      component: Vue.component("App"),
+      meta: { open: true },
+    },
     { path: "/list", component: Vue.component("Enrollments") },
     { path: "/style", component: Vue.component("StyleGuide") },
     {
@@ -23,7 +27,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path !== "/" && !localStorage.token) {
+  if (!localStorage.token && !to.meta.open) {
     next({ path: "/" });
   } else {
     next();
