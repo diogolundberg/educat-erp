@@ -46,7 +46,7 @@
     props: {
       value: {
         type: String,
-        required: true,
+        default: "",
       },
       label: {
         type: String,

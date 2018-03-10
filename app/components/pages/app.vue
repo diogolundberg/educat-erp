@@ -1,7 +1,7 @@
 <template>
   <div>
     <Stepper
-      :value="1"
+      v-model="step"
       header
       class="max-width-4 m-auto">
       <Step
@@ -18,67 +18,68 @@
           <Fieldset>
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="item.name"
+                v-model="data.name"
                 :size="6"
                 label="Nome"
                 hint="Seu nome completo" />
               <InputBox
-                v-model="item.socialName"
+                v-model="data.socialName"
                 :size="6"
                 label="Nome Social"
                 hint="Seu nome social" />
               <InputBox
-                v-model="item.cpf"
+                v-model="data.cpf"
                 :size="3"
                 label="CPF"
                 mask="###.###.###-##"
                 hint="Ex: 000.000.000-00" />
               <InputBox
-                v-model="item.birthdate"
+                v-model="data.birthday"
                 :size="3"
                 label="Nascimento"
                 mask="##/##/####" />
               <DropDown
-                v-model="item.civilStatus"
+                v-model="data.civilStatusId"
                 :size="3"
                 :options="options.civilStatus"
                 label="Estado Civil" />
               <DropDown
-                v-model="item.genders"
+                v-model="data.genderId"
                 :size="3"
                 :options="options.genders"
                 label="Sexo" />
             </div>
             <div class="flex gutters flex-wrap">
-              <InputBox
-                v-model="item.nationality"
+              <DropDown
+                v-model="data.nationalityId"
                 :size="3"
+                :options="options.countries"
                 label="Nacionalidade"
                 hint="Ex: Brasileiro" />
               <DropDown
-                v-model="item.birthCountry"
+                v-model="data.originCountryId"
                 :size="3"
                 :options="options.countries"
                 label="País de Origem"
                 hint="Ex: Brasil" />
               <DropDown
-                v-model="item.birthUF"
+                v-model="data.birthStateId"
                 :size="3"
                 :options="options.states"
                 label="UF de Nascimento" />
               <InputBox
-                v-model="item.birthCity"
+                v-model="data.birthCity"
                 :size="3"
                 label="Naturalidade"
                 hint="Cidade de Nascimento" />
             </div>
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="item.graduationYear"
+                v-model="data.yearofHighSchoolGraduation"
                 :size="6"
                 label="Ano de conclusão do ensino médio" />
               <DropDown
-                v-model="item.graduationCountry"
+                v-model="data.countryOfGraduationFromHighSchoolId"
                 :size="6"
                 :options="options.countries"
                 label="País de conclusão do ensino médio" />
@@ -87,11 +88,11 @@
           <Fieldset title="Dados de Contato">
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="item.email"
+                v-model="data.email"
                 :size="6"
                 label="E-mail" />
               <InputBox
-                v-model="item.phone"
+                v-model="data.phoneNumber"
                 :size="6"
                 label="Telefone"
                 mask="(##) ####-#####?" />
@@ -100,90 +101,299 @@
           <Fieldset title="Endereço">
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="item.cep"
+                v-model="data.cep"
                 :size="3"
                 label="CEP"
                 mask="#####-###" />
-              <InputBox
-                v-model="item.street"
-                :size="6"
-                label="Logradouro"
-                hint="Sua rua, avenida, etc." />
-              <InputBox
-                v-model="item.number"
-                :size="3"
-                label="Número" />
-            </div>
-            <div class="flex gutters flex-wrap">
-              <InputBox
-                v-model="item.complement"
-                :size="3"
-                label="Bairro" />
-              <InputBox
-                v-model="item.city"
-                :size="3"
-                label="Cidade" />
               <DropDown
-                v-model="item.uf"
-                :size="3"
-                :options="options.states"
-                label="Estado" />
-              <DropDown
-                v-model="item.addressType"
+                v-model="data.addressTypeId"
                 :size="3"
                 :options="options.addressTypes"
                 label="Tipo de Endereço" />
+              <InputBox
+                v-model="data.address"
+                :size="6"
+                label="Logradouro"
+                hint="Sua rua, avenida, etc." />
+            </div>
+            <div class="flex gutters flex-wrap">
+              <InputBox
+                v-model="data.number"
+                :size="3"
+                label="Número" />
+              <InputBox
+                v-model="data.neighborhood"
+                :size="3"
+                label="Bairro" />
+              <InputBox
+                v-model="data.city"
+                :size="3"
+                label="Cidade" />
+              <DropDown
+                v-model="data.countryStateId"
+                :size="3"
+                :options="options.states"
+                label="Estado" />
             </div>
           </Fieldset>
           <Fieldset title="Dados para o Censo">
             <div class="flex gutters flex-wrap">
               <DropDown
-                v-model="item.race"
+                v-model="data.raceId"
                 :size="3"
-                :options="options.race"
+                :options="options.races"
                 label="Raça" />
               <DropDown
-                v-model="item.school"
+                v-model="data.schoolId"
                 :size="3"
-                :options="options.school"
+                :options="options.schools"
                 label="Escola" />
               <InputBox
-                v-model="item.mothersName"
+                v-model="data.mothersName"
                 :size="6"
                 label="Nome completo da mãe" />
             </div>
-            <div class="flex gutters flex-wrap">
+            <div>
               <RadioGroup
-                v-model="item.handicaps"
+                v-model="data.handicaps"
                 :options="options.handicaps"
                 label="Possui alguma Deficiência, Transtorno Global do
                   Desenvolvimento, ou Habilidades/Superdotação?" />
             </div>
             <div
-              v-if="item.handicaps == 'yes'"
+              v-if="data.handicaps == 'yes'"
               class="flex gutters flex-wrap">
               <h4>Selecione:</h4>
               <CheckGroup
-                v-model="item.handicapList"
-                :options="options.handicapList" />
+                v-model="data.disabilities"
+                :options="options.disabilities" />
+            </div>
+          </Fieldset>
+          <Fieldset title="Documentos">
+            <div class="p2 shadow0 rounded">
+              <div class="flex justify-between items-center">
+                <div>Histórico Escolar do Ensino Médio</div>
+                <Btn
+                  label="Enviar"
+                  primary />
+              </div>
+              <hr>
+              <div class="flex justify-between items-center">
+                <div>Certidão de Nasciment ou Casamento</div>
+                <Btn
+                  label="Enviar"
+                  primary />
+              </div>
+              <hr>
+              <div class="flex justify-between items-center">
+                <div>Carteira de Identidade</div>
+                <Btn
+                  label="Enviar"
+                  primary />
+              </div>
+              <hr>
+              <div class="flex justify-between items-center">
+                <div>Título de Eleitor e Comprovante de Votação</div>
+                <Btn
+                  label="Enviar"
+                  primary />
+              </div>
+              <hr>
+              <div class="flex justify-between items-center">
+                <div>CPF</div>
+                <Btn
+                  label="Enviar"
+                  primary />
+              </div>
+              <hr>
+              <div class="flex justify-between items-center">
+                <div>Cartão de Vacinação (constando 3 doses de vacina contra
+                  Hepatite B e vacina Dupla-adulto)</div>
+                <Btn
+                  label="Enviar"
+                  primary />
+              </div>
+              <hr>
+              <div class="flex justify-between items-center">
+                <div>Documento Militar</div>
+                <Btn
+                  label="Enviar"
+                  primary />
+              </div>
             </div>
           </Fieldset>
           <div class="flex justify-end">
             <Btn
               primary
-              label="Enviar para análise" />
+              label="Próximo"
+              @click="step = 2" />
           </div>
         </Card>
       </Step>
       <Step
-        title="Documentação"
-        description="Envie seus documentos online, sem precisar de filas ou
-          agendamento de horário." />
-      <Step
         title="Dados Financeiros"
-        description="Aqui você insere seus dados de pagamento." />
+        description="Aqui você insere seus dados de pagamento.">
+        <Card
+          title="Dados Financeiros">
+          <Fieldset title="Responsável Financeiro">
+            <div class="flex gutters flex-wrap">
+              <DropDown
+                v-model="data.responsibleDocumentType"
+                :size="3"
+                :options="options.documentType"
+                label="CPF ou CNPJ" />
+              <InputBox
+                v-model="data.responsibleCPF"
+                v-if="data.responsibleDocumentType == 'CPF'"
+                :size="3"
+                label="CPF"
+                mask="###.###.###-##"
+                hint="Ex: 000.000.000-00" />
+              <InputBox
+                v-model="data.responsibleCNPJ"
+                v-if="data.responsibleDocumentType == 'CNPJ'"
+                :size="3"
+                label="CNPJ"
+                mask="##.###.###/####-##"
+                hint="Ex: 00.000.000/0000-00" />
+              <InputBox
+                v-model="data.responsibleName"
+                :size="6"
+                label="Razão Social" />
+            </div>
+            <div class="flex gutters flex-wrap">
+              <InputBox
+                v-model="data.responsibleContact"
+                :size="4"
+                label="Contato" />
+              <InputBox
+                v-model="data.responsibleAddress"
+                :size="8"
+                label="Endereço Completo" />
+            </div>
+            <div class="flex gutters flex-wrap">
+              <InputBox
+                v-model="data.responsiblePhone1"
+                :size="4"
+                label="Telefone"
+                mask="(##) ####-####" />
+              <InputBox
+                v-model="data.responsiblePhone2"
+                :size="4"
+                label="Celular"
+                mask="(##) #####-####" />
+              <InputBox
+                v-model="data.responsibleEmail"
+                :size="4"
+                label="E-mail" />
+           </div>
+          </Fieldset>
+          <Fieldset title="Fiador">
+            <div class="flex gutters flex-wrap">
+              <DropDown
+                v-model="data.guarantorDocumentType"
+                :size="3"
+                :options="options.documentType"
+                label="CPF ou CNPJ" />
+              <InputBox
+                v-model="data.guarantorCPF"
+                v-if="data.guarantorDocumentType == 'CPF'"
+                :size="3"
+                label="CPF"
+                mask="###.###.###-##"
+                hint="Ex: 000.000.000-00" />
+              <InputBox
+                v-model="data.guarantorCNPJ"
+                v-if="data.guarantorDocumentType == 'CNPJ'"
+                :size="3"
+                label="CNPJ"
+                mask="##.###.###/####-##"
+                hint="Ex: 00.000.000/0000-00" />
+              <InputBox
+                v-model="data.guarantorName"
+                :size="6"
+                label="Razão Social" />
+            </div>
+            <div class="flex gutters flex-wrap">
+              <InputBox
+                v-model="data.guarantorContact"
+                :size="4"
+                label="Contato" />
+              <InputBox
+                v-model="data.guarantorAddress"
+                :size="8"
+                label="Endereço Completo" />
+            </div>
+            <div class="flex gutters flex-wrap">
+              <InputBox
+                v-model="data.guarantorPhone1"
+                :size="4"
+                label="Telefone"
+                mask="(##) ####-####" />
+              <InputBox
+                v-model="data.guarantorPhone2"
+                :size="4"
+                label="Celular"
+                mask="(##) #####-####" />
+              <InputBox
+                v-model="data.guarantorEmail"
+                :size="4"
+                label="E-mail" />
+           </div>
+          </Fieldset>
+          <Fieldset title="Documentos do Fiador">
+            <div class="p2 shadow0 rounded">
+              <div class="flex justify-between items-center">
+                <div>Carteira de Identidade</div>
+                <Btn
+                  label="Enviar"
+                  primary />
+              </div>
+              <hr>
+              <div class="flex justify-between items-center">
+                <div>CPF</div>
+                <Btn
+                  label="Enviar"
+                  primary />
+              </div>
+              <hr>
+              <div class="flex justify-between items-center">
+                <div>Comprovante de Endereço</div>
+                <Btn
+                  label="Enviar"
+                  primary />
+              </div>
+              <hr>
+              <div class="flex justify-between items-center">
+                <div>Certidão de Nasciment ou Casamento</div>
+                <Btn
+                  label="Enviar"
+                  primary />
+              </div>
+            </div>
+          </Fieldset>
+          <div class="flex justify-end">
+            <Btn
+              primary
+              label="Próximo"
+              @click="step = 3" />
+          </div>
+        </Card>
+      </Step>
       <Step
-        title="Enviar para a Secretaria" />
+        title="Enviar para Análise"
+        description="Enviar para aprovação da secretaria e departamento
+          financeiro">
+        <Card title="Enviar para Análise">
+          <p>Envie seus dados para a secetaria e para o departamento financeiro
+            para aprovação.</p>
+          <div class="flex justify-end">
+            <Btn
+              primary
+              label="Enviar" />
+          </div>
+        </Card>
+      </Step>
       <Step
         title="Aprovação da Secretaria"
         description="A secretaria irá analisar seus documentos para aprovar
@@ -204,38 +414,61 @@
 </template>
 
 <script>
+  import axios from "axios";
+  import { debounce } from "lodash";
+
   export default {
     name: "App",
     data() {
       return {
-        item: {
-          cep: "",
-          gender: null,
-          civilStatus: null,
-          country: null,
-          uf: null,
-          birthUF: null,
+        data: {
+          name: null,
+          socialName: null,
+          cpf: null,
+          birthday: null,
+          civilStatusId: null,
+          genderId: null,
+          nationalityId: null,
+          originCountryId: null,
+          birthStateId: null,
+          birthCity: null,
+          yearofHighSchoolGraduation: null,
+          countryOfGraduationFromHighSchoolId: null,
+          email: null,
+          phoneTypeId: null,
+          phoneNumber: null,
+          cep: null,
+          address: null,
+          number: null,
+          neighborhood: null,
+          city: null,
+          countryStateId: null,
+          addressTypeId: null,
+          raceId: null,
+          schoolId: null,
+          mothersName: null,
+          hasHandicaps: true,
+          disabilities: [],
 
-          cpf: "",
-          phone: "",
-          name: "",
-          socialName: "",
-          birthdate: "",
-          nationality: "",
-          birthCountry: "",
-          birthCity: "",
-          graduationYear: "",
-          graduationCountry: "",
-          email: "",
-          city: "",
-          addressType: "",
-          street: "",
-          number: "",
-          complement: "",
-          race: "",
-          school: null,
-          mothersName: "",
-          handicapList: [],
+          responsibleDocumentType: null,
+          responsibleCPF: "",
+          responsibleCNPJ: "",
+          responsibleName: "",
+          responsibleContact: "",
+          responsibleAddress: "",
+          responsiblePhone1: "",
+          responsiblePhone2: "",
+          responsibleEmail: "",
+
+          guarantorDocumentType: null,
+          guarantorCPF: "",
+          guarantorCNPJ: "",
+          guarantorName: "",
+          guarantorContact: "",
+          guarantorAddress: "",
+          guarantorPhone1: "",
+          guarantorPhone2: "",
+          guarantorEmail: "",
         },
         options: {
           genders: [],
@@ -245,28 +478,18 @@
           addressTypes: [],
           nationalities: [],
           phoneType: [],
-          race: [],
-          school: [],
+          races: [],
+          schools: [],
+          disabilities: [],
 
+          documentType: [
+            { id: "CPF", name: "CPF" },
+            { id: "CNPJ", name: "CNPJ" },
+          ],
           handicaps: [
             { id: "yes", name: "Sim" },
             { id: "no", name: "Não" },
             { id: "unknown", name: "Não disponho da informação" },
-          ],
-          handicapList: [
-            { id: 1, name: "Cegueira" },
-            { id: 2, name: "Baixa Visão" },
-            { id: 3, name: "Surdez" },
-            { id: 4, name: "Surdocegueira" },
-            { id: 5, name: "Deficiência Auditiva" },
-            { id: 6, name: "Deficiência Física" },
-            { id: 7, name: "Autismos" },
-            { id: 8, name: "Transtorno Degenrativo de Infância" },
-            { id: 9, name: "Altas Habilidades/Superdotação" },
-            { id: 10, name: "Síndrome de Rett" },
-            { id: 11, name: "Deficiência Intelectual" },
-            { id: 12, name: " Sindrome de Aspergers" },
-            { id: 13, name: " Deficiência Múltipla" },
           ],
         },
         step: 1,
