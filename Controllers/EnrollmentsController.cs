@@ -90,17 +90,26 @@ namespace Onboarding.Controllers
             };
         }
 
-        [HttpPatch("{id}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
-        public IActionResult Update(Guid id, [FromBody]EnrollmentViewModel obj)
+        [HttpPatch("{token}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
+        public IActionResult Update(string token, [FromBody]EnrollmentViewModel obj)
         {
-            if (obj == null || obj.Id != id)
+            if(string.IsNullOrEmpty(token))
             {
                 return BadRequest();
             }
 
-            Enrollment enrollment = _enrollmentRepository.GetById(obj.Id);
+            byte[] data = Convert.FromBase64String(token);
+            string enrollmentTokenJson = Encoding.ASCII.GetString(data);
+            EnrollmentToken enrollmentToken = Newtonsoft.Json.JsonConvert.DeserializeObject<EnrollmentToken>(enrollmentTokenJson);
 
-            if (enrollment == null)
+            if(DateTime.Now >= enrollmentToken.End)
+            {
+                return BadRequest();
+            }
+
+            Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.Id);
+
+            if(enrollment == null)
             {
                 return NotFound();
             }
@@ -111,6 +120,12 @@ namespace Onboarding.Controllers
             }
 
             Enrollment newEnrollment = (Enrollment)enrollment.Clone();
+
+            newEnrollment.Name = obj.Name;
+            newEnrollment.SocialName = obj.SocialName;
+            newEnrollment.Cpf = obj.Cpf;
+            newEnrollment.Birthday = obj.Birthday;
+            newEnrollment.CivilStatusId = obj.CivilStatusId;
 
             _enrollmentRepository.Update(enrollment, newEnrollment);
 
