@@ -80,7 +80,7 @@ namespace Onboarding
                 app.UseDeveloperExceptionPage();
             }
 
-            DatabaseInitializer.Seed(app);
+            //DatabaseInitializer.Seed(app);
 
             app.UseCors("MyPolicy");
 
