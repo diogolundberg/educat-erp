@@ -32,6 +32,8 @@ namespace Onboarding.Data.Entity
 
         public virtual void Add(TEntity obj, bool? saveChanges = true)
         {
+            TEntity last = _context.Set<TEntity>().OrderByDescending(x => x.ExternalId).FirstOrDefault();
+            obj.ExternalId =  last != null ? last.ExternalId : 1;
             _context.Set<TEntity>().Add(obj);
             _context.SaveChanges();
         }
