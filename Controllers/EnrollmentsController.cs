@@ -117,7 +117,7 @@ namespace Onboarding.Controllers
         }
 
        [HttpGet("GenerateToken", Name = "SSO/PASSWORD/NEW")]
-        public IActionResult NewPassword(string email)
+        public IActionResult GenerateToken(string email)
         {
             if(string.IsNullOrEmpty(email))
             {
