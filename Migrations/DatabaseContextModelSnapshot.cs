@@ -174,6 +174,8 @@ namespace Onboarding.Migrations
 
                     b.Property<Guid?>("GenderId");
 
+                    b.Property<bool?>("HaveHandcaps");
+
                     b.Property<string>("MotherMom");
 
                     b.Property<string>("Name");

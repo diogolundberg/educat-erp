@@ -11,7 +11,7 @@ using System;
 namespace Onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20180310144414_initial")]
+    [Migration("20180310175656_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -174,6 +174,8 @@ namespace Onboarding.Migrations
                     b.Property<int>("ExternalId");
 
                     b.Property<Guid?>("GenderId");
+
+                    b.Property<bool?>("HaveHandcaps");
 
                     b.Property<string>("MotherMom");
 

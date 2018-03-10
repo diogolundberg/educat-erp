@@ -217,6 +217,7 @@ namespace Onboarding.Migrations
                     EmailId = table.Column<Guid>(nullable: true),
                     ExternalId = table.Column<int>(nullable: false),
                     GenderId = table.Column<Guid>(nullable: true),
+                    HaveHandcaps = table.Column<bool>(nullable: true),
                     MotherMom = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     NationalityId = table.Column<Guid>(nullable: true),
