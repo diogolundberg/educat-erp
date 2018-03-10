@@ -3,6 +3,7 @@ using Onboarding.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Onboarding.Data.Entity;
 
 namespace Onboarding
 {
@@ -12,46 +13,66 @@ namespace Onboarding
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetService<DatabaseContext>();       
-                
+                DatabaseContext context = serviceScope.ServiceProvider.GetService<DatabaseContext>();       
+                BaseRepository<AddressType> addressTypeRepository = new BaseRepository<AddressType>(context);
+                BaseRepository<CivilStatus> civilStatusRepository = new BaseRepository<CivilStatus>(context);
+                BaseRepository<Country> countryRepository = new BaseRepository<Country>(context);
+                BaseRepository<Gender> genderRepository = new BaseRepository<Gender>(context);
+                BaseRepository<Nationality> nationalityRepository = new BaseRepository<Nationality>(context);
+                BaseRepository<PhoneType> phoneTypeRepository = new BaseRepository<PhoneType>(context);
+                BaseRepository<Race> raceRepository = new BaseRepository<Race>(context);
+                BaseRepository<School> schoolRepository = new BaseRepository<School>(context);
+                BaseRepository<State> stateRepository = new BaseRepository<State>(context);
+                BaseRepository<Disability> disabilityRepository = new BaseRepository<Disability>(context);
+
                 context.Database.Migrate();
                 context.Database.EnsureCreated();
 
                 if (!context.AddressTypes.Any())
                 {
-                    context.AddressTypes.AddRange(new AddressType { ExternalId = 1, Name = "Rua", State = EntityState.Added.ToString(), Active = true });
+                    addressTypeRepository.Add(new AddressType { Name = "Rua" });
                 }
                 if (!context.CivilStatus.Any())
                 {
-                    context.CivilStatus.AddRange(new CivilStatus { ExternalId = 1, Name = "Casado", State = EntityState.Added.ToString(), Active = true});
+                    civilStatusRepository.Add(new CivilStatus { Name = "Casado" });
                 }
                 if (!context.CivilStatus.Any())
                 {
-                    context.Countries.AddRange(new Country { ExternalId = 1, Name = "Brasil", State = EntityState.Added.ToString(), Active = true});
+                    countryRepository.Add(new Country { Name = "Brasil"});
                 }
                 if (!context.Genders.Any())
                 {
-                    context.Genders.AddRange(new Gender { ExternalId = 1, Name = "Masculino", State = EntityState.Added.ToString(), Active = true});
+                    genderRepository.Add(new Gender { Name = "Masculino" });
                 }
                 if (!context.Nationalities.Any())
                 {
-                    context.Nationalities.AddRange(new Nationality { ExternalId = 1, Name = "Brasileiro", State = EntityState.Added.ToString(), Active = true});
+                    nationalityRepository.Add(new Nationality { Name = "Brasileiro" });
                 }                
                 if (!context.PhoneTypes.Any())
                 {
-                    context.PhoneTypes.AddRange(new PhoneType { ExternalId = 1, Name = "Celular", State = EntityState.Added.ToString(), Active = true});
+                    phoneTypeRepository.Add(new PhoneType { Name = "Celular" });
                 }                                
                 if (!context.Races.Any())
                 {
-                    context.Races.AddRange(new Race { ExternalId = 1, Name = "Negro", State = EntityState.Added.ToString(), Active = true});
+                    raceRepository.Add(new Race { Name = "Negro" });
                 }                                  
                 if (!context.Schools.Any())
                 {
-                    context.Schools.AddRange(new School { ExternalId = 1, Name = "Colégio Padre Eustáquio", State = EntityState.Added.ToString(), Active = true});
-                }                                                                
-
+                    schoolRepository.Add(new School { Name = "Colégio Padre Eustáquio" });
+                }
+                if (!context.States.Any())                                                               
+                {
+                    stateRepository.Add(new State { Name = "MG" });
+                } 
+                if (!context.Disabilities.Any())                                                               
+                {
+                    disabilityRepository.Add(new Disability { Name = "Cegueira" });
+                } 
+                
                 context.SaveChanges();
             }
         }
     }
 }
+
+
