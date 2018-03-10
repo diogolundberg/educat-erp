@@ -144,7 +144,7 @@ namespace Onboarding.Controllers
             SendGridMessage msg = MailHelper.CreateSingleEmail(from, to, "subject", plainTextContent, emailText);
             SendGrid.Response response = client.SendEmailAsync(msg).Result;
 
-            return new OkResult();
+            return new OkObjectResult(new { token = token });
         }
     }
 }
