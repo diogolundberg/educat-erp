@@ -11,7 +11,7 @@ const router = new VueRouter({
     { path: "/", component: Vue.component("Login"), meta: { open: true } },
     {
       path: "/enroll/:id",
-      component: Vue.component("App"),
+      component: Vue.component("Enrollment"),
       meta: { open: true },
     },
     { path: "/list", component: Vue.component("Enrollments") },

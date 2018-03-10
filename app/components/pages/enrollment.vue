@@ -268,7 +268,7 @@
   import { debounce } from "lodash";
 
   export default {
-    name: "App",
+    name: "Enrollment",
     data() {
       return {
         data: {
