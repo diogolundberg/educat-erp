@@ -33,6 +33,14 @@
         steps: [],
       };
     },
+    watch: {
+      value(index) {
+        this.$nextTick(() => {
+          const el = this.$children.find(a => a.index === index).$el;
+          window.scrollTo({ top: el.offsetTop - 60 });
+        });
+      },
+    },
     mounted() {
       this.steps = this.$children.filter(a => a.$options.name === "Step")
         .map((a, i) => ({ id: i + 1, name: a.title }));
