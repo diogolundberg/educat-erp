@@ -3,34 +3,23 @@
     <header class="fixed top-0 z3 w100 bg-white black shadow0">
       <div class="max-width-4 m-auto flex justify-between">
         <h1 class="m2 h3">CMMG</h1>
-        <div class="flex flex-auto items-end">
+        <div class="m2">
+          <a
+            class="pl2"
+            href="#"
+            @click.prevent="$emit('notifications')">
+            <img
+              class="y2 pointer"
+              src="../../assets/img/bell.svg">
+          </a>
           <router-link
-            class="btn upcase input-line border-none ease"
-            to="/enroll">
-            Matrícula
-          </router-link>
-          <router-link
-            class="btn upcase input-line border-none ease"
-            to="/list">
-            Listagem
-          </router-link>
-        </div>
-        <div class="flex items-end justify-end">
-          <router-link
-            class="btn upcase input-line border-none ease"
+            class="pl2"
             to="/logout">
-            Logout
+            <img
+              class="y2 pointer"
+              src="../../assets/img/logout.svg">
           </router-link>
         </div>
-        <a
-          href="#"
-          data-badge="1"
-          class="m2"
-          @click.prevent="$emit('notifications')">
-          <img
-            class="y2 pointer"
-            src="../../assets/img/bell.svg">
-        </a>
       </div>
     </header>
     <div class="p2 mb4" />
