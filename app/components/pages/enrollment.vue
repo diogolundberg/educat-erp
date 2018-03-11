@@ -5,6 +5,7 @@
       header
       class="max-width-4 m-auto">
       <Step
+        :disabled="data.sendBy"
         title="Seus Dados"
         description="Preencha seus dados pessoais">
         <Card title="Seus Dados">
@@ -246,6 +247,7 @@
       </Step>
       <Step
         v-if="false"
+        :disabled="data.sendBy"
         title="Dados Financeiros"
         description="Aqui você insere seus dados de pagamento.">
         <Card
@@ -396,12 +398,28 @@
         </Card>
       </Step>
       <Step
+        v-if="!data.sendBy"
         title="Enviar para Análise"
         description="Enviar para aprovação da secretaria e departamento
           financeiro">
         <Card title="Enviar para Análise">
           <p>Envie seus dados para a secetaria e para o departamento financeiro
             para aprovação.</p>
+          <div class="flex justify-end">
+            <Btn
+              primary
+              label="Enviar" />
+          </div>
+        </Card>
+      </Step>
+      <Step
+        v-if="data.sendBy"
+        title="Aguardando Aprovação"
+        description="A secretaria e o departamento financeiro estão analisando
+          seus documentos">
+        <Card title="Aguardando Aprovação">
+          <p>A secretaria e o departamento financeiro estão analisando
+            seus documentos.</p>
           <div class="flex justify-end">
             <Btn
               primary
@@ -522,6 +540,9 @@
       axios.get(`${uri}/api/Enrollments/${token}`).then((response) => {
         Object.assign(this.data, response.data.data);
         Object.assign(this.options, response.data.options);
+        if (response.data.data.sendBy) {
+          this.step = 2;
+        }
       }, () => {
         this.$router.replace("/");
       });
