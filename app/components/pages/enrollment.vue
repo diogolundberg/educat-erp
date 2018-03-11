@@ -33,7 +33,7 @@
                 label="CPF"
                 mask="###.###.###-##"
                 hint="Ex: 000.000.000-00" />
-              <InputBox
+              <Date
                 v-model="data.birthday"
                 :size="3"
                 label="Nascimento"
