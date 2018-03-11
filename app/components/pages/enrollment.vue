@@ -171,42 +171,54 @@
           </Fieldset>
           <Fieldset title="Documentos">
             <div class="p2 shadow0 rounded">
-              <div class="flex justify-between items-center">
+              <div
+                id="doc_01"
+                class="flex justify-between items-center">
                 <div>Histórico Escolar do Ensino Médio</div>
                 <Btn
                   label="Enviar"
                   primary />
               </div>
               <hr>
-              <div class="flex justify-between items-center">
+              <div
+                id="doc_02"
+                class="flex justify-between items-center">
                 <div>Certidão de Nasciment ou Casamento</div>
                 <Btn
                   label="Enviar"
                   primary />
               </div>
               <hr>
-              <div class="flex justify-between items-center">
+              <div
+                id="doc_03"
+                class="flex justify-between items-center">
                 <div>Carteira de Identidade</div>
                 <Btn
                   label="Enviar"
                   primary />
               </div>
               <hr>
-              <div class="flex justify-between items-center">
+              <div
+                id="doc_04"
+                class="flex justify-between items-center">
                 <div>Título de Eleitor e Comprovante de Votação</div>
                 <Btn
                   label="Enviar"
                   primary />
               </div>
               <hr>
-              <div class="flex justify-between items-center">
+              <div
+                id="doc_05"
+                class="flex justify-between items-center">
                 <div>CPF</div>
                 <Btn
                   label="Enviar"
                   primary />
               </div>
               <hr>
-              <div class="flex justify-between items-center">
+              <div
+                id="doc_06"
+                class="flex justify-between items-center">
                 <div>Cartão de Vacinação (constando 3 doses de vacina contra
                   Hepatite B e vacina Dupla-adulto)</div>
                 <Btn
@@ -214,7 +226,9 @@
                   primary />
               </div>
               <hr>
-              <div class="flex justify-between items-center">
+              <div
+                id="doc_07"
+                class="flex justify-between items-center">
                 <div>Documento Militar</div>
                 <Btn
                   label="Enviar"

@@ -13,10 +13,12 @@
           class="y2 mr2 pointer"
           src="../../assets/img/bell.svg">
           <div>{{ item.title }}</div>
-          <Btn
-            class="btn-primary"
-            label="OK"
-            @click="$emit('click')" />
+          <a
+            href="#doc_01"
+            class="btn btn-primary"
+            @click="$emit('click')">
+            OK
+          </a>
       </div>
     </aside>
   </transition>
