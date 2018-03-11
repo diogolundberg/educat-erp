@@ -2,9 +2,10 @@
   <div :is="container">
     <StepperHeader
       v-if="header"
-      v-model="value"
+      :value="value"
       :steps="steps"
-      class="mb4" />
+      class="mb4"
+      @input="goTo($event)" />
     <slot />
   </div>
 </template>
@@ -35,6 +36,13 @@
     mounted() {
       this.steps = this.$children.filter(a => a.$options.name === "Step")
         .map((a, i) => ({ id: i + 1, name: a.title }));
+    },
+    methods: {
+      goTo(index) {
+        if (this.value > index) {
+          this.$emit("input", index);
+        }
+      },
     },
   };
 </script>

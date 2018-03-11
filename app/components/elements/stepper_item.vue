@@ -1,7 +1,8 @@
 <template>
   <div
     :class="{ 'x2 y2 p6x shadow2': active, 'bg-blue': complete } "
-    class="x1 y1 circle relative">
+    class="x1 y1 circle relative"
+    @click="$emit('click')">
     <div
       :class="{ 'bg-blue': active, 'bg-gray': !active }"
       class="block w100 h100 circle ease" />

@@ -2,7 +2,9 @@
   <div>
     <div
       v-if="!visible"
-      class="p2 mb3 bg-white shadow2 rounded flex items-center">
+      class="p2 mb3 bg-white shadow2 rounded flex items-center"
+      :class="{ pointer: $parent.value > index }"
+      @click="$parent.goTo(index)">
       <Ball
         :index="index"
         class="mr2" />
