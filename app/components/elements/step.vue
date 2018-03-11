@@ -3,7 +3,7 @@
     <div
       v-if="!visible || disabled"
       class="p2 mb3 bg-white shadow2 rounded flex items-center"
-      :class="{ pointer: $parent.value > index }"
+      :class="{ pointer: !disabled && $parent.value > index }"
       @click="$parent.goTo(index)">
       <Ball
         :index="index"
