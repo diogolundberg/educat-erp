@@ -47,7 +47,8 @@
     },
     methods: {
       goTo(index) {
-        if (this.value > index) {
+        const { disabled } = this.$children.find(a => a.index === index);
+        if (this.value > index && !disabled) {
           this.$emit("input", index);
         }
       },

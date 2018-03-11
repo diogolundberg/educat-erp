@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-if="!visible"
+      v-if="!visible || disabled"
       class="p2 mb3 bg-white shadow2 rounded flex items-center"
       :class="{ pointer: $parent.value > index }"
       @click="$parent.goTo(index)">
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div
-      v-if="visible"
+      v-if="visible && !disabled"
       class="py2">
       <slot />
     </div>
@@ -32,6 +32,10 @@
       description: {
         type: String,
         required: true,
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
       },
     },
     computed: {
