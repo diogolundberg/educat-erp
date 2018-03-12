@@ -483,7 +483,7 @@
 
 <script>
   import axios from "axios";
-  import { debounce } from "lodash";
+  import { debounce, pickBy } from "lodash";
 
   export default {
     name: "Enrollment",
@@ -566,7 +566,7 @@
     watch: {
       data: {
         deep: true,
-        handler: debounce(function save() { this.save(); }, 2000),
+        handler: debounce(function save() { this.save(); }, 5000),
       },
     },
     mounted() {
@@ -586,7 +586,8 @@
       save() {
         const uri = process.env.URL2;
         const token = this.$route.params.id;
-        axios.patch(`${uri}/api/Enrollments/${token}`, this.data);
+        const data = pickBy(this.data, a => a);
+        axios.patch(`${uri}/api/Enrollments/${token}`, data);
       },
     },
   };
