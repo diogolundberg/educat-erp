@@ -9,7 +9,7 @@ namespace Onboarding.Models
 
         public bool IsValid()
         {
-            return DateTime.Now >= End;
+            return DateTime.Now <= End;
         }
     }
 }

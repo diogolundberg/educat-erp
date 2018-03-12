@@ -73,7 +73,7 @@ namespace Onboarding
                 c.SwaggerDoc("v1", new Info { Title = "ONBOARDING", Version = "v1" });
             });
             
-            services.AddAutoMapper();
+            services.AddAutoMapper(x=> x.AddProfile(new MappingsProfile()));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

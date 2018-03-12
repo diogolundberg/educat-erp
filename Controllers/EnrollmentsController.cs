@@ -118,15 +118,10 @@ namespace Onboarding.Controllers
             if(enrollment.SendBy.HasValue)
             {
                 return BadRequest();
-            }
+            }   
 
-            Enrollment newEnrollment = (Enrollment)enrollment.Clone();
-
-            newEnrollment.Name = obj.Name;
-            newEnrollment.SocialName = obj.SocialName;
-            newEnrollment.Cpf = obj.Cpf;
-            newEnrollment.Birthday = obj.Birthday;
-            newEnrollment.CivilStatusId = obj.CivilStatusId;
+            Enrollment newEnrollment = _mapper.Map<Enrollment>(obj);
+            newEnrollment.ExternalId = enrollment.ExternalId;
 
             _enrollmentRepository.Update(enrollment, newEnrollment);
 
@@ -156,10 +151,17 @@ namespace Onboarding.Controllers
             string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + token );
             string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
 
-            smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]),
-                                new MailAddress(email),
-                                body,
-                                subject);
+
+            try{
+                smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]),
+                                    new MailAddress(email),
+                                    body,
+                                    subject);
+            }
+            catch(Exception)
+            {
+
+            }            
 
             return new OkObjectResult(new { token = token });
         }
