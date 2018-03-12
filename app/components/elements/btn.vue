@@ -8,7 +8,7 @@
     }"
     :type="submit ? 'submit' : 'button'"
     class="btn upcase shadow0 rounded ease center"
-    @click="$emit('click')">
+    @click.prevent="$emit('click')">
     {{ label }}
     <slot />
   </button>

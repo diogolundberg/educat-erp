@@ -17,9 +17,7 @@
         required
         label="Senha"
         type="password" />
-      <Btn
-        primary
-        submit
+      <Submit
         label="OK"
         @click="login" />
     </form>
@@ -45,7 +43,7 @@
     methods: {
       login() {
         const url = process.env.URL1;
-        axios.post(`${url}/api/Token`, this.params).then((response) => {
+        return axios.post(`${url}/api/Token`, this.params).then((response) => {
           localStorage.token = response.data.token;
           this.$router.replace("/enroll");
         }, () => {
