@@ -144,24 +144,17 @@ namespace Onboarding.Controllers
             string token = _tokenHelper.Generate<EnrollmentToken>(enrollmentToken);
 
             SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"],
-                                                                    _configuration["SMTP_HOST"],
+                                                                    "smtp.sendgrid.net",
                                                                     _configuration["SMTP_USERNAME"],
                                                                     _configuration["SMTP_PASSWORD"]);
 
             string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + token );
             string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
 
-
-            try{
-                smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]),
+                smtpClientHelper.Send(new MailAddress("matricula@cmmg.com.br"),
                                     new MailAddress(email),
                                     body,
                                     subject);
-            }
-            catch(Exception)
-            {
-
-            }            
 
             return new OkObjectResult(new { token = token });
         }
