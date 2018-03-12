@@ -12,6 +12,8 @@
 </template>
 
 <script>
+  import { xor } from "lodash";
+
   export default {
     name: "CheckGroup",
     props: {
@@ -37,12 +39,7 @@
         return !!this.value.includes(option[this.idField]);
       },
       toggle(option) {
-        const id = option[this.idField];
-        if (this.value.includes(id)) {
-          this.$emit("input", this.value.filter(item => item !== id));
-        } else {
-          this.$emit("input", this.value.concat(id));
-        }
+        this.$emit("input", xor(this.value, [option[this.idField]]));
       },
     },
   };
