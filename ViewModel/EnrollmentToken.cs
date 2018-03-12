@@ -1,6 +1,6 @@
 using System;
 
-namespace Onboarding.Models
+namespace Onboarding.ViewModel
 {
     public class EnrollmentToken
     {
