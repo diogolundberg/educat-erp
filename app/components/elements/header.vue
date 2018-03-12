@@ -29,13 +29,5 @@
 <script>
   export default {
     name: "Header",
-    data() {
-      return {
-        tab: "",
-        tabs: [
-          { id: "1" },
-        ],
-      };
-    },
   };
 </script>
