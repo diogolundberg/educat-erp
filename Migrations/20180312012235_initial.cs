@@ -205,7 +205,7 @@ namespace Onboarding.Migrations
                     AddressTypeId = table.Column<Guid>(nullable: true),
                     BirthCity = table.Column<string>(nullable: true),
                     BirthStateId = table.Column<Guid>(nullable: true),
-                    Birthday = table.Column<DateTime>(nullable: false),
+                    Birthday = table.Column<DateTime>(nullable: true),
                     Cep = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     CivilStatusId = table.Column<Guid>(nullable: true),

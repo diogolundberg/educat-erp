@@ -11,7 +11,7 @@ using System;
 namespace Onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20180310202421_initial")]
+    [Migration("20180312012235_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -151,7 +151,7 @@ namespace Onboarding.Migrations
 
                     b.Property<Guid?>("BirthStateId");
 
-                    b.Property<DateTime>("Birthday");
+                    b.Property<DateTime?>("Birthday");
 
                     b.Property<string>("Cep");
 

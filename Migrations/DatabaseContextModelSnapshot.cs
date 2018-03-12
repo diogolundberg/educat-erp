@@ -150,7 +150,7 @@ namespace Onboarding.Migrations
 
                     b.Property<Guid?>("BirthStateId");
 
-                    b.Property<DateTime>("Birthday");
+                    b.Property<DateTime?>("Birthday");
 
                     b.Property<string>("Cep");
 
