@@ -1,6 +1,8 @@
 <template>
   <div class="fixed fill flex bg-dim">
-    <div class="m-auto width-2 shadow2 bg-white p2 flex flex-column rounded">
+    <form
+      class="m-auto width-2 shadow2 bg-white p2 flex flex-column rounded"
+      @submit.prevent="login">
       <div class="h1 thin">CMMG</div>
       <Alert
         v-if="errors && errors.base"
@@ -15,9 +17,10 @@
         type="password" />
       <Btn
         primary
+        submit
         label="OK"
         @click="login" />
-    </div>
+    </form>
   </div>
 </template>
 

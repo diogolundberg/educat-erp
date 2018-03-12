@@ -1,16 +1,17 @@
 <template>
-  <a
+  <button
     :class="{
       'btn-primary': primary,
       'btn-primary bg-red': danger,
       'btn-primary bg-yellow': warning,
       'btn-primary bg-green': success,
     }"
+    :type="submit ? 'submit' : 'button'"
     class="btn upcase shadow0 rounded ease center"
     @click="$emit('click')">
     {{ label }}
     <slot />
-  </a>
+  </button>
 </template>
 
 <script>
@@ -35,6 +36,10 @@
         default: false,
       },
       success: {
+        type: Boolean,
+        default: false,
+      },
+      submit: {
         type: Boolean,
         default: false,
       },
