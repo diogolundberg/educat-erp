@@ -19,7 +19,7 @@ namespace Onboarding.Models
 
         public string Cpf { get; set; }
 
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         public Guid? CivilStatusId { get; set; }
 
