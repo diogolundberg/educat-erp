@@ -54,7 +54,9 @@
     },
     watch: {
       value(val) {
-        this.formatted = new Date(val).toLocaleDateString();
+        if (val !== "0001-01-01T00:00:00") {
+          this.formatted = new Date(val).toLocaleDateString();
+        }
       },
       formatted(val) {
         const parts = val.split(/\D+/);
