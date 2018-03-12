@@ -10,9 +10,11 @@
         error />
       <InputBox
         v-model="params.username"
+        required
         label="Login" />
       <InputBox
         v-model="params.password"
+        required
         label="Senha"
         type="password" />
       <Btn
