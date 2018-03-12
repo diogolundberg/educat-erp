@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Onboarding;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using AutoMapper;
 
 namespace Onboarding
 {
@@ -71,6 +72,8 @@ namespace Onboarding
             {
                 c.SwaggerDoc("v1", new Info { Title = "ONBOARDING", Version = "v1" });
             });
+            
+            services.AddAutoMapper();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
