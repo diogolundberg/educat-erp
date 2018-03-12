@@ -1,22 +1,23 @@
 using System;
-using System.Collections.Generic;
+using AutoMapper;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Onboarding.Data.Entity;
 using Onboarding.Models;
 using Onboarding.ViewModel;
-using SendGrid;
-using SendGrid.Helpers.Mail;
+using Onboarding.Data.Entity;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
+using System.Net.Mail;
 
 namespace Onboarding.Controllers
 {
     [Route("api/[controller]")]
     public class EnrollmentsController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly DatabaseContext _context;
         private readonly BaseRepository<AddressType> _addressTypeRepository;
@@ -30,8 +31,10 @@ namespace Onboarding.Controllers
         private readonly BaseRepository<State> _stateRepository;
         private readonly BaseRepository<Disability> _disabilitiesRepository;
         private readonly BaseRepository<Enrollment> _enrollmentRepository;
+        private readonly TokenHelper _tokenHelper;
 
-        public EnrollmentsController(DatabaseContext databaseContext, IConfiguration configuration)
+
+        public EnrollmentsController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
         {
             _context = databaseContext;
             _addressTypeRepository = new BaseRepository<AddressType>(_context);
@@ -46,6 +49,8 @@ namespace Onboarding.Controllers
             _disabilitiesRepository = new BaseRepository<Disability>(_context);
             _enrollmentRepository = new BaseRepository<Enrollment>(_context);
             _configuration = configuration;
+            _mapper = mapper;
+            _tokenHelper = new TokenHelper();
         }
 
         [HttpGet("{token}")]
@@ -56,11 +61,9 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            byte[] data = Convert.FromBase64String(token);
-            string enrollmentTokenJson = Encoding.ASCII.GetString(data);
-            EnrollmentToken enrollmentToken = Newtonsoft.Json.JsonConvert.DeserializeObject<EnrollmentToken>(enrollmentTokenJson);
+            EnrollmentToken enrollmentToken = _tokenHelper.GetObject<EnrollmentToken>(token);
 
-            if(DateTime.Now >= enrollmentToken.End)
+            if(!enrollmentToken.IsValid())
             {
                 return BadRequest();
             }
@@ -98,11 +101,9 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            byte[] data = Convert.FromBase64String(token);
-            string enrollmentTokenJson = Encoding.ASCII.GetString(data);
-            EnrollmentToken enrollmentToken = Newtonsoft.Json.JsonConvert.DeserializeObject<EnrollmentToken>(enrollmentTokenJson);
+            EnrollmentToken enrollmentToken = _tokenHelper.GetObject<EnrollmentToken>(token);
 
-            if(DateTime.Now >= enrollmentToken.End)
+            if(!enrollmentToken.IsValid())
             {
                 return BadRequest();
             }
@@ -145,20 +146,20 @@ namespace Onboarding.Controllers
             _enrollmentRepository.Add(enrollment);
 
             EnrollmentToken enrollmentToken = new EnrollmentToken { Id = enrollment.ExternalId, End = DateTime.Now.AddMonths(1) };
-            string enrollmentTokenJson = Newtonsoft.Json.JsonConvert.SerializeObject(enrollmentToken);
+            string token = _tokenHelper.Generate<EnrollmentToken>(enrollmentToken);
 
-            byte[] bytes = Encoding.ASCII.GetBytes(enrollmentTokenJson);
-            string token = Convert.ToBase64String(bytes.ToArray());
+            SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"],
+                                                                    _configuration["SMTP_HOST"],
+                                                                    _configuration["SMTP_USERNAME"],
+                                                                    _configuration["SMTP_PASSWORD"]);
 
-            string emailText = String.Format("?token=" + token);
-            string apiKey = _configuration["SENDGRID_APIKEY"];
-            string plainTextContent = Regex.Replace(emailText, "<[^>]*>", "");
+            string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + token );
+            string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
 
-            SendGridClient client = new SendGridClient(apiKey);
-            EmailAddress from = new EmailAddress("suporte@cmmg.com.br", "Suporte");
-            EmailAddress to = new EmailAddress(email);  
-            SendGridMessage msg = MailHelper.CreateSingleEmail(from, to, "subject", plainTextContent, emailText);
-            SendGrid.Response response = client.SendEmailAsync(msg).Result;
+            smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]),
+                                new MailAddress(email),
+                                body,
+                                subject);
 
             return new OkObjectResult(new { token = token });
         }
