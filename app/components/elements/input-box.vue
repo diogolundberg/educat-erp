@@ -7,17 +7,18 @@
         :disabled="disabled"
         :class="{
           'active': focus,
-          'error': errors && errors.length,
+          'error': allErrors.length,
           'dots-bottom': disabled,
           'input-line': !disabled,
         }"
         :id="`fld${_uid}`"
         :type="type"
+        :maxlength="maxSize"
         required
         class="m0 py2 ease border-none h5 w100"
         @input="changed"
         @focus="focus = true"
-        @blur="focus = false">
+        @blur="focus = false; validate = true">
       <label
         :for="`fld${_uid}`"
         :class="{ nudge: focus || (value && value.length) }"
@@ -26,9 +27,9 @@
       <template v-if="hint">
         <label class="block dim h7">{{ hint }}</label>
       </template>
-      <template v-if="errors">
+      <template v-if="allErrors">
         <label
-          v-for="error in errors"
+          v-for="error in allErrors"
           :key="error"
           class="block red h7">
           {{ error }}
@@ -79,13 +80,47 @@
       errors: {
         type: Array,
         required: false,
+        default: () => [],
+      },
+      maxSize: {
+        type: Number,
         default: null,
+        required: false,
+      },
+      minSize: {
+        type: Number,
+        default: 0,
+        required: false,
+      },
+      required: {
+        type: Boolean,
+        default: false,
+      },
+      email: {
+        type: Boolean,
+        default: false,
       },
     },
     data() {
       return {
         focus: false,
+        validate: false,
       };
+    },
+    computed: {
+      allErrors() {
+        return [].concat(this.errors || [], this.localErrors);
+      },
+      length() {
+        return this.value && this.value.length;
+      },
+      localErrors() {
+        return [
+          this.required && !this.length && "Campo obrigatório",
+          this.required && this.length < this.minSize && "Valor inválido",
+          this.email && !(/^.+@.+\..+$/.test(this.value)) && "E-mail inválido",
+        ].filter(a => a && this.validate);
+      },
     },
     methods: {
       changed() {

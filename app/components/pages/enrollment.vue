@@ -21,33 +21,42 @@
               <InputBox
                 v-model="data.name"
                 :size="6"
+                required
                 label="Nome"
                 hint="Seu nome completo" />
               <InputBox
                 v-model="data.socialName"
                 :size="6"
+                required
                 label="Nome Social"
                 hint="Seu nome social" />
               <InputBox
                 v-model="data.cpf"
                 :size="3"
+                :min-size="14"
+                required
                 label="CPF"
                 mask="###.###.###-##"
                 hint="Ex: 000.000.000-00" />
               <Date
                 v-model="data.birthday"
                 :size="3"
+                :min-size="10"
+                required
                 label="Nascimento"
-                mask="##/##/####" />
+                mask="##/##/####"
+                hint="Ex: 18/12/2001" />
               <DropDown
                 v-model="data.civilStatusId"
                 :size="3"
                 :options="options.civilStatus"
+                required
                 label="Estado Civil" />
               <DropDown
                 v-model="data.genderId"
                 :size="3"
                 :options="options.genders"
+                required
                 label="Sexo" />
             </div>
             <div class="flex gutters flex-wrap">
@@ -71,6 +80,7 @@
               <InputBox
                 v-model="data.birthCity"
                 :size="3"
+                required
                 label="Naturalidade"
                 hint="Cidade de Nascimento" />
             </div>
@@ -78,7 +88,12 @@
               <InputBox
                 v-model="data.yearofHighSchoolGraduation"
                 :size="6"
-                label="Ano de conclusão do ensino médio" />
+                :min-size="4"
+                :max-size="4"
+                mask="####"
+                required
+                label="Ano de conclusão do ensino médio"
+                hint="Ex: 2017" />
               <DropDown
                 v-model="data.countryOfGraduationFromHighSchoolId"
                 :size="6"
@@ -91,12 +106,20 @@
               <InputBox
                 v-model="data.email"
                 :size="6"
+                :min-size="6"
+                :max-size="50"
+                email
+                required
                 label="E-mail" />
               <InputBox
                 v-model="data.phoneNumber"
                 :size="6"
+                :min-size="13"
+                :max-size="14"
+                required
                 label="Telefone"
-                mask="(##) ####-#####?" />
+                mask="(##) #########?"
+                hint="Ex: (31) 999999999" />
             </div>
           </Fieldset>
           <Fieldset title="Endereço">
@@ -104,16 +127,21 @@
               <InputBox
                 v-model="data.cep"
                 :size="3"
+                :min-size="9"
+                required
                 label="CEP"
-                mask="#####-###" />
+                mask="#####-###"
+                hint="Ex: 30100-000" />
               <DropDown
                 v-model="data.addressTypeId"
                 :size="3"
                 :options="options.addressTypes"
+                required
                 label="Tipo de Endereço" />
               <InputBox
                 v-model="data.address"
                 :size="6"
+                required
                 label="Logradouro"
                 hint="Sua rua, avenida, etc." />
             </div>
@@ -121,18 +149,22 @@
               <InputBox
                 v-model="data.number"
                 :size="3"
+                required
                 label="Número" />
               <InputBox
                 v-model="data.neighborhood"
                 :size="3"
+                required
                 label="Bairro" />
               <InputBox
                 v-model="data.city"
                 :size="3"
+                required
                 label="Cidade" />
               <DropDown
                 v-model="data.countryStateId"
                 :size="3"
+                required
                 :options="options.states"
                 label="Estado" />
             </div>
@@ -143,15 +175,18 @@
                 v-model="data.raceId"
                 :size="3"
                 :options="options.races"
+                required
                 label="Raça" />
               <DropDown
                 v-model="data.schoolId"
                 :size="3"
                 :options="options.schools"
+                required
                 label="Escola" />
               <InputBox
                 v-model="data.mothersName"
                 :size="6"
+                required
                 label="Nome completo da mãe" />
             </div>
             <div>

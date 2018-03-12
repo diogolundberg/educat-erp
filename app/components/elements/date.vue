@@ -5,6 +5,8 @@
     :label="label"
     :hint="hint"
     :disabled="disabled"
+    :min-size="10"
+    :required="required"
     :size="size"
     :errors="errors" />
 </template>
@@ -39,6 +41,10 @@
         type: Array,
         required: false,
         default: null,
+      },
+      required: {
+        type: Boolean,
+        default: false,
       },
     },
     data() {

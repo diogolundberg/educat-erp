@@ -45,9 +45,9 @@
       <label
         v-if="hint"
         class="block gray h7">{{ hint }}</label>
-      <template v-if="errors">
+      <template v-if="allErrors">
         <label
-          v-for="error in errors"
+          v-for="error in allErrors"
           :key="error"
           class="block red h7">
           {{ error }}
@@ -99,12 +99,17 @@
       errors: {
         type: Array,
         required: false,
-        default: null,
+        default: () => [],
+      },
+      required: {
+        type: Boolean,
+        default: false,
       },
     },
     data() {
       return {
         focus: false,
+        validate: false,
       };
     },
     computed: {
@@ -117,6 +122,14 @@
       isDisabled() {
         return this.disabled || !this.options.length;
       },
+      allErrors() {
+        return [].concat(this.errors || [], this.localErrors);
+      },
+      localErrors() {
+        return [
+          this.required && !this.value && "Campo obrigatório",
+        ].filter(a => a && this.validate);
+      },
     },
     methods: {
       pick(option) {
@@ -124,6 +137,7 @@
         this.$emit("input", option[this.idField]);
       },
       onBlur() {
+        this.validate = true;
         setTimeout(() => {
           this.focus = false;
         }, 150);
