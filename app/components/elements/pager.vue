@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import range from "lodash/range";
+  import { range } from "lodash";
 
   export default {
     name: "Pager",
