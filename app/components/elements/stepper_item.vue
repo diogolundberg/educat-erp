@@ -5,7 +5,15 @@
     @click="$emit('click')">
     <div
       :class="{ 'bg-blue': active, 'bg-gray': !active }"
-      class="block w100 h100 circle ease" />
+      class="block w100 h100 circle ease">
+      <svg
+        v-if="complete"
+        viewBox="0 0 512 512">
+        <path
+          d="m208 433l-164-164 77-78 87 85 196-197 79 78z"
+          fill="#fff" />
+      </svg>
+    </div>
     <div class="absolute left2n x6 pt2 h7 center xs-hide">
       {{ title }}
     </div>
