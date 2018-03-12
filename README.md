@@ -58,7 +58,7 @@ setx SMTP_HOST "smtp.sparkpostmail.com" -m
 setx SMTP_PORT "587" -m
 setx SMTP_USERNAME "SMTP_Injection" -m
 setx SMTP_PASSWORD "92eba140e629ecbe721ef60677957b185225445a" -m
-setx EMAIL_SENDER_ONBOARDING "matricula@cmmg.com" -m
+setx EMAIL_SENDER_ONBOARDING "sandbox@sparkpostbox.com" -m
 setx EMAIL_ENROLLMENTS_SUBJECT "MATRICULA - CMMG" -m
 setx ENROLLMENT_HOST "http://cmmg-ui.netlify.com/enroll/" -m
 ```
