@@ -13,7 +13,7 @@
         :id="`fld${_uid}`"
         type="text"
         readonly
-        class="m0 py2 border-none ease h5 w100"
+        class="m0 py2 border-none ease h5 w100 bg-transparent"
         @focus="focus = true"
         @click="focus = true"
         @blur="onBlur">

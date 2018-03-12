@@ -14,8 +14,8 @@
         :id="`fld${_uid}`"
         :type="type"
         :maxlength="maxSize"
-        required
-        class="m0 py2 ease border-none h5 w100"
+        :required="required"
+        class="m0 py2 ease border-none h5 w100 bg-transparent"
         @input="changed"
         @focus="focus = true"
         @blur="focus = false; validate = true">
