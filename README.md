@@ -54,6 +54,13 @@ setx ONBOARDING_HOST "http://localhost:5001/" -m
 setx SECURITY_KEY "dd%88*377f6d&f£$$£$FdddFF33fssDG^!3" -m
 setx ONBOARDING_DATABASE_CONNECTION "Server=(localdb)\mssqllocaldb;Database=onboarding;" -m
 setx SENDGRID_APIKEY "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" -m
+setx SMTP_HOST "smtp.sparkpostmail.com" -m
+setx SMTP_PORT "587" -m
+setx SMTP_USERNAME "SMTP_Injection" -m
+setx SMTP_PASSWORD "92eba140e629ecbe721ef60677957b185225445a" -m
+setx EMAIL_SENDER_ONBOARDING "sandbox@sparkpostbox.com" -m
+setx EMAIL_ENROLLMENTS_SUBJECT "MATRICULA - CMMG" -m
+setx ENROLLMENT_HOST "http://cmmg-ui.netlify.com/enroll/" -m
 ```
 
 Criar um novo migration
