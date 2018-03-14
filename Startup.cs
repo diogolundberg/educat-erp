@@ -19,6 +19,10 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using SharpRaven.Core.Configuration;
+using SharpRaven.Core;
+using Microsoft.AspNetCore.Http;
+using SharpRaven.Core.Data;
 
 namespace SSO
 {
@@ -33,7 +37,19 @@ namespace SSO
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["SSO_DATABASE_CONNECTION"]));
+
+            services.AddScoped<IRavenClient, RavenClient>((s) => {
+
+                RavenClient rc = new RavenClient(Configuration["SENTRY_API"], s.GetRequiredService<IHttpContextAccessor>())
+                {
+                    Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+                };
+
+                return rc;
+            });
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -95,24 +111,31 @@ namespace SSO
             app.UseExceptionHandler(
                 builder =>
                 {
-                    builder.Run(async context =>
+                    using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                     {
-                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        context.Response.ContentType = "application/json";
-
-                        IExceptionHandlerFeature ex = context.Features.Get<IExceptionHandlerFeature>();
-
-                        if (ex != null)
+                        IRavenClient ravenClient = serviceScope.ServiceProvider.GetService<IRavenClient>();  
+                        
+                        builder.Run(async context =>
                         {
-                            var err = JsonConvert.SerializeObject(new Error()
-                            {
-                                Stacktrace = ex.Error.StackTrace,
-                                Message = ex.Error.Message
-                            });
+                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                            context.Response.ContentType = "application/json";
 
-                            await context.Response.Body.WriteAsync(Encoding.ASCII.GetBytes(err),0,err.Length).ConfigureAwait(false);
-                        }
-                    });
+                            IExceptionHandlerFeature ex = context.Features.Get<IExceptionHandlerFeature>();
+
+                            if (ex != null)
+                            {
+                                await ravenClient.CaptureAsync(new SentryEvent(ex.Error));
+
+                                var err = JsonConvert.SerializeObject(new Error()
+                                {
+                                    Stacktrace = ex.Error.StackTrace,
+                                    Message = ex.Error.Message
+                                });
+
+                                await context.Response.Body.WriteAsync(Encoding.ASCII.GetBytes(err),0,err.Length).ConfigureAwait(false);
+                            }
+                        });
+                    }
                 }
             );
 
