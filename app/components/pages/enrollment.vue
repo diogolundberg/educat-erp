@@ -482,8 +482,7 @@
 </template>
 
 <script>
-  import axios from "axios";
-  import { debounce, pickBy } from "lodash";
+  import { debounce } from "lodash";
 
   export default {
     name: "Enrollment",
@@ -570,20 +569,17 @@
       },
     },
     async mounted() {
-      const uri = process.env.URL2;
-      const token = this.$route.params.id;
-      const response = await axios.get(`${uri}/api/Enrollments/${token}`);
+      await this.$store.dispatch("getEnrollment", this.$route.params.id);
 
-      Object.assign(this.data, response.data.data);
-      Object.assign(this.options, response.data.options);
-      this.step = response.data.data.sendBy ? 2 : 1;
+      Object.assign(this.data, this.$store.getters.enrollment.data);
+      Object.assign(this.options, this.$store.getters.enrollment.options);
+      this.step = this.$store.getters.enrollment.sendBy ? 2 : 1;
     },
     methods: {
       async save() {
-        const uri = process.env.URL2;
         const token = this.$route.params.id;
-        const data = pickBy(this.data, a => a);
-        await axios.patch(`${uri}/api/Enrollments/${token}`, data);
+        const { data } = this;
+        await this.$store.dispatch("setEnrollment", { token, data });
       },
     },
   };

@@ -2,16 +2,21 @@ import Vue from "vue";
 import VueX from "vuex";
 import axios from "axios";
 
+import { pickBy, identity } from "lodash";
+
 Vue.use(VueX);
 
 const url1 = "https://cmmg-development-sso.azurewebsites.net";
+const url2 = "https://cmmg-development-onboarding.azurewebsites.net";
 
 export default new VueX.Store({
   state: {
     token: localStorage.getItem("token"),
+    enrollment: null,
   },
   getters: {
     logged: state => !!state.token,
+    enrollment: state => state.enrollment,
   },
   mutations: {
     LOGIN(state, token) {
@@ -19,6 +24,9 @@ export default new VueX.Store({
     },
     LOGOUT(state) {
       state.token = undefined;
+    },
+    SET_ENROLLMENT(state, data) {
+      state.enrollment = data;
     },
   },
   actions: {
@@ -30,6 +38,15 @@ export default new VueX.Store({
     logout({ commit }) {
       localStorage.removeItem("token");
       commit("LOGOUT");
+    },
+    async getEnrollment({ commit }, token) {
+      const response = await axios.get(`${url2}/api/Enrollments/${token}`);
+      commit("SET_ENROLLMENT", response.data);
+    },
+    async setEnrollment({ commit }, { token, data }) {
+      const filledData = pickBy(data, identity);
+      await axios.patch(`${url2}/api/Enrollments/${token}`, filledData);
+      commit("SET_ENROLLMENT", filledData);
     },
   },
 });
