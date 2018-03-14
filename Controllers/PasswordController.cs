@@ -45,14 +45,14 @@ namespace SSO.Controllers
             string token = Convert.ToBase64String(time.Concat(key).ToArray());
 
             SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"],
-                                                            "smtp.sendgrid.net",
+                                                            _configuration["SMTP_HOST"],
                                                             _configuration["SMTP_USERNAME"],
                                                             _configuration["SMTP_PASSWORD"]);
 
             string body = String.Format("?token=" + token + "&i=" + user.Id);
             string subject = _configuration["EMAIL_RESET_PASSWORD_SUBJECT"];
 
-            smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_RESET_PASSWORD_SUBJECT"]),
+            smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_RESET_PASSWORD"]),
                                 new MailAddress(email),
                                 body,
                                 subject);                                                            
