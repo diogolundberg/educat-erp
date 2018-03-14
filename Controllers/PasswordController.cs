@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using SSO.Data.Entity;
 using System.Net.Mail;
+using SSO.ViewModels;
 
 namespace SSO.Controllers
 {
@@ -17,12 +18,14 @@ namespace SSO.Controllers
         private readonly IConfiguration _configuration;
         private readonly DatabaseContext _context;
         private readonly BaseRepository<User> _userRepository;
+        private readonly TokenHelper _tokenHelper;
         
         public PasswordController(DatabaseContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;
             _userRepository = new BaseRepository<User>(context);
+            _tokenHelper = new TokenHelper();
         }
 
         [HttpGet("New", Name = "SSO/PASSWORD/NEW")]
@@ -40,9 +43,8 @@ namespace SSO.Controllers
                 return NotFound();
             }
 
-            byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
-            byte[] key = Guid.NewGuid().ToByteArray();
-            string token = Convert.ToBase64String(time.Concat(key).ToArray());
+            ResetToken resetToken = new ResetToken { UserId = user.Id , Expirated = DateTimeOffset.Now.AddHours(2) };
+            string token = _tokenHelper.Generate<ResetToken>(resetToken);
 
             SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"],
                                                             _configuration["SMTP_HOST"],
@@ -68,16 +70,14 @@ namespace SSO.Controllers
                 return BadRequest();
             }
 
-            byte[] data = Convert.FromBase64String(token);
+            ResetToken resetToken = _tokenHelper.GetObject<ResetToken>(token);
 
-            DateTime when = DateTime.FromBinary(BitConverter.ToInt64(data, 0));
-
-            if (when < DateTime.UtcNow.AddHours(-24)) 
+            if(!resetToken.IsValid())
             {
                 return BadRequest();
             }
 
-            User user = _userRepository.GetById(obj.ExternalId);
+            User user = _userRepository.GetById(resetToken.UserId);
 
             if(user == null)
             {
