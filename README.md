@@ -53,12 +53,11 @@ setx SSO_HOST "http://localhost:5000/" -m
 setx ONBOARDING_HOST "http://localhost:5001/" -m
 setx SECURITY_KEY "dd%88*377f6d&f£$$£$FdddFF33fssDG^!3" -m
 setx ONBOARDING_DATABASE_CONNECTION "Server=(localdb)\mssqllocaldb;Database=onboarding;" -m
-setx SENDGRID_APIKEY "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" -m
-setx SMTP_HOST "smtp.sparkpostmail.com" -m
+setx SMTP_HOST "smtp.sendgrid.net" -m
 setx SMTP_PORT "587" -m
-setx SMTP_USERNAME "SMTP_Injection" -m
-setx SMTP_PASSWORD "92eba140e629ecbe721ef60677957b185225445a" -m
-setx EMAIL_SENDER_ONBOARDING "sandbox@sparkpostbox.com" -m
+setx SMTP_USERNAME "azure_cb670a222faa4e88621781f17888b964@azure.com" -m
+setx SMTP_PASSWORD "241213AAl" -m
+setx EMAIL_SENDER_ONBOARDING "matricula@cmmg.com.br" -m
 setx EMAIL_ENROLLMENTS_SUBJECT "MATRICULA - CMMG" -m
 setx ENROLLMENT_HOST "http://cmmg-ui.netlify.com/enroll/" -m
 setx SENTRY_API "https://d65854af58114f31ac105ac7a55ed60b:61ac0c663c9a4ad7940a11b83a3ebfde@sentry.io/303952" -m
