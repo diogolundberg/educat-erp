@@ -61,6 +61,7 @@ setx SMTP_PASSWORD "92eba140e629ecbe721ef60677957b185225445a" -m
 setx EMAIL_SENDER_ONBOARDING "sandbox@sparkpostbox.com" -m
 setx EMAIL_ENROLLMENTS_SUBJECT "MATRICULA - CMMG" -m
 setx ENROLLMENT_HOST "http://cmmg-ui.netlify.com/enroll/" -m
+setx SENTRY_API "https://d65854af58114f31ac105ac7a55ed60b:61ac0c663c9a4ad7940a11b83a3ebfde@sentry.io/303952" -m
 ```
 
 Criar um novo migration

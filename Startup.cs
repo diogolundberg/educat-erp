@@ -21,6 +21,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Onboarding;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using SharpRaven.Core;
 
 namespace Onboarding
 {
@@ -35,7 +37,19 @@ namespace Onboarding
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["ONBOARDING_DATABASE_CONNECTION"]));
+
+            services.AddScoped<IRavenClient, RavenClient>((s) => {
+
+                RavenClient rc = new RavenClient(Configuration["SENTRY_API"], s.GetRequiredService<IHttpContextAccessor>())
+                {
+                    Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+                };
+
+                return rc;
+            });
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -99,24 +113,29 @@ namespace Onboarding
             app.UseExceptionHandler(
                 builder =>
                 {
-                    builder.Run(async context =>
+                    using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                     {
-                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        context.Response.ContentType = "application/json";
+                        IRavenClient ravenClient = serviceScope.ServiceProvider.GetService<IRavenClient>();  
 
-                        IExceptionHandlerFeature ex = context.Features.Get<IExceptionHandlerFeature>();
-
-                        if (ex != null)
+                        builder.Run(async context =>
                         {
-                            var err = JsonConvert.SerializeObject(new Error()
-                            {
-                                Stacktrace = ex.Error.StackTrace,
-                                Message = ex.Error.Message
-                            });
+                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                            context.Response.ContentType = "application/json";
 
-                            await context.Response.Body.WriteAsync(Encoding.ASCII.GetBytes(err),0,err.Length).ConfigureAwait(false);
-                        }
-                    });
+                            IExceptionHandlerFeature ex = context.Features.Get<IExceptionHandlerFeature>();
+
+                            if (ex != null)
+                            {
+                                var err = JsonConvert.SerializeObject(new Error()
+                                {
+                                    Stacktrace = ex.Error.StackTrace,
+                                    Message = ex.Error.Message
+                                });
+
+                                await context.Response.Body.WriteAsync(Encoding.ASCII.GetBytes(err),0,err.Length).ConfigureAwait(false);
+                            }
+                        });
+                    }
                 }
             );
 
