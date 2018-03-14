@@ -57,9 +57,8 @@ setx SMTP_HOST "smtp.sendgrid.net" -m
 setx SMTP_PORT "587" -m
 setx SMTP_USERNAME "azure_cb670a222faa4e88621781f17888b964@azure.com" -m
 setx SMTP_PASSWORD "241213AAl" -m
-setx EMAIL_SENDER_ONBOARDING "matricula@cmmg.com.br" -m
+setx EMAIL_SENDER_RESET_PASSWORD "no-reply@cmmg.com.br" -m
 setx EMAIL_RESET_PASSWORD_SUBJECT "RESETAR SENHA - CMMG" -m
-
 ```
 
 Criar um novo migration
