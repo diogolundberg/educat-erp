@@ -30,6 +30,11 @@ namespace SSO.Data.Entity
             return _context.Set<TEntity>().FirstOrDefault(x => x.Active && x.ExternalId == id);
         }
 
+        public virtual TEntity GetById(Guid id)
+        {
+            return _context.Set<TEntity>().FirstOrDefault(x => x.Active && x.Id == id);
+        }        
+
         public virtual void Add(TEntity obj, bool? saveChanges = true)
         {
             TEntity last = _context.Set<TEntity>().OrderByDescending(x => x.ExternalId).FirstOrDefault();
