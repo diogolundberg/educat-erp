@@ -25,8 +25,6 @@
 </template>
 
 <script>
-  import axios from "axios";
-
   export default {
     name: "Login",
     data() {
@@ -43,9 +41,7 @@
     methods: {
       async login() {
         try {
-          const url = process.env.URL1;
-          const response = await axios.post(`${url}/api/Token`, this.params);
-          localStorage.token = response.data.token;
+          await this.$store.dispatch("login", this.params);
           this.$router.replace("/enroll");
         } catch (e) {
           this.errors.base = "Erro ao logar. Tente novamente.";

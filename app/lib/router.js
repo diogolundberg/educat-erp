@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+import store from "./store";
+
 const lazy = name => () => Promise.resolve(Vue.component(name));
 
 Vue.use(VueRouter);
@@ -37,7 +39,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (!localStorage.token && !to.meta.open) {
+  if (!store.getters.logged && !to.meta.open) {
     next({ path: "/" });
   } else {
     next();
