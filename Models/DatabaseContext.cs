@@ -23,12 +23,10 @@ namespace SSO.Models
             {
                 if (auditableEntity.State == EntityState.Added)
                 {
-                    auditableEntity.Entity.Id = Guid.NewGuid();
                     auditableEntity.Entity.Active = true;
-                    auditableEntity.Entity.State = auditableEntity.State.ToString();
                     auditableEntity.Entity.CommitedBy = "";
                     auditableEntity.Entity.CommittedAt = DateTime.Now;
-                }
+                }                    
             }
 
             try
