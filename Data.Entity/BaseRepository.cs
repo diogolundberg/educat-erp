@@ -33,7 +33,11 @@ namespace SSO.Data.Entity
         public virtual void Add(TEntity obj, bool? saveChanges = true)
         {
             TEntity last = _context.Set<TEntity>().OrderByDescending(x => x.ExternalId).FirstOrDefault();
-            obj.ExternalId =  last != null ? last.ExternalId : 1;
+            
+            obj.ExternalId =  last != null ? last.ExternalId + 1 : 1;
+            obj.State = EntityState.Added.ToString();
+            obj.Id = Guid.NewGuid();
+
             _context.Set<TEntity>().Add(obj);
             _context.SaveChanges();
         }
@@ -41,10 +45,13 @@ namespace SSO.Data.Entity
         public virtual void Update(TEntity obj, TEntity newobj)
         {
             _context.Entry(obj).State = EntityState.Modified;
-            obj.State = EntityState.Modified.ToString();
             obj.Active = false;
 
-            newobj.Id = Guid.Empty;
+            _context.SaveChanges();
+
+            newobj.Id = Guid.NewGuid();
+            newobj.ExternalId = obj.ExternalId;
+            newobj.State = EntityState.Modified.ToString();
             _context.Set<TEntity>().Add(newobj);
 
             _context.SaveChanges();
