@@ -569,25 +569,21 @@
         handler: debounce(function save() { this.save(); }, 5000),
       },
     },
-    mounted() {
+    async mounted() {
       const uri = process.env.URL2;
       const token = this.$route.params.id;
-      axios.get(`${uri}/api/Enrollments/${token}`).then((response) => {
-        Object.assign(this.data, response.data.data);
-        Object.assign(this.options, response.data.options);
-        if (response.data.data.sendBy) {
-          this.step = 2;
-        }
-      }, () => {
-        this.$router.replace("/");
-      });
+      const response = await axios.get(`${uri}/api/Enrollments/${token}`);
+
+      Object.assign(this.data, response.data.data);
+      Object.assign(this.options, response.data.options);
+      this.step = response.data.data.sendBy ? 2 : 1;
     },
     methods: {
-      save() {
+      async save() {
         const uri = process.env.URL2;
         const token = this.$route.params.id;
         const data = pickBy(this.data, a => a);
-        axios.patch(`${uri}/api/Enrollments/${token}`, data);
+        await axios.patch(`${uri}/api/Enrollments/${token}`, data);
       },
     },
   };

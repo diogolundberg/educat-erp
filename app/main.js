@@ -34,4 +34,6 @@ router.beforeEach((to, from, next) => {
   }
 });
 
+Vue.prototype.sleep = time => new Promise(r => setTimeout(r, time));
+
 new Vue({ render: h => h("Application"), router }).$mount("main");

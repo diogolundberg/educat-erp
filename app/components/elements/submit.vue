@@ -25,11 +25,11 @@
       };
     },
     methods: {
-      click() {
+      async click() {
         this.loading = true;
-        this._events.click[0]().then(() => setTimeout(() => {
-          this.loading = false;
-        }, 500));
+        await this._events.click[0]();
+        await this.sleep(500);
+        this.loading = false;
       },
     },
   };

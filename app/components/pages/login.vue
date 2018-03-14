@@ -41,14 +41,15 @@
       };
     },
     methods: {
-      login() {
-        const url = process.env.URL1;
-        return axios.post(`${url}/api/Token`, this.params).then((response) => {
+      async login() {
+        try {
+          const url = process.env.URL1;
+          const response = await axios.post(`${url}/api/Token`, this.params);
           localStorage.token = response.data.token;
           this.$router.replace("/enroll");
-        }, () => {
+        } catch (e) {
           this.errors.base = "Erro ao logar. Tente novamente.";
-        });
+        }
       },
     },
   };
