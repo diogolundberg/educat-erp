@@ -75,7 +75,9 @@ namespace Onboarding
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ValidateModelStateAttribute));
-            });
+            }).AddJsonOptions(
+                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.Configure<MvcOptions>(options =>
             {
