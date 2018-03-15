@@ -5,15 +5,13 @@ namespace Onboarding.ViewModel
 {
     public class EnrollmentViewModel 
     {
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
 
         public string SocialName { get; set; }
 
         public string Cpf { get; set; }
 
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         public Guid? CivilStatusId { get; set; }
 
@@ -23,12 +21,13 @@ namespace Onboarding.ViewModel
 
         public Guid? OriginCountryId { get; set; }
 
-        public Guid? BornStateId { get; set; }
+        public Guid? BirthStateId { get; set; }
 
         public string YearofHighSchoolGraduation { get; set; }
 
         public Guid? CountryOfGraduationFromHighSchoolId { get; set; }
 
+        [EmailAddress]
         public string Email { get; set; }
 
         public Guid? PhoneTypeId { get; set; }
@@ -41,7 +40,7 @@ namespace Onboarding.ViewModel
 
         public string Number { get; set; }
 
-        public string Neighborhood { get; set;  }
+        public string Neighborhood { get; set; }
 
         public string City { get; set; }
 
@@ -53,10 +52,48 @@ namespace Onboarding.ViewModel
 
         public Guid? SchoolId { get; set; }
 
-        public string MotherMom { get; set; }
+        public string MothersName { get; set; }
 
         public DateTimeOffset? SendBy { get; set; }
 
-        public bool? HaveHandicaps { get; set; }
+        public bool? HasHandicaps { get; set; }
+
+        public string BirthCity { get; set; }
+
+        public Guid? ResponsibleDocumentTypeId { get; set; }
+
+        public string ResponsibleCpf { get; set; }
+
+        public string ResponsibleCnpj { get; set; }
+
+        public string ResponsibleName { get; set; }
+
+        public string ResponsibleContact { get; set; }
+
+        public string ResponsibleAddress { get; set; }
+
+        public string ResponsiblePhone1 { get; set; }
+
+        public string ResponsiblePhone2 { get; set; }
+
+        public string ResponsibleEmail { get; set; }
+
+        public Guid? GuarantorDocumentTypeId { get; set; }
+
+        public string GuarantorCpf { get; set; }
+
+        public string GuarantorCnpj { get; set; }
+
+        public string GuarantorName { get; set; }
+
+        public string GuarantorContact { get; set; }
+
+        public string GuarantorAddress { get; set; }
+
+        public string GuarantorPhone1 { get; set; }
+
+        public string GuarantorPhone2 { get; set; }
+
+        public string GuarantorEmail { get; set; }
     }
 }
