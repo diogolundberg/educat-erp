@@ -76,6 +76,10 @@ namespace Onboarding.Controllers
                 return NotFound();
             }
 
+            _context.Entry(enrollment).Collection(x => x.EnrollmentDisabilities).Load();
+            _context.Entry(enrollment).Reference(x => x.Responsible).Load();
+            _context.Entry(enrollment).Reference(x => x.Guarantor).Load();
+
             return new { 
                 data = enrollment,
                 options = new 
