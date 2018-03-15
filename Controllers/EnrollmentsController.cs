@@ -31,6 +31,7 @@ namespace Onboarding.Controllers
         private readonly BaseRepository<State> _stateRepository;
         private readonly BaseRepository<Disability> _disabilitiesRepository;
         private readonly BaseRepository<Enrollment> _enrollmentRepository;
+        private readonly BaseRepository<DocumentType> _documentTypeRepository;
         private readonly TokenHelper _tokenHelper;
 
         public EnrollmentsController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
@@ -47,6 +48,7 @@ namespace Onboarding.Controllers
             _stateRepository = new BaseRepository<State>(_context);
             _disabilitiesRepository = new BaseRepository<Disability>(_context);
             _enrollmentRepository = new BaseRepository<Enrollment>(_context);
+            _documentTypeRepository = new BaseRepository<DocumentType>(_context);
             _configuration = configuration;
             _mapper = mapper;
             _tokenHelper = new TokenHelper();
@@ -81,13 +83,14 @@ namespace Onboarding.Controllers
                     AddressTypes = _addressTypeRepository.List(),
                     CivilStatus = _civilStatusRepository.List(),
                     Countries = _countryRepository.List(),
+                    Disabilities = _disabilitiesRepository.List(),
+                    DocumentTypes = _documentTypeRepository.List(),
                     Genders = _genderRepository.List(),
                     Nationalities = _nationalityRepository.List(),
                     PhoneTypes = _phoneTypeRepository.List(),
                     Races = _RaceRepository.List(),
                     Schools = _schoolRepository.List(),
-                    States = _stateRepository.List(),
-                    Disabilities = _disabilitiesRepository.List()
+                    States = _stateRepository.List()
                 }
             };
         }
