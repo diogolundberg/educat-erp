@@ -79,7 +79,7 @@ namespace Onboarding.Controllers
             return new { 
                 data = enrollment,
                 options = new 
-                {
+                {   
                     AddressTypes = _addressTypeRepository.List(),
                     CivilStatus = _civilStatusRepository.List(),
                     Countries = _countryRepository.List(),
