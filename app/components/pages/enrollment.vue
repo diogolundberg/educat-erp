@@ -1,5 +1,18 @@
 <template>
   <div>
+    <Header @notifications="notifications = !notifications">
+      <div class="flex items-center">
+        <Icon name="clock" />
+        <div class="mx2 px2 border-white-50 border-left inline-block h6">
+          Olá, <strong>{{ data.name }}</strong><br>
+          O seu processo de matrícula se encerra em 0 dias.
+        </div>
+      </div>
+    </Header>
+    <Notifications
+      v-if="notifications"
+      @click="notifications = false" />
+
     <Stepper
       v-model="step"
       header
@@ -560,6 +573,7 @@
           ],
         },
         step: 1,
+        notifications: false,
       };
     },
     watch: {

@@ -9,10 +9,10 @@
         v-for="item in items"
         :key="item.id"
         class="p2 border-bottom border-silver flex items-center">
-          <img
-          class="y2 mr2 pointer"
-          src="../../assets/img/bell.svg">
-          <div>{{ item.title }}</div>
+          <Icon
+            name="bell"
+            black />
+          <div class="px1">{{ item.title }}</div>
           <a
             href="#doc_01"
             class="btn btn-primary"

@@ -1,10 +1,10 @@
 <template>
   <div
-    :class="{ 'x2 y2 p6x shadow2': active, 'bg-blue': complete } "
+    :class="{ 'x2 y2 p6x shadow1': active, 'bg-green': complete } "
     class="x1 y1 circle relative"
     @click="$emit('click')">
     <div
-      :class="{ 'bg-blue': active, 'bg-gray': !active }"
+      :class="{ 'bg-green': active, 'bg-gray': !active }"
       class="block w100 h100 circle ease">
       <svg
         v-if="complete"

@@ -6,13 +6,15 @@ $gray = rgba(black, .1)
 $shadow = rgba(black, .2)
 $dim = rgba(black, .6)
 $blue = rgb(69, 192, 245)
-$green = rgb(56, 239, 125)
+$green = rgb(0, 184, 151)
 $red = rgb(255, 80, 70)
 $yellow = rgb(255, 190, 0)
+$brown = rgb(167, 152, 95)
 $blue-grad = linear-gradient(90deg, $blue 0, rgb(0, 144, 206))
 $red-grad = linear-gradient(90deg, $red 0, rgb(249, 131, 140))
 $yellow-grad = linear-gradient(90deg, $yellow 0, rgb(255, 137, 28))
-$green-grad = linear-gradient(90deg, $green 0, rgb(0, 154, 215))
+$green-grad = linear-gradient(90deg, rgb(0, 163, 151) 0, $green)
+$brown-grad = linear-gradient(90deg, rgb(125, 108, 47) 0, $brown)
 
 body
   font-family BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif
@@ -25,7 +27,7 @@ input:invalid
 // Helpers
 
 .btn-primary
-  background-color $blue
+  background-color $green
 .thin
   font-weight 200
 .bg-transparent
@@ -46,6 +48,8 @@ input:invalid
   background $yellow-grad
 .bg-green-grad
   background $green-grad
+.bg-brown-grad
+  background $brown-grad
 .bg-green
   background-color $green
 .bg-red
@@ -54,10 +58,16 @@ input:invalid
   background-color $yellow
 .border-blue
   border-color $blue
+.border-white-50
+  border-color rgba(white, 0.5)
 .blue
   color $blue
 .dim
   color $dim
+.fill-white
+  fill white
+.fill-black
+  fill black
 .border-top-silver
   border-top-color $silver
 .border-top-gray
@@ -156,7 +166,7 @@ input:invalid
     100%
       transform rotate(360deg)
 .input-line
-  background linear-gradient($blue, $blue) center bottom/0 2px no-repeat,
+  background linear-gradient($green, $green) center bottom/0 2px no-repeat,
     linear-gradient($dim, $dim) center bottom/100% 1px no-repeat
   &:hover:not(:disabled)
   &.active
