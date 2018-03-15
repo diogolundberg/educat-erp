@@ -8,17 +8,13 @@ namespace Onboarding.Models
     {
         public DocumentType ()
         {
-            ResponsibleEnrollments = new HashSet<Enrollment>();
-            GuarantorEnrollments = new HashSet<Enrollment>();
+            EnrollmentPeople = new HashSet<EnrollmentPerson>();
         }
 
         [Required]
         public string Name { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Enrollment> ResponsibleEnrollments { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Enrollment> GuarantorEnrollments { get; set; }
+        public virtual ICollection<EnrollmentPerson> EnrollmentPeople { get; set; }
     } 
 }
