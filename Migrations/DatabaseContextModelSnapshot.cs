@@ -174,23 +174,7 @@ namespace Onboarding.Migrations
 
                     b.Property<Guid?>("GenderId");
 
-                    b.Property<string>("GuarantorAddress");
-
-                    b.Property<string>("GuarantorCnpj");
-
-                    b.Property<string>("GuarantorContact");
-
-                    b.Property<string>("GuarantorCpf");
-
-                    b.Property<Guid?>("GuarantorDocumentTypeId");
-
-                    b.Property<string>("GuarantorEmail");
-
-                    b.Property<string>("GuarantorName");
-
-                    b.Property<string>("GuarantorPhone1");
-
-                    b.Property<string>("GuarantorPhone2");
+                    b.Property<Guid?>("GuarantorId");
 
                     b.Property<bool?>("HasHandicaps");
 
@@ -212,23 +196,7 @@ namespace Onboarding.Migrations
 
                     b.Property<Guid?>("RaceId");
 
-                    b.Property<string>("ResponsibleAddress");
-
-                    b.Property<string>("ResponsibleCnpj");
-
-                    b.Property<string>("ResponsibleContact");
-
-                    b.Property<string>("ResponsibleCpf");
-
-                    b.Property<Guid?>("ResponsibleDocumentTypeId");
-
-                    b.Property<string>("ResponsibleEmail");
-
-                    b.Property<string>("ResponsibleName");
-
-                    b.Property<string>("ResponsiblePhone1");
-
-                    b.Property<string>("ResponsiblePhone2");
+                    b.Property<Guid?>("ResponsibleId");
 
                     b.Property<Guid?>("SchoolId");
 
@@ -254,7 +222,7 @@ namespace Onboarding.Migrations
 
                     b.HasIndex("GenderId");
 
-                    b.HasIndex("GuarantorDocumentTypeId");
+                    b.HasIndex("GuarantorId");
 
                     b.HasIndex("NationalityId");
 
@@ -264,7 +232,7 @@ namespace Onboarding.Migrations
 
                     b.HasIndex("RaceId");
 
-                    b.HasIndex("ResponsibleDocumentTypeId");
+                    b.HasIndex("ResponsibleId");
 
                     b.HasIndex("SchoolId");
 
@@ -282,6 +250,46 @@ namespace Onboarding.Migrations
                     b.HasIndex("DisabilityId");
 
                     b.ToTable("EnrollmentDisability");
+                });
+
+            modelBuilder.Entity("Onboarding.Models.EnrollmentPerson", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("Cnpj");
+
+                    b.Property<string>("CommitedBy");
+
+                    b.Property<DateTime>("CommittedAt");
+
+                    b.Property<string>("Contact");
+
+                    b.Property<string>("Cpf");
+
+                    b.Property<Guid?>("DocumentTypeId");
+
+                    b.Property<string>("Email");
+
+                    b.Property<int>("ExternalId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Phone1");
+
+                    b.Property<string>("Phone2");
+
+                    b.Property<string>("State");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.ToTable("EnrollmentPerson");
                 });
 
             modelBuilder.Entity("Onboarding.Models.Gender", b =>
@@ -428,7 +436,7 @@ namespace Onboarding.Migrations
                         .WithMany("Enrollments")
                         .HasForeignKey("AddressTypeId");
 
-                    b.HasOne("Onboarding.Models.State", "BornState")
+                    b.HasOne("Onboarding.Models.State", "BirthState")
                         .WithMany("BornStateEnrollments")
                         .HasForeignKey("BirthStateId");
 
@@ -448,9 +456,9 @@ namespace Onboarding.Migrations
                         .WithMany("Enrollments")
                         .HasForeignKey("GenderId");
 
-                    b.HasOne("Onboarding.Models.DocumentType", "GuarantorDocumentType")
-                        .WithMany("GuarantorEnrollments")
-                        .HasForeignKey("GuarantorDocumentTypeId");
+                    b.HasOne("Onboarding.Models.EnrollmentPerson", "Guarantor")
+                        .WithMany()
+                        .HasForeignKey("GuarantorId");
 
                     b.HasOne("Onboarding.Models.Nationality", "Nationality")
                         .WithMany("Enrollments")
@@ -468,9 +476,9 @@ namespace Onboarding.Migrations
                         .WithMany("Enrollments")
                         .HasForeignKey("RaceId");
 
-                    b.HasOne("Onboarding.Models.DocumentType", "ResponsibleDocumentType")
-                        .WithMany("ResponsibleEnrollments")
-                        .HasForeignKey("ResponsibleDocumentTypeId");
+                    b.HasOne("Onboarding.Models.EnrollmentPerson", "Responsible")
+                        .WithMany()
+                        .HasForeignKey("ResponsibleId");
 
                     b.HasOne("Onboarding.Models.School", "School")
                         .WithMany("Enrollments")
@@ -488,6 +496,13 @@ namespace Onboarding.Migrations
                         .WithMany("EnrollmentDisabilities")
                         .HasForeignKey("EnrollmentId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Onboarding.Models.EnrollmentPerson", b =>
+                {
+                    b.HasOne("Onboarding.Models.DocumentType", "DocumentType")
+                        .WithMany("EnrollmentPeople")
+                        .HasForeignKey("DocumentTypeId");
                 });
 #pragma warning restore 612, 618
         }

@@ -196,6 +196,37 @@ namespace Onboarding.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EnrollmentPerson",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Active = table.Column<bool>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
+                    Cnpj = table.Column<string>(nullable: true),
+                    CommitedBy = table.Column<string>(nullable: true),
+                    CommittedAt = table.Column<DateTime>(nullable: false),
+                    Contact = table.Column<string>(nullable: true),
+                    Cpf = table.Column<string>(nullable: true),
+                    DocumentTypeId = table.Column<Guid>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    ExternalId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Phone1 = table.Column<string>(nullable: true),
+                    Phone2 = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EnrollmentPerson", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EnrollmentPerson_DocumentTypes_DocumentTypeId",
+                        column: x => x.DocumentTypeId,
+                        principalTable: "DocumentTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Enrollments",
                 columns: table => new
                 {
@@ -217,15 +248,7 @@ namespace Onboarding.Migrations
                     Email = table.Column<string>(nullable: true),
                     ExternalId = table.Column<int>(nullable: false),
                     GenderId = table.Column<Guid>(nullable: true),
-                    GuarantorAddress = table.Column<string>(nullable: true),
-                    GuarantorCnpj = table.Column<string>(nullable: true),
-                    GuarantorContact = table.Column<string>(nullable: true),
-                    GuarantorCpf = table.Column<string>(nullable: true),
-                    GuarantorDocumentTypeId = table.Column<Guid>(nullable: true),
-                    GuarantorEmail = table.Column<string>(nullable: true),
-                    GuarantorName = table.Column<string>(nullable: true),
-                    GuarantorPhone1 = table.Column<string>(nullable: true),
-                    GuarantorPhone2 = table.Column<string>(nullable: true),
+                    GuarantorId = table.Column<Guid>(nullable: true),
                     HasHandicaps = table.Column<bool>(nullable: true),
                     MothersName = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
@@ -236,15 +259,7 @@ namespace Onboarding.Migrations
                     PhoneNumber = table.Column<string>(nullable: true),
                     PhoneTypeId = table.Column<Guid>(nullable: true),
                     RaceId = table.Column<Guid>(nullable: true),
-                    ResponsibleAddress = table.Column<string>(nullable: true),
-                    ResponsibleCnpj = table.Column<string>(nullable: true),
-                    ResponsibleContact = table.Column<string>(nullable: true),
-                    ResponsibleCpf = table.Column<string>(nullable: true),
-                    ResponsibleDocumentTypeId = table.Column<Guid>(nullable: true),
-                    ResponsibleEmail = table.Column<string>(nullable: true),
-                    ResponsibleName = table.Column<string>(nullable: true),
-                    ResponsiblePhone1 = table.Column<string>(nullable: true),
-                    ResponsiblePhone2 = table.Column<string>(nullable: true),
+                    ResponsibleId = table.Column<Guid>(nullable: true),
                     SchoolId = table.Column<Guid>(nullable: true),
                     SendBy = table.Column<DateTimeOffset>(nullable: true),
                     SocialName = table.Column<string>(nullable: true),
@@ -291,9 +306,9 @@ namespace Onboarding.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Enrollments_DocumentTypes_GuarantorDocumentTypeId",
-                        column: x => x.GuarantorDocumentTypeId,
-                        principalTable: "DocumentTypes",
+                        name: "FK_Enrollments_EnrollmentPerson_GuarantorId",
+                        column: x => x.GuarantorId,
+                        principalTable: "EnrollmentPerson",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -321,9 +336,9 @@ namespace Onboarding.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Enrollments_DocumentTypes_ResponsibleDocumentTypeId",
-                        column: x => x.ResponsibleDocumentTypeId,
-                        principalTable: "DocumentTypes",
+                        name: "FK_Enrollments_EnrollmentPerson_ResponsibleId",
+                        column: x => x.ResponsibleId,
+                        principalTable: "EnrollmentPerson",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -364,6 +379,11 @@ namespace Onboarding.Migrations
                 column: "DisabilityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EnrollmentPerson_DocumentTypeId",
+                table: "EnrollmentPerson",
+                column: "DocumentTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_AddressTypeId",
                 table: "Enrollments",
                 column: "AddressTypeId");
@@ -394,9 +414,9 @@ namespace Onboarding.Migrations
                 column: "GenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_GuarantorDocumentTypeId",
+                name: "IX_Enrollments_GuarantorId",
                 table: "Enrollments",
-                column: "GuarantorDocumentTypeId");
+                column: "GuarantorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_NationalityId",
@@ -419,9 +439,9 @@ namespace Onboarding.Migrations
                 column: "RaceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_ResponsibleDocumentTypeId",
+                name: "IX_Enrollments_ResponsibleId",
                 table: "Enrollments",
-                column: "ResponsibleDocumentTypeId");
+                column: "ResponsibleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_SchoolId",
@@ -456,7 +476,7 @@ namespace Onboarding.Migrations
                 name: "Genders");
 
             migrationBuilder.DropTable(
-                name: "DocumentTypes");
+                name: "EnrollmentPerson");
 
             migrationBuilder.DropTable(
                 name: "Nationalities");
@@ -469,6 +489,9 @@ namespace Onboarding.Migrations
 
             migrationBuilder.DropTable(
                 name: "Schools");
+
+            migrationBuilder.DropTable(
+                name: "DocumentTypes");
         }
     }
 }
