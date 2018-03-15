@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Onboarding.ViewModel
@@ -95,5 +96,7 @@ namespace Onboarding.ViewModel
         public string GuarantorPhone2 { get; set; }
 
         public string GuarantorEmail { get; set; }
+
+        public IEnumerable<Guid> Deficiencies { get; set; }
     }
 }

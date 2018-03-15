@@ -1,3 +1,4 @@
+using System.Linq;
 using AutoMapper;
 using Onboarding.Models;
 using Onboarding.ViewModel;
@@ -23,7 +24,11 @@ namespace Onboarding
                 .ForMember(x => x.School, config => config.Ignore())
                 .ForMember(x => x.EnrollmentDisabilities, config => config.Ignore())
                 .ForMember(x => x.ResponsibleDocumentType, config => config.Ignore())
-                .ForMember(x => x.GuarantorDocumentType, config => config.Ignore());
+                .ForMember(x => x.GuarantorDocumentType, config => config.Ignore())
+                .ForMember(x => x.EnrollmentDisabilities, config => config
+                                                        .MapFrom(cm => 
+                                                                    cm.Deficiencies
+                                                                    .Select(dfs => new EnrollmentDisability { DisabilityId = dfs })));
         }
     }
 }
