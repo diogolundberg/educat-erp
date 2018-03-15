@@ -49,7 +49,7 @@ namespace Onboarding.Models
 
         [JsonIgnore]
         [ForeignKey("BirthStateId")]
-        public virtual State BornState { get; set; }
+        public virtual State BirthState { get; set; }
 
         public string YearofHighSchoolGraduation { get; set; }
 
@@ -112,50 +112,17 @@ namespace Onboarding.Models
 
         public string BirthCity { get; set; }
 
-        public Guid? ResponsibleDocumentTypeId { get; set; }
-
-        [JsonIgnore]
-        [ForeignKey("ResponsibleDocumentTypeId")]
-        public DocumentType ResponsibleDocumentType { get; set; }
-
-        public string ResponsibleCpf { get; set; }
-
-        public string ResponsibleCnpj { get; set; }
-
-        public string ResponsibleName { get; set; }
-
-        public string ResponsibleContact { get; set; }
-
-        public string ResponsibleAddress { get; set; }
-
-        public string ResponsiblePhone1 { get; set; }
-
-        public string ResponsiblePhone2 { get; set; }
-
-        public string ResponsibleEmail { get; set; }        
-
-        public Guid? GuarantorDocumentTypeId { get; set; }
-
-        [JsonIgnore]
-        [ForeignKey("GuarantorDocumentTypeId")]
-        public DocumentType GuarantorDocumentType { get; set; }
-
-        public string GuarantorCpf { get; set; }
-
-        public string GuarantorCnpj { get; set; }
-
-        public string GuarantorName { get; set; }
-
-        public string GuarantorContact { get; set; }
-
-        public string GuarantorAddress { get; set; }
-
-        public string GuarantorPhone1 { get; set; }
-
-        public string GuarantorPhone2 { get; set; }
-        
-        public string GuarantorEmail { get; set; }   
-
         public virtual ICollection<EnrollmentDisability> EnrollmentDisabilities { get; set; }
+
+        public Guid? ResponsibleId { get; set; }
+
+        [ForeignKey("ResponsibleId")]
+        public virtual EnrollmentPerson Responsible { get; set; }
+
+        public Guid? GuarantorId { get; set; }
+
+        [ForeignKey("GuarantorId")]
+        public virtual EnrollmentPerson Guarantor { get; set; }
     }
 }
+
