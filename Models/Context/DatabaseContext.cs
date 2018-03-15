@@ -17,10 +17,8 @@ namespace Onboarding.Models
             modelBuilder.Entity<EnrollmentDisability>().HasKey(t => new { t.EnrollmentId, t.DisabilityId });
             modelBuilder.Entity<Enrollment>().HasOne(t => t.CountryOfGraduationFromHighSchool).WithMany(u => u.CountryOfGraduationFromHighSchoolEnrollments);
             modelBuilder.Entity<Enrollment>().HasOne(t => t.OriginCountry).WithMany(u => u.OriginCountryEnrollments);
-            modelBuilder.Entity<Enrollment>().HasOne(t => t.BornState).WithMany(u => u.BornStateEnrollments);
+            modelBuilder.Entity<Enrollment>().HasOne(t => t.BirthState).WithMany(u => u.BornStateEnrollments);
             modelBuilder.Entity<Enrollment>().HasOne(t => t.CountryState).WithMany(u => u.CountryStateEnrollments);
-            modelBuilder.Entity<Enrollment>().HasOne(t => t.ResponsibleDocumentType).WithMany(u => u.ResponsibleEnrollments);
-            modelBuilder.Entity<Enrollment>().HasOne(t => t.GuarantorDocumentType).WithMany(u => u.GuarantorEnrollments);
         }
 
         public override int SaveChanges()  
