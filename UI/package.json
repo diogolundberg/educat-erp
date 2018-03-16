@@ -1,0 +1,108 @@
+{
+  "license": "MIT",
+  "scripts": {
+    "build": "parcel build app/index.html --public-url /",
+    "rebuild": "parcel build app/index.html --no-cache --public-url /",
+    "serve": "parcel app/index.html --open",
+    "deploy": "yarn rebuild && echo '/* /index.html 200' >| dist/_redirects && netlify deploy -p dist",
+    "lint": "eslint app/**/*.js app/**/**/*.vue",
+    "esw": "esw ./app --ext .js --ext .vue -w --color",
+    "test": "jest",
+    "precommit": "npm run lint",
+    "prepush": "npm run lint"
+  },
+  "dependencies": {
+    "ace-css": "^1.1.0",
+    "axios": "^0.18.0",
+    "lodash": "^4.17.5",
+    "v-mask": "^1.3.2",
+    "vue": "^2.5.15",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-plugin-import-glob": "^2.0.0",
+    "babel-preset-env": "^1.6.1",
+    "parcel-bundler": "^1.6.1",
+    "parcel-plugin-vue": "^1.5.0",
+    "stylus": "^0.54.5",
+    "vue-template-compiler": "^2.5.15"
+  },
+  "optionalDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-jest": "^22.1.0",
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-html": "^4.0.2",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-vue": "4.2.2",
+    "husky": "^0.14.3",
+    "jest": "^22.4.2",
+    "jest-serializer-vue": "^1.0.0",
+    "jest-vue-preprocessor": "^1.3.1",
+    "vue-jest": "^2.1.1"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 8 versions",
+    "ie 9"
+  ],
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor"
+    },
+    "modulePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:vue/recommended",
+      "airbnb-base"
+    ],
+    "plugins": [
+      "vue"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint",
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "modules": true
+      }
+    },
+    "rules": {
+      "max-len": [
+        "error",
+        {
+          "code": 80
+        }
+      ],
+      "vue/html-indent": "off",
+      "vue/script-indent": [
+        "error",
+        2,
+        {
+          "baseIndent": 1
+        }
+      ],
+      "quotes": [
+        "error",
+        "double"
+      ],
+      "indent": [
+        "off"
+      ],
+      "import/no-unresolved": [
+        "off"
+      ],
+      "no-underscore-dangle": "off",
+      "no-param-reassign": "off"
+    }
+  }
+}

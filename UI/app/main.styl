@@ -1,0 +1,183 @@
+@import("ace-css/css/ace")
+@import("./assets/css/tooltip.styl")
+
+$silver = rgba(black, .03)
+$gray = rgba(black, .1)
+$shadow = rgba(black, .2)
+$dim = rgba(black, .6)
+$blue = rgb(69, 192, 245)
+$green = rgb(0, 184, 151)
+$red = rgb(255, 80, 70)
+$yellow = rgb(255, 190, 0)
+$brown = rgb(167, 152, 95)
+$blue-grad = linear-gradient(90deg, $blue 0, rgb(0, 144, 206))
+$red-grad = linear-gradient(90deg, $red 0, rgb(249, 131, 140))
+$yellow-grad = linear-gradient(90deg, $yellow 0, rgb(255, 137, 28))
+$green-grad = linear-gradient(90deg, rgb(0, 163, 151) 0, $green)
+$brown-grad = linear-gradient(90deg, rgb(125, 108, 47) 0, $brown)
+
+body
+  font-family BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif
+  font-size 14px
+input
+  outline none
+input:invalid
+  box-shadow: none
+
+// Helpers
+
+.btn-primary
+  background-color $green
+.thin
+  font-weight 200
+.bg-transparent
+  background-color transparent
+.bg-dim
+  background-color $dim
+.bg-gray
+  background-color $gray
+.bg-silver, .h-bg-silver:hover
+  background-color $silver
+.bg-blue
+  background-color $blue
+.bg-blue-grad
+  background $blue-grad
+.bg-red-grad
+  background $red-grad
+.bg-yellow-grad
+  background $yellow-grad
+.bg-green-grad
+  background $green-grad
+.bg-brown-grad
+  background $brown-grad
+.bg-green
+  background-color $green
+.bg-red
+  background-color $red
+.bg-yellow
+  background-color $yellow
+.border-blue
+  border-color $blue
+.border-white-50
+  border-color rgba(white, 0.5)
+.blue
+  color $blue
+.dim
+  color $dim
+.fill-white
+  fill white
+.fill-black
+  fill black
+.border-top-silver
+  border-top-color $silver
+.border-top-gray
+  border-top solid $gray
+.dots-bottom
+  border-bottom dotted 1px $dim
+.rounded-bookend:first-child
+  border-radius 3px 0 0 3px
+.rounded-bookend:last-child
+  border-radius: 0 3px 3px 0
+.border2
+  border-width 2px
+.border4
+  border-width 4px
+.rounded50
+  border-radius 50px
+.shadow0
+  box-shadow 0 0 2px 0 $shadow
+.shadow1
+  box-shadow 0 4px 6px 0 $shadow
+.shadow2
+  box-shadow 2px 10px 16px 1px $shadow
+.op0
+  opacity 0
+.grow1
+  flex-grow 1
+.l50
+  left 50%
+.h100
+  height 100%
+.w50
+  width 50%
+.w100
+  width 100%
+.y1
+  height 1em
+.y2
+  height 2em
+.y6
+  height 6em
+.x1
+  width 1em
+.x2
+  width 2em
+.x4
+  width 4em
+.x6
+  width 6em
+.width-1
+  width 16rem
+.width-2
+  width 32rem
+.p2x
+  padding 2px
+.p4x
+  padding 4px
+.p6x
+  padding 6px
+.mb4n
+  margin-bottom -4rem
+.m-auto
+  margin auto
+.h7
+  font-size .7rem
+.upcase
+  text-transform uppercase
+.ease
+  transition all .25s ease
+.bounce
+  transition transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+.scale0 > div
+  transform scale(0.1)
+.nudge
+  transform translate(-10%, -50%) scale(0.8)
+.left2n
+  left -2.5em
+.right0
+  transform translateX(100%)
+.blur
+  filter blur(4px)
+.pointer
+  cursor pointer
+.noclick
+  pointer-events none
+.fill
+  top 0
+  bottom 0
+  left 0
+  right 0
+
+// Shame
+
+.spin
+  animation spin 1s infinite linear
+  @keyframes spin
+    100%
+      transform rotate(360deg)
+.input-line
+  background linear-gradient($green, $green) center bottom/0 2px no-repeat,
+    linear-gradient($dim, $dim) center bottom/100% 1px no-repeat
+  &:hover:not(:disabled)
+  &.active
+  &.router-link-exact-active
+    background-size 100% 2px, 100% 1px
+  &.error
+    background-image linear-gradient($red, $red),
+      linear-gradient($dim, $dim)
+
+@media (min-width: 40em)
+  .gutters > *:not(:last-child)
+    padding-right 1rem
+  .sm-border-left
+    border-left solid 1px

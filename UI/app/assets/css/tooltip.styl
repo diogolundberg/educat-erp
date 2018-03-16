@@ -1,0 +1,64 @@
+[data-tip]
+  position relative
+  &::before, &::after
+    position absolute
+    left 50%
+    opacity 0
+    transition all .3s ease
+    z-index -100
+  &::before
+    content ""
+    bottom 100%
+    margin-left -0.5em
+    border solid 0.5em
+    border-color #555 transparent transparent
+  &::after
+    content attr(data-tip)
+    text-transform none
+    font-weight 200
+    font-size 14px
+    bottom 140%
+    width 100px
+    margin-left -60px
+    padding 8px 12px
+    border-radius 3px
+    background #555
+    color white
+  &:hover::after, &:hover::before, &:focus::after, &:focus::before
+    opacity 1
+    z-index 100
+
+[data-ribbon]
+  position relative
+  overflow hidden
+  &:after
+    content attr(data-ribbon)
+    position absolute
+    top 15px
+    right -30px
+    width 120px
+    transform rotate(45deg)
+    background-color #BFDC7A
+    box-shadow 0 0 3px rgba(0,0,0,0.3)
+    padding 7px 0
+    font bold 15px Sans-Serif
+    color #333
+    text-align center
+    text-shadow rgba(255,255,255,0.5) 0px 1px 0px
+
+[data-badge]
+  position relative
+  &:after
+    content: attr(data-badge)
+    position absolute
+    top -5px
+    right -8px
+    width 1rem
+    height 1rem
+    border solid 2px white
+    border-radius 50%
+    background red
+    text-align center
+    font-size 11px
+    color white
+    text-decoration none

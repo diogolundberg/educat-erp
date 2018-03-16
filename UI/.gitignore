@@ -1,0 +1,8 @@
+.DS_Store
+.cache
+.netlify
+log
+tmp
+public
+dist
+node_modules
