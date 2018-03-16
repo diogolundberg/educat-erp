@@ -30,6 +30,7 @@ setx SECURITY_KEY "dd%88*377f6d&f£$$£$FdddFF33fssDG^!3" -m
 setx BLOB_AZURE_ACCOUNT_NAME "cmmgdevelopment" -m 
 setx BLOB_AZURE_ACCESS_KEY "VhN/tJCNGWUqtmH+OBjs28qx3kWUu4ULERtSJduR7RzGpV9oyx5vnl3zWXje3eIoebfwRMvOYoHJ5w75ytw75A==" -m
 setx BLOB_AZURE_CONTAINER "documents" -m
+setx BLOB_AZURE_SHARED_ACCESS_EXPIRY_TIME "15" -m
 setx SENTRY_API "https://d65854af58114f31ac105ac7a55ed60b:61ac0c663c9a4ad7940a11b83a3ebfde@sentry.io/303952" -m
 ```
 Rodar o projeto
