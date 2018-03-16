@@ -59,6 +59,7 @@ setx SMTP_USERNAME "azure_cb670a222faa4e88621781f17888b964@azure.com" -m
 setx SMTP_PASSWORD "241213AAl" -m
 setx EMAIL_SENDER_RESET_PASSWORD "no-reply@cmmg.com.br" -m
 setx EMAIL_RESET_PASSWORD_SUBJECT "RESETAR SENHA - CMMG" -m
+setx SENTRY_API "https://d65854af58114f31ac105ac7a55ed60b:61ac0c663c9a4ad7940a11b83a3ebfde@sentry.io/303952" -m
 ```
 
 Criar um novo migration
