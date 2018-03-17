@@ -1,7 +1,7 @@
 <template>
   <span>
     <Btn
-      :label="finalLabel"
+      :label="value ? sentLabel : sendLabel"
       :id="`uploadBtn${_uid}`"
       :disabled="disabled"
       primary
@@ -46,25 +46,16 @@
         disabled: false,
       };
     },
-    computed: {
-      finalLabel() {
-        return this.value ? this.sentLabel : this.sendLabel;
-      },
-    },
     methods: {
-      async pick(event) {
+      async pick() {
         this.disabled = true;
 
-        const file = event.target.files[0];
+        const file = this.$refs.file.files[0];
         await this.$store.dispatch("presign", `${this.prefix}-${file.name}`);
         const url = this.$store.getters.uploadUrl;
 
-        await axios({
-          url,
-          headers: { "x-ms-blob-type": "BlockBlob" },
-          method: "PUT",
-          data: file,
-        });
+        const headers = { "x-ms-blob-type": "BlockBlob" };
+        await axios.put(url, file, { headers });
         this.$emit("input", url.split("?")[0]);
         this.disabled = false;
       },
