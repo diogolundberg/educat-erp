@@ -6,17 +6,20 @@ import { pickBy, identity } from "lodash";
 
 Vue.use(VueX);
 
-const url1 = "http://sso.sandbox.eti.br/";
-const url2 = "http://onboarding.sandbox.eti.br/";
+const url1 = "http://sso.sandbox.eti.br";
+const url2 = "http://onboarding.sandbox.eti.br";
+const url3 = "http://upload.sandbox.eti.br";
 
 export default new VueX.Store({
   state: {
     token: localStorage.getItem("token"),
     enrollment: null,
+    uploadUrl: null,
   },
   getters: {
     logged: state => !!state.token,
     enrollment: state => state.enrollment,
+    uploadUrl: state => state.uploadUrl,
   },
   mutations: {
     LOGIN(state, token) {
@@ -27,6 +30,9 @@ export default new VueX.Store({
     },
     SET_ENROLLMENT(state, data) {
       state.enrollment = data;
+    },
+    SET_UPLOAD_URL(state, url) {
+      state.uploadUrl = url;
     },
   },
   actions: {
@@ -47,6 +53,10 @@ export default new VueX.Store({
       const filledData = pickBy(data, identity);
       await axios.patch(`${url2}/api/Enrollments/${token}`, filledData);
       commit("SET_ENROLLMENT", filledData);
+    },
+    async presign({ commit }, fileName) {
+      const response = await axios.post(`${url3}/api/Presign`, { fileName });
+      commit("SET_UPLOAD_URL", response.data);
     },
   },
 });
