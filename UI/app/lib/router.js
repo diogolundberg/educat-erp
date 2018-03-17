@@ -19,6 +19,7 @@ const router = new VueRouter({
       path: "/enroll/:id",
       component: lazy("Enrollment"),
       meta: { open: true },
+      props: true,
     },
     {
       path: "/list",

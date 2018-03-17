@@ -499,6 +499,12 @@
 
   export default {
     name: "Enrollment",
+    props: {
+      id: {
+        type: String,
+        required: true,
+      },
+    },
     data() {
       return {
         data: {
@@ -583,7 +589,7 @@
       },
     },
     async mounted() {
-      await this.$store.dispatch("getEnrollment", this.$route.params.id);
+      await this.$store.dispatch("getEnrollment", this.id);
 
       Object.assign(this.data, this.$store.getters.enrollment.data);
       Object.assign(this.options, this.$store.getters.enrollment.options);
@@ -591,7 +597,7 @@
     },
     methods: {
       async save() {
-        const token = this.$route.params.id;
+        const token = this.id;
         const { data } = this;
         await this.$store.dispatch("setEnrollment", { token, data });
       },
