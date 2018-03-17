@@ -585,7 +585,7 @@
     watch: {
       data: {
         deep: true,
-        handler: debounce(function save() { this.save(); }, 5000),
+        handler: debounce(function save() { this.save(); }, 1000),
       },
     },
     async mounted() {
