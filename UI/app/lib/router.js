@@ -36,6 +36,10 @@ const router = new VueRouter({
         next("/");
       },
     },
+    {
+      path: "*",
+      component: lazy("NotFound"),
+    },
   ],
 });
 
