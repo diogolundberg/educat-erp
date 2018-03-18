@@ -303,52 +303,52 @@
           <Fieldset title="Responsável Financeiro">
             <div class="flex gutters flex-wrap">
               <DropDown
-                v-model="data.responsibleDocumentType"
+                v-model="data.responsible.documenttype"
                 :size="3"
                 :options="options.documentType"
                 label="CPF ou CNPJ" />
               <InputBox
-                v-model="data.responsibleCPF"
-                v-if="data.responsibleDocumentType == 'CPF'"
+                v-model="data.responsible.cpf"
+                v-if="data.responsible.documenttype == 'CPF'"
                 :size="3"
                 label="CPF"
                 mask="###.###.###-##"
                 hint="Ex: 000.000.000-00" />
               <InputBox
-                v-model="data.responsibleCNPJ"
-                v-if="data.responsibleDocumentType == 'CNPJ'"
+                v-model="data.responsible.cnpj"
+                v-if="data.responsible.documenttype == 'CNPJ'"
                 :size="3"
                 label="CNPJ"
                 mask="##.###.###/####-##"
                 hint="Ex: 00.000.000/0000-00" />
               <InputBox
-                v-model="data.responsibleName"
+                v-model="data.responsible.name"
                 :size="6"
                 label="Razão Social" />
             </div>
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="data.responsibleContact"
+                v-model="data.responsible.contact"
                 :size="4"
                 label="Contato" />
               <InputBox
-                v-model="data.responsibleAddress"
+                v-model="data.responsible.address"
                 :size="8"
                 label="Endereço Completo" />
             </div>
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="data.responsiblePhone1"
+                v-model="data.responsible.phone1"
                 :size="4"
                 label="Telefone"
                 mask="(##) ####-####" />
               <InputBox
-                v-model="data.responsiblePhone2"
+                v-model="data.responsible.phone2"
                 :size="4"
                 label="Celular"
                 mask="(##) #####-####" />
               <InputBox
-                v-model="data.responsibleEmail"
+                v-model="data.responsible.email"
                 :size="4"
                 label="E-mail" />
            </div>
@@ -356,52 +356,52 @@
           <Fieldset title="Fiador">
             <div class="flex gutters flex-wrap">
               <DropDown
-                v-model="data.guarantorDocumentType"
+                v-model="data.guarantor.documenttype"
                 :size="3"
                 :options="options.documentType"
                 label="CPF ou CNPJ" />
               <InputBox
-                v-model="data.guarantorCPF"
-                v-if="data.guarantorDocumentType == 'CPF'"
+                v-model="data.guarantor.cpf"
+                v-if="data.guarantor.documenttype == 'CPF'"
                 :size="3"
                 label="CPF"
                 mask="###.###.###-##"
                 hint="Ex: 000.000.000-00" />
               <InputBox
-                v-model="data.guarantorCNPJ"
-                v-if="data.guarantorDocumentType == 'CNPJ'"
+                v-model="data.guarantor.cnpj"
+                v-if="data.guarantor.documenttype == 'CNPJ'"
                 :size="3"
                 label="CNPJ"
                 mask="##.###.###/####-##"
                 hint="Ex: 00.000.000/0000-00" />
               <InputBox
-                v-model="data.guarantorName"
+                v-model="data.guarantor.name"
                 :size="6"
                 label="Razão Social" />
             </div>
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="data.guarantorContact"
+                v-model="data.guarantor.contact"
                 :size="4"
                 label="Contato" />
               <InputBox
-                v-model="data.guarantorAddress"
+                v-model="data.guarantor.address"
                 :size="8"
                 label="Endereço Completo" />
             </div>
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="data.guarantorPhone1"
+                v-model="data.guarantor.phone1"
                 :size="4"
                 label="Telefone"
                 mask="(##) ####-####" />
               <InputBox
-                v-model="data.guarantorPhone2"
+                v-model="data.guarantor.phone2"
                 :size="4"
                 label="Celular"
                 mask="(##) #####-####" />
               <InputBox
-                v-model="data.guarantorEmail"
+                v-model="data.guarantor.email"
                 :size="4"
                 label="E-mail" />
            </div>
@@ -527,27 +527,28 @@
           mothersName: null,
           hasHandicaps: true,
           disabilities: [],
-
-          responsibleDocumentType: null,
-          responsibleCPF: "",
-          responsibleCNPJ: "",
-          responsibleName: "",
-          responsibleContact: "",
-          responsibleAddress: "",
-          responsiblePhone1: "",
-          responsiblePhone2: "",
-          responsibleEmail: "",
-
-          guarantorDocumentType: null,
-          guarantorCPF: "",
-          guarantorCNPJ: "",
-          guarantorName: "",
-          guarantorContact: "",
-          guarantorAddress: "",
-          guarantorPhone1: "",
-          guarantorPhone2: "",
-          guarantorEmail: "",
-
+          responsible: {
+            documenttype: null,
+            cpf: "",
+            cnpj: "",
+            name: "",
+            contact: "",
+            address: "",
+            phone1: "",
+            phone2: "",
+            email: "",
+          },
+          guarantor: {
+            documenttype: null,
+            cpf: "",
+            cnpj: "",
+            name: "",
+            contact: "",
+            address: "",
+            phone1: "",
+            phone2: "",
+            email: "",
+          },
           documents: {
             history: null,
             birthCertificate: null,
