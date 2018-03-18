@@ -1,11 +1,17 @@
 <template>
   <span>
     <Btn
-      :label="value ? sentLabel : sendLabel"
       :id="`uploadBtn${_uid}`"
-      :disabled="disabled"
+      :disabled="loading"
       primary
-      @click="$refs.file.click()" />
+      class="relative"
+      @click="$refs.file.click()">
+      <span
+        v-show="loading"
+        :style="{ width: `${Math.floor(loaded)}%` }"
+        class="absolute fill bg-white op30" />
+      {{ loading ? "..." : (value ? sentLabel : sendLabel) }}
+    </Btn>
     <input
       ref="file"
       type="file"
@@ -43,21 +49,27 @@
     },
     data() {
       return {
-        disabled: false,
+        loading: false,
+        loaded: 0,
       };
     },
     methods: {
       async pick() {
-        this.disabled = true;
+        this.loading = true;
+        this.loaded = 0;
 
         const file = this.$refs.file.files[0];
         await this.$store.dispatch("presign", `${this.prefix}-${file.name}`);
         const url = this.$store.getters.uploadUrl;
 
         const headers = { "x-ms-blob-type": "BlockBlob" };
-        await axios.put(url, file, { headers });
+        await axios.put(url, file, { headers, onUploadProgress: this.setProg });
         this.$emit("input", url.split("?")[0]);
-        this.disabled = false;
+        this.loading = false;
+      },
+      setProg(e) {
+        const ratio = e.loaded / e.total;
+        this.loaded = Math.floor(ratio * 100.0);
       },
     },
   };
