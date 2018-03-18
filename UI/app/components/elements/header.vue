@@ -4,12 +4,14 @@
       <div class="max-width-4 m-auto flex items-center justify-between p2">
         <div class="flex-auto flex items-center">
           <div class="h3">CMMG</div>
-          <h2 class="h2 my0 mx2 px2 thin border-white-50 border-left">
+          <h2 class="my0 mx2 px2 thin border-white-50 h4 md-h2">
             Matrícula Online
           </h2>
         </div>
 
-        <slot />
+        <div class="xs-hide sm-hide">
+          <slot />
+        </div>
 
         <div>
           <a
