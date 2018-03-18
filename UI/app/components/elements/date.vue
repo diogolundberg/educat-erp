@@ -54,14 +54,14 @@
     },
     watch: {
       value(val) {
-        if (val !== "0001-01-01T00:00:00") {
+        if (this.formatted == null && val !== "0001-01-01T00:00:00") {
           this.formatted = new Date(val).toLocaleDateString();
         }
       },
       formatted(val) {
-        const parts = val.split(/\D+/);
-        const date = new Date(parts[2], parts[1] - 1, parts[0]);
-        if (val.length === 10) {
+        const [day, month, year] = val.split(/\D+/);
+        if (day && month && year && year > 1900 && val.length >= 10) {
+          const date = new Date(year, month - 1, day);
           this.$emit("input", date.toISOString());
         }
       },
