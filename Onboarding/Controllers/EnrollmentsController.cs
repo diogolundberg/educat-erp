@@ -81,7 +81,10 @@ namespace Onboarding.Controllers
             _context.Entry(enrollment).Reference(x => x.Guarantor).Load();
 
             return new { 
-                data = enrollment,
+                data = new {
+                    Deadline = enrollmentToken.End,
+                    PersonalData = enrollment
+                },
                 options = new 
                 {   
                     AddressTypes = _addressTypeRepository.List(),
@@ -134,35 +137,42 @@ namespace Onboarding.Controllers
             return Ok();
         }
 
-       [HttpGet("GenerateToken", Name = "SSO/PASSWORD/NEW")]
-        public IActionResult GenerateToken(string email)
+       [HttpPost("GenerateToken", Name = "ONBOARDING/ENROLLMENTS/GENERATETOKEN")]
+        public IActionResult GenerateToken([FromBody]EnrollmentParameter obj)
         {
-            if(string.IsNullOrEmpty(email))
+            if(obj.Emails.Count == 0)
             {
                 return BadRequest();
             }            
             
-            Enrollment enrollment = new Enrollment { Email = email };
+            List<string> responseObj = new List<string>();
 
-            _enrollmentRepository.Add(enrollment);
+            foreach (string email in obj.Emails)
+            {
+                Enrollment enrollment = new Enrollment { Email = email };
 
-            EnrollmentToken enrollmentToken = new EnrollmentToken { Id = enrollment.ExternalId, End = DateTime.Now.AddMonths(1) };
-            string token = _tokenHelper.Generate<EnrollmentToken>(enrollmentToken);
+                _enrollmentRepository.Add(enrollment);
 
-            SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"],
-                                                                    _configuration["SMTP_HOST"],
-                                                                    _configuration["SMTP_USERNAME"],
-                                                                    _configuration["SMTP_PASSWORD"]);
+                EnrollmentToken enrollmentToken = new EnrollmentToken { Id = enrollment.ExternalId, End = obj.End, Start = obj.Start };
+                string token = _tokenHelper.Generate<EnrollmentToken>(enrollmentToken);
 
-            string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + token );
-            string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
+                SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"],
+                                                                        _configuration["SMTP_HOST"],
+                                                                        _configuration["SMTP_USERNAME"],
+                                                                        _configuration["SMTP_PASSWORD"]);
 
-            smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]),
-                                new MailAddress(email),
-                                body,
-                                subject);
+                string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + token );
+                string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
 
-            return new OkObjectResult(new { token = token });
+                smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]),
+                                    new MailAddress(email),
+                                    body,
+                                    subject);
+
+                responseObj.Add(string.Format("{0} - {1}", email, token));
+            }
+
+            return new OkObjectResult(responseObj);
         }
     }
 }
