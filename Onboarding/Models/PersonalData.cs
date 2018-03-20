@@ -5,8 +5,14 @@ using Newtonsoft.Json;
 
 namespace Onboarding.Models
 {
-    public class PersonalData
-    { 
+    public class PersonalData : BaseModel
+    {
+        public PersonalData()
+        {
+            PersonalDataSpecialNeeds = new HashSet<PersonalDataSpecialNeed>();
+            PersonalDataDisabilities = new HashSet<PersonalDataDisability>();
+        }
+
         public string RealName { get; set; }
 
         public string AssumedName { get; set; }
@@ -41,7 +47,7 @@ namespace Onboarding.Models
 
         [JsonIgnore]
         [ForeignKey("GenderId")]
-        public Gender Gender { get; set; }
+        public virtual Gender Gender { get; set; }
 
         public Guid? MaritalStatusId { get; set; }
 
@@ -55,14 +61,14 @@ namespace Onboarding.Models
 
         [JsonIgnore]
         [ForeignKey("BirthStateId")]
-        public virtual State BirthState { get; set; }  
+        public virtual State BirthState { get; set; }
 
         public Guid? BirthCountryId { get; set; }
 
         [JsonIgnore]
         [ForeignKey("BirthCountryId")]
         public virtual Country BirthCountry { get; set; }
-        
+
         public Guid? HighSchoolGraduationCountryId { get; set; }
 
         [JsonIgnore]
@@ -81,22 +87,30 @@ namespace Onboarding.Models
 
         [JsonIgnore]
         [ForeignKey("AddressKindId")]
-        public virtual AddressKind AddressKind { get; set; } 
+        public virtual AddressKind AddressKind { get; set; }
 
         public Guid? RaceId { get; set; }
 
         [JsonIgnore]
         [ForeignKey("RaceId")]
         public virtual Race Race { get; set; }
-        
+
         public Guid? HighSchoolKindId { get; set; }
 
         [JsonIgnore]
         [ForeignKey("HighSchoolKindId")]
         public virtual HighSchoolKind HighSchollKind { get; set; }
 
-        [JsonIgnore]
-        public virtual IEnumerable<Disability> DisabilitiesIds { get; set; }
 
-    }      
- }
+        public Guid EnrollmentId { get; set; }
+
+        [JsonIgnore]
+        [ForeignKey("EnrollmentId")]
+        public virtual Enrollment Enrollment { get; set; }
+
+        public virtual ICollection<PersonalDataSpecialNeed> PersonalDataSpecialNeeds { get; set; }
+
+        public virtual ICollection<PersonalDataDisability> PersonalDataDisabilities { get; set; }
+
+    }
+}

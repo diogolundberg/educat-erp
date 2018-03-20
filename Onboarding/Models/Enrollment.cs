@@ -12,10 +12,6 @@ namespace Onboarding.Models
         {
         }
 
-        public Guid PersonalDataId { get; set; }
-        
-        [JsonIgnore]
-        [ForeignKey("PersonalDataId")]
         public virtual PersonalData PersonalData { get; set; }
 
         public DateTime? SendBy { get; set; }

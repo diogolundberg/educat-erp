@@ -15,6 +15,9 @@ namespace Onboarding
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 DatabaseContext context = serviceScope.ServiceProvider.GetService<DatabaseContext>();
+
+                context.Database.Migrate();
+
                 BaseRepository<AddressKind> addressKindRepository = new BaseRepository<AddressKind>(context);
                 BaseRepository<MaritalStatus> maritalStatusRepository = new BaseRepository<MaritalStatus>(context);
                 BaseRepository<Country> countryRepository = new BaseRepository<Country>(context);

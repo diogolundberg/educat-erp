@@ -11,9 +11,10 @@ using System;
 namespace Onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180320204552_change-name-of-column-disabilitiesids-in-personal-data")]
+    partial class changenameofcolumndisabilitiesidsinpersonaldata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -349,13 +350,9 @@ namespace Onboarding.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<Guid?>("PersonalDataId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DisabilityId");
-
-                    b.HasIndex("PersonalDataId");
 
                     b.ToTable("SpecialNeeds");
                 });
@@ -448,10 +445,6 @@ namespace Onboarding.Migrations
                         .WithMany("SpecialNeeds")
                         .HasForeignKey("DisabilityId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Onboarding.Models.PersonalData")
-                        .WithMany("SpecialNeeds")
-                        .HasForeignKey("PersonalDataId");
                 });
 #pragma warning restore 612, 618
         }

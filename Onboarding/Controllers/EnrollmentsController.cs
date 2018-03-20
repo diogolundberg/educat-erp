@@ -14,6 +14,7 @@ using System.Net.Mail;
 
 namespace Onboarding.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class EnrollmentsController : Controller
     {
@@ -74,14 +75,14 @@ namespace Onboarding.Controllers
                 return NotFound();
             }
 
-            // _context.Entry(enrollment).Collection(x => x.EnrollmentDisabilities).Load();
-            // _context.Entry(enrollment).Reference(x => x.Responsible).Load();
-            // _context.Entry(enrollment).Reference(x => x.Guarantor).Load();
+            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
+            _context.Entry(enrollment.PersonalData).Collection(x => x.Disabilities).Load();
+            _context.Entry(enrollment.PersonalData).Collection(x => x.SpecialNeeds).Load();
 
             return new { 
                 data = new {
                     Deadline = enrollmentToken.End,
-                    PersonalData = enrollment
+                    PersonalData = enrollment.PersonalData
                 },
                 options = new 
                 {
@@ -146,9 +147,13 @@ namespace Onboarding.Controllers
 
             foreach (string email in obj.Emails)
             {
-                Enrollment enrollment = new Enrollment { PersonalData = new PersonalData { Email = email }};
+                Enrollment enrollment = new Enrollment { };
 
                 _enrollmentRepository.Add(enrollment);
+
+                PersonalData personalData = new PersonalData { Email = email, EnrollmentId = enrollment.Id };
+
+                _personalDataRepository.Add(personalData);
 
                 EnrollmentToken enrollmentToken = new EnrollmentToken { Id = enrollment.ExternalId, End = obj.End, Start = obj.Start };
                 string token = _tokenHelper.Generate<EnrollmentToken>(enrollmentToken);
