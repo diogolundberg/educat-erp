@@ -14,11 +14,6 @@ namespace Onboarding.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EnrollmentDisability>().HasKey(t => new { t.EnrollmentId, t.DisabilityId });
-            modelBuilder.Entity<Enrollment>().HasOne(t => t.CountryOfGraduationFromHighSchool).WithMany(u => u.CountryOfGraduationFromHighSchoolEnrollments);
-            modelBuilder.Entity<Enrollment>().HasOne(t => t.OriginCountry).WithMany(u => u.OriginCountryEnrollments);
-            modelBuilder.Entity<Enrollment>().HasOne(t => t.BirthState).WithMany(u => u.BornStateEnrollments);
-            modelBuilder.Entity<Enrollment>().HasOne(t => t.CountryState).WithMany(u => u.CountryStateEnrollments);
         }
 
         public override int SaveChanges()  
@@ -43,18 +38,17 @@ namespace Onboarding.Models
             }
         }
 
-        public DbSet<AddressType> AddressTypes { get; set; }  
-        public DbSet<CivilStatus> CivilStatus { get; set; }  
+        public DbSet<AddressKind> AddressKinds { get; set; }  
+        public DbSet<MaritalStatus> MaritalStatuses { get; set; }  
         public DbSet<Country> Countries { get; set; }
         public DbSet<Disability> Disabilities { get; set; }
-        public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Gender> Genders {get;set;}
-        public DbSet<Nationality> Nationalities { get; set; }
-        public DbSet<PhoneType> PhoneTypes { get; set; }
         public DbSet<Race> Races { get; set; }
-        public DbSet<School> Schools { get; set; }
+        public DbSet<HighSchoolKind> HighSchoolKinds { get; set; }
         public DbSet<State> States { get; set; }
+        public DbSet<City> Cities { get; set;}
+        public DbSet<SpecialNeed> SpecialNeeds { get; set; }
 
     }
 }

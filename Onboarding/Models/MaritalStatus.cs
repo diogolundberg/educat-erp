@@ -1,18 +1,16 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace Onboarding.Models
 {
-    public class AddressType : BaseModel
+    public class MaritalStatus : BaseModel
     {
-        public AddressType()
+        public MaritalStatus()
         {
-            Enrollments = new HashSet<Enrollment>();
         }
 
         [Required]
         public string Name { get; set; }
-
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
     } 
 }

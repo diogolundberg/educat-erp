@@ -8,17 +8,13 @@ namespace Onboarding.Models
     {
         public State ()
         {
-            CountryStateEnrollments = new HashSet<Enrollment>();
-            BornStateEnrollments = new HashSet<Enrollment>();
+            Cities = new HashSet<City>();
         }
 
         [Required]
         public string Name { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Enrollment> CountryStateEnrollments { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Enrollment> BornStateEnrollments { get; set; }
+        public virtual IEnumerable<City> Cities { get; set; }
     }   
 }

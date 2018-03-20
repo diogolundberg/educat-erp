@@ -20,35 +20,33 @@ namespace Onboarding.Controllers
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly DatabaseContext _context;
-        private readonly BaseRepository<AddressType> _addressTypeRepository;
-        private readonly BaseRepository<CivilStatus> _civilStatusRepository;
+        private readonly BaseRepository<AddressKind> _addressKindRepository;
+        private readonly BaseRepository<MaritalStatus> _maritalStatusRepository;
         private readonly BaseRepository<Country> _countryRepository;
         private readonly BaseRepository<Gender> _genderRepository;
-        private readonly BaseRepository<Nationality> _nationalityRepository;
-        private readonly BaseRepository<PhoneType> _phoneTypeRepository;
         private readonly BaseRepository<Race> _RaceRepository;
-        private readonly BaseRepository<School> _schoolRepository;
+        private readonly BaseRepository<HighSchoolKind> _highSchoolKindRepository;
         private readonly BaseRepository<State> _stateRepository;
         private readonly BaseRepository<Disability> _disabilitiesRepository;
         private readonly BaseRepository<Enrollment> _enrollmentRepository;
-        private readonly BaseRepository<DocumentType> _documentTypeRepository;
+        private readonly BaseRepository<City> _cityRepository;
+        private readonly BaseRepository<SpecialNeed> _specialNeedsRepository;
         private readonly TokenHelper _tokenHelper;
 
         public EnrollmentsController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
         {
             _context = databaseContext;
-            _addressTypeRepository = new BaseRepository<AddressType>(_context);
-            _civilStatusRepository = new BaseRepository<CivilStatus>(_context);
+            _addressKindRepository = new BaseRepository<AddressKind>(_context);
+            _maritalStatusRepository = new BaseRepository<MaritalStatus>(_context);
             _countryRepository = new BaseRepository<Country>(_context);
             _genderRepository = new BaseRepository<Gender>(_context);
-            _nationalityRepository = new BaseRepository<Nationality>(_context);
-            _phoneTypeRepository = new BaseRepository<PhoneType>(_context);
             _RaceRepository = new BaseRepository<Race>(_context);
-            _schoolRepository = new BaseRepository<School>(_context);
+            _highSchoolKindRepository = new BaseRepository<HighSchoolKind>(_context);
             _stateRepository = new BaseRepository<State>(_context);
             _disabilitiesRepository = new BaseRepository<Disability>(_context);
             _enrollmentRepository = new BaseRepository<Enrollment>(_context);
-            _documentTypeRepository = new BaseRepository<DocumentType>(_context);
+            _cityRepository = new BaseRepository<City>(_context);
+            _specialNeedsRepository = new BaseRepository<SpecialNeed>(_context);
             _configuration = configuration;
             _mapper = mapper;
             _tokenHelper = new TokenHelper();
@@ -76,9 +74,9 @@ namespace Onboarding.Controllers
                 return NotFound();
             }
 
-            _context.Entry(enrollment).Collection(x => x.EnrollmentDisabilities).Load();
-            _context.Entry(enrollment).Reference(x => x.Responsible).Load();
-            _context.Entry(enrollment).Reference(x => x.Guarantor).Load();
+            // _context.Entry(enrollment).Collection(x => x.EnrollmentDisabilities).Load();
+            // _context.Entry(enrollment).Reference(x => x.Responsible).Load();
+            // _context.Entry(enrollment).Reference(x => x.Guarantor).Load();
 
             return new { 
                 data = new {
@@ -86,18 +84,17 @@ namespace Onboarding.Controllers
                     PersonalData = enrollment
                 },
                 options = new 
-                {   
-                    AddressTypes = _addressTypeRepository.List(),
-                    CivilStatus = _civilStatusRepository.List(),
-                    Countries = _countryRepository.List(),
-                    Disabilities = _disabilitiesRepository.List(),
-                    DocumentTypes = _documentTypeRepository.List(),
+                {
                     Genders = _genderRepository.List(),
-                    Nationalities = _nationalityRepository.List(),
-                    PhoneTypes = _phoneTypeRepository.List(),
+                    MaritalStatuses = _maritalStatusRepository.List(),
+                    States = _stateRepository.List(),
+                    Cities = _cityRepository.List(),
+                    Countries = _countryRepository.List(),                    
+                    AddressKinds = _addressKindRepository.List(),
                     Races = _RaceRepository.List(),
-                    Schools = _schoolRepository.List(),
-                    States = _stateRepository.List()
+                    HighSchoolKinds = _highSchoolKindRepository.List(),
+                    Disabilities = _disabilitiesRepository.List(),
+                    SpecialNeeds = _specialNeedsRepository.List()
                 }
             };
         }
@@ -149,7 +146,7 @@ namespace Onboarding.Controllers
 
             foreach (string email in obj.Emails)
             {
-                Enrollment enrollment = new Enrollment { Email = email };
+                Enrollment enrollment = new Enrollment { PersonalData = new PersonalData { Email = email }};
 
                 _enrollmentRepository.Add(enrollment);
 

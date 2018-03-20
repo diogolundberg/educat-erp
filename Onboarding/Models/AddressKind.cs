@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Onboarding.Models
 {
-    public class Gender : BaseModel
+    public class AddressKind : BaseModel
     {
-        public Gender ()
+        public AddressKind()
         {
         }
 

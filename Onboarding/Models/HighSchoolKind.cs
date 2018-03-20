@@ -4,17 +4,13 @@ using Newtonsoft.Json;
 
 namespace Onboarding.Models
 {
-    public class School : BaseModel
+    public class HighSchoolKind : BaseModel
     {
-        public School () 
+        public HighSchoolKind() 
         {
-            Enrollments = new HashSet<Enrollment>();
         }
 
         [Required]
         public string Name { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
     }   
 }

@@ -18,7 +18,7 @@ namespace Onboarding.Models
         public string CommitedBy { get; set; }
 
         [JsonIgnore]
-        public string State { get; set; }
+        public string DbState { get; set; }
 
         [JsonIgnore]
         public bool Active { get; set; }

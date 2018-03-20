@@ -40,7 +40,7 @@ namespace Onboarding.Data.Entity
             TEntity last = _context.Set<TEntity>().OrderByDescending(x => x.ExternalId).FirstOrDefault();
             
             obj.ExternalId =  last != null ? last.ExternalId + 1 : 1;
-            obj.State = EntityState.Added.ToString();
+            obj.DbState = EntityState.Added.ToString();
             obj.Id = Guid.NewGuid();
 
             _context.Set<TEntity>().Add(obj);
@@ -56,7 +56,7 @@ namespace Onboarding.Data.Entity
 
             newobj.Id = Guid.NewGuid();
             newobj.ExternalId = obj.ExternalId;
-            newobj.State = EntityState.Modified.ToString();
+            newobj.DbState = EntityState.Modified.ToString();
             _context.Set<TEntity>().Add(newobj);
 
             _context.SaveChanges();
@@ -65,7 +65,7 @@ namespace Onboarding.Data.Entity
         public virtual void Delete(TEntity obj)
         {
             _context.Entry(obj).State = EntityState.Modified;
-            obj.State = EntityState.Deleted.ToString();
+            obj.DbState = EntityState.Deleted.ToString();
             obj.Active = false;
 
             _context.SaveChanges();

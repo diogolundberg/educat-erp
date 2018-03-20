@@ -8,13 +8,13 @@ namespace Onboarding.Models
     {
         public Disability ()
         {
-            EnrollmentDisabilities = new HashSet<EnrollmentDisability>();
+            SpecialNeeds = new HashSet<SpecialNeed>();
         }
 
         [Required]
         public string Name { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<EnrollmentDisability> EnrollmentDisabilities { get; set; }
+        public virtual IEnumerable<SpecialNeed> SpecialNeeds { get; set; }
     } 
 }
