@@ -32,6 +32,7 @@ namespace Onboarding.Controllers
         private readonly BaseRepository<Enrollment> _enrollmentRepository;
         private readonly BaseRepository<City> _cityRepository;
         private readonly BaseRepository<SpecialNeed> _specialNeedsRepository;
+        private readonly BaseRepository<PersonalData> _personalDataRepository;
         private readonly TokenHelper _tokenHelper;
 
         public EnrollmentsController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
@@ -48,6 +49,7 @@ namespace Onboarding.Controllers
             _enrollmentRepository = new BaseRepository<Enrollment>(_context);
             _cityRepository = new BaseRepository<City>(_context);
             _specialNeedsRepository = new BaseRepository<SpecialNeed>(_context);
+            _personalDataRepository = new BaseRepository<PersonalData>(_context);
             _configuration = configuration;
             _mapper = mapper;
             _tokenHelper = new TokenHelper();
@@ -76,8 +78,8 @@ namespace Onboarding.Controllers
             }
 
             _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
-            _context.Entry(enrollment.PersonalData).Collection(x => x.Disabilities).Load();
-            _context.Entry(enrollment.PersonalData).Collection(x => x.SpecialNeeds).Load();
+            _context.Entry(enrollment.PersonalData).Collection(x => x.PersonalDataDisabilities).Load();
+            _context.Entry(enrollment.PersonalData).Collection(x => x.PersonalDataSpecialNeeds).Load();
 
             return new { 
                 data = new {
