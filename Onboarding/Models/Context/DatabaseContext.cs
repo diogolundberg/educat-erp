@@ -16,6 +16,10 @@ namespace Onboarding.Models
         {
             modelBuilder.Entity<PersonalDataDisability>().HasKey(t => new { t.PersonalDataId, t.DisabilityId });
             modelBuilder.Entity<PersonalDataSpecialNeed>().HasKey(t => new { t.PersonalDataId, t.SpecialNeedId });
+
+            modelBuilder.Entity<PersonalDocument>().HasBaseType<DocumentType>();
+            modelBuilder.Entity<ResponsibleDocument>().HasBaseType<DocumentType>();
+            modelBuilder.Entity<GuarantorDocument>().HasBaseType<DocumentType>();
         }
 
         public override int SaveChanges()  
@@ -51,6 +55,6 @@ namespace Onboarding.Models
         public DbSet<State> States { get; set; }
         public DbSet<City> Cities { get; set;}
         public DbSet<SpecialNeed> SpecialNeeds { get; set; }
-
+        public DbSet<DocumentType> DocumentTypes { get; set; }
     }
 }
