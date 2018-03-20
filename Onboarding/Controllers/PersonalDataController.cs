@@ -28,7 +28,7 @@ namespace Onboarding.Controllers
             _personalDataRepository = new BaseRepository<PersonalData>(_context);
         }
 
-        [HttpPatch("{token}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
+        [HttpPatch("{token}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
         public IActionResult Update(string token, [FromBody]PersonalViewModel obj)
         {
             if (string.IsNullOrEmpty(token))
