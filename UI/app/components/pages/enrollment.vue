@@ -5,7 +5,9 @@
         <Icon name="clock" />
         <div class="mx2 px2 border-white-50 border-left inline-block h6">
           Olá, <strong>{{ data.name }}</strong><br>
-          O seu processo de matrícula se encerra em 0 dias.
+          <template v-if="data.deadline">
+            O seu processo de matrícula se encerra em {{ daysRemaining }} dias.
+          </template>
         </div>
       </div>
     </Header>
@@ -589,6 +591,12 @@
         step: 1,
         notifications: false,
       };
+    },
+    computed: {
+      daysRemaining() {
+        const day = 1000 * 60 * 60 * 24;
+        return Math.floor((new Date(this.data.deadline) - new Date()) / day);
+      },
     },
     watch: {
       data: {
