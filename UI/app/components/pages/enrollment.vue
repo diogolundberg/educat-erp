@@ -77,18 +77,21 @@
                 v-model="data.nationalityId"
                 :size="3"
                 :options="options.countries"
+                required
                 label="Nacionalidade"
                 hint="Ex: Brasileiro" />
               <DropDown
                 v-model="data.originCountryId"
                 :size="3"
                 :options="options.countries"
+                required
                 label="País de Origem"
                 hint="Ex: Brasil" />
               <DropDown
                 v-model="data.birthStateId"
                 :size="3"
                 :options="options.states"
+                required
                 label="UF de Nascimento" />
               <InputBox
                 v-model="data.birthCity"
@@ -111,6 +114,7 @@
                 v-model="data.countryOfGraduationFromHighSchoolId"
                 :size="6"
                 :options="options.countries"
+                required
                 label="País de conclusão do ensino médio" />
             </div>
           </Fieldset>
@@ -177,8 +181,8 @@
               <DropDown
                 v-model="data.countryStateId"
                 :size="3"
-                required
                 :options="options.states"
+                required
                 label="Estado" />
             </div>
           </Fieldset>
@@ -206,6 +210,7 @@
               <RadioGroup
                 v-model="data.handicaps"
                 :options="options.handicaps"
+                required
                 label="Possui alguma Deficiência, Transtorno Global do
                   Desenvolvimento, ou Habilidades/Superdotação?" />
             </div>
