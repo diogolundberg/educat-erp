@@ -13,7 +13,7 @@ const url3 = "http://upload.sandbox.eti.br";
 export default new VueX.Store({
   state: {
     token: localStorage.getItem("token"),
-    enrollment: null,
+    enrollment: {},
     uploadUrl: null,
   },
   getters: {
@@ -30,6 +30,9 @@ export default new VueX.Store({
     },
     SET_ENROLLMENT(state, data) {
       state.enrollment = data;
+    },
+    SET_PERSONAL_DATA(state, data) {
+      state.enrollment.personalData = data;
     },
     SET_UPLOAD_URL(state, url) {
       state.uploadUrl = url;
@@ -49,10 +52,10 @@ export default new VueX.Store({
       const response = await axios.get(`${url2}/api/Enrollments/${token}`);
       commit("SET_ENROLLMENT", response.data);
     },
-    async setEnrollment({ commit }, { token, data }) {
+    async setPersonalData({ commit }, { token, data }) {
       const filledData = pickBy(data, identity);
-      await axios.patch(`${url2}/api/Enrollments/${token}`, filledData);
-      commit("SET_ENROLLMENT", filledData);
+      await axios.patch(`${url2}/api/PersonalData/${token}`, filledData);
+      commit("SET_PERSONAL_DATA", filledData);
     },
     async presign({ commit }, fileName) {
       const response = await axios.post(`${url3}/api/Presign`, { fileName });
