@@ -100,7 +100,7 @@ namespace Onboarding.Controllers
                     HighSchoolKinds = _highSchoolKindRepository.List(),
                     Disabilities = _disabilitiesRepository.List(),
                     SpecialNeeds = _specialNeedsRepository.List(),
-                    PersonalDocument = _personalDocumentsRepository.List()
+                    PersonalDocuments = _personalDocumentsRepository.List()
                 }
             };
         }
