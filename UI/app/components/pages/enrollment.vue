@@ -95,9 +95,9 @@
                 required
                 label="UF de Nascimento" />
               <DropDown
-                v-model="data.personalData.birthCountryId"
+                v-model="data.personalData.birthCityId"
                 :size="3"
-                :options="options.cities"
+                :options="birthCities"
                 required
                 label="Naturalidade"
                 hint="Cidade de Nascimento" />
@@ -602,6 +602,10 @@
       daysRemaining() {
         const day = 1000 * 60 * 60 * 24;
         return Math.floor((new Date(this.data.deadline) - new Date()) / day);
+      },
+      birthCities() {
+        const parentId = this.data.personalData.birthStateId;
+        return this.options.cities.filter(a => a.stateId === parentId);
       },
     },
     watch: {
