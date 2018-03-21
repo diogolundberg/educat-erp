@@ -222,7 +222,7 @@
               class="flex gutters flex-wrap">
               <h4>Selecione:</h4>
               <CheckGroup
-                v-model="data.personalData.personalDataDisabilities"
+                v-model="data.personalData.disabilities"
                 :options="options.disabilities" />
             </div>
           </Fieldset>
@@ -536,8 +536,8 @@
             addressKindId: null,
             raceId: null,
             highSchoolKindId: null,
-            personalDataSpecialNeeds: [],
-            personalDataDisabilities: [],
+            specialNeeds: [],
+            disabilities: [],
           },
           responsible: {
             documenttype: null,
