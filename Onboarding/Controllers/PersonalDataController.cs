@@ -44,6 +44,8 @@ namespace Onboarding.Controllers
             }
 
             Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.Id);
+            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
+            _context.Entry(enrollment.PersonalData).Collection(x => x.PersonalDataDisabilities).Load();
 
             if (enrollment == null)
             {
