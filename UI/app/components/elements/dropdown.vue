@@ -31,7 +31,7 @@
       </span>
       <Outside
         v-if="focus"
-        class="absolute top-0 bg-white shadow1 w100 z2"
+        class="absolute top-0 bg-white shadow1 w100 z2 overflow-scroll height-1"
         @click="focus = false">
         <div
           v-for="opt in options"
