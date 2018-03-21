@@ -34,19 +34,19 @@
           <Fieldset>
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="data.name"
+                v-model="data.personalData.realName"
                 :size="6"
                 required
                 label="Nome"
                 hint="Seu nome completo" />
               <InputBox
-                v-model="data.socialName"
+                v-model="data.personalData.assumedName"
                 :size="6"
                 required
                 label="Nome Social"
                 hint="Seu nome social" />
               <InputBox
-                v-model="data.cpf"
+                v-model="data.personalData.cpf"
                 :size="3"
                 :min-size="14"
                 required
@@ -54,7 +54,7 @@
                 mask="###.###.###-##"
                 hint="Ex: 000.000.000-00" />
               <Date
-                v-model="data.birthday"
+                v-model="data.personalData.birthDate"
                 :size="3"
                 :min-size="10"
                 required
@@ -62,49 +62,49 @@
                 mask="##/##/####"
                 hint="Ex: 18/12/2001" />
               <DropDown
-                v-model="data.civilStatusId"
+                v-model="data.personalData.maritalStatusId"
                 :size="3"
-                :options="options.civilStatus"
+                :options="options.maritalStatuses"
                 required
                 label="Estado Civil" />
               <DropDown
-                v-model="data.genderId"
+                v-model="data.personalData.genderId"
                 :size="3"
                 :options="options.genders"
                 required
                 label="Sexo" />
             </div>
             <div class="flex gutters flex-wrap">
-              <DropDown
-                v-model="data.nationalityId"
+              <InputBox
+                v-model="data.personalData.nationality"
                 :size="3"
-                :options="options.countries"
                 required
                 label="Nacionalidade"
                 hint="Ex: Brasileiro" />
               <DropDown
-                v-model="data.originCountryId"
+                v-model="data.personalData.birthCountryId"
                 :size="3"
                 :options="options.countries"
                 required
                 label="País de Origem"
                 hint="Ex: Brasil" />
               <DropDown
-                v-model="data.birthStateId"
+                v-model="data.personalData.birthStateId"
                 :size="3"
                 :options="options.states"
                 required
                 label="UF de Nascimento" />
-              <InputBox
-                v-model="data.birthCity"
+              <DropDown
+                v-model="data.personalData.birthCountryId"
                 :size="3"
+                :options="options.cities"
                 required
                 label="Naturalidade"
                 hint="Cidade de Nascimento" />
             </div>
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="data.yearofHighSchoolGraduation"
+                v-model="data.personalData.highSchoolGraduationYear"
                 :size="6"
                 :min-size="4"
                 :max-size="4"
@@ -113,7 +113,7 @@
                 label="Ano de conclusão do ensino médio"
                 hint="Ex: 2017" />
               <DropDown
-                v-model="data.countryOfGraduationFromHighSchoolId"
+                v-model="data.personalData.highSchoolGraduationCountryId"
                 :size="6"
                 :options="options.countries"
                 required
@@ -123,7 +123,7 @@
           <Fieldset title="Dados de Contato">
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="data.email"
+                v-model="data.personalData.email"
                 :size="6"
                 :min-size="6"
                 :max-size="50"
@@ -131,7 +131,7 @@
                 required
                 label="E-mail" />
               <InputBox
-                v-model="data.phoneNumber"
+                v-model="data.personalData.phoneNumber"
                 :size="6"
                 :min-size="13"
                 :max-size="14"
@@ -144,7 +144,7 @@
           <Fieldset title="Endereço">
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="data.cep"
+                v-model="data.personalData.zipcode"
                 :size="3"
                 :min-size="9"
                 required
@@ -152,13 +152,13 @@
                 mask="#####-###"
                 hint="Ex: 30100-000" />
               <DropDown
-                v-model="data.addressTypeId"
+                v-model="data.personalData.addressTypeId"
                 :size="3"
-                :options="options.addressTypes"
+                :options="options.addressKinds"
                 required
                 label="Tipo de Endereço" />
               <InputBox
-                v-model="data.address"
+                v-model="data.personalData.streetAddress"
                 :size="6"
                 required
                 label="Logradouro"
@@ -166,22 +166,22 @@
             </div>
             <div class="flex gutters flex-wrap">
               <InputBox
-                v-model="data.number"
+                v-model="data.personalData.complementAddress"
                 :size="3"
                 required
-                label="Número" />
+                label="Complemento" />
               <InputBox
-                v-model="data.neighborhood"
+                v-model="data.personalData.neighborhood"
                 :size="3"
                 required
                 label="Bairro" />
               <InputBox
-                v-model="data.city"
+                v-model="data.personalData.city"
                 :size="3"
                 required
                 label="Cidade" />
               <DropDown
-                v-model="data.countryStateId"
+                v-model="data.personalData.stateId"
                 :size="3"
                 :options="options.states"
                 required
@@ -191,37 +191,37 @@
           <Fieldset title="Dados para o Censo">
             <div class="flex gutters flex-wrap">
               <DropDown
-                v-model="data.raceId"
+                v-model="data.personalData.raceId"
                 :size="3"
                 :options="options.races"
                 required
                 label="Raça" />
               <DropDown
-                v-model="data.schoolId"
+                v-model="data.personalData.highSchoolKindId"
                 :size="3"
-                :options="options.schools"
+                :options="options.highSchoolKinds"
                 required
                 label="Escola" />
               <InputBox
-                v-model="data.mothersName"
+                v-model="data.personalData.mothersName"
                 :size="6"
                 required
                 label="Nome completo da mãe" />
             </div>
             <div>
               <RadioGroup
-                v-model="data.handicaps"
-                :options="options.handicaps"
+                v-model="data.personalData.handicap"
+                :options="options.handicap"
                 required
                 label="Possui alguma Deficiência, Transtorno Global do
                   Desenvolvimento, ou Habilidades/Superdotação?" />
             </div>
             <div
-              v-if="data.handicaps == 'yes'"
+              v-if="data.personalData.handicap == 'yes'"
               class="flex gutters flex-wrap">
               <h4>Selecione:</h4>
               <CheckGroup
-                v-model="data.disabilities"
+                v-model="data.personalData.personalDataDisabilities"
                 :options="options.disabilities" />
             </div>
           </Fieldset>
@@ -312,7 +312,7 @@
               <DropDown
                 v-model="data.responsible.documenttype"
                 :size="3"
-                :options="options.documentType"
+                :options="options.documentTypes"
                 label="CPF ou CNPJ" />
               <InputBox
                 v-model="data.responsible.cpf"
@@ -365,7 +365,7 @@
               <DropDown
                 v-model="data.guarantor.documenttype"
                 :size="3"
-                :options="options.documentType"
+                :options="options.documentTypes"
                 label="CPF ou CNPJ" />
               <InputBox
                 v-model="data.guarantor.cpf"
@@ -507,33 +507,37 @@
     data() {
       return {
         data: {
-          name: null,
-          socialName: null,
-          cpf: null,
-          birthday: null,
-          civilStatusId: null,
-          genderId: null,
-          nationalityId: null,
-          originCountryId: null,
-          birthStateId: null,
-          birthCity: null,
-          yearofHighSchoolGraduation: null,
-          countryOfGraduationFromHighSchoolId: null,
-          email: null,
-          phoneTypeId: null,
-          phoneNumber: null,
-          cep: null,
-          address: null,
-          number: null,
-          neighborhood: null,
-          city: null,
-          countryStateId: null,
-          addressTypeId: null,
-          raceId: null,
-          schoolId: null,
-          mothersName: null,
-          hasHandicaps: true,
-          disabilities: [],
+          deadline: null,
+          personalData: {
+            realName: null,
+            assumedName: null,
+            birthDate: null,
+            cpf: null,
+            nationality: null,
+            highSchoolGraduationYear: null,
+            email: null,
+            zipcode: null,
+            streetAddress: null,
+            complementAddress: null,
+            neighborhood: null,
+            phoneNumber: null,
+            landline: null,
+            mothersName: null,
+            handicap: null,
+            genderId: null,
+            maritalStatusId: null,
+            birthCity: null,
+            birthStateId: null,
+            birthCountryId: null,
+            highSchoolGraduationCountryId: null,
+            city: null,
+            stateId: null,
+            addressKindId: null,
+            raceId: null,
+            highSchoolKindId: null,
+            personalDataSpecialNeeds: [],
+            personalDataDisabilities: [],
+          },
           responsible: {
             documenttype: null,
             cpf: "",
@@ -568,21 +572,23 @@
         },
         options: {
           genders: [],
-          civilStatus: [],
+          maritalStatuses: [],
           countries: [],
           states: [],
-          addressTypes: [],
+          cities: [],
+          addressKinds: [],
           nationalities: [],
           phoneType: [],
           races: [],
-          schools: [],
+          highSchoolKinds: [],
           disabilities: [],
+          specialNeeds: [],
 
-          documentType: [
+          documentTypes: [
             { id: "CPF", name: "CPF" },
             { id: "CNPJ", name: "CNPJ" },
           ],
-          handicaps: [
+          handicap: [
             { id: "yes", name: "Sim" },
             { id: "no", name: "Não" },
             { id: "unknown", name: "Não disponho da informação" },
@@ -599,7 +605,7 @@
       },
     },
     watch: {
-      data: {
+      "data.personalData": {
         deep: true,
         handler: debounce(function save() { this.save(); }, 1000),
       },
@@ -614,8 +620,8 @@
     methods: {
       async save() {
         const token = this.id;
-        const { data } = this;
-        await this.$store.dispatch("setEnrollment", { token, data });
+        const data = this.data.personalData;
+        await this.$store.dispatch("setPersonalData", { token, data });
       },
     },
   };
