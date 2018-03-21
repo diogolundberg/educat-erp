@@ -2,6 +2,6 @@ namespace Onboarding.ViewModel
 {
     public class EnrollmentViewModel 
     {
-        public PersonalViewModel PersonalViewModel { get; set; }
+        public PersonalDataViewModel PersonalViewModel { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace Onboarding.Models
         {
             PersonalDataSpecialNeeds = new HashSet<PersonalDataSpecialNeed>();
             PersonalDataDisabilities = new HashSet<PersonalDataDisability>();
+            PersonalDataDocuments = new HashSet<PersonalDataDocument>();
         }
 
         public string RealName { get; set; }
@@ -112,5 +113,6 @@ namespace Onboarding.Models
 
         public virtual ICollection<PersonalDataDisability> PersonalDataDisabilities { get; set; }
 
+        public virtual ICollection<PersonalDataDocument> PersonalDataDocuments { get; set; }
     }
 }

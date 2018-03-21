@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Onboarding.ViewModel
 {
-    public class PersonalViewModel
+    public class PersonalDataViewModel
     {
         public string RealName { get; set; }
 
@@ -57,8 +57,10 @@ namespace Onboarding.ViewModel
 
         public Guid? HighSchoolKindId { get; set; }
 
-        public IEnumerable<Guid> Deficiencies { get; set; }
+        public IEnumerable<Guid> Disabilities { get; set; }
 
         public IEnumerable<Guid> SpecialNeeds { get; set; }
+
+        public IEnumerable<string> Documents { get; set; }
     }
 }

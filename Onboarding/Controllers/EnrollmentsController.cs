@@ -33,6 +33,7 @@ namespace Onboarding.Controllers
         private readonly BaseRepository<City> _cityRepository;
         private readonly BaseRepository<SpecialNeed> _specialNeedsRepository;
         private readonly BaseRepository<PersonalData> _personalDataRepository;
+        private readonly BaseRepository<PersonalDocument> _personalDocumentsRepository;
         private readonly TokenHelper _tokenHelper;
 
         public EnrollmentsController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
@@ -50,6 +51,7 @@ namespace Onboarding.Controllers
             _cityRepository = new BaseRepository<City>(_context);
             _specialNeedsRepository = new BaseRepository<SpecialNeed>(_context);
             _personalDataRepository = new BaseRepository<PersonalData>(_context);
+            _personalDocumentsRepository = new BaseRepository<PersonalDocument>(_context);
             _configuration = configuration;
             _mapper = mapper;
             _tokenHelper = new TokenHelper();
@@ -84,7 +86,7 @@ namespace Onboarding.Controllers
             return new { 
                 data = new {
                     Deadline = enrollmentToken.End,
-                    PersonalData = enrollment.PersonalData
+                    PersonalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData)
                 },
                 options = new 
                 {
@@ -97,7 +99,8 @@ namespace Onboarding.Controllers
                     Races = _RaceRepository.List(),
                     HighSchoolKinds = _highSchoolKindRepository.List(),
                     Disabilities = _disabilitiesRepository.List(),
-                    SpecialNeeds = _specialNeedsRepository.List()
+                    SpecialNeeds = _specialNeedsRepository.List(),
+                    PersonalDocument = _personalDocumentsRepository.List()
                 }
             };
         }

@@ -12,9 +12,10 @@ using System;
 namespace Onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180321011814_add-entity-documents")]
+    partial class addentitydocuments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,9 +137,13 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("Link");
 
+                    b.Property<Guid?>("PersonalDataId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("PersonalDataId");
 
                     b.ToTable("Documents");
                 });
@@ -370,19 +375,6 @@ namespace Onboarding.Migrations
                     b.ToTable("PersonalDataDisability");
                 });
 
-            modelBuilder.Entity("Onboarding.Models.PersonalDataDocument", b =>
-                {
-                    b.Property<Guid>("PersonalDataId");
-
-                    b.Property<Guid>("DocumentId");
-
-                    b.HasKey("PersonalDataId", "DocumentId");
-
-                    b.HasIndex("DocumentId");
-
-                    b.ToTable("PersonalDataDocument");
-                });
-
             modelBuilder.Entity("Onboarding.Models.PersonalDataSpecialNeed", b =>
                 {
                     b.Property<Guid>("PersonalDataId");
@@ -513,6 +505,10 @@ namespace Onboarding.Migrations
                         .WithMany()
                         .HasForeignKey("DocumentTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Onboarding.Models.PersonalData")
+                        .WithMany("Documents")
+                        .HasForeignKey("PersonalDataId");
                 });
 
             modelBuilder.Entity("Onboarding.Models.PersonalData", b =>
@@ -568,19 +564,6 @@ namespace Onboarding.Migrations
 
                     b.HasOne("Onboarding.Models.PersonalData", "PersonalData")
                         .WithMany("PersonalDataDisabilities")
-                        .HasForeignKey("PersonalDataId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Onboarding.Models.PersonalDataDocument", b =>
-                {
-                    b.HasOne("Onboarding.Models.Document", "Document")
-                        .WithMany()
-                        .HasForeignKey("DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Onboarding.Models.PersonalData", "PersonalData")
-                        .WithMany("PersonalDataDocuments")
                         .HasForeignKey("PersonalDataId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

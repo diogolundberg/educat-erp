@@ -25,6 +25,11 @@ namespace Onboarding.Data.Entity
            return _context.Set<TEntity>().Where(x => x.Active);
         }
 
+        public virtual bool Any()
+        {
+            return _context.Set<TEntity>().Where(x => x.Active).Any();
+        }
+
         public virtual TEntity GetById(int id)
         {
             return _context.Set<TEntity>().FirstOrDefault(x => x.Active && x.ExternalId == id);

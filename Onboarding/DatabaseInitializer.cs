@@ -24,10 +24,11 @@ namespace Onboarding
                 BaseRepository<Disability> disabilityRepository = new BaseRepository<Disability>(context);
                 BaseRepository<Gender> genderRepository = new BaseRepository<Gender>(context);
                 BaseRepository<Race> raceRepository = new BaseRepository<Race>(context);
-                BaseRepository<HighSchoolKind> schoolRepository = new BaseRepository<HighSchoolKind>(context);
+                BaseRepository<HighSchoolKind> highSchoolRepository = new BaseRepository<HighSchoolKind>(context);
                 BaseRepository<State> stateRepository = new BaseRepository<State>(context);
+                BaseRepository<PersonalDocument> personalDocumentRepository = new BaseRepository<PersonalDocument>(context);
 
-                if (!context.AddressKinds.Any())
+                if (!addressKindRepository.Any())
                 {
                     addressKindRepository.Add(new AddressKind { Name = "Aeroporto" });
                     addressKindRepository.Add(new AddressKind { Name = "Alameda" });
@@ -76,7 +77,7 @@ namespace Onboarding
                     addressKindRepository.Add(new AddressKind { Name = "Vila" });
                 }
 
-                if (!context.MaritalStatuses.Any())
+                if (!maritalStatusRepository.Any())
                 {
                     maritalStatusRepository.Add(new MaritalStatus { Name = "Solteiro(a)" });
                     maritalStatusRepository.Add(new MaritalStatus { Name = "Casado(a)" });
@@ -85,12 +86,12 @@ namespace Onboarding
                     maritalStatusRepository.Add(new MaritalStatus { Name = "Separado(a)" });
                 }
 
-                if (!context.Countries.Any())
+                if (!countryRepository.Any())
                 {
                     countryRepository.Add(new Country { Name = "Brasil" });
                 }
 
-                if (!context.Disabilities.Any())
+                if (!disabilityRepository.Any())
                 {
                     disabilityRepository.Add(new Disability
                     {
@@ -137,13 +138,13 @@ namespace Onboarding
                     disabilityRepository.Add(new Disability { Name = "Altas habilidades/superdotação" });
                 }
 
-                if (!context.Genders.Any())
+                if (!genderRepository.Any())
                 {
                     genderRepository.Add(new Gender { Name = "Masculino" });
                     genderRepository.Add(new Gender { Name = "Feminino" });
                 }
 
-                if (!context.Races.Any())
+                if (!raceRepository.Any())
                 {
                     raceRepository.Add(new Race { Name = "Brancos" });
                     raceRepository.Add(new Race { Name = "Negros" });
@@ -153,11 +154,13 @@ namespace Onboarding
                     raceRepository.Add(new Race { Name = "Caboclos" });
                     raceRepository.Add(new Race { Name = "Cafuzos" });
                 }
-                if (!context.HighSchoolKinds.Any())
+
+                if (!highSchoolRepository.Any())
                 {
-                    schoolRepository.Add(new HighSchoolKind { Name = "TESTE" });
+                    highSchoolRepository.Add(new HighSchoolKind { Name = "TESTE" });
                 }
-                if (!context.States.Any())
+
+                if (!stateRepository.Any())
                 {
                     stateRepository.Add(new State
                     {
@@ -8674,6 +8677,17 @@ namespace Onboarding
                             new City { Name = "Xambioá" },
                         }
                     });
+                }
+
+                if (!personalDocumentRepository.Any())
+                {
+                    personalDocumentRepository.Add(new PersonalDocument { Name = "Histórico Escolar do Ensino Médio" });
+                    personalDocumentRepository.Add(new PersonalDocument { Name = "Certidão de Nascimento ou Casamento" });
+                    personalDocumentRepository.Add(new PersonalDocument { Name = "Carteira de Identidade" });
+                    personalDocumentRepository.Add(new PersonalDocument { Name = "Título de Eleitor e Comprovante de Votação" });
+                    personalDocumentRepository.Add(new PersonalDocument { Name = "CPF" });
+                    personalDocumentRepository.Add(new PersonalDocument { Name = "Cartão de Vacinação (constanto 3 doses de vacina contra Hepatite B e vacina Dupla-adulto" });
+                    personalDocumentRepository.Add(new PersonalDocument { Name = "Documento Militar" });
                 }
 
                 context.SaveChanges();

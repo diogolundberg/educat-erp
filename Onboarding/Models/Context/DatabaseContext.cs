@@ -16,6 +16,7 @@ namespace Onboarding.Models
         {
             modelBuilder.Entity<PersonalDataDisability>().HasKey(t => new { t.PersonalDataId, t.DisabilityId });
             modelBuilder.Entity<PersonalDataSpecialNeed>().HasKey(t => new { t.PersonalDataId, t.SpecialNeedId });
+            modelBuilder.Entity<PersonalDataDocument>().HasKey(t => new { t.PersonalDataId, t.DocumentId });
 
             modelBuilder.Entity<PersonalDocument>().HasBaseType<DocumentType>();
             modelBuilder.Entity<ResponsibleDocument>().HasBaseType<DocumentType>();
@@ -56,5 +57,7 @@ namespace Onboarding.Models
         public DbSet<City> Cities { get; set;}
         public DbSet<SpecialNeed> SpecialNeeds { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
+        public DbSet<Document> Documents { get; set; }
+             
     }
 }

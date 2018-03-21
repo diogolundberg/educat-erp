@@ -29,7 +29,7 @@ namespace Onboarding.Controllers
         }
 
         [HttpPatch("{token}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
-        public IActionResult Update(string token, [FromBody]PersonalViewModel obj)
+        public IActionResult Update(string token, [FromBody]PersonalDataViewModel obj)
         {
             if (string.IsNullOrEmpty(token))
             {
