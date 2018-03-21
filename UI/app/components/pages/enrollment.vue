@@ -153,7 +153,7 @@
                 mask="#####-###"
                 hint="Ex: 30100-000" />
               <DropDown
-                v-model="data.personalData.addressTypeId"
+                v-model="data.personalData.addressKindId"
                 :size="3"
                 :options="options.addressKinds"
                 required
