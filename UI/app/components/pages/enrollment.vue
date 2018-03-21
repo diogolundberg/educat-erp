@@ -95,9 +95,10 @@
                 required
                 label="UF de Nascimento" />
               <DropDown
-                v-model="data.personalData.birthCityId"
+                v-model="data.personalData.birthCity"
                 :size="3"
                 :options="birthCities"
+                key-id="name"
                 required
                 label="Naturalidade"
                 hint="Cidade de Nascimento" />
