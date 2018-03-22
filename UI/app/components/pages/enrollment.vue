@@ -44,7 +44,6 @@
                 <InputBox
                   v-model="data.personalData.assumedName"
                   :size="6"
-                  required
                   label="Nome Social"
                   hint="Seu nome social" />
                 <InputBox
