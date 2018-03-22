@@ -256,7 +256,7 @@
                   </div>
                   <hr
                     v-if="idx < options.personalDocuments.length - 1"
-                    :key="doc.id">
+                    :key="`hr${doc.id}`">
                 </template>
               </div>
             </Fieldset>
