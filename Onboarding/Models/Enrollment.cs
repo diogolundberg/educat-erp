@@ -19,10 +19,17 @@ namespace Onboarding.Models
 
         public bool FinanceApproval { get; set; }
 
+        public DateTime Deadline { get; set; }
+
         public override string CreateExternalId()
         {
             string semester = DateTime.Now.Month > 6 ? "2" : "1";
             return DateTime.Now.Year  + semester + Regex.Replace(PersonalData.CPF, @"\D" , string.Empty); ;
+        }
+
+        internal bool IsDeadlineValid()
+        {
+            return DateTime.Now <= Deadline;
         }
     }
 }

@@ -36,18 +36,15 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            EnrollmentToken enrollmentToken = _tokenHelper.GetObject<EnrollmentToken>(token);
-
-            Enrollment enrollment = _enrollmentRepository.GetByExternalId(enrollmentToken.ExternalId);
+            Enrollment enrollment = _enrollmentRepository.GetByExternalId(token);
+            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
 
             if (enrollment == null)
             {
                 return NotFound();
             }
 
-            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
-
-            if (!enrollmentToken.IsValid(enrollment.PersonalData))
+            if (enrollment.SendDate.HasValue || !enrollment.IsDeadlineValid())
             {
                 return BadRequest();
             }

@@ -63,9 +63,7 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            EnrollmentToken enrollmentToken = _tokenHelper.GetObject<EnrollmentToken>(token);
-
-            Enrollment enrollment = _enrollmentRepository.GetByExternalId(enrollmentToken.ExternalId);
+            Enrollment enrollment = _enrollmentRepository.GetByExternalId(token);
 
             if (enrollment == null)
             {
@@ -82,7 +80,7 @@ namespace Onboarding.Controllers
                 _context.Entry(personalDataDocument).Reference(x => x.Document).Load();
             }
 
-            if (!enrollmentToken.IsValid(enrollment.PersonalData))
+            if (!enrollment.IsDeadlineValid())
             {
                 return BadRequest();
             }
@@ -91,7 +89,7 @@ namespace Onboarding.Controllers
             {
                 data = new
                 {
-                    Deadline = enrollmentToken.End,
+                    Deadline = enrollment.Deadline,
                     SendDate = enrollment.SendDate,
                     AcademicApproval = enrollment.AcademicApproval,
                     FinanceApproval = enrollment.FinanceApproval,
@@ -124,23 +122,14 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            EnrollmentToken enrollmentToken = _tokenHelper.GetObject<EnrollmentToken>(token);
-
-            Enrollment enrollment = _enrollmentRepository.GetByExternalId(enrollmentToken.ExternalId);
+            Enrollment enrollment = _enrollmentRepository.GetByExternalId(token);
 
             if (enrollment == null)
             {
                 return NotFound();
             }
 
-            if (enrollment.SendDate.HasValue)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
-
-            if (!enrollmentToken.IsValid(enrollment.PersonalData))
+            if (enrollment.SendDate.HasValue || !enrollment.IsDeadlineValid())
             {
                 return BadRequest();
             }
@@ -161,6 +150,7 @@ namespace Onboarding.Controllers
             foreach (EnrollmentParameterObj enrollmentParameterObj in obj.List)
             {
                 Enrollment enrollment = new Enrollment { 
+                    Deadline = obj.End,
                     PersonalData = new PersonalData {
                         RealName = enrollmentParameterObj.Name,
                         Email = enrollmentParameterObj.Email,
