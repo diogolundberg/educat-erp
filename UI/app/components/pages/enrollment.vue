@@ -231,69 +231,20 @@
             </Fieldset>
             <Fieldset title="Documentos">
               <div class="p2 shadow0 rounded">
-                <div
-                  id="doc_01"
-                  class="flex justify-between items-center">
-                  <div>Histórico Escolar do Ensino Médio</div>
-                  <UploadButton
-                    v-model="data.documents.history"
-                    :prefix="data.externalId" />
-                </div>
-                <hr>
-                <div
-                  id="doc_02"
-                  class="flex justify-between items-center">
-                  <div>Certidão de Nasciment ou Casamento</div>
-                  <UploadButton
-                    v-model="data.documents.birthCertificate"
-                    :prefix="data.externalId" />
-                </div>
-                <hr>
-                <div
-                  id="doc_03"
-                  class="flex justify-between items-center">
-                  <div>Carteira de Identidade</div>
-                  <UploadButton
-                    v-model="data.documents.rg"
-                    :prefix="data.externalId" />
-                </div>
-                <hr>
-                <div
-                  id="doc_04"
-                  class="flex justify-between items-center">
-                  <div>Título de Eleitor e Comprovante de Votação</div>
-                  <UploadButton
-                    v-model="data.documents.voterId"
-                    :prefix="data.externalId" />
-                </div>
-                <hr>
-                <div
-                  id="doc_05"
-                  class="flex justify-between items-center">
-                  <div>CPF</div>
-                  <UploadButton
-                    v-model="data.documents.cpf"
-                    :prefix="data.externalId" />
-                </div>
-                <hr>
-                <div
-                  id="doc_06"
-                  class="flex justify-between items-center">
-                  <div>Cartão de Vacinação (constando 3 doses de vacina contra
-                    Hepatite B e vacina Dupla-adulto)</div>
-                  <UploadButton
-                    v-model="data.documents.vaccination"
-                    :prefix="data.externalId" />
-                </div>
-                <hr>
-                <div
-                  id="doc_07"
-                  class="flex justify-between items-center">
-                  <div>Documento Militar</div>
-                  <UploadButton
-                    v-model="data.documents.military"
-                    :prefix="data.externalId" />
-                </div>
+                <template v-for="(doc, idx) in options.personalDocuments">
+                  <div
+                    :id="`doc_${doc.id}`"
+                    :key="doc.id"
+                    class="flex justify-between items-center">
+                      <div>{{ doc.name }}</div>
+                      <UploadButton
+                        v-model="personalDocuments[doc.id]"
+                        :prefix="data.externalId" />
+                  </div>
+                  <hr
+                    v-if="idx < options.personalDocuments.length - 1"
+                    :key="doc.id">
+                </template>
               </div>
             </Fieldset>
             <div class="flex justify-end">
@@ -600,6 +551,7 @@
         },
         step: 1,
         notifications: false,
+        personalDocuments: {},
       };
     },
     computed: {
