@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Data.Entity;
@@ -29,7 +30,7 @@ namespace Onboarding.Controllers
         }
 
         [HttpPatch("{token}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
-        public IActionResult Update(string token, [FromBody]PersonalDataViewModel obj)
+        public IActionResult Update(string token, [FromBody]PersonalDataPatchViewModel obj)
         {
             if (string.IsNullOrEmpty(token))
             {
@@ -67,7 +68,21 @@ namespace Onboarding.Controllers
 
             _personalDataRepository.Update(oldPersonalData, newPersonalData);
 
-            return Ok();
+
+            return new OkObjectResult(new
+            {
+                ModelState,
+                data = new
+                {
+                    Deadline = enrollment.Deadline,
+                    SendDate = enrollment.SendDate,
+                    AcademicApproval = enrollment.AcademicApproval,
+                    FinanceApproval = enrollment.FinanceApproval,
+                    PersonalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData),
+                    FinanceData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData),
+                }
+            });
         }
+
     }
 }

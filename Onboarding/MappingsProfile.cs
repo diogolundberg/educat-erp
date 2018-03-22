@@ -27,7 +27,7 @@ namespace Onboarding
                    DocumentTypeId = o.Document.Id.ToString()
                })));
 
-            CreateMap<PersonalDataViewModel, PersonalData>()
+            CreateMap<PersonalDataPatchViewModel, PersonalData>()
                 .ForMember(x => x.MaritalStatus, config => config.Ignore())
                 .ForMember(x => x.Gender, config => config.Ignore())
                 .ForMember(x => x.BirthState, config => config.Ignore())
