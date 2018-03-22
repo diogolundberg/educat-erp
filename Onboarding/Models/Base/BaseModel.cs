@@ -12,6 +12,7 @@ namespace Onboarding.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [JsonProperty(PropertyName = "id")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string ExternalId { get; set; }
 
