@@ -619,11 +619,15 @@
       },
     },
     async mounted() {
-      await this.$store.dispatch("getEnrollment", this.id);
+      try {
+        await this.$store.dispatch("getEnrollment", this.id);
 
-      Object.assign(this.data, this.$store.getters.enrollment.data);
-      Object.assign(this.options, this.$store.getters.enrollment.options);
-      this.step = this.$store.getters.enrollment.sendBy ? 2 : 1;
+        Object.assign(this.data, this.$store.getters.enrollment.data);
+        Object.assign(this.options, this.$store.getters.enrollment.options);
+        this.step = this.$store.getters.enrollment.sendBy ? 2 : 1;
+      } catch (ex) {
+        this.$router.push("/404");
+      }
     },
     methods: {
       async save() {

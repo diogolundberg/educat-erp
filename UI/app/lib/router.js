@@ -39,6 +39,7 @@ const router = new VueRouter({
     {
       path: "*",
       component: lazy("NotFound"),
+      meta: { open: true },
     },
   ],
 });
