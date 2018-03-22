@@ -6,7 +6,7 @@
         :complete="value > step.id"
         :title="step.name"
         :key="step.id"
-        :class="{ pointer: value > step.id }"
+        class="pointer"
         @click="$emit('input', step.id)" />
       <hr
         v-if="step.id < steps.length"
