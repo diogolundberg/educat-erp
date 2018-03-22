@@ -18,9 +18,13 @@
         @click="focus = true">
       <label
         v-if="!focus"
-        :class="{ nudge: focus || value }"
+        :class="{
+          nudge: nudge,
+          red: !nudge && allErrors.length,
+          dim: nudge || !allErrors.length,
+        }"
         :for="`fld${_uid}`"
-        class="py2 absolute top-0 left-0 bounce h5 dim noclick">
+        class="py2 absolute top-0 left-0 bounce h5 noclick">
         {{ label }}
       </label>
       <span
@@ -146,6 +150,9 @@
         return [
           this.required && !this.value && "Campo obrigatório",
         ].filter(a => a && this.validate);
+      },
+      nudge() {
+        return this.focus || this.value;
       },
     },
     watch: {

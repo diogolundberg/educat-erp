@@ -302,7 +302,6 @@
         </Card>
       </Step>
       <Step
-        v-if="false"
         :disabled="data.sendBy"
         title="Dados Financeiros"
         description="Aqui você insere seus dados de pagamento.">
