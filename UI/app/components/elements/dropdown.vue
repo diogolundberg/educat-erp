@@ -46,7 +46,7 @@
           @blur="onBlur">
         <div
           ref="optionBox"
-          class="overflow-scroll">
+          class="overflow-auto hide-scroll">
           <div
             v-for="opt in filteredOptions"
             :key="opt[idField]"
