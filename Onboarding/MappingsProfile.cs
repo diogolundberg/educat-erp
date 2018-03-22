@@ -11,10 +11,17 @@ namespace Onboarding
         {
             CreateMap<Enrollment, EnrollmentViewModel>();
 
+            CreateMap<FinanceData, FinanceDataViewModel>();
+            CreateMap<FinanceDataViewModel, FinanceData>();
+
             CreateMap<PersonalData, PersonalDataViewModel>()
                 .ForMember(x => x.Disabilities, config => config.MapFrom(x => x.PersonalDataDisabilities.Select(o => o.DisabilityId)))
                 .ForMember(x => x.SpecialNeeds, config => config.MapFrom(x => x.PersonalDataSpecialNeeds.Select(o => o.SpecialNeedId)))
-                .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => o.Document.Link)));
+                .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => new DocumentViewModel
+                {
+                    ExternalId = o.Document.ExternalId,
+                    DocumentTypeId = o.Document.DocumentTypeId
+                })));
 
             CreateMap<PersonalDataViewModel, PersonalData>()
                 .ForMember(x => x.MaritalStatus, config => config.Ignore())
@@ -31,8 +38,14 @@ namespace Onboarding
                                                 .MapFrom(cm => cm.Disabilities.Select(x => new PersonalDataDisability { DisabilityId = x })))
                 .ForMember(x => x.PersonalDataSpecialNeeds, config => config
                                                 .MapFrom(cm => cm.SpecialNeeds.Select(x => new PersonalDataSpecialNeed { SpecialNeedId = x })))
-                .ForMember(x => x.PersonalDataDocuments, config => config
-                                                .MapFrom(cm => cm.Documents.Select(x => new PersonalDataDocument { Document = new Document { Link = x } })));
+                .ForMember(x => x.PersonalDataDocuments, config => config.MapFrom(cm => cm.Documents.Select(x => new PersonalDataDocument
+                {
+                    Document = new Document
+                    {
+                        ExternalId = x.ExternalId,
+                        DocumentTypeId = x.DocumentTypeId
+                    }
+                })));
 
         }
     }
