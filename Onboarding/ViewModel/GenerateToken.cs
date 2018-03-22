@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Onboarding.Validations;
 
 namespace Onboarding.ViewModel
 {
@@ -18,6 +19,7 @@ namespace Onboarding.ViewModel
         public string Email { get; set; }
 
         [Required]
+        [Cpf]
         public string CPF { get; set; }
 
         [Required]

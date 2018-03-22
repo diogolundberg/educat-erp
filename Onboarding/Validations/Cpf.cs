@@ -7,9 +7,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Onboarding.Validations
 {
-    public class CpfValidationAtributte : ValidationAttribute, IClientModelValidator
+    public class Cpf : ValidationAttribute, IClientModelValidator
     {
-        public CpfValidationAtributte() { }
+        public Cpf() { }
 
         public override bool IsValid(object value)
         {
