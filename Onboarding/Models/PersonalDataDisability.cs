@@ -7,18 +7,16 @@ namespace Onboarding.Models
 {
     public class PersonalDataDisability
     {
-        [Required]
-        public Guid DisabilityId { get; set; }
+        [ForeignKey("Disability")]
+        public int DisabilityId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("DisabilityId")]
         public virtual Disability Disability { get; set; }
 
-        [Required]
-        public Guid PersonalDataId { get; set; }
+        [ForeignKey("PersonalData")]
+        public int PersonalDataId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("PersonalDataId")]
         public virtual PersonalData PersonalData { get; set; }
     }
 }

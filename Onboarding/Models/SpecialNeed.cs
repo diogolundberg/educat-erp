@@ -10,10 +10,10 @@ namespace Onboarding.Models
         [Required]
         public string Name { get; set; }
 
-        public Guid DisabilityId { get; set; }
+        [ForeignKey("Disability")]
+        public int DisabilityId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("DisabilityId")]
         public virtual Disability Disability { get; set; }
     }
 }

@@ -1,20 +1,22 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Newtonsoft.Json;
 
 namespace Onboarding.Models
 {
     public class Enrollment : BaseModel
     {
-        public Enrollment ()
+        public Enrollment()
         {
         }
 
         public virtual PersonalData PersonalData { get; set; }
 
-        public DateTime? SendBy { get; set; }
+        public virtual FinanceData FinanceData { get; set; }
+
+        public DateTime? SendDate { get; set; }
+
+        public bool AcademicApproval { get; set; }
+
+        public bool FinanceApproval { get; set; }
     }
 }
 

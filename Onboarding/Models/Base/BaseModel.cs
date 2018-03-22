@@ -1,16 +1,20 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
 namespace Onboarding.Models
 {
     public class BaseModel : ICloneable
     {
-        public int ExternalId{ get; set; }
-
         [Key]
-        public Guid Id { get; set; }
-        
+        [JsonIgnore]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public string ExternalId { get; set; }
+
         [JsonIgnore]
         public DateTime CommittedAt { get; set; }
 
@@ -26,6 +30,11 @@ namespace Onboarding.Models
         public object Clone()
         {
             return this.MemberwiseClone();
+        }
+
+        public virtual string CreateExternalId()
+        {
+            return Guid.NewGuid().ToString();
         }
     }
 }

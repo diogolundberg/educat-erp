@@ -10,10 +10,10 @@ namespace Onboarding.Models
         [Required]
         public string Name { get; set; }
 
-        public Guid StateId { get; set; }
+        [ForeignKey("State")]
+        public int StateId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("StateId")]
         public virtual State State { get; set; }
     }
 }

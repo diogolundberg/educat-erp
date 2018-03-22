@@ -6,58 +6,61 @@ namespace Onboarding.Models
 {
     public class DatabaseContext : DbContext
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options)
-            : base(options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
-            
+
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            modelBuilder.Entity<PersonalDataDisability>().HasKey(t => new { t.PersonalDataId, t.DisabilityId });
-            modelBuilder.Entity<PersonalDataSpecialNeed>().HasKey(t => new { t.PersonalDataId, t.SpecialNeedId });
-            modelBuilder.Entity<PersonalDataDocument>().HasKey(t => new { t.PersonalDataId, t.DocumentId });
+            base.OnModelCreating(builder);
 
-            modelBuilder.Entity<PersonalDocument>().HasBaseType<DocumentType>();
-            modelBuilder.Entity<ResponsibleDocument>().HasBaseType<DocumentType>();
-            modelBuilder.Entity<GuarantorDocument>().HasBaseType<DocumentType>();
+            builder.Entity<PersonalDataDisability>().HasKey(t => new { t.PersonalDataId, t.DisabilityId });
+            builder.Entity<PersonalDataSpecialNeed>().HasKey(t => new { t.PersonalDataId, t.SpecialNeedId });
+            builder.Entity<PersonalDataDocument>().HasKey(t => new { t.PersonalDataId, t.DocumentId });
+
+            builder.Entity<PersonalDocument>().HasBaseType<DocumentType>();
+            builder.Entity<ResponsibleDocument>().HasBaseType<DocumentType>();
+            builder.Entity<GuarantorDocument>().HasBaseType<DocumentType>();
+
+            builder.Entity<RepresentativePerson>().HasBaseType<Representative>();
+            builder.Entity<RepresentativeCompany>().HasBaseType<Representative>();
         }
 
-        public override int SaveChanges()  
+        public override int SaveChanges()
         {
             foreach (var auditableEntity in ChangeTracker.Entries<BaseModel>())
             {
+                auditableEntity.Entity.ExternalId = !string.IsNullOrEmpty(auditableEntity.Entity.ExternalId) ? auditableEntity.Entity.ExternalId : auditableEntity.Entity.CreateExternalId();
+
                 if (auditableEntity.State == EntityState.Added)
                 {
                     auditableEntity.Entity.Active = true;
                     auditableEntity.Entity.CommitedBy = "";
                     auditableEntity.Entity.CommittedAt = DateTime.Now;
-                }                    
+                }
             }
 
-            try
-            {
-                return base.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return base.SaveChanges();
         }
 
-        public DbSet<AddressKind> AddressKinds { get; set; }  
-        public DbSet<MaritalStatus> MaritalStatuses { get; set; }  
+        public DbSet<AddressKind> AddressKinds { get; set; }
+        public DbSet<MaritalStatus> MaritalStatuses { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Disability> Disabilities { get; set; }
-        public DbSet<Enrollment> Enrollments { get; set; }
-        public DbSet<Gender> Genders {get;set;}
+        public DbSet<Gender> Genders { get; set; }
         public DbSet<Race> Races { get; set; }
         public DbSet<HighSchoolKind> HighSchoolKinds { get; set; }
         public DbSet<State> States { get; set; }
-        public DbSet<City> Cities { get; set;}
+        public DbSet<City> Cities { get; set; }
         public DbSet<SpecialNeed> SpecialNeeds { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<Document> Documents { get; set; }
-             
+
+        public DbSet<PersonalData> PersonalDatas { get; set; }
+        public DbSet<FinanceData> FinanceDatas { get; set; }
+        public DbSet<Representative> Representatives { get; set; }
+        public DbSet<Guarantor> Guarantors { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
     }
 }

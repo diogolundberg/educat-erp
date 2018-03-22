@@ -7,18 +7,16 @@ namespace Onboarding.Models
 {
     public class PersonalDataSpecialNeed
     {
-        [Required]
-        public Guid SpecialNeedId { get; set; }
+        [ForeignKey("SpecialNeed")]
+        public int SpecialNeedId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("SpecialNeedId")]
         public virtual SpecialNeed SpecialNeed { get; set; }
 
-        [Required]
-        public Guid PersonalDataId { get; set; }
+        [ForeignKey("PersonalData")]
+        public int PersonalDataId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("PersonalDataId")]
         public virtual PersonalData PersonalData { get; set; }
     }
 }

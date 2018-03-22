@@ -14,7 +14,6 @@ namespace Onboarding.Models
         [Required]
         public string Name { get; set; }
 
-        [JsonIgnore]
         public virtual IEnumerable<SpecialNeed> SpecialNeeds { get; set; }
     } 
 }

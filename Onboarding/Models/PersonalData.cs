@@ -44,69 +44,68 @@ namespace Onboarding.Models
 
         public string Handicap { get; set; }
 
-        public Guid? GenderId { get; set; }
+        [ForeignKey("Gender")]
+        public int? GenderId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("GenderId")]
         public virtual Gender Gender { get; set; }
 
-        public Guid? MaritalStatusId { get; set; }
+        [ForeignKey("MaritalStatus")]
+        public int? MaritalStatusId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("MaritalStatusId")]
         public virtual MaritalStatus MaritalStatus { get; set; }
 
         public string BirthCity { get; set; }
 
-        public Guid? BirthStateId { get; set; }
+        [ForeignKey("BirthState")]
+        public int? BirthStateId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("BirthStateId")]
         public virtual State BirthState { get; set; }
 
-        public Guid? BirthCountryId { get; set; }
+        [ForeignKey("BirthCountry")]
+        public int? BirthCountryId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("BirthCountryId")]
         public virtual Country BirthCountry { get; set; }
 
-        public Guid? HighSchoolGraduationCountryId { get; set; }
+        [ForeignKey("HighSchoolGraduationCountry")]
+        public int? HighSchoolGraduationCountryId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("HighSchoolGraduationCountryId")]
         public virtual Country HighSchoolGraduationCountry { get; set; }
 
         public string City { get; set; }
 
-        public Guid? StateId { get; set; }
+        [ForeignKey("State")]
+        public int? StateId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("StateId")]
         public virtual State State { get; set; }
 
-        public Guid? AddressKindId { get; set; }
+        [ForeignKey("AddressKind")]
+        public int? AddressKindId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("AddressKindId")]
         public virtual AddressKind AddressKind { get; set; }
 
-        public Guid? RaceId { get; set; }
+        [ForeignKey("Race")]
+        public int? RaceId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("RaceId")]
         public virtual Race Race { get; set; }
 
-        public Guid? HighSchoolKindId { get; set; }
+        [ForeignKey("HighSchoolKind")]
+        public int? HighSchoolKindId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("HighSchoolKindId")]
         public virtual HighSchoolKind HighSchollKind { get; set; }
 
-
-        public Guid EnrollmentId { get; set; }
+        [ForeignKey("Enrollment")]
+        public int? EnrollmentId { get; set; }
 
         [JsonIgnore]
-        [ForeignKey("EnrollmentId")]
         public virtual Enrollment Enrollment { get; set; }
 
         public virtual ICollection<PersonalDataSpecialNeed> PersonalDataSpecialNeeds { get; set; }
