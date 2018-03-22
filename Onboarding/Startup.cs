@@ -39,7 +39,7 @@ namespace Onboarding
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
-            services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["ONBOARDING_DATABASE_CONNECTION"]));
+            services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer("Server=tcp:cmmg-development.database.windows.net,1433;Initial Catalog=onboarding;Persist Security Info=False;User ID=cmmg;Password=Triangulo31;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 
             services.AddScoped<IRavenClient, RavenClient>((s) => {
 
@@ -97,9 +97,8 @@ namespace Onboarding
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                DatabaseInitializer.Seed(app);
             }
-
-            DatabaseInitializer.Seed(app);
 
             app.UseCors("MyPolicy");
 
