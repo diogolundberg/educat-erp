@@ -31,9 +31,9 @@ namespace SSO
         [HttpPost("", Name = "SSO/TOKEN")]
         public IActionResult RequestToken([FromBody]TokenRequest request)
         {
-            if (_userRepository.List().Any(x=>x.Email.ToLower() == request.Username && x.Password == request.Password))
+            if (_userRepository.List().Any(x => x.Email.ToLower() == request.Username && x.Password == request.Password))
             {
-                var claims = new [] { new Claim(ClaimTypes.Name, request.Username) };
+                var claims = new[] { new Claim(ClaimTypes.Name, request.Username) };
 
                 SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SECURITY_KEY"]));
                 SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

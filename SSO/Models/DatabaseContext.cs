@@ -8,7 +8,7 @@ namespace SSO.Models
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -17,7 +17,7 @@ namespace SSO.Models
             modelBuilder.Entity<UserGroup>().HasKey(t => new { t.UserId, t.GroupId });
         }
 
-        public override int SaveChanges()  
+        public override int SaveChanges()
         {
             foreach (var auditableEntity in ChangeTracker.Entries<BaseModel>())
             {
@@ -26,7 +26,7 @@ namespace SSO.Models
                     auditableEntity.Entity.Active = true;
                     auditableEntity.Entity.CommitedBy = "";
                     auditableEntity.Entity.CommittedAt = DateTime.Now;
-                }                    
+                }
             }
 
             try
@@ -37,7 +37,7 @@ namespace SSO.Models
             {
                 throw ex;
             }
-        } 
+        }
 
         public DbSet<User> Users { get; set; }
 

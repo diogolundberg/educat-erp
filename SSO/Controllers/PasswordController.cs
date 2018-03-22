@@ -19,7 +19,7 @@ namespace SSO.Controllers
         private readonly DatabaseContext _context;
         private readonly BaseRepository<User> _userRepository;
         private readonly TokenHelper _tokenHelper;
-        
+
         public PasswordController(DatabaseContext context, IConfiguration configuration)
         {
             _context = context;
@@ -31,19 +31,19 @@ namespace SSO.Controllers
         [HttpGet("New", Name = "SSO/PASSWORD/NEW")]
         public IActionResult NewPassword(string email)
         {
-            if(string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(email))
             {
                 return BadRequest();
-            }            
-            
+            }
+
             User user = _userRepository.List().FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
 
-            if(user == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            ResetToken resetToken = new ResetToken { UserId = user.Id , Expirated = DateTimeOffset.Now.AddHours(2) };
+            ResetToken resetToken = new ResetToken { UserId = user.Id, Expirated = DateTimeOffset.Now.AddHours(2) };
             string token = _tokenHelper.Generate<ResetToken>(resetToken);
 
             SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"],
@@ -57,7 +57,7 @@ namespace SSO.Controllers
             smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_RESET_PASSWORD"]),
                                 new MailAddress(email),
                                 body,
-                                subject);                                                            
+                                subject);
 
             return new OkResult();
         }
@@ -65,21 +65,21 @@ namespace SSO.Controllers
         [HttpPost("New", Name = "SSO/PASSWORD/NEW")]
         public IActionResult NewPassword([FromQuery]string token, [FromBody]User obj)
         {
-            if(User == null || string.IsNullOrEmpty(token))
+            if (User == null || string.IsNullOrEmpty(token))
             {
                 return BadRequest();
             }
 
             ResetToken resetToken = _tokenHelper.GetObject<ResetToken>(token);
 
-            if(!resetToken.IsValid())
+            if (!resetToken.IsValid())
             {
                 return BadRequest();
             }
 
             User user = _userRepository.GetById(resetToken.UserId);
 
-            if(user == null)
+            if (user == null)
             {
                 return NotFound();
             }

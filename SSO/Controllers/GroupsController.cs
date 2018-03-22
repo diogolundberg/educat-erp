@@ -32,7 +32,7 @@ namespace SSO.Controllers
         public IActionResult GetById([FromQuery]int id)
         {
             Group item = _groupRepository.GetById(id);
-            
+
             if (item == null)
             {
                 return NotFound();
@@ -40,7 +40,7 @@ namespace SSO.Controllers
 
             return new ObjectResult(item);
         }
-        
+
         [HttpPost("", Name = "SSO/GROUPS/NEW")]
         public IActionResult Create([FromBody]Group obj)
         {
@@ -48,7 +48,7 @@ namespace SSO.Controllers
 
             return new ObjectResult(obj);
         }
-        
+
         [HttpPut("{id}", Name = "SSO/GROUPS/EDIT")]
         public IActionResult Update(int id, [FromBody]Group obj)
         {
@@ -72,7 +72,7 @@ namespace SSO.Controllers
 
             return new OkResult();
         }
-        
+
         [HttpDelete("{id}", Name = "SSO/GROUPS/DELETE")]
         public IActionResult Delete(int id)
         {
@@ -82,7 +82,7 @@ namespace SSO.Controllers
             {
                 return NotFound();
             }
-            
+
             _groupRepository.Delete(obj);
 
             return new OkResult();

@@ -41,7 +41,8 @@ namespace SSO
 
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["SSO_DATABASE_CONNECTION"]));
 
-            services.AddScoped<IRavenClient, RavenClient>((s) => {
+            services.AddScoped<IRavenClient, RavenClient>((s) =>
+            {
 
                 RavenClient rc = new RavenClient(Configuration["SENTRY_API"], s.GetRequiredService<IHttpContextAccessor>())
                 {
@@ -113,8 +114,8 @@ namespace SSO
                 {
                     using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                     {
-                        IRavenClient ravenClient = serviceScope.ServiceProvider.GetService<IRavenClient>();  
-                        
+                        IRavenClient ravenClient = serviceScope.ServiceProvider.GetService<IRavenClient>();
+
                         builder.Run(async context =>
                         {
                             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -132,7 +133,7 @@ namespace SSO
                                     Message = ex.Error.Message
                                 });
 
-                                await context.Response.Body.WriteAsync(Encoding.ASCII.GetBytes(err),0,err.Length).ConfigureAwait(false);
+                                await context.Response.Body.WriteAsync(Encoding.ASCII.GetBytes(err), 0, err.Length).ConfigureAwait(false);
                             }
                         });
                     }

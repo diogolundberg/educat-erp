@@ -5,11 +5,11 @@ namespace SSO.Models
 {
     public class Feature : BaseModel
     {
-        public Feature ()
+        public Feature()
         {
             GroupFeatures = new HashSet<GroupFeature>();
         }
-        
+
         [Required]
         public string Grant { get; set; }
 

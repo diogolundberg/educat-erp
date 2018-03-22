@@ -27,11 +27,11 @@ namespace SSO.Controllers
             return _userRepository.List();
         }
 
-        [HttpGet("{id}",Name = "SSO/USERS/GET")]
+        [HttpGet("{id}", Name = "SSO/USERS/GET")]
         public IActionResult GetById(int id)
         {
             User item = _userRepository.GetById(id);
-            
+
             if (item == null)
             {
                 return NotFound();
@@ -80,10 +80,10 @@ namespace SSO.Controllers
             {
                 return NotFound();
             }
-            
+
             _userRepository.Delete(obj);
 
             return new OkResult();
-        }       
+        }
     }
 }

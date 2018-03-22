@@ -5,7 +5,7 @@ namespace SSO.Models
 {
     public class User : BaseModel
     {
-        public User ()
+        public User()
         {
             UserGroups = new HashSet<UserGroup>();
         }

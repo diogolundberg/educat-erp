@@ -14,5 +14,5 @@ namespace SSO.Models
         public string Name { get; set; }
 
         public virtual ICollection<GroupFeature> Permissions { get; set; }
-    }    
+    }
 }

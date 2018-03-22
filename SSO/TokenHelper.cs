@@ -7,7 +7,7 @@ namespace SSO
 {
     public class TokenHelper
     {
-        public TokenHelper ()
+        public TokenHelper()
         {
 
         }
@@ -21,11 +21,11 @@ namespace SSO
             return token;
         }
 
-        public T GetObject<T> (string token)
+        public T GetObject<T>(string token)
         {
             byte[] data = Convert.FromBase64String(token);
             string enrollmentTokenJson = Encoding.ASCII.GetString(data);
-            return JsonConvert.DeserializeObject<T>(enrollmentTokenJson);    
+            return JsonConvert.DeserializeObject<T>(enrollmentTokenJson);
         }
     }
 }

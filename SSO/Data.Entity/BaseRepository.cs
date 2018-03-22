@@ -22,7 +22,7 @@ namespace SSO.Data.Entity
 
         public virtual IEnumerable<TEntity> List()
         {
-           return _context.Set<TEntity>().Where(x => x.Active);
+            return _context.Set<TEntity>().Where(x => x.Active);
         }
 
         public virtual TEntity GetById(int id)
@@ -33,13 +33,13 @@ namespace SSO.Data.Entity
         public virtual TEntity GetById(Guid id)
         {
             return _context.Set<TEntity>().FirstOrDefault(x => x.Active && x.Id == id);
-        }        
+        }
 
         public virtual void Add(TEntity obj, bool? saveChanges = true)
         {
             TEntity last = _context.Set<TEntity>().OrderByDescending(x => x.ExternalId).FirstOrDefault();
-            
-            obj.ExternalId =  last != null ? last.ExternalId + 1 : 1;
+
+            obj.ExternalId = last != null ? last.ExternalId + 1 : 1;
             obj.State = EntityState.Added.ToString();
             obj.Id = Guid.NewGuid();
 

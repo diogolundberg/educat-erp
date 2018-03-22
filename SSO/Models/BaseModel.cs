@@ -7,7 +7,7 @@ namespace SSO.Models
 {
     public class BaseModel : ICloneable
     {
-        public int ExternalId{ get; set; }
+        public int ExternalId { get; set; }
 
         [Key]
         public Guid Id { get; set; }

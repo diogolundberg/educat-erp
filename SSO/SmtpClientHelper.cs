@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using System.Net.Mail;
 
-namespace SSO 
+namespace SSO
 {
     public class SmtpClientHelper
     {
@@ -21,11 +21,11 @@ namespace SSO
 
         public void Send(MailAddress from, MailAddress to, string body, string subject)
         {
-            using(SmtpClient smtpClient = new SmtpClient(SmtpHost, Port))
+            using (SmtpClient smtpClient = new SmtpClient(SmtpHost, Port))
             {
                 smtpClient.UseDefaultCredentials = false;
                 smtpClient.Credentials = new NetworkCredential(Username, Password);
-                
+
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = from;
                 mailMessage.To.Add(to);
