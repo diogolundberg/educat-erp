@@ -38,8 +38,8 @@ namespace Onboarding
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
-            services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer("Server=tcp:cmmg-development.database.windows.net,1433;Initial Catalog=onboarding;Persist Security Info=False;User ID=cmmg;Password=Triangulo31;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+
+            services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["ONBOARDING_DATABASE_CONNECTION"]));
 
             services.AddScoped<IRavenClient, RavenClient>((s) => {
 
@@ -88,7 +88,7 @@ namespace Onboarding
             {
                 c.SwaggerDoc("v1", new Info { Title = "ONBOARDING", Version = "v1" });
             });
-            
+
             services.AddAutoMapper(x=> x.AddProfile(new MappingsProfile()));
         }
 
@@ -116,7 +116,7 @@ namespace Onboarding
                 {
                     using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                     {
-                        IRavenClient ravenClient = serviceScope.ServiceProvider.GetService<IRavenClient>();  
+                        IRavenClient ravenClient = serviceScope.ServiceProvider.GetService<IRavenClient>();
 
                         builder.Run(async context =>
                         {
