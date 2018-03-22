@@ -21,8 +21,12 @@
         @blur="focus = false; validate = true">
       <label
         :for="`fld${_uid}`"
-        :class="{ nudge: focus || (value && value.length) }"
-        class="py2 absolute top-0 left-0 bounce h5 dim noclick"
+        :class="{
+          nudge: focused,
+          red: !focused && allErrors.length,
+          dim: focused || !allErrors.length,
+        }"
+        class="py2 absolute top-0 left-0 bounce h5 noclick"
         v-text="label" />
       <template v-if="hint">
         <label class="block dim h7">{{ hint }}</label>
@@ -120,6 +124,9 @@
           this.required && this.length < this.minSize && "Valor inválido",
           this.email && !(/^.+@.+\..+$/.test(this.value)) && "E-mail inválido",
         ].filter(a => a && this.validate);
+      },
+      focused() {
+        return this.focus || (this.value && this.value.length);
       },
     },
     methods: {
