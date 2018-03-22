@@ -15,5 +15,5 @@ namespace Onboarding.Models
         public string Name { get; set; }
 
         public virtual IEnumerable<SpecialNeed> SpecialNeeds { get; set; }
-    } 
+    }
 }

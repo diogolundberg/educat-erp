@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using System.Net.Mail;
 
-namespace Onboarding 
+namespace Onboarding
 {
     public class SmtpClientHelper
     {
@@ -25,7 +25,7 @@ namespace Onboarding
             {
                 smtpClient.UseDefaultCredentials = false;
                 smtpClient.Credentials = new NetworkCredential(Username, Password);
-                
+
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = from;
                 mailMessage.To.Add(to);

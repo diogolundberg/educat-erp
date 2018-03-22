@@ -11,5 +11,5 @@ namespace Onboarding.Models
 
         [Required]
         public string Name { get; set; }
-    } 
+    }
 }

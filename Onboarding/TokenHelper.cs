@@ -25,7 +25,7 @@ namespace Onboarding
         {
             byte[] data = Convert.FromBase64String(token);
             string enrollmentTokenJson = Encoding.ASCII.GetString(data);
-            return JsonConvert.DeserializeObject<T>(enrollmentTokenJson);    
+            return JsonConvert.DeserializeObject<T>(enrollmentTokenJson);
         }
     }
 }
