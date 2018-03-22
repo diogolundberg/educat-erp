@@ -279,6 +279,11 @@
                   :options="options.documentTypes"
                   label="CPF ou CNPJ" />
                 <InputBox
+                  v-if="data.responsible.documenttype == null"
+                  :size="3"
+                  disabled
+                  label="Documento" />
+                <InputBox
                   v-model="data.responsible.cpf"
                   v-if="data.responsible.documenttype == 'CPF'"
                   :size="3"
@@ -331,6 +336,11 @@
                   :size="3"
                   :options="options.documentTypes"
                   label="CPF ou CNPJ" />
+                <InputBox
+                  v-if="data.guarantor.documenttype == null"
+                  :size="3"
+                  disabled
+                  label="Documento" />
                 <InputBox
                   v-model="data.guarantor.cpf"
                   v-if="data.guarantor.documenttype == 'CPF'"
