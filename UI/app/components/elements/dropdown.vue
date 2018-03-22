@@ -15,8 +15,7 @@
         readonly
         class="m0 py2 border-none ease h5 w100 bg-transparent"
         @focus="focus = true"
-        @click="focus = true"
-        @blur="onBlur">
+        @click="focus = true">
       <label
         v-if="!focus"
         :class="{ nudge: focus || value }"
@@ -31,15 +30,28 @@
       </span>
       <Outside
         v-if="focus"
-        class="absolute top-0 bg-white shadow1 w100 z2 overflow-scroll height-1"
+        class="absolute top-0 bg-white shadow1 w100 z2 height-1 flex
+          flex-column"
         @click="focus = false">
+        <input
+          v-model="search"
+          v-el-focus
+          type="text"
+          class="m0 p2 border-none h5 fit bg-transparent"
+          placeholder="Busca..."
+          @blur="onBlur">
         <div
-          v-for="opt in options"
-          :key="opt[idField]"
-          :class="{ 'bg-silver': choice === opt }"
-          class="p2 pointer h-bg-silver"
-          @click="pick(opt)">
-          {{ opt[labelField] }}
+          ref="optionBox"
+          class="overflow-scroll">
+          <div
+            v-for="opt in filteredOptions"
+            :key="opt[idField]"
+            :class="{ 'bg-silver': choice === opt }"
+            :data-selected="choice === opt"
+            class="p2 pointer h-bg-silver"
+            @click="pick(opt)">
+            {{ opt[labelField] }}
+          </div>
         </div>
       </Outside>
       <label
@@ -110,9 +122,14 @@
       return {
         focus: false,
         validate: false,
+        search: "",
       };
     },
     computed: {
+      filteredOptions() {
+        const query = this.search.toLowerCase();
+        return this.options.filter(a => a.name.toLowerCase().includes(query));
+      },
       choice() {
         return this.options.find(a => a[this.idField] === this.value);
       },
@@ -131,6 +148,12 @@
         ].filter(a => a && this.validate);
       },
     },
+    watch: {
+      focus() {
+        this.search = "";
+        this.focusSelected();
+      },
+    },
     methods: {
       pick(option) {
         this.focus = false;
@@ -141,6 +164,15 @@
         setTimeout(() => {
           this.focus = false;
         }, 150);
+      },
+      focusSelected() {
+        this.$nextTick(() => {
+          const selected = this.$el.querySelector("[data-selected]");
+          if (selected) {
+            const top = selected.offsetTop - selected.offsetHeight;
+            this.$refs.optionBox.scrollTop = top;
+          }
+        });
       },
     },
   };

@@ -4,7 +4,7 @@
       <div class="flex items-center">
         <Icon name="clock" />
         <div class="mx2 px2 border-white-50 border-left inline-block h6">
-          Olá, <strong>{{ data.name }}</strong><br>
+          Olá, <strong>{{ data.personalData.realName }}</strong><br>
           <template v-if="data.deadline">
             O seu processo de matrícula se encerra em {{ daysRemaining }} dias.
           </template>
@@ -95,9 +95,10 @@
                 required
                 label="UF de Nascimento" />
               <DropDown
-                v-model="data.personalData.birthCityId"
+                v-model="data.personalData.birthCity"
                 :size="3"
                 :options="birthCities"
+                key-id="name"
                 required
                 label="Naturalidade"
                 hint="Cidade de Nascimento" />
@@ -152,7 +153,7 @@
                 mask="#####-###"
                 hint="Ex: 30100-000" />
               <DropDown
-                v-model="data.personalData.addressTypeId"
+                v-model="data.personalData.addressKindId"
                 :size="3"
                 :options="options.addressKinds"
                 required
@@ -221,7 +222,7 @@
               class="flex gutters flex-wrap">
               <h4>Selecione:</h4>
               <CheckGroup
-                v-model="data.personalData.personalDataDisabilities"
+                v-model="data.personalData.disabilities"
                 :options="options.disabilities" />
             </div>
           </Fieldset>
@@ -535,8 +536,8 @@
             addressKindId: null,
             raceId: null,
             highSchoolKindId: null,
-            personalDataSpecialNeeds: [],
-            personalDataDisabilities: [],
+            specialNeeds: [],
+            disabilities: [],
           },
           responsible: {
             documenttype: null,
