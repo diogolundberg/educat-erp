@@ -55,7 +55,7 @@ namespace Onboarding.Controllers
             _tokenHelper = new TokenHelper();
         }
 
-        [HttpGet("{token}")]
+        [HttpGet("{token}", Name = "ONBOARDING/ENROLLMENTS/GET")]
         public dynamic Get(string token)
         {
             if (string.IsNullOrEmpty(token))
@@ -160,37 +160,24 @@ namespace Onboarding.Controllers
 
             foreach (EnrollmentParameterObj enrollmentParameterObj in obj.List)
             {
-                Enrollment enrollment = new Enrollment { };
+                Enrollment enrollment = new Enrollment { 
+                    PersonalData = new PersonalData {
+                        RealName = enrollmentParameterObj.Name,
+                        Email = enrollmentParameterObj.Email,
+                        CPF = enrollmentParameterObj.CPF,
+                    }
+                };
 
                 _enrollmentRepository.Add(enrollment);
 
-                PersonalData personalData = new PersonalData
-                {
-                    RealName = enrollmentParameterObj.Name,
-                    Email = enrollmentParameterObj.Email,
-                    CPF = enrollmentParameterObj.CPF,
-                    EnrollmentId = enrollment.Id
-                };
-
-                _personalDataRepository.Add(personalData);
-
-                EnrollmentToken enrollmentToken = new EnrollmentToken
-                {
-                    ExternalId = enrollment.ExternalId,
-                    End = obj.End,
-                    Start = obj.Start,
-                };
-
-                string token = _tokenHelper.Generate<EnrollmentToken>(enrollmentToken);
-
                 SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"], _configuration["SMTP_HOST"], _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
 
-                string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + token);
+                string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + enrollment.ExternalId);
                 string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
 
                 smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]), new MailAddress(enrollmentParameterObj.Email), body, subject);
 
-                responseObj.Add(string.Format("{0} - {1}", enrollmentParameterObj.Email, token));
+                responseObj.Add(string.Format("{0} - {1}", enrollmentParameterObj.Email, enrollment.ExternalId));
             }
 
             return new OkObjectResult(responseObj);

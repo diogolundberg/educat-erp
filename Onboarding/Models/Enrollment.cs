@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 
 namespace Onboarding.Models
 {
@@ -17,6 +18,12 @@ namespace Onboarding.Models
         public bool AcademicApproval { get; set; }
 
         public bool FinanceApproval { get; set; }
+
+        public override string CreateExternalId()
+        {
+            string semester = DateTime.Now.Month > 6 ? "2" : "1";
+            return DateTime.Now.Year  + semester + Regex.Replace(PersonalData.CPF, @"\D" , string.Empty); ;
+        }
     }
 }
 
