@@ -35,27 +35,27 @@ namespace Onboarding.ViewModel
 
         public string Handicap { get; set; }
 
-        public Guid? GenderId { get; set; }
+        public string GenderId { get; set; }
 
-        public Guid? MaritalStatusId { get; set; }
+        public string MaritalStatusId { get; set; }
 
         public string BirthCity { get; set; }
 
-        public Guid? BirthStateId { get; set; }
+        public string BirthStateId { get; set; }
 
-        public Guid? BirthCountryId { get; set; }
+        public string BirthCountryId { get; set; }
 
-        public Guid? HighSchoolGraduationCountryId { get; set; }
+        public string HighSchoolGraduationCountryId { get; set; }
 
         public string City { get; set; }
 
-        public Guid? StateId { get; set; }
+        public string StateId { get; set; }
 
-        public Guid? AddressKindId { get; set; }
+        public string AddressKindId { get; set; }
 
-        public Guid? RaceId { get; set; }
+        public string RaceId { get; set; }
 
-        public Guid? HighSchoolKindId { get; set; }
+        public string HighSchoolKindId { get; set; }
 
         public IEnumerable<string> Disabilities { get; set; }
 
