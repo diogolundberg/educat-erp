@@ -14,8 +14,8 @@
         type="text"
         readonly
         class="m0 py2 border-none ease h5 w100 bg-transparent"
-        @focus="focus = true"
-        @click="focus = true">
+        @focus="$nextTick(() => focus = true)"
+        @click="$nextTick(() => focus = true)">
       <label
         v-if="!focus"
         :class="{
