@@ -37,6 +37,11 @@ const router = new VueRouter({
       },
     },
     {
+      path: "/403",
+      component: lazy("NotAuthorized"),
+      meta: { open: true },
+    },
+    {
       path: "*",
       component: lazy("NotFound"),
       meta: { open: true },
