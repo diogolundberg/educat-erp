@@ -22,6 +22,7 @@
         class="max-width-4 m-auto">
         <Step
           :disabled="data.sendDate"
+          :complete="data.personalData.state === 'valid'"
           title="Seus Dados"
           description="Preencha seus dados pessoais">
           <Card
@@ -270,6 +271,7 @@
         </Step>
         <Step
           :disabled="data.sendDate"
+          :complete="data.financeData && data.financeData.state == 'valid'"
           title="Dados Financeiros"
           description="Aqui você insere seus dados de pagamento.">
           <Card
@@ -515,6 +517,7 @@
         </Step>
         <Step
           v-if="data.sendDate"
+          complete
           title="Aguardando Aprovação"
           description="A secretaria e o departamento financeiro estão analisando
             seus documentos">
@@ -529,10 +532,12 @@
           </Card>
         </Step>
         <Step
+          :complete="data.academicApproval"
           title="Aprovação da Secretaria"
           description="A secretaria irá analisar seus documentos para aprovar
             sua matrícula." />
         <Step
+          :complete="data.financeApproval"
           title="Aprovação do Financeiro"
           description="O financeiro irá analisar sua matrícula para aprovar
             sua matrícula." />
@@ -564,6 +569,7 @@
         data: {
           deadline: null,
           personalData: {
+            state: "empty",
             realName: null,
             assumedName: null,
             birthDate: null,
@@ -592,6 +598,9 @@
             highSchoolKindId: null,
             specialNeeds: [],
             disabilities: [],
+          },
+          financeData: {
+            state: "empty",
           },
           responsible: {
             discriminator: null,
