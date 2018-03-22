@@ -21,6 +21,7 @@
             <Icon name="bell" />
           </a>
           <router-link
+            v-if="$store.getters.logged"
             class="pl2 pointer"
             to="/logout">
             <Icon name="logout" />
