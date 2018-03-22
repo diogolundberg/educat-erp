@@ -261,3 +261,4 @@ app.config
 *.xlsx
 appsettings.Development.json
 appsettings.json
+*.sln
