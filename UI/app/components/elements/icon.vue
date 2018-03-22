@@ -1,6 +1,13 @@
 <template>
   <span :class="{ 'fill-white': white, 'fill-black': black }">
     <svg
+      v-if="name === 'check'"
+      viewBox="0 0 512 512">
+      <path
+        d="m208 433l-164-164 77-78 87 85 196-197 79 78z"
+        fill="#fff" />
+    </svg>
+    <svg
       v-if="name === 'clock'"
       :width="width"
       viewBox="0 0 1000 1000">
