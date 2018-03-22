@@ -29,17 +29,17 @@ Clonar o projeto
 git clone git@github.com:diogolundberg/cmmg.git
 ```
 
-Compilar o projeto
-
+Atualizar packages
 ```bash
-cd SSO
+dotnet restore
 ```
 
 Criar o banco de dados ambiente de Desenvolvimento
-```bash
-SQLLocalDB create MSSQLLocalDB 
-SQLLocalDB start MSSQLLocalDB 
-dotnet ef database update
+
+- Windows
+```powershell
+SQLLocalDB create MSSQLLocalDB
+SQLLocalDB start MSSQLLocalDB
 ```
 
 OBS: Na versão SQLLocalDB 14, para criar o banco deve rodar o seguinte comando
@@ -47,7 +47,28 @@ OBS: Na versão SQLLocalDB 14, para criar o banco deve rodar o seguinte comando
 CREATE DATABASE sso ON (NAME='sso',  FILENAME='c:\databases\sso.mdf')
 ```
 
-Criar variaveis de ambiente
+- Linux
+```bash
+docker run -d --name mssql-server-linux -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=curls288&poet' -p 1433:1433 microsoft/mssql-server-linux:2017-latest
+docker start mssql-server-linux
+```
+
+Migrate
+```bash
+dotnet ef database update
+```
+
+Compilar o projeto
+```bash
+dotnet build
+```
+
+Rodar o projeto
+```bash
+dotnet run
+```
+
+Vari'aveis de ambiente
 ```bash
 setx SSO_HOST "http://localhost:5000/" -m
 setx HOST "http://localhost:5000/" -m
@@ -75,9 +96,4 @@ dotnet ef database drop
 Como obter script sql da migração
 ```bash
 dotnet ef migrations script
-```
-
-Rodar o projeto
-```bash
-dotnet run
 ```
