@@ -23,7 +23,7 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.AddressKind", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -34,7 +34,7 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -46,7 +46,7 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.City", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -57,12 +57,12 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<Guid>("StateId");
+                    b.Property<int>("StateId");
 
                     b.HasKey("Id");
 
@@ -73,7 +73,7 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.Country", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -84,7 +84,7 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -96,7 +96,7 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.Disability", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -107,7 +107,7 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -119,7 +119,7 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.Document", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -130,9 +130,9 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<Guid>("DocumentTypeId");
+                    b.Property<int>("DocumentTypeId");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Link");
 
@@ -145,7 +145,7 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.DocumentType", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -159,7 +159,7 @@ namespace Onboarding.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -173,8 +173,10 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.Enrollment", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("AcademicApproval");
 
                     b.Property<bool>("Active");
 
@@ -184,18 +186,20 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
-                    b.Property<DateTime?>("SendBy");
+                    b.Property<bool>("FinanceApproval");
+
+                    b.Property<DateTime?>("SendDate");
 
                     b.HasKey("Id");
 
                     b.ToTable("Enrollments");
                 });
 
-            modelBuilder.Entity("Onboarding.Models.Gender", b =>
+            modelBuilder.Entity("Onboarding.Models.FinanceData", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -206,7 +210,33 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<int?>("EnrollmentId");
+
+                    b.Property<string>("ExternalId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId")
+                        .IsUnique()
+                        .HasFilter("[EnrollmentId] IS NOT NULL");
+
+                    b.ToTable("FinanceDatas");
+                });
+
+            modelBuilder.Entity("Onboarding.Models.Gender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("CommitedBy");
+
+                    b.Property<DateTime>("CommittedAt");
+
+                    b.Property<string>("DbState");
+
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -216,9 +246,55 @@ namespace Onboarding.Migrations
                     b.ToTable("Genders");
                 });
 
+            modelBuilder.Entity("Onboarding.Models.Guarantor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CityId");
+
+                    b.Property<string>("CommitedBy");
+
+                    b.Property<DateTime>("CommittedAt");
+
+                    b.Property<string>("ComplementAddress");
+
+                    b.Property<string>("DbState");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("ExternalId");
+
+                    b.Property<int?>("FinanceDataId");
+
+                    b.Property<string>("Landline");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Neighborhood");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<int?>("StateId");
+
+                    b.Property<string>("StreetAddress");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("FinanceDataId");
+
+                    b.HasIndex("StateId");
+
+                    b.ToTable("Guarantors");
+                });
+
             modelBuilder.Entity("Onboarding.Models.HighSchoolKind", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -229,7 +305,7 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -241,7 +317,7 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.MaritalStatus", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -252,7 +328,7 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -264,22 +340,22 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.PersonalData", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
 
-                    b.Property<Guid?>("AddressKindId");
+                    b.Property<int?>("AddressKindId");
 
                     b.Property<string>("AssumedName");
 
                     b.Property<string>("BirthCity");
 
-                    b.Property<Guid?>("BirthCountryId");
+                    b.Property<int?>("BirthCountryId");
 
                     b.Property<DateTime>("BirthDate");
 
-                    b.Property<Guid?>("BirthStateId");
+                    b.Property<int?>("BirthStateId");
 
                     b.Property<string>("CPF");
 
@@ -295,23 +371,23 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<Guid>("EnrollmentId");
+                    b.Property<int?>("EnrollmentId");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
-                    b.Property<Guid?>("GenderId");
+                    b.Property<int?>("GenderId");
 
                     b.Property<string>("Handicap");
 
-                    b.Property<Guid?>("HighSchoolGraduationCountryId");
+                    b.Property<int?>("HighSchoolGraduationCountryId");
 
                     b.Property<string>("HighSchoolGraduationYear");
 
-                    b.Property<Guid?>("HighSchoolKindId");
+                    b.Property<int?>("HighSchoolKindId");
 
                     b.Property<string>("Landline");
 
-                    b.Property<Guid?>("MaritalStatusId");
+                    b.Property<int?>("MaritalStatusId");
 
                     b.Property<string>("MothersName");
 
@@ -321,11 +397,11 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("PhoneNumber");
 
-                    b.Property<Guid?>("RaceId");
+                    b.Property<int?>("RaceId");
 
                     b.Property<string>("RealName");
 
-                    b.Property<Guid?>("StateId");
+                    b.Property<int?>("StateId");
 
                     b.Property<string>("StreetAddress");
 
@@ -340,7 +416,8 @@ namespace Onboarding.Migrations
                     b.HasIndex("BirthStateId");
 
                     b.HasIndex("EnrollmentId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[EnrollmentId] IS NOT NULL");
 
                     b.HasIndex("GenderId");
 
@@ -354,14 +431,14 @@ namespace Onboarding.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("PersonalData");
+                    b.ToTable("PersonalDatas");
                 });
 
             modelBuilder.Entity("Onboarding.Models.PersonalDataDisability", b =>
                 {
-                    b.Property<Guid>("PersonalDataId");
+                    b.Property<int>("PersonalDataId");
 
-                    b.Property<Guid>("DisabilityId");
+                    b.Property<int>("DisabilityId");
 
                     b.HasKey("PersonalDataId", "DisabilityId");
 
@@ -372,9 +449,9 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.PersonalDataDocument", b =>
                 {
-                    b.Property<Guid>("PersonalDataId");
+                    b.Property<int>("PersonalDataId");
 
-                    b.Property<Guid>("DocumentId");
+                    b.Property<int>("DocumentId");
 
                     b.HasKey("PersonalDataId", "DocumentId");
 
@@ -385,9 +462,9 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.PersonalDataSpecialNeed", b =>
                 {
-                    b.Property<Guid>("PersonalDataId");
+                    b.Property<int>("PersonalDataId");
 
-                    b.Property<Guid>("SpecialNeedId");
+                    b.Property<int>("SpecialNeedId");
 
                     b.HasKey("PersonalDataId", "SpecialNeedId");
 
@@ -398,7 +475,7 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.Race", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -409,7 +486,7 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -419,9 +496,62 @@ namespace Onboarding.Migrations
                     b.ToTable("Races");
                 });
 
+            modelBuilder.Entity("Onboarding.Models.Representative", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int?>("CityId");
+
+                    b.Property<string>("CommitedBy");
+
+                    b.Property<DateTime>("CommittedAt");
+
+                    b.Property<string>("ComplementAddress");
+
+                    b.Property<string>("DbState");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("ExternalId");
+
+                    b.Property<int?>("FinanceDataId");
+
+                    b.Property<string>("Landline");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Neighborhood");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<int?>("StateId");
+
+                    b.Property<string>("StreetAddress");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("FinanceDataId")
+                        .IsUnique()
+                        .HasFilter("[FinanceDataId] IS NOT NULL");
+
+                    b.HasIndex("StateId");
+
+                    b.ToTable("Representatives");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Representative");
+                });
+
             modelBuilder.Entity("Onboarding.Models.SpecialNeed", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -432,9 +562,9 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<Guid>("DisabilityId");
+                    b.Property<int>("DisabilityId");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -448,7 +578,7 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.State", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
@@ -459,7 +589,7 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("DbState");
 
-                    b.Property<int>("ExternalId");
+                    b.Property<string>("ExternalId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -499,6 +629,32 @@ namespace Onboarding.Migrations
                     b.HasDiscriminator().HasValue("ResponsibleDocument");
                 });
 
+            modelBuilder.Entity("Onboarding.Models.RepresentativeCompany", b =>
+                {
+                    b.HasBaseType("Onboarding.Models.Representative");
+
+                    b.Property<string>("Cnpj");
+
+                    b.Property<string>("Contact");
+
+                    b.ToTable("RepresentativeCompany");
+
+                    b.HasDiscriminator().HasValue("RepresentativeCompany");
+                });
+
+            modelBuilder.Entity("Onboarding.Models.RepresentativePerson", b =>
+                {
+                    b.HasBaseType("Onboarding.Models.Representative");
+
+                    b.Property<string>("Cpf");
+
+                    b.Property<string>("Relationship");
+
+                    b.ToTable("RepresentativePerson");
+
+                    b.HasDiscriminator().HasValue("RepresentativePerson");
+                });
+
             modelBuilder.Entity("Onboarding.Models.City", b =>
                 {
                     b.HasOne("Onboarding.Models.State", "State")
@@ -513,6 +669,28 @@ namespace Onboarding.Migrations
                         .WithMany()
                         .HasForeignKey("DocumentTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Onboarding.Models.FinanceData", b =>
+                {
+                    b.HasOne("Onboarding.Models.Enrollment", "Enrollment")
+                        .WithOne("FinanceData")
+                        .HasForeignKey("Onboarding.Models.FinanceData", "EnrollmentId");
+                });
+
+            modelBuilder.Entity("Onboarding.Models.Guarantor", b =>
+                {
+                    b.HasOne("Onboarding.Models.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("Onboarding.Models.FinanceData")
+                        .WithMany("Guarantors")
+                        .HasForeignKey("FinanceDataId");
+
+                    b.HasOne("Onboarding.Models.State", "State")
+                        .WithMany()
+                        .HasForeignKey("StateId");
                 });
 
             modelBuilder.Entity("Onboarding.Models.PersonalData", b =>
@@ -531,8 +709,7 @@ namespace Onboarding.Migrations
 
                     b.HasOne("Onboarding.Models.Enrollment", "Enrollment")
                         .WithOne("PersonalData")
-                        .HasForeignKey("Onboarding.Models.PersonalData", "EnrollmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Onboarding.Models.PersonalData", "EnrollmentId");
 
                     b.HasOne("Onboarding.Models.Gender", "Gender")
                         .WithMany()
@@ -596,6 +773,21 @@ namespace Onboarding.Migrations
                         .WithMany()
                         .HasForeignKey("SpecialNeedId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Onboarding.Models.Representative", b =>
+                {
+                    b.HasOne("Onboarding.Models.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("Onboarding.Models.FinanceData", "FinanceData")
+                        .WithOne("Representative")
+                        .HasForeignKey("Onboarding.Models.Representative", "FinanceDataId");
+
+                    b.HasOne("Onboarding.Models.State", "State")
+                        .WithMany()
+                        .HasForeignKey("StateId");
                 });
 
             modelBuilder.Entity("Onboarding.Models.SpecialNeed", b =>
