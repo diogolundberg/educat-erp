@@ -212,6 +212,8 @@
                   required
                   label="Nome completo da mãe" />
               </div>
+            </Fieldset>
+            <Fieldset title="Outras Informações">
               <div>
                 <RadioGroup
                   v-model="data.personalData.handicap"
@@ -227,6 +229,14 @@
                 <CheckGroup
                   v-model="data.personalData.disabilities"
                   :options="options.disabilities" />
+              </div>
+            </Fieldset>
+            <Fieldset title="Necessidades Especiais">
+              <div class="flex gutters flex-wrap">
+                <h4>Selecione:</h4>
+                <CheckGroup
+                  v-model="data.personalData.specialNeeds"
+                  :options="options.specialNeeds" />
               </div>
             </Fieldset>
             <Fieldset title="Documentos">
