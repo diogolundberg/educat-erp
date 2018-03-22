@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Onboarding.ViewModel
 {
-    public class EnrollmentParameter
+    public class GenerateToken
     {
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public List<EnrollmentParameterObj> List { get; set; }
+        public List<GenerateTokenEnrollment> List { get; set; }
     }
 
-    public class EnrollmentParameterObj
+    public class GenerateTokenEnrollment
     {
         [Required]
         [EmailAddress]

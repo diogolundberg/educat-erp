@@ -138,7 +138,7 @@ namespace Onboarding.Controllers
         }
 
         [HttpPost("GenerateToken", Name = "ONBOARDING/ENROLLMENTS/GENERATETOKEN")]
-        public IActionResult GenerateToken([FromBody]EnrollmentParameter obj)
+        public IActionResult GenerateToken([FromBody]GenerateToken obj)
         {
             if (obj.List.Count == 0)
             {
@@ -147,7 +147,7 @@ namespace Onboarding.Controllers
 
             List<string> responseObj = new List<string>();
 
-            foreach (EnrollmentParameterObj enrollmentParameterObj in obj.List)
+            foreach (GenerateTokenEnrollment enrollmentParameterObj in obj.List)
             {
                 Enrollment enrollment = new Enrollment { 
                     Deadline = obj.End,
