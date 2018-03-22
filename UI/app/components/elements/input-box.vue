@@ -133,8 +133,8 @@
       },
       localErrors() {
         return this.validations.concat([
-          _ => this.required && !this.length && "Campo obrigatório",
-          _ => this.required && this.length < this.minSize && "Valor inválido",
+          () => this.required && !this.length && "Campo obrigatório",
+          () => this.required && this.length < this.minSize && "Valor inválido",
           a => this.email && !(/^.+@.+\..+$/.test(a)) && "E-mail inválido",
           a => this.cpf && !CPF.isValid(a) && "CPF Inválido!",
           a => this.cnpj && !CNPJ.isValid(a) && "CNPJ Inválido!",
