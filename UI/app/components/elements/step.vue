@@ -5,10 +5,9 @@
       class="p2 mb3 bg-white shadow2 rounded flex items-center"
       :class="{ pointer: !disabled }"
       @click="$parent.goTo(index)">
-      <Ball
-        :index="index"
-        :blank="current < index"
-        class="mr2" />
+      <Ball class="mr2">
+        {{ index }}
+      </Ball>
       <div class="h5 line-height-3 flex-auto">
         <div>{{ title }}</div>
         <small class="dim">{{ description }}</small>

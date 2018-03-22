@@ -1,8 +1,7 @@
 <template>
-  <div
-    :class="{ 'bg-green white': !blank, 'shadow0': blank }"
-    class="x2 y2 p4x circle bold h4 center">
-    {{ index }}
+  <div class="x2 y2 p4x circle bold h4 center shadow0">
+    <slot />
+    {{ content }}
   </div>
 </template>
 
@@ -10,7 +9,7 @@
   export default {
     name: "Ball",
     props: {
-      index: {
+      content: {
         type: [Number, String],
         required: true,
       },
