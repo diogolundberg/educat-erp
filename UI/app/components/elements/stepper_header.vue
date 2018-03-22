@@ -2,15 +2,14 @@
   <div class="px4 flex items-center justify-between">
     <template v-for="step in steps">
       <StepperItem
-        :active="value >= step.id"
-        :complete="value > step.id"
+        :active="value == step.id || step.complete"
+        :complete="step.complete && value !== step.id"
         :title="step.name"
         :key="step.id"
         class="pointer"
         @click="$emit('input', step.id)" />
       <hr
         v-if="step.id < steps.length"
-        :class="{ 'border-blue border2': value > step.id }"
         :key="step.id + '_separator'"
         class="flex-auto border-bottom">
     </template>
