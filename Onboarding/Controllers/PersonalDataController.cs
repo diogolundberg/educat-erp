@@ -38,25 +38,37 @@ namespace Onboarding.Controllers
 
             EnrollmentToken enrollmentToken = _tokenHelper.GetObject<EnrollmentToken>(token);
 
-            if (!enrollmentToken.IsValid())
-            {
-                return BadRequest();
-            }
-
-            Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.Id);
-            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
-            _context.Entry(enrollment.PersonalData).Collection(x => x.PersonalDataDisabilities).Load();
+            Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.ExternalId);
 
             if (enrollment == null)
             {
                 return NotFound();
             }
 
-            PersonalData newPersonalData = _mapper.Map<PersonalData>(obj);
-            newPersonalData.ExternalId = enrollment.PersonalData.ExternalId;
-            newPersonalData.EnrollmentId = enrollment.Id;
+            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
 
-            _personalDataRepository.Update(enrollment.PersonalData, newPersonalData);
+            if (!enrollmentToken.IsValid(enrollment.PersonalData))
+            {
+                return BadRequest();
+            }
+
+            PersonalData oldPersonalData = enrollment.PersonalData;
+
+            Enrollment newEnrollment = (Enrollment)enrollment.Clone();
+
+            _enrollmentRepository.Update(enrollment, newEnrollment);
+
+            _context.Entry(newEnrollment).Reference(x => x.PersonalData).Load();
+
+            PersonalData newPersonalData = _mapper.Map<PersonalData>(obj);
+
+            newPersonalData.ExternalId = newEnrollment.PersonalData.ExternalId;
+            newPersonalData.EnrollmentId = newEnrollment.Id;
+            newPersonalData.RealName = oldPersonalData.RealName;
+            newPersonalData.CPF = oldPersonalData.CPF;
+            newPersonalData.Email = oldPersonalData.Email;
+
+            _personalDataRepository.Update(oldPersonalData, newPersonalData);
 
             return Ok();
         }

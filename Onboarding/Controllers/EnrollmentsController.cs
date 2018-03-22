@@ -1,15 +1,10 @@
-using System;
 using AutoMapper;
-using System.Linq;
-using System.Text;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Onboarding.Data.Entity;
 using Onboarding.Models;
 using Onboarding.ViewModel;
-using Onboarding.Data.Entity;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Configuration;
 using System.Net.Mail;
 
 namespace Onboarding.Controllers
@@ -34,6 +29,7 @@ namespace Onboarding.Controllers
         private readonly BaseRepository<SpecialNeed> _specialNeedsRepository;
         private readonly BaseRepository<PersonalData> _personalDataRepository;
         private readonly BaseRepository<PersonalDocument> _personalDocumentsRepository;
+        private readonly BaseRepository<GuarantorDocument> _guarantorDocumentsRepository;
         private readonly TokenHelper _tokenHelper;
 
         public EnrollmentsController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
@@ -52,29 +48,26 @@ namespace Onboarding.Controllers
             _specialNeedsRepository = new BaseRepository<SpecialNeed>(_context);
             _personalDataRepository = new BaseRepository<PersonalData>(_context);
             _personalDocumentsRepository = new BaseRepository<PersonalDocument>(_context);
+            _guarantorDocumentsRepository = new BaseRepository<GuarantorDocument>(_context);
+
             _configuration = configuration;
             _mapper = mapper;
             _tokenHelper = new TokenHelper();
         }
 
         [HttpGet("{token}")]
-        public dynamic Get (string token)
+        public dynamic Get(string token)
         {
-            if(string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(token))
             {
                 return BadRequest();
             }
 
             EnrollmentToken enrollmentToken = _tokenHelper.GetObject<EnrollmentToken>(token);
 
-            if(!enrollmentToken.IsValid())
-            {
-                return BadRequest();
-            }
+            Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.ExternalId);
 
-            Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.Id);
-
-            if(enrollment == null)
+            if (enrollment == null)
             {
                 return NotFound();
             }
@@ -82,25 +75,43 @@ namespace Onboarding.Controllers
             _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
             _context.Entry(enrollment.PersonalData).Collection(x => x.PersonalDataDisabilities).Load();
             _context.Entry(enrollment.PersonalData).Collection(x => x.PersonalDataSpecialNeeds).Load();
+            _context.Entry(enrollment.PersonalData).Collection(x => x.PersonalDataDocuments).Load();
 
-            return new { 
-                data = new {
+            foreach (PersonalDataDocument personalDataDocument in enrollment.PersonalData.PersonalDataDocuments)
+            {
+                _context.Entry(personalDataDocument).Reference(x => x.Document).Load();
+            }
+
+            if (!enrollmentToken.IsValid(enrollment.PersonalData))
+            {
+                return BadRequest();
+            }
+
+            return new
+            {
+                data = new
+                {
                     Deadline = enrollmentToken.End,
-                    PersonalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData)
+                    SendDate = enrollment.SendDate,
+                    AcademicApproval = enrollment.AcademicApproval,
+                    FinanceApproval = enrollment.FinanceApproval,
+                    PersonalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData),
+                    FinanceData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData),
                 },
-                options = new 
+                options = new
                 {
                     Genders = _genderRepository.List(),
                     MaritalStatuses = _maritalStatusRepository.List(),
                     States = _stateRepository.List(),
                     Cities = _cityRepository.List(),
-                    Countries = _countryRepository.List(),                    
+                    Countries = _countryRepository.List(),
                     AddressKinds = _addressKindRepository.List(),
                     Races = _RaceRepository.List(),
                     HighSchoolKinds = _highSchoolKindRepository.List(),
                     Disabilities = _disabilitiesRepository.List(),
                     SpecialNeeds = _specialNeedsRepository.List(),
-                    PersonalDocuments = _personalDocumentsRepository.List()
+                    PersonalDocuments = _personalDocumentsRepository.List(),
+                    GuarantorDocuments = _guarantorDocumentsRepository.List()
                 }
             };
         }
@@ -108,75 +119,67 @@ namespace Onboarding.Controllers
         [HttpPatch("{token}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
         public IActionResult Update(string token, [FromBody]EnrollmentViewModel obj)
         {
-            if(string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(token))
             {
                 return BadRequest();
             }
 
             EnrollmentToken enrollmentToken = _tokenHelper.GetObject<EnrollmentToken>(token);
 
-            if(!enrollmentToken.IsValid())
-            {
-                return BadRequest();
-            }
+            Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.ExternalId);
 
-            Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.Id);
-
-            if(enrollment == null)
+            if (enrollment == null)
             {
                 return NotFound();
             }
 
-            if(enrollment.SendBy.HasValue)
+            if (enrollment.SendDate.HasValue)
             {
                 return BadRequest();
-            }   
+            }
 
-            Enrollment newEnrollment = _mapper.Map<Enrollment>(obj);
-            newEnrollment.ExternalId = enrollment.ExternalId;
+            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
 
-            _enrollmentRepository.Update(enrollment, newEnrollment);
+            if (!enrollmentToken.IsValid(enrollment.PersonalData))
+            {
+                return BadRequest();
+            }
 
             return Ok();
         }
 
-       [HttpPost("GenerateToken", Name = "ONBOARDING/ENROLLMENTS/GENERATETOKEN")]
+        [HttpPost("GenerateToken", Name = "ONBOARDING/ENROLLMENTS/GENERATETOKEN")]
         public IActionResult GenerateToken([FromBody]EnrollmentParameter obj)
         {
-            if(obj.Emails.Count == 0)
+            if (obj.List.Count == 0)
             {
                 return BadRequest();
-            }            
-            
+            }
+
             List<string> responseObj = new List<string>();
 
-            foreach (string email in obj.Emails)
+            foreach (EnrollmentParameterObj enrollmentParameterObj in obj.List)
             {
                 Enrollment enrollment = new Enrollment { };
 
                 _enrollmentRepository.Add(enrollment);
 
-                PersonalData personalData = new PersonalData { Email = email, EnrollmentId = enrollment.Id };
+                PersonalData personalData = new PersonalData { RealName = enrollmentParameterObj.Name, Email = enrollmentParameterObj.Email, CPF = enrollmentParameterObj.CPF, EnrollmentId = enrollment.Id };
 
                 _personalDataRepository.Add(personalData);
 
-                EnrollmentToken enrollmentToken = new EnrollmentToken { Id = enrollment.ExternalId, End = obj.End, Start = obj.Start };
+                EnrollmentToken enrollmentToken = new EnrollmentToken { ExternalId = enrollment.ExternalId, End = obj.End, Start = obj.Start, CPF = enrollmentParameterObj.CPF };
+
                 string token = _tokenHelper.Generate<EnrollmentToken>(enrollmentToken);
 
-                SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"],
-                                                                        _configuration["SMTP_HOST"],
-                                                                        _configuration["SMTP_USERNAME"],
-                                                                        _configuration["SMTP_PASSWORD"]);
+                SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"], _configuration["SMTP_HOST"], _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
 
-                string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + token );
+                string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + token);
                 string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
 
-                smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]),
-                                    new MailAddress(email),
-                                    body,
-                                    subject);
+                smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]), new MailAddress(enrollmentParameterObj.Email), body, subject);
 
-                responseObj.Add(string.Format("{0} - {1}", email, token));
+                responseObj.Add(string.Format("{0} - {1}", enrollmentParameterObj.Email, token));
             }
 
             return new OkObjectResult(responseObj);
