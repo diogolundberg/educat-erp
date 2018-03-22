@@ -685,7 +685,7 @@
 
         Object.assign(this.data, this.$store.getters.enrollment.data);
         Object.assign(this.options, this.$store.getters.enrollment.options);
-        this.step = this.$store.getters.enrollment.sendDate ? 2 : 1;
+        this.step = this.$store.getters.enrollment.sendDate ? 3 : 1;
       } catch (ex) {
         this.$router.push("/404");
       }
