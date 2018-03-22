@@ -9,14 +9,12 @@ Este é o Monorepo do projeto CMMG.
 Para deploy no Azure, basta adicionar os repositórios no git. Pela primeira vez:
 
 ```
-git remote add azure-sso https://git-pub@cmmg-sso.scm.azurewebsites.net:443/cmmg-sso.git
-git remote add azure-upload https://git-pub@cmmg-upload.scm.azurewebsites.net:443/cmmg-upload.git
-git remote add azure-onboarding https://git-pub@cmmg-onboarding.scm.azurewebsites.net:443/cmmg-onboarding.git
+git remote add azure-sso https://git-pub:Triangulo31@cmmg-sso.scm.azurewebsites.net:443/cmmg-sso.git
+git remote add azure-upload https://git-pub:Triangulo31@cmmg-upload.scm.azurewebsites.net:443/cmmg-upload.git
+git remote add azure-onboarding https://git-pub:Triangulo31@cmmg-onboarding.scm.azurewebsites.net:443/cmmg-onboarding.git
 ```
 
 #### Para fazer deploy
-
-É só dar push no respectivo remote.
 
 ```
 git push azure-sso master
