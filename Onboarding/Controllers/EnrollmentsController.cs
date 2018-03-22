@@ -65,7 +65,7 @@ namespace Onboarding.Controllers
 
             EnrollmentToken enrollmentToken = _tokenHelper.GetObject<EnrollmentToken>(token);
 
-            Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.ExternalId);
+            Enrollment enrollment = _enrollmentRepository.GetByExternalId(enrollmentToken.ExternalId);
 
             if (enrollment == null)
             {
@@ -126,7 +126,7 @@ namespace Onboarding.Controllers
 
             EnrollmentToken enrollmentToken = _tokenHelper.GetObject<EnrollmentToken>(token);
 
-            Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.ExternalId);
+            Enrollment enrollment = _enrollmentRepository.GetByExternalId(enrollmentToken.ExternalId);
 
             if (enrollment == null)
             {
@@ -164,11 +164,23 @@ namespace Onboarding.Controllers
 
                 _enrollmentRepository.Add(enrollment);
 
-                PersonalData personalData = new PersonalData { RealName = enrollmentParameterObj.Name, Email = enrollmentParameterObj.Email, CPF = enrollmentParameterObj.CPF, EnrollmentId = enrollment.Id };
+                PersonalData personalData = new PersonalData
+                {
+                    RealName = enrollmentParameterObj.Name,
+                    Email = enrollmentParameterObj.Email,
+                    CPF = enrollmentParameterObj.CPF,
+                    EnrollmentId = enrollment.Id
+                };
 
                 _personalDataRepository.Add(personalData);
 
-                EnrollmentToken enrollmentToken = new EnrollmentToken { ExternalId = enrollment.ExternalId, End = obj.End, Start = obj.Start, CPF = enrollmentParameterObj.CPF };
+                EnrollmentToken enrollmentToken = new EnrollmentToken
+                {
+                    ExternalId = enrollment.ExternalId,
+                    End = obj.End,
+                    Start = obj.Start,
+                    CPF = enrollmentParameterObj.CPF
+                };
 
                 string token = _tokenHelper.Generate<EnrollmentToken>(enrollmentToken);
 

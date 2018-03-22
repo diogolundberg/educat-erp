@@ -30,7 +30,7 @@ namespace Onboarding.Data.Entity
             return _context.Set<TEntity>().Where(x => x.Active).Any();
         }
 
-        public virtual TEntity GetById(string externalId)
+        public virtual TEntity GetByExternalId(string externalId)
         {
             return _context.Set<TEntity>().FirstOrDefault(x => x.Active && x.ExternalId == externalId);
         }

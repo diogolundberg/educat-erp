@@ -2,8 +2,8 @@
 {
     public class DocumentViewModel
     {
-        public string ExternalId { get; set; }
+        public string Id { get; set; }
 
-        public int DocumentTypeId { get; set; }
+        public string DocumentTypeId { get; set; }
     }
 }

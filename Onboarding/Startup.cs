@@ -41,7 +41,8 @@ namespace Onboarding
 
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["ONBOARDING_DATABASE_CONNECTION"]));
 
-            services.AddScoped<IRavenClient, RavenClient>((s) => {
+            services.AddScoped<IRavenClient, RavenClient>((s) =>
+            {
 
                 RavenClient rc = new RavenClient(Configuration["SENTRY_API"], s.GetRequiredService<IHttpContextAccessor>())
                 {
@@ -89,7 +90,7 @@ namespace Onboarding
                 c.SwaggerDoc("v1", new Info { Title = "ONBOARDING", Version = "v1" });
             });
 
-            services.AddAutoMapper(x=> x.AddProfile(new MappingsProfile()));
+            services.AddAutoMapper(x => x.AddProfile(new MappingsProfile()));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -133,7 +134,7 @@ namespace Onboarding
                                     Message = ex.Error.Message
                                 });
 
-                                await context.Response.Body.WriteAsync(Encoding.ASCII.GetBytes(err),0,err.Length).ConfigureAwait(false);
+                                await context.Response.Body.WriteAsync(Encoding.ASCII.GetBytes(err), 0, err.Length).ConfigureAwait(false);
                             }
                         });
                     }

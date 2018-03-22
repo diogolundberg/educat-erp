@@ -8,10 +8,10 @@ namespace Onboarding.Models
     public class BaseModel : ICloneable
     {
         [Key]
-        [JsonIgnore]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [JsonIgnore]
         [JsonProperty(PropertyName = "id")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string ExternalId { get; set; }

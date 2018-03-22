@@ -38,7 +38,7 @@ namespace Onboarding.Controllers
 
             EnrollmentToken enrollmentToken = _tokenHelper.GetObject<EnrollmentToken>(token);
 
-            Enrollment enrollment = _enrollmentRepository.GetById(enrollmentToken.ExternalId);
+            Enrollment enrollment = _enrollmentRepository.GetByExternalId(enrollmentToken.ExternalId);
 
             if (enrollment == null)
             {
