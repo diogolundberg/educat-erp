@@ -299,14 +299,26 @@
                   hint="Ex: 00.000.000/0000-00" />
                 <InputBox
                   v-model="data.responsible.name"
+                  v-if="data.responsible.documenttype == 'CPF'"
+                  :size="6"
+                  label="Nome completo" />
+                <InputBox
+                  v-model="data.responsible.name"
+                  v-if="data.responsible.documenttype == 'CNPJ'"
                   :size="6"
                   label="Razão Social" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
+                  v-if="data.responsible.documenttype == 'CNPJ'"
                   v-model="data.responsible.contact"
                   :size="4"
-                  label="Contato" />
+                  label="Pessoa de Contato" />
+                <InputBox
+                  v-if="data.responsible.documenttype == 'CPF'"
+                  v-model="data.responsible.relationship"
+                  :size="4"
+                  label="Relacionamento com o aluno" />
                 <InputBox
                   v-model="data.responsible.address"
                   :size="8"
