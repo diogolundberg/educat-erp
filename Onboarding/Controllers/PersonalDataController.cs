@@ -29,8 +29,8 @@ namespace Onboarding.Controllers
             _personalDataRepository = new BaseRepository<PersonalData>(_context);
         }
 
-        [HttpPatch("{token}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
-        public IActionResult Update(string token, [FromBody]PersonalDataPatchViewModel obj)
+        [HttpPatch("{token}", Name = "ONBOARDING/PERSONALDATA/PATCHEDIT")]
+        public IActionResult Update([FromRoute]string token, [FromBody]PersonalDataPatchViewModel obj)
         {
             if (string.IsNullOrEmpty(token))
             {
@@ -68,19 +68,66 @@ namespace Onboarding.Controllers
 
             _personalDataRepository.Update(oldPersonalData, newPersonalData);
 
+            var errors = ModelState.ToDictionary(
+                modelState => modelState.Key,
+                modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+            );
 
             return new OkObjectResult(new
             {
-                ModelState,
-                data = new
-                {
-                    Deadline = enrollment.Deadline,
-                    SendDate = enrollment.SendDate,
-                    AcademicApproval = enrollment.AcademicApproval,
-                    FinanceApproval = enrollment.FinanceApproval,
-                    PersonalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData),
-                    FinanceData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData),
-                }
+                errors,
+                data = obj
+            });
+        }
+
+        [HttpPost("{token}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
+        public IActionResult Update([FromRoute]string token, [FromBody]PersonalDataViewModel obj)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest();
+            }
+
+            Enrollment enrollment = _enrollmentRepository.GetByExternalId(token);
+            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
+
+            if (enrollment == null)
+            {
+                return NotFound();
+            }
+
+            if (enrollment.SendDate.HasValue || !enrollment.IsDeadlineValid())
+            {
+                return BadRequest();
+            }
+
+            PersonalData oldPersonalData = enrollment.PersonalData;
+
+            Enrollment newEnrollment = (Enrollment)enrollment.Clone();
+
+            _enrollmentRepository.Update(enrollment, newEnrollment);
+
+            _context.Entry(newEnrollment).Reference(x => x.PersonalData).Load();
+
+            PersonalData newPersonalData = _mapper.Map<PersonalData>(obj);
+
+            newPersonalData.ExternalId = newEnrollment.PersonalData.ExternalId;
+            newPersonalData.EnrollmentId = newEnrollment.Id;
+            newPersonalData.RealName = oldPersonalData.RealName;
+            newPersonalData.CPF = oldPersonalData.CPF;
+            newPersonalData.Email = oldPersonalData.Email;
+
+            _personalDataRepository.Update(oldPersonalData, newPersonalData);
+
+            var errors = ModelState.ToDictionary(
+                modelState => modelState.Key,
+                modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+            );
+
+            return new OkObjectResult(new
+            {
+                errors,
+                data = obj
             });
         }
 

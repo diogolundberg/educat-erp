@@ -56,6 +56,36 @@ namespace Onboarding
                         DocumentTypeId = int.Parse(x.DocumentTypeId)
                     }
                 })));
+
+            CreateMap<PersonalDataViewModel, PersonalData>()
+                .ForMember(x => x.MaritalStatus, config => config.Ignore())
+                .ForMember(x => x.Gender, config => config.Ignore())
+                .ForMember(x => x.BirthState, config => config.Ignore())
+                .ForMember(x => x.BirthCountry, config => config.Ignore())
+                .ForMember(x => x.HighSchoolGraduationCountry, config => config.Ignore())
+                .ForMember(x => x.State, config => config.Ignore())
+                .ForMember(x => x.AddressKind, config => config.Ignore())
+                .ForMember(x => x.Race, config => config.Ignore())
+                .ForMember(x => x.HighSchollKind, config => config.Ignore())
+                .ForMember(x => x.Enrollment, config => config.Ignore())
+                .ForMember(x => x.PersonalDataDisabilities, config => config
+                                                .MapFrom(cm => cm.Disabilities.Select(x => new PersonalDataDisability
+                                                {
+                                                    DisabilityId = int.Parse(x)
+                                                })))
+                .ForMember(x => x.PersonalDataSpecialNeeds, config => config
+                                                .MapFrom(cm => cm.SpecialNeeds.Select(x => new PersonalDataSpecialNeed
+                                                {
+                                                    SpecialNeedId = int.Parse(x)
+                                                })))
+                .ForMember(x => x.PersonalDataDocuments, config => config.MapFrom(cm => cm.Documents.Select(x => new PersonalDataDocument
+                {
+                    Document = new Document
+                    {
+                        ExternalId = x.Id,
+                        DocumentTypeId = int.Parse(x.DocumentTypeId)
+                    }
+                })));                
         }
     }
 }

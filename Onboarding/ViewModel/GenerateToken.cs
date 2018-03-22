@@ -18,8 +18,8 @@ namespace Onboarding.ViewModel
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
         [Cpf]
+        [Required]
         public string CPF { get; set; }
 
         [Required]

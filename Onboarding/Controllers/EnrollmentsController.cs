@@ -140,7 +140,7 @@ namespace Onboarding.Controllers
         [HttpPost("GenerateToken", Name = "ONBOARDING/ENROLLMENTS/GENERATETOKEN")]
         public IActionResult GenerateToken([FromBody]GenerateToken obj)
         {
-            if (obj.List.Count == 0)
+            if (!ModelState.IsValid || obj.List.Count == 0)
             {
                 return BadRequest();
             }
@@ -149,7 +149,7 @@ namespace Onboarding.Controllers
 
             foreach (GenerateTokenEnrollment enrollmentParameterObj in obj.List)
             {
-                Enrollment enrollment = new Enrollment { 
+                Enrollment enrollment = new Enrollment {
                     Deadline = obj.End,
                     PersonalData = new PersonalData {
                         RealName = enrollmentParameterObj.Name,
