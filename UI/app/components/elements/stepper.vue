@@ -45,7 +45,7 @@
     },
     mounted() {
       this.steps = this.$children.filter(a => a.$options.name === "Step")
-        .map((a, i) => ({ id: i + 1, name: a.title, complete: a.complete }));
+        .map((a, i) => ({ id: i + 1, name: a.title, el: a }));
     },
     methods: {
       goTo(index) {

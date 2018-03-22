@@ -2,8 +2,8 @@
   <div class="px4 flex items-center justify-between">
     <template v-for="step in steps">
       <StepperItem
-        :active="value == step.id || step.complete"
-        :complete="step.complete && value !== step.id"
+        :active="value == step.id || step.el.complete"
+        :complete="step.el.complete && value !== step.id"
         :title="step.name"
         :key="step.id"
         class="pointer"
