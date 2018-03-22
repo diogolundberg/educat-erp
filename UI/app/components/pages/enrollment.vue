@@ -38,6 +38,7 @@
                   v-model="data.personalData.realName"
                   :size="6"
                   required
+                  disabled
                   label="Nome"
                   hint="Seu nome completo" />
                 <InputBox
@@ -51,6 +52,7 @@
                   :size="3"
                   :min-size="14"
                   required
+                  disabled
                   label="CPF"
                   mask="###.###.###-##"
                   hint="Ex: 000.000.000-00" />
@@ -131,6 +133,7 @@
                   :max-size="50"
                   email
                   required
+                  disabled
                   label="E-mail" />
                 <InputBox
                   v-model="data.personalData.phoneNumber"
