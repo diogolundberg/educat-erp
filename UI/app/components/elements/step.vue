@@ -7,6 +7,7 @@
       @click="$parent.goTo(index)">
       <Ball
         :index="index"
+        :blank="current < index"
         class="mr2" />
       <div class="h5 line-height-3">
         <div>{{ title }}</div>
@@ -45,6 +46,9 @@
       index() {
         return this.$parent.$slots.default.filter(s => s.tag)
           .indexOf(this.$vnode) + 1;
+      },
+      current() {
+        return this.$parent.value;
       },
     },
   };
