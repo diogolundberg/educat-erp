@@ -57,10 +57,10 @@ namespace Onboarding.ViewModel
 
         public Guid? HighSchoolKindId { get; set; }
 
-        public IEnumerable<Guid> Disabilities { get; set; }
+        public IEnumerable<int> Disabilities { get; set; }
 
-        public IEnumerable<Guid> SpecialNeeds { get; set; }
+        public IEnumerable<int> SpecialNeeds { get; set; }
 
-        public IEnumerable<string> Documents { get; set; }
+        public IEnumerable<DocumentViewModel> Documents { get; set; }
     }
 }

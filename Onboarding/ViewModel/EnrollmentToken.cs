@@ -1,15 +1,18 @@
+using Onboarding.Models;
 using System;
 
 namespace Onboarding.ViewModel
 {
     public class EnrollmentToken
     {
-        public int Id { get; set; }
+        public string ExternalId { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public bool IsValid()
+        public string CPF { get; set; }
+
+        public bool IsValid(PersonalData personalData)
         {
-            return DateTime.Now <= End;
+            return DateTime.Now <= End && CPF == personalData.CPF;
         }
     }
 }
