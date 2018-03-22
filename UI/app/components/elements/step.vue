@@ -17,6 +17,11 @@
           <Icon name="check" />
         </div>
       </div>
+      <div v-if="error">
+        <div class="x1 y1 circle relative pointer x2 y2 p6x shadow1 bg-red">
+          <Icon name="error" />
+        </div>
+      </div>
     </div>
     <div
       v-if="visible && !disabled"
@@ -43,6 +48,10 @@
         default: false,
       },
       complete: {
+        type: Boolean,
+        default: false,
+      },
+      error: {
         type: Boolean,
         default: false,
       },

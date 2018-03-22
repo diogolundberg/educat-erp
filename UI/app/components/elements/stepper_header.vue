@@ -4,6 +4,7 @@
       <StepperItem
         :active="value == step.id || step.el.complete"
         :complete="step.el.complete && value !== step.id"
+        :error="step.el.invalid && value !== step.id"
         :title="step.name"
         :key="step.id"
         class="pointer"

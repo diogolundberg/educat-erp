@@ -23,6 +23,7 @@
         <Step
           :disabled="data.sendDate"
           :complete="data.personalData.state === 'valid'"
+          :error="data.personalData.state === 'error'"
           title="Seus Dados"
           description="Preencha seus dados pessoais">
           <Card
@@ -272,6 +273,7 @@
         <Step
           :disabled="data.sendDate"
           :complete="data.financeData && data.financeData.state == 'valid'"
+          :error="data.financeData && data.financeData.state == 'invalid'"
           title="Dados Financeiros"
           description="Aqui você insere seus dados de pagamento.">
           <Card

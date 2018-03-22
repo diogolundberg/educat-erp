@@ -1,6 +1,10 @@
 <template>
   <div
-    :class="{ 'x2 y2 p6x shadow1': active, 'bg-green': complete } "
+    :class="{
+      'x2 y2 p6x shadow1': active,
+      'bg-green': complete,
+      'bg-red': error,
+    }"
     class="x1 y1 circle relative"
     @click="$emit('click')">
     <div
@@ -25,6 +29,10 @@
         default: false,
       },
       complete: {
+        type: Boolean,
+        default: false,
+      },
+      error: {
         type: Boolean,
         default: false,
       },
