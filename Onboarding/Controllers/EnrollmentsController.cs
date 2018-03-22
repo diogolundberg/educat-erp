@@ -179,7 +179,6 @@ namespace Onboarding.Controllers
                     ExternalId = enrollment.ExternalId,
                     End = obj.End,
                     Start = obj.Start,
-                    CPF = enrollmentParameterObj.CPF
                 };
 
                 string token = _tokenHelper.Generate<EnrollmentToken>(enrollmentToken);
