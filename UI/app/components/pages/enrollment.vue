@@ -179,17 +179,17 @@
                   :size="3"
                   required
                   label="Bairro" />
-                <InputBox
-                  v-model="data.personalData.city"
-                  :size="3"
-                  required
-                  label="Cidade" />
                 <DropDown
                   v-model="data.personalData.stateId"
                   :size="3"
                   :options="options.states"
                   required
                   label="Estado" />
+                <InputBox
+                  v-model="data.personalData.city"
+                  :size="3"
+                  required
+                  label="Cidade" />
               </div>
             </Fieldset>
             <Fieldset title="Dados para o Censo">
@@ -274,64 +274,97 @@
             <Fieldset title="Responsável Financeiro">
               <div class="flex gutters flex-wrap">
                 <DropDown
-                  v-model="data.responsible.documenttype"
-                  :size="3"
-                  :options="options.documentTypes"
+                  v-model="data.responsible.discriminator"
+                  :size="4"
+                  :options="options.discriminators"
                   label="CPF ou CNPJ" />
                 <InputBox
-                  v-if="data.responsible.documenttype == null"
-                  :size="3"
+                  v-if="data.responsible.discriminator == null"
+                  :size="4"
                   disabled
                   label="Documento" />
                 <InputBox
                   v-model="data.responsible.cpf"
-                  v-if="data.responsible.documenttype == 'CPF'"
-                  :size="3"
+                  v-if="data.responsible.discriminator == 'Person'"
+                  :size="4"
                   label="CPF"
                   mask="###.###.###-##"
                   hint="Ex: 000.000.000-00" />
                 <InputBox
                   v-model="data.responsible.cnpj"
-                  v-if="data.responsible.documenttype == 'CNPJ'"
-                  :size="3"
+                  v-if="data.responsible.discriminator == 'Company'"
+                  :size="4"
                   label="CNPJ"
                   mask="##.###.###/####-##"
                   hint="Ex: 00.000.000/0000-00" />
                 <InputBox
+                  v-if="data.responsible.discriminator == null"
+                  :size="4"
+                  disabled
+                  label="Nome" />
+                <InputBox
                   v-model="data.responsible.name"
-                  v-if="data.responsible.documenttype == 'CPF'"
-                  :size="6"
+                  v-if="data.responsible.discriminator == 'Person'"
+                  :size="4"
                   label="Nome completo" />
                 <InputBox
                   v-model="data.responsible.name"
-                  v-if="data.responsible.documenttype == 'CNPJ'"
-                  :size="6"
+                  v-if="data.responsible.discriminator == 'Company'"
+                  :size="4"
                   label="Razão Social" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-if="data.responsible.documenttype == 'CNPJ'"
+                  v-if="data.responsible.discriminator == null"
+                  :size="4"
+                  disabled
+                  label="Contato" />
+                <InputBox
+                  v-if="data.responsible.discriminator == 'Company'"
                   v-model="data.responsible.contact"
                   :size="4"
                   label="Pessoa de Contato" />
                 <InputBox
-                  v-if="data.responsible.documenttype == 'CPF'"
+                  v-if="data.responsible.discriminator == 'Person'"
                   v-model="data.responsible.relationship"
                   :size="4"
                   label="Relacionamento com o aluno" />
                 <InputBox
-                  v-model="data.responsible.address"
-                  :size="8"
-                  label="Endereço Completo" />
+                  v-model="data.responsible.streetAddress"
+                  :size="4"
+                  label="Logradouro" />
+                <InputBox
+                  v-model="data.responsible.complementAddress"
+                  :size="4"
+                  label="Complemento" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.responsible.phone1"
+                  v-model="data.responsible.neighborhood"
+                  :size="4"
+                  label="Bairro" />
+                <DropDown
+                  v-model="data.responsible.stateId"
+                  :size="4"
+                  :options="options.states"
+                  required
+                  label="Estado" />
+                <DropDown
+                  v-model="data.responsible.city"
+                  :size="4"
+                  :options="options.cities"
+                  key-id="name"
+                  required
+                  label="Cidade" />
+              </div>
+              <div class="flex gutters flex-wrap">
+                <InputBox
+                  v-model="data.responsible.landline"
                   :size="4"
                   label="Telefone"
                   mask="(##) ####-####" />
                 <InputBox
-                  v-model="data.responsible.phone2"
+                  v-model="data.responsible.phoneNumber"
                   :size="4"
                   label="Celular"
                   mask="(##) #####-####" />
@@ -344,32 +377,32 @@
             <Fieldset title="Fiador">
               <div class="flex gutters flex-wrap">
                 <DropDown
-                  v-model="data.guarantor.documenttype"
-                  :size="3"
-                  :options="options.documentTypes"
+                  v-model="data.guarantor.discriminator"
+                  :size="4"
+                  :options="options.discriminators"
                   label="CPF ou CNPJ" />
                 <InputBox
-                  v-if="data.guarantor.documenttype == null"
-                  :size="3"
+                  v-if="data.guarantor.discriminator == null"
+                  :size="4"
                   disabled
                   label="Documento" />
                 <InputBox
                   v-model="data.guarantor.cpf"
-                  v-if="data.guarantor.documenttype == 'CPF'"
-                  :size="3"
+                  v-if="data.guarantor.discriminator == 'Person'"
+                  :size="4"
                   label="CPF"
                   mask="###.###.###-##"
                   hint="Ex: 000.000.000-00" />
                 <InputBox
                   v-model="data.guarantor.cnpj"
-                  v-if="data.guarantor.documenttype == 'CNPJ'"
-                  :size="3"
+                  v-if="data.guarantor.discriminator == 'Company'"
+                  :size="4"
                   label="CNPJ"
                   mask="##.###.###/####-##"
                   hint="Ex: 00.000.000/0000-00" />
                 <InputBox
                   v-model="data.guarantor.name"
-                  :size="6"
+                  :size="4"
                   label="Razão Social" />
               </div>
               <div class="flex gutters flex-wrap">
@@ -378,18 +411,41 @@
                   :size="4"
                   label="Contato" />
                 <InputBox
-                  v-model="data.guarantor.address"
-                  :size="8"
+                  v-model="data.guarantor.streetAddress"
+                  :size="4"
                   label="Endereço Completo" />
+                <InputBox
+                  v-model="data.guarantor.complementAddress"
+                  :size="4"
+                  label="Complemento" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.guarantor.phone1"
+                  v-model="data.guarantor.neighborhood"
+                  :size="4"
+                  label="Bairro" />
+                <DropDown
+                  v-model="data.guarantor.stateId"
+                  :size="4"
+                  :options="options.states"
+                  required
+                  label="Estado" />
+                <DropDown
+                  v-model="data.guarantor.cityId"
+                  :size="4"
+                  :options="options.cities"
+                  key-id="name"
+                  required
+                  label="Cidade" />
+              </div>
+              <div class="flex gutters flex-wrap">
+                <InputBox
+                  v-model="data.guarantor.landline"
                   :size="4"
                   label="Telefone"
                   mask="(##) ####-####" />
                 <InputBox
-                  v-model="data.guarantor.phone2"
+                  v-model="data.guarantor.phoneNumber"
                   :size="4"
                   label="Celular"
                   mask="(##) #####-####" />
@@ -526,26 +582,35 @@
             disabilities: [],
           },
           responsible: {
-            documenttype: null,
+            discriminator: null,
             cpf: "",
             cnpj: "",
             name: "",
             contact: "",
-            address: "",
-            phone1: "",
-            phone2: "",
+            relationship: "",
+            streetAddress: "",
+            complementAddress: "",
+            neighborhood: "",
+            phoneNumber: "",
+            landline: "",
             email: "",
+            cityId: null,
+            stateId: null,
           },
           guarantor: {
-            documenttype: null,
+            discriminator: null,
             cpf: "",
             cnpj: "",
             name: "",
             contact: "",
-            address: "",
-            phone1: "",
-            phone2: "",
+            streetAddress: "",
+            complementAddress: "",
+            neighborhood: "",
+            phoneNumber: "",
+            landline: "",
             email: "",
+            cityId: null,
+            stateId: null,
           },
           documents: {
             history: null,
@@ -571,9 +636,9 @@
           disabilities: [],
           specialNeeds: [],
 
-          documentTypes: [
-            { id: "CPF", name: "CPF" },
-            { id: "CNPJ", name: "CNPJ" },
+          discriminators: [
+            { id: "Person", name: "CPF" },
+            { id: "Company", name: "CNPJ" },
           ],
           handicap: [
             { id: "yes", name: "Sim" },
