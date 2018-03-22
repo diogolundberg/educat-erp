@@ -21,7 +21,7 @@
         header
         class="max-width-4 m-auto">
         <Step
-          :disabled="data.sendBy"
+          :disabled="data.sendDate"
           title="Seus Dados"
           description="Preencha seus dados pessoais">
           <Card
@@ -269,7 +269,7 @@
           </Card>
         </Step>
         <Step
-          :disabled="data.sendBy"
+          :disabled="data.sendDate"
           title="Dados Financeiros"
           description="Aqui você insere seus dados de pagamento.">
           <Card
@@ -498,11 +498,12 @@
           </Card>
         </Step>
         <Step
-          v-if="!data.sendBy"
+          v-if="!data.sendDate"
           title="Enviar para Análise"
           description="Enviar para aprovação da secretaria e departamento
             financeiro">
           <Card title="Enviar para Análise">
+
             <p>Envie seus dados para a secetaria e para o departamento
               financeiro para aprovação.</p>
             <div class="flex justify-end">
@@ -513,7 +514,7 @@
           </Card>
         </Step>
         <Step
-          v-if="data.sendBy"
+          v-if="data.sendDate"
           title="Aguardando Aprovação"
           description="A secretaria e o departamento financeiro estão analisando
             seus documentos">
@@ -684,7 +685,7 @@
 
         Object.assign(this.data, this.$store.getters.enrollment.data);
         Object.assign(this.options, this.$store.getters.enrollment.options);
-        this.step = this.$store.getters.enrollment.sendBy ? 2 : 1;
+        this.step = this.$store.getters.enrollment.sendDate ? 2 : 1;
       } catch (ex) {
         this.$router.push("/404");
       }
