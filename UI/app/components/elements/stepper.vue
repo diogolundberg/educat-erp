@@ -36,8 +36,10 @@
     watch: {
       value(index) {
         this.$nextTick(() => {
-          const el = this.$children.find(a => a.index === index).$el;
-          window.scrollTo({ top: el.offsetTop - 60 });
+          const el = this.$children.find(a => a.index === index);
+          if (el && el.$el) {
+            window.scrollTo({ top: el.$el.offsetTop - 60 });
+          }
         });
       },
     },

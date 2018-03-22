@@ -24,7 +24,10 @@
           :disabled="data.sendBy"
           title="Seus Dados"
           description="Preencha seus dados pessoais">
-          <Card title="Seus Dados">
+          <Card
+            title="Seus Dados"
+            closeable
+            @close="step = 0">
             <div
               slot="title"
               class="center mb4n mt2">
