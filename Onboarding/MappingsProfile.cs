@@ -23,7 +23,7 @@ namespace Onboarding
                .ForMember(x => x.SpecialNeeds, config => config.MapFrom(x => x.PersonalDataSpecialNeeds.Select(o => o.SpecialNeedId)))
                .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => new DocumentViewModel
                {
-                   Id = o.Document.Id.ToString(),
+                   Id = o.Document.ExternalId.ToString(),
                    DocumentTypeId = o.Document.Id.ToString()
                })));
 
