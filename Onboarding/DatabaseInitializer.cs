@@ -1,9 +1,8 @@
-using System.Linq;
-using Onboarding.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Onboarding.Data.Entity;
+using Onboarding.Models;
 using System.Collections.Generic;
 
 namespace Onboarding
@@ -27,6 +26,7 @@ namespace Onboarding
                 BaseRepository<HighSchoolKind> highSchoolRepository = new BaseRepository<HighSchoolKind>(context);
                 BaseRepository<State> stateRepository = new BaseRepository<State>(context);
                 BaseRepository<PersonalDocument> personalDocumentRepository = new BaseRepository<PersonalDocument>(context);
+                BaseRepository<GuarantorDocument> guarantorDocumentRepository = new BaseRepository<GuarantorDocument>(context);
 
                 if (!addressKindRepository.Any())
                 {
@@ -1683,7 +1683,8 @@ namespace Onboarding
                             new City { Name = "Xique-Xique" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "CE",
                         Cities = new List<City>
                         {
@@ -1873,14 +1874,16 @@ namespace Onboarding
                             new City { Name = "Viçosa do Ceará" }
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "DF",
                         Cities = new List<City>
                         {
                             new City { Name = "Brasília" }
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "ES",
                         Cities = new List<City>
                         {
@@ -1964,7 +1967,8 @@ namespace Onboarding
                             new City { Name = "Vitória" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "GO",
                         Cities = new List<City>
                         {
@@ -2216,7 +2220,8 @@ namespace Onboarding
                             new City { Name = "Vila Propício" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "MA",
                         Cities = new List<City>
                         {
@@ -2439,7 +2444,8 @@ namespace Onboarding
                             new City { Name = "Zé Doca" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "MT",
                         Cities = new List<City>
                         {
@@ -2481,7 +2487,8 @@ namespace Onboarding
                             new City { Name = "Nova Monte Verde" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "MS",
                         Cities = new List<City>
                         {
@@ -2566,7 +2573,8 @@ namespace Onboarding
                             new City { Name = "Vicentina" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "MG",
                         Cities = new List<City>
                         {
@@ -3425,7 +3433,8 @@ namespace Onboarding
                             new City { Name = "Wenceslau Braz" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "PA",
                         Cities = new List<City>
                         {
@@ -5591,7 +5600,8 @@ namespace Onboarding
                             new City { Name = "Xinguara" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "PB",
                         Cities = new List<City>
                         {
@@ -5820,7 +5830,8 @@ namespace Onboarding
                             new City { Name = "Zabelê" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "PR",
                         Cities = new List<City>
                         {
@@ -6225,7 +6236,8 @@ namespace Onboarding
                             new City { Name = "Xambrê" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "PE",
                         Cities = new List<City>
                         {
@@ -6416,7 +6428,8 @@ namespace Onboarding
                             new City { Name = "Xexéu" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "PI",
                         Cities = new List<City>
                         {
@@ -6646,7 +6659,8 @@ namespace Onboarding
                             new City { Name = "Wall Ferraz" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "RJ",
                         Cities = new List<City>
                         {
@@ -6744,7 +6758,8 @@ namespace Onboarding
                             new City { Name = "Volta Redonda" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "RN",
                         Cities = new List<City>
                         {
@@ -6917,7 +6932,8 @@ namespace Onboarding
                             new City { Name = "Vila Flor" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "RS",
                         Cities = new List<City>
                         {
@@ -7218,7 +7234,8 @@ namespace Onboarding
                             new City { Name = "Balneário Rincão" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "RO",
                         Cities = new List<City>
                         {
@@ -7276,7 +7293,8 @@ namespace Onboarding
                             new City { Name = "Vale do Paraíso" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "RR",
                         Cities = new List<City>
                         {
@@ -7297,7 +7315,8 @@ namespace Onboarding
                             new City { Name = "Uiramutã" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "SC",
                         Cities = new List<City>
                         {
@@ -7800,7 +7819,8 @@ namespace Onboarding
                             new City { Name = "Xangri-lá" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "SP",
                         Cities = new List<City>
                         {
@@ -8451,7 +8471,8 @@ namespace Onboarding
                             new City { Name = "Estiva Gerbi" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "SE",
                         Cities = new List<City>
                         {
@@ -8532,7 +8553,8 @@ namespace Onboarding
                             new City { Name = "Umbaúba" },
                         }
                     });
-                    stateRepository.Add(new State {
+                    stateRepository.Add(new State
+                    {
                         Name = "TO",
                         Cities = new List<City>
                         {
@@ -8688,6 +8710,17 @@ namespace Onboarding
                     personalDocumentRepository.Add(new PersonalDocument { Name = "CPF" });
                     personalDocumentRepository.Add(new PersonalDocument { Name = "Cartão de Vacinação (constanto 3 doses de vacina contra Hepatite B e vacina Dupla-adulto" });
                     personalDocumentRepository.Add(new PersonalDocument { Name = "Documento Militar" });
+                }
+
+                if (!guarantorDocumentRepository.Any())
+                {
+                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Histórico Escolar do Ensino Médio" });
+                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Certidão de Nascimento ou Casamento" });
+                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Carteira de Identidade" });
+                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Título de Eleitor e Comprovante de Votação" });
+                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "CPF" });
+                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Cartão de Vacinação (constanto 3 doses de vacina contra Hepatite B e vacina Dupla-adulto" });
+                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Documento Militar" });
                 }
 
                 context.SaveChanges();
