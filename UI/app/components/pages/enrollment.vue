@@ -287,6 +287,8 @@
                   v-model="data.responsible.cpf"
                   v-if="data.responsible.discriminator == 'Person'"
                   :size="4"
+                  :min-size="14"
+                  cpf
                   label="CPF"
                   mask="###.###.###-##"
                   hint="Ex: 000.000.000-00" />
@@ -294,6 +296,8 @@
                   v-model="data.responsible.cnpj"
                   v-if="data.responsible.discriminator == 'Company'"
                   :size="4"
+                  :min-size="18"
+                  cnpj
                   label="CNPJ"
                   mask="##.###.###/####-##"
                   hint="Ex: 00.000.000/0000-00" />
@@ -390,6 +394,8 @@
                   v-model="data.guarantor.cpf"
                   v-if="data.guarantor.discriminator == 'Person'"
                   :size="4"
+                  :min-size="14"
+                  cpf
                   label="CPF"
                   mask="###.###.###-##"
                   hint="Ex: 000.000.000-00" />
@@ -397,6 +403,8 @@
                   v-model="data.guarantor.cnpj"
                   v-if="data.guarantor.discriminator == 'Company'"
                   :size="4"
+                  :min-size="18"
+                  cnpj
                   label="CNPJ"
                   mask="##.###.###/####-##"
                   hint="Ex: 00.000.000/0000-00" />

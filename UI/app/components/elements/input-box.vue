@@ -45,6 +45,7 @@
 
 <script>
   import format from "v-mask/src/format";
+  import { CPF, CNPJ } from "cpf_cnpj";
 
   export default {
     name: "InputBox",
@@ -104,6 +105,18 @@
         type: Boolean,
         default: false,
       },
+      cpf: {
+        type: Boolean,
+        default: false,
+      },
+      cnpj: {
+        type: Boolean,
+        default: false,
+      },
+      validations: {
+        type: Array,
+        default: () => [],
+      },
     },
     data() {
       return {
@@ -119,11 +132,13 @@
         return this.value && this.value.length;
       },
       localErrors() {
-        return [
-          this.required && !this.length && "Campo obrigatório",
-          this.required && this.length < this.minSize && "Valor inválido",
-          this.email && !(/^.+@.+\..+$/.test(this.value)) && "E-mail inválido",
-        ].filter(a => a && this.validate);
+        return this.validations.concat([
+          _ => this.required && !this.length && "Campo obrigatório",
+          _ => this.required && this.length < this.minSize && "Valor inválido",
+          a => this.email && !(/^.+@.+\..+$/.test(a)) && "E-mail inválido",
+          a => this.cpf && !CPF.isValid(a) && "CPF Inválido!",
+          a => this.cnpj && !CNPJ.isValid(a) && "CNPJ Inválido!",
+        ]).map(a => a(this.value)).filter(a => a && this.validate);
       },
       focused() {
         return this.focus || (this.value && this.value.length);
