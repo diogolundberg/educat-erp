@@ -11,7 +11,8 @@
     props: {
       content: {
         type: [Number, String],
-        required: true,
+        required: false,
+        default: null,
       },
       blank: {
         type: Boolean,
