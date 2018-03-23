@@ -85,7 +85,20 @@ namespace Onboarding
                         ExternalId = x.Id,
                         DocumentTypeId = int.Parse(x.DocumentTypeId)
                     }
-                })));                
+                })));
+
+            CreateMap<RepresentativeViewModel, Representative>()
+                .ForMember(x => x.City, config => config.Ignore())
+                .ForMember(x => x.FinanceData, config => config.Ignore())
+                .ForMember(x => x.State, config => config.Ignore());
+
+            CreateMap<Representative, RepresentativeViewModel>();
+
+            CreateMap<GuarantorViewModel, Guarantor>()
+                .ForMember(x => x.City, config => config.Ignore())
+                .ForMember(x => x.State, config => config.Ignore());
+
+            CreateMap<Guarantor, GuarantorViewModel>();
         }
     }
 }

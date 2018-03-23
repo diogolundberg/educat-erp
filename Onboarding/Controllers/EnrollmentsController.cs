@@ -30,7 +30,6 @@ namespace Onboarding.Controllers
         private readonly BaseRepository<PersonalData> _personalDataRepository;
         private readonly BaseRepository<PersonalDocument> _personalDocumentsRepository;
         private readonly BaseRepository<GuarantorDocument> _guarantorDocumentsRepository;
-        private readonly TokenHelper _tokenHelper;
 
         public EnrollmentsController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
         {
@@ -52,7 +51,6 @@ namespace Onboarding.Controllers
 
             _configuration = configuration;
             _mapper = mapper;
-            _tokenHelper = new TokenHelper();
         }
 
         [HttpGet("{token}", Name = "ONBOARDING/ENROLLMENTS/GET")]
@@ -149,9 +147,11 @@ namespace Onboarding.Controllers
 
             foreach (GenerateTokenEnrollment enrollmentParameterObj in obj.List)
             {
-                Enrollment enrollment = new Enrollment {
+                Enrollment enrollment = new Enrollment
+                {
                     Deadline = obj.End,
-                    PersonalData = new PersonalData {
+                    PersonalData = new PersonalData
+                    {
                         RealName = enrollmentParameterObj.Name,
                         Email = enrollmentParameterObj.Email,
                         CPF = enrollmentParameterObj.CPF,

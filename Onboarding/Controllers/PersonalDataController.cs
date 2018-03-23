@@ -15,7 +15,6 @@ namespace Onboarding.Controllers
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly DatabaseContext _context;
-        private readonly TokenHelper _tokenHelper;
         private readonly BaseRepository<Enrollment> _enrollmentRepository;
         private readonly BaseRepository<PersonalData> _personalDataRepository;
 
@@ -24,7 +23,6 @@ namespace Onboarding.Controllers
             _context = databaseContext;
             _configuration = configuration;
             _mapper = mapper;
-            _tokenHelper = new TokenHelper();
             _enrollmentRepository = new BaseRepository<Enrollment>(_context);
             _personalDataRepository = new BaseRepository<PersonalData>(_context);
         }
