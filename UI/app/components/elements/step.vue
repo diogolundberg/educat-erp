@@ -9,9 +9,14 @@
         :index="index"
         :blank="current < index"
         class="mr2" />
-      <div class="h5 line-height-3">
+      <div class="h5 line-height-3 flex-auto">
         <div>{{ title }}</div>
         <small class="dim">{{ description }}</small>
+      </div>
+      <div v-if="complete">
+        <div class="x1 y1 circle relative pointer x2 y2 p6x shadow1 bg-green">
+          <Icon name="check" />
+        </div>
       </div>
     </div>
     <div

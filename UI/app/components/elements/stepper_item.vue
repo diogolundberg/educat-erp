@@ -6,13 +6,9 @@
     <div
       :class="{ 'bg-green': active, 'bg-gray': !active }"
       class="block w100 h100 circle ease">
-      <svg
+      <Icon
         v-if="complete"
-        viewBox="0 0 512 512">
-        <path
-          d="m208 433l-164-164 77-78 87 85 196-197 79 78z"
-          fill="#fff" />
-      </svg>
+        name="check" />
     </div>
     <div class="absolute left2n x6 pt2 h7 center xs-hide">
       {{ title }}
