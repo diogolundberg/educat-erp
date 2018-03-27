@@ -56,8 +56,6 @@ namespace Onboarding.Controllers
 
             _context.Entry(newEnrollment).Reference(x => x.FinanceData).Load();
 
-            bool testLab = obj.Representative is RepresentativePersonPatchViewModel;
-
             FinanceData newFinanceData = _mapper.Map<FinanceData>(obj);
 
             newFinanceData.EnrollmentId = newEnrollment.Id;
