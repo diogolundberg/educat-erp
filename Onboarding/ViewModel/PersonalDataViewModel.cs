@@ -9,6 +9,12 @@ namespace Onboarding.ViewModel
     public class PersonalDataViewModel
     {
         [Required]
+        public string Id { get; set; }
+
+        [Required]
+        public string EnrollmentId { get; set; }
+
+        [Required]
         public string RealName { get; set; }
 
         public string AssumedName { get; set; }

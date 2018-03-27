@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Data.Entity;
 using Onboarding.Models;
@@ -13,7 +14,6 @@ namespace Onboarding.Controllers
     public class PersonalDataController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IConfiguration _configuration;
         private readonly DatabaseContext _context;
         private readonly BaseRepository<Enrollment> _enrollmentRepository;
         private readonly BaseRepository<PersonalData> _personalDataRepository;
@@ -21,7 +21,6 @@ namespace Onboarding.Controllers
         public PersonalDataController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
         {
             _context = databaseContext;
-            _configuration = configuration;
             _mapper = mapper;
             _enrollmentRepository = new BaseRepository<Enrollment>(_context);
             _personalDataRepository = new BaseRepository<PersonalData>(_context);
@@ -35,23 +34,24 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            Enrollment enrollment = _enrollmentRepository.GetByExternalId(token);
-            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
+            PersonalData personalData = _context.Set<PersonalData>()
+                                                .Include(x => x.Enrollment)
+                                                .AsNoTracking()
+                                                .Single(x => x.Enrollment.ExternalId == token);
 
-            if (enrollment == null)
+            if (personalData == null)
             {
                 return NotFound();
             }
 
-            if (enrollment.SendDate.HasValue || !enrollment.IsDeadlineValid())
+            if (personalData.Enrollment.SendDate.HasValue || !personalData.Enrollment.IsDeadlineValid())
             {
                 return BadRequest();
             }
 
-            PersonalData personalData = enrollment.PersonalData;
             personalData = _mapper.Map<PersonalData>(obj);
-
-            _personalDataRepository.Update(personalData);
+            _context.Set<PersonalData>().Update(personalData);
+            _context.SaveChanges();
 
             var errors = ModelState.ToDictionary(
                 modelState => modelState.Key,
