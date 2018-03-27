@@ -18,6 +18,15 @@ namespace Onboarding.Bindings
                 DocumentTypeId = o.Document.DocumentTypeId.ToString()
             })));
 
+            CreateMap<PersonalData, PersonalDataPatchViewModel>()
+            .ForMember(x => x.Disabilities, config => config.MapFrom(x => x.PersonalDataDisabilities.Select(o => o.DisabilityId)))
+            .ForMember(x => x.SpecialNeeds, config => config.MapFrom(x => x.PersonalDataSpecialNeeds.Select(o => o.SpecialNeedId)))
+            .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => new DocumentViewModel
+            {
+                Id = o.Document.ExternalId.ToString(),
+                DocumentTypeId = o.Document.DocumentTypeId.ToString()
+            })));
+
             CreateMap<PersonalDataPatchViewModel, PersonalData>()
             .ForMember(x => x.MaritalStatus, config => config.Ignore())
             .ForMember(x => x.Gender, config => config.Ignore())

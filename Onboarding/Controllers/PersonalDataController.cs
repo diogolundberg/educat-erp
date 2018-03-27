@@ -66,7 +66,7 @@ namespace Onboarding.Controllers
             return new OkObjectResult(new
             {
                 errors,
-                data = obj
+                data = _mapper.Map<PersonalDataPatchViewModel>(newPersonalData)
             });
         }
 
