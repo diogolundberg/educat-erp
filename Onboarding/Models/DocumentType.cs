@@ -7,4 +7,16 @@ namespace Onboarding.Models
         [Required]
         public string Name { get; set; }
     }
+
+    public class PersonalDocument : DocumentType
+    {
+    }
+
+    public class GuarantorDocument : DocumentType
+    {
+    }
+
+    public class ResponsibleDocument : DocumentType
+    {
+    }
 }

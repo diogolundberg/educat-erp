@@ -37,4 +37,18 @@ namespace Onboarding.Models
         [JsonIgnore]
         public virtual State State { get; set; }
     }
+
+    public class RepresentativePerson : Representative
+    {
+        public string Cpf { get; set; }
+
+        public string Relationship { get; set; }
+    }
+
+    public class RepresentativeCompany : Representative
+    {
+        public string Cnpj { get; set; }
+
+        public string Contact { get; set; }
+    }
 }
