@@ -12,6 +12,10 @@ namespace Onboarding.Models
 
         public string ExternalId { get; set; }
 
+        public DateTime? CreatedAt { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
+
         public object Clone()
         {
             return this.MemberwiseClone();
