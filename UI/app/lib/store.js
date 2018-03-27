@@ -6,9 +6,9 @@ import { pickBy, identity } from "lodash";
 
 Vue.use(VueX);
 
-const url1 = "http://sso.sandbox.eti.br";
-const url2 = "http://onboarding.sandbox.eti.br";
-const url3 = "http://upload.sandbox.eti.br";
+const url1 = process.env.SSO_HOST || "http://sso.sandbox.eti.br";
+const url2 = process.env.ONBOARDING_HOST || "http://onboarding.sandbox.eti.br";
+const url3 = process.env.UPLOAD_HOST || "http://upload.sandbox.eti.br";
 
 export default new VueX.Store({
   state: {
