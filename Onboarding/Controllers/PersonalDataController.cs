@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using AutoMapper;
+using Marvin.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Data.Entity;
@@ -28,30 +29,28 @@ namespace Onboarding.Controllers
         }
 
         [HttpPatch("{token}", Name = "ONBOARDING/PERSONALDATA/PATCHEDIT")]
-        public IActionResult Update([FromRoute]string token, [FromBody]PersonalDataPatchViewModel obj)
+        public IActionResult Update([FromRoute]string token, [FromBody]JsonPatchDocument<PersonalDataPatchViewModel> personalDataPatch)
         {
             if (string.IsNullOrEmpty(token))
             {
                 return BadRequest();
             }
 
-            Enrollment enrollment = _enrollmentRepository.GetByExternalId(token);
-            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
+            Enrollment enrollmentDatabase = _enrollmentRepository.GetByExternalId(token);
 
-            if (enrollment == null)
-            {
-                return NotFound();
-            }
-
-            if (enrollment.SendDate.HasValue || !enrollment.IsDeadlineValid())
+            if (enrollmentDatabase.SendDate.HasValue || !enrollmentDatabase.IsDeadlineValid())
             {
                 return BadRequest();
             }
 
-            PersonalData personalData = enrollment.PersonalData;
-            personalData = _mapper.Map<PersonalData>(obj);
+            _context.Entry(enrollmentDatabase).Reference(x => x.PersonalData).Load();
 
-            _personalDataRepository.Update(personalData);
+            PersonalDataPatchViewModel personalDataViewModel = _mapper.Map<PersonalDataPatchViewModel>(enrollmentDatabase.PersonalData);
+            personalDataPatch.ApplyTo(personalDataViewModel);
+
+            _mapper.Map(personalDataViewModel, enrollmentDatabase.PersonalData);
+
+            _personalDataRepository.Update(enrollmentDatabase.PersonalData);
 
             var errors = ModelState.ToDictionary(
                 modelState => modelState.Key,
@@ -61,7 +60,7 @@ namespace Onboarding.Controllers
             return new OkObjectResult(new
             {
                 errors,
-                data = _mapper.Map<PersonalDataPatchViewModel>(personalData)
+                data = _mapper.Map<PersonalDataPatchViewModel>(enrollmentDatabase.PersonalData)
             });
         }
 
