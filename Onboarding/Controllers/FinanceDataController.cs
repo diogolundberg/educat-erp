@@ -48,27 +48,8 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            FinanceData oldFinanceData = enrollment.FinanceData;
-
-            Enrollment newEnrollment = (Enrollment)enrollment.Clone();
-
-            _enrollmentRepository.Update(enrollment, newEnrollment);
-
-            _context.Entry(newEnrollment).Reference(x => x.FinanceData).Load();
-
-            FinanceData newFinanceData = _mapper.Map<FinanceData>(obj);
-
-            newFinanceData.EnrollmentId = newEnrollment.Id;
-            
-            if (oldFinanceData == null)
-            {
-                _financeDataRepository.Add(newFinanceData);
-            }
-            else
-            {
-                newFinanceData.ExternalId = newEnrollment.FinanceData.ExternalId;
-                _financeDataRepository.Update(oldFinanceData, newFinanceData);
-            }
+            FinanceData financeData = _mapper.Map<FinanceData>(obj);
+            enrollment.FinanceData = financeData;
 
             var errors = ModelState.ToDictionary(
                 modelState => modelState.Key,
@@ -103,27 +84,8 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            FinanceData oldFinanceData = enrollment.FinanceData;
-
-            Enrollment newEnrollment = (Enrollment)enrollment.Clone();
-
-            _enrollmentRepository.Update(enrollment, newEnrollment);
-
-            _context.Entry(newEnrollment).Reference(x => x.FinanceData).Load();
-
-            FinanceData newFinanceData = _mapper.Map<FinanceData>(obj);
-
-            newFinanceData.EnrollmentId = newEnrollment.Id;
-
-            if (oldFinanceData == null)
-            {
-                _financeDataRepository.Add(newFinanceData);
-            }
-            else
-            {
-                newFinanceData.ExternalId = newEnrollment.FinanceData.ExternalId;
-                _financeDataRepository.Update(oldFinanceData, newFinanceData);
-            }
+            FinanceData financeData = _mapper.Map<FinanceData>(obj);
+            enrollment.FinanceData = financeData;
 
             var errors = ModelState.ToDictionary(
                 modelState => modelState.Key,
