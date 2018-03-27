@@ -15,7 +15,7 @@ namespace Onboarding.Bindings
             .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => new DocumentViewModel
             {
                 Id = o.Document.ExternalId.ToString(),
-                DocumentTypeId = o.Document.Id.ToString()
+                DocumentTypeId = o.Document.DocumentTypeId.ToString()
             })));
 
             CreateMap<PersonalDataPatchViewModel, PersonalData>()
