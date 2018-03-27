@@ -16,7 +16,7 @@ namespace Onboarding.Bindings
             {
                 Id = o.Document.Id.ToString(),
                 Url = o.Document.Url.ToString(),
-                DocumentTypeId = o.Document.DocumentTypeId  .ToString()
+                DocumentTypeId = o.Document.DocumentTypeId.ToString()
             })));
 
             CreateMap<PersonalDataViewModel, PersonalData>()
