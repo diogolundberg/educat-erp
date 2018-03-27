@@ -51,7 +51,21 @@ namespace Onboarding.Controllers
 
             personalData = _mapper.Map<PersonalData>(obj);
             _context.Set<PersonalData>().Update(personalData);
+            foreach (PersonalDataDocument document in personalData.PersonalDataDocuments)
+            {
+                if (document.Document.Id == 0)
+                {
+                    _context.Set<PersonalDataDocument>().Add(document);
+                }
+                else
+                {
+                    _context.Set<PersonalDataDocument>().Update(document);
+                }
+            }
             _context.SaveChanges();
+
+            PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
+            viewModel.State = PersonalDataState(personalData);
 
             var errors = ModelState.ToDictionary(
                 modelState => modelState.Key,
@@ -61,9 +75,25 @@ namespace Onboarding.Controllers
             return new OkObjectResult(new
             {
                 errors,
-                data = _mapper.Map<PersonalDataViewModel>(personalData)
+                data = viewModel
             });
         }
 
+        private string PersonalDataState(PersonalData personalData)
+        {
+            if (personalData.UpdatedAt.HasValue)
+            {
+                return "empty";
+            }
+
+            if (ModelState.IsValid)
+            {
+                return "valid";
+            }
+            else
+            {
+                return "invalid";
+            }
+        }
     }
 }

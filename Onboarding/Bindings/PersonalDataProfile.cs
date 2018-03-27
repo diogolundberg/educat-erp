@@ -42,7 +42,8 @@ namespace Onboarding.Bindings
             {
                 Document = new Document
                 {
-                    ExternalId = x.Id,
+                    Id = string.IsNullOrEmpty(x.Id) ? 0 : int.Parse(x.Id),
+                    Url = x.Url,
                     DocumentTypeId = int.Parse(x.DocumentTypeId)
                 }
             })));

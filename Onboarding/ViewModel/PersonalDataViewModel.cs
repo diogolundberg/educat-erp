@@ -14,6 +14,8 @@ namespace Onboarding.ViewModel
         [Required]
         public string EnrollmentId { get; set; }
 
+        public string State { get; set; }
+
         [Required]
         public string RealName { get; set; }
 
