@@ -275,3 +275,4 @@ app.config
 appsettings.Development.json
 appsettings.json
 *.code-workspace
+*.sln
