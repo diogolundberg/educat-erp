@@ -16,8 +16,9 @@ namespace Onboarding.ViewModel
 
         public string State { get; set; }
 
-        [Required]
         public string RealName { get; set; }
+        public string CPF { get; set; }
+        public string Email { get; set; }
 
         public string AssumedName { get; set; }
 
@@ -26,18 +27,11 @@ namespace Onboarding.ViewModel
         public DateTime BirthDate { get; set; }
 
         [Required]
-        [Cpf]
-        public string CPF { get; set; }
-
-        [Required]
         public string Nationality { get; set; }
 
         [Required]
         public string HighSchoolGraduationYear { get; set; }
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
 
         [Required]
         public string Zipcode { get; set; }

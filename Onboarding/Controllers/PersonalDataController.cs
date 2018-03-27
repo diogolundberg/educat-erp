@@ -31,6 +31,7 @@ namespace Onboarding.Controllers
         [HttpPost("{token}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
         public IActionResult Update([FromRoute]string token, [FromBody]PersonalDataViewModel obj)
         {
+
             if (string.IsNullOrEmpty(token))
             {
                 return BadRequest();
@@ -52,7 +53,6 @@ namespace Onboarding.Controllers
             }
 
             personalData = _mapper.Map<PersonalData>(obj);
-
             foreach (PersonalDataDocument document in personalData.PersonalDataDocuments)
             {
                 if (document.Document.Id == 0)
@@ -66,8 +66,11 @@ namespace Onboarding.Controllers
             }
 
             _context.Set<PersonalData>().Update(personalData);
-
+            _context.Entry(personalData).Property(x => x.CPF).IsModified = false;
+            _context.Entry(personalData).Property(x => x.RealName).IsModified = false;
+            _context.Entry(personalData).Property(x => x.Email).IsModified = false;
             _context.SaveChanges();
+            _context.Entry(personalData).Reload();
 
             PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
             viewModel.State = PersonalDataState(personalData);
