@@ -50,7 +50,7 @@ namespace Onboarding.Controllers
             }
 
             personalData = _mapper.Map<PersonalData>(obj);
-            _context.Set<PersonalData>().Update(personalData);
+            
             foreach (PersonalDataDocument document in personalData.PersonalDataDocuments)
             {
                 if (document.Document.Id == 0)
@@ -62,6 +62,9 @@ namespace Onboarding.Controllers
                     _context.Set<PersonalDataDocument>().Update(document);
                 }
             }
+
+            _context.Set<PersonalData>().Update(personalData);
+
             _context.SaveChanges();
 
             PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
