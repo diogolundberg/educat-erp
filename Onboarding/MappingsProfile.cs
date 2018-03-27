@@ -1,8 +1,5 @@
 using System.Linq;
 using AutoMapper;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Onboarding.Data.Entity;
 using Onboarding.Models;
 using Onboarding.ViewModel;
 
@@ -14,9 +11,6 @@ namespace Onboarding
         public MappingsProfile()
         {
             CreateMap<Enrollment, EnrollmentViewModel>();
-
-            CreateMap<FinanceData, FinanceDataViewModel>();
-            CreateMap<FinanceDataViewModel, FinanceData>();
 
             CreateMap<PersonalData, PersonalDataViewModel>()
                .ForMember(x => x.Disabilities, config => config.MapFrom(x => x.PersonalDataDisabilities.Select(o => o.DisabilityId)))
@@ -78,27 +72,50 @@ namespace Onboarding
                                                 {
                                                     SpecialNeedId = int.Parse(x)
                                                 })))
-                .ForMember(x => x.PersonalDataDocuments, config => config.MapFrom(cm => cm.Documents.Select(x => new PersonalDataDocument
-                {
-                    Document = new Document
-                    {
-                        ExternalId = x.Id,
-                        DocumentTypeId = int.Parse(x.DocumentTypeId)
-                    }
-                })));
+                .ForMember(x => x.PersonalDataDocuments, config => config
+                                                .MapFrom(cm => cm.Documents.Select(x => new PersonalDataDocument
+                                                {
+                                                    Document = new Document
+                                                    {
+                                                        ExternalId = x.Id,
+                                                        DocumentTypeId = int.Parse(x.DocumentTypeId)
+                                                    }
+                                                })));
 
-            CreateMap<RepresentativeViewModel, Representative>()
+            CreateMap<RepresentativePatchViewModel, Representative>()
+                    .ForMember(x => x.City, config => config.Ignore())
+                    .ForMember(x => x.FinanceData, config => config.Ignore())
+                    .ForMember(x => x.State, config => config.Ignore());
+
+            CreateMap<RepresentativeCompany, RepresentativeCompanyPatchViewModel>();
+            CreateMap<RepresentativeCompanyPatchViewModel, RepresentativeCompany>()
                 .ForMember(x => x.City, config => config.Ignore())
-                .ForMember(x => x.FinanceData, config => config.Ignore())
                 .ForMember(x => x.State, config => config.Ignore());
 
-            CreateMap<Representative, RepresentativeViewModel>();
-
-            CreateMap<GuarantorViewModel, Guarantor>()
+            CreateMap<RepresentativePerson, RepresentativePersonPatchViewModel>();
+            CreateMap<RepresentativePersonPatchViewModel, RepresentativeCompany>()
                 .ForMember(x => x.City, config => config.Ignore())
                 .ForMember(x => x.State, config => config.Ignore());
 
-            CreateMap<Guarantor, GuarantorViewModel>();
+            CreateMap<Representative, RepresentativePatchViewModel>()
+                    .Include<RepresentativeCompany, RepresentativeCompanyPatchViewModel>()
+                    .Include<RepresentativePerson, RepresentativePersonPatchViewModel>();
+
+            CreateMap<GuarantorPatchViewModel, Guarantor>()
+                .ForMember(x => x.City, config => config.Ignore())
+                .ForMember(x => x.State, config => config.Ignore());
+
+            CreateMap<Guarantor, GuarantorPatchViewModel>();
+
+            CreateMap<FinanceData, FinanceDataViewModel>()
+                .ForMember(x => x.Representative, config => config.MapFrom(x => x.Representative));
+            CreateMap<FinanceDataViewModel, FinanceData>()
+                .ForMember(x => x.Representative, config => config.MapFrom(x => x.Representative));
+
+            CreateMap<FinanceData, FinanceDataPatchViewModel>()
+                    .ForMember(x => x.Representative, config => config.MapFrom(x => x.Representative));
+            CreateMap<FinanceDataPatchViewModel, FinanceData>()
+                .ForMember(x => x.Representative, config => config.MapFrom(x => (RepresentativePatchViewModel)x.Representative));
         }
     }
 }

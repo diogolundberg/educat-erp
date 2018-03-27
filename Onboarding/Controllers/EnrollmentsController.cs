@@ -92,7 +92,9 @@ namespace Onboarding.Controllers
                     AcademicApproval = enrollment.AcademicApproval,
                     FinanceApproval = enrollment.FinanceApproval,
                     PersonalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData),
-                    FinanceData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData),
+                    FinanceData = enrollment.FinanceData != null ?
+                                    _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData) :
+                                    new FinanceDataViewModel { Representative = new RepresentativePersonViewModel() },
                 },
                 options = new
                 {

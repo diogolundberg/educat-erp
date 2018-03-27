@@ -2,7 +2,7 @@
 
 namespace Onboarding.ViewModel
 {
-    public abstract class RepresentativePatchViewModel
+    public class RepresentativePatchViewModel
     {
         public string Name { get; set; }
 

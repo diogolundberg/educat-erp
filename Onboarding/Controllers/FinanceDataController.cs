@@ -1,6 +1,6 @@
 using System.Linq;
 using AutoMapper;
-using AutoMapper.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Onboarding.Data.Entity;
 using Onboarding.Models;
@@ -30,7 +30,7 @@ namespace Onboarding.Controllers
         [HttpPatch("{token}", Name = "ONBOARDING/FINANCEDATA/PATCHEDIT")]
         public IActionResult Update([FromRoute]string token, [FromBody]FinanceDataPatchViewModel obj)
         {
-            if (string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(token) || obj == null)
             {
                 return BadRequest();
             }
@@ -57,10 +57,73 @@ namespace Onboarding.Controllers
             _context.Entry(newEnrollment).Reference(x => x.FinanceData).Load();
 
             FinanceData newFinanceData = _mapper.Map<FinanceData>(obj);
-            newFinanceData.ExternalId = newEnrollment.FinanceData.ExternalId;
+
+            newFinanceData.EnrollmentId = newEnrollment.Id;
+            
+            if (oldFinanceData == null)
+            {
+                _financeDataRepository.Add(newFinanceData);
+            }
+            else
+            {
+                newFinanceData.ExternalId = newEnrollment.FinanceData.ExternalId;
+                _financeDataRepository.Update(oldFinanceData, newFinanceData);
+            }
+
+            var errors = ModelState.ToDictionary(
+                modelState => modelState.Key,
+                modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+            );
+
+            return new OkObjectResult(new
+            {
+                errors,
+                data = obj
+            });
+        }
+
+        [HttpPost("{token}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
+        public IActionResult Update([FromRoute]string token, [FromBody]FinanceDataViewModel obj)
+        {
+            if (string.IsNullOrEmpty(token) || obj == null)
+            {
+                return BadRequest();
+            }
+
+            Enrollment enrollment = _enrollmentRepository.GetByExternalId(token);
+            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
+
+            if (enrollment == null)
+            {
+                return NotFound();
+            }
+
+            if (enrollment.SendDate.HasValue || !enrollment.IsDeadlineValid())
+            {
+                return BadRequest();
+            }
+
+            FinanceData oldFinanceData = enrollment.FinanceData;
+
+            Enrollment newEnrollment = (Enrollment)enrollment.Clone();
+
+            _enrollmentRepository.Update(enrollment, newEnrollment);
+
+            _context.Entry(newEnrollment).Reference(x => x.FinanceData).Load();
+
+            FinanceData newFinanceData = _mapper.Map<FinanceData>(obj);
+
             newFinanceData.EnrollmentId = newEnrollment.Id;
 
-            _financeDataRepository.Update(oldFinanceData, newFinanceData);
+            if (oldFinanceData == null)
+            {
+                _financeDataRepository.Add(newFinanceData);
+            }
+            else
+            {
+                newFinanceData.ExternalId = newEnrollment.FinanceData.ExternalId;
+                _financeDataRepository.Update(oldFinanceData, newFinanceData);
+            }
 
             var errors = ModelState.ToDictionary(
                 modelState => modelState.Key,

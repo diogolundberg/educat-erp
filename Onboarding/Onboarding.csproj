@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Onboarding.sln" />
+    <Folder Include="Bindings\" />
   </ItemGroup>
   
 </Project>
