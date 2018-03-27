@@ -70,7 +70,7 @@ namespace Onboarding.ViewModel
         public string MaritalStatusId { get; set; }
 
         [Required]
-        public string BirthCity { get; set; }
+        public string BirthCityId { get; set; }
 
         [Required]
         public string BirthStateId { get; set; }
@@ -82,7 +82,7 @@ namespace Onboarding.ViewModel
         public string HighSchoolGraduationCountryId { get; set; }
 
         [Required]
-        public string City { get; set; }
+        public string CityId { get; set; }
 
         [Required]
         public string StateId { get; set; }
