@@ -48,23 +48,10 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            PersonalData oldPersonalData = enrollment.PersonalData;
+            PersonalData personalData = enrollment.PersonalData;
+            personalData = _mapper.Map<PersonalData>(obj);
 
-            Enrollment newEnrollment = (Enrollment)enrollment.Clone();
-
-            _enrollmentRepository.Update(enrollment, newEnrollment);
-
-            _context.Entry(newEnrollment).Reference(x => x.PersonalData).Load();
-
-            PersonalData newPersonalData = _mapper.Map<PersonalData>(obj);
-
-            newPersonalData.ExternalId = newEnrollment.PersonalData.ExternalId;
-            newPersonalData.EnrollmentId = newEnrollment.Id;
-            newPersonalData.RealName = oldPersonalData.RealName;
-            newPersonalData.CPF = oldPersonalData.CPF;
-            newPersonalData.Email = oldPersonalData.Email;
-
-            _personalDataRepository.Update(oldPersonalData, newPersonalData);
+            _personalDataRepository.Update(personalData);
 
             var errors = ModelState.ToDictionary(
                 modelState => modelState.Key,
@@ -74,7 +61,7 @@ namespace Onboarding.Controllers
             return new OkObjectResult(new
             {
                 errors,
-                data = obj
+                data = _mapper.Map<PersonalDataPatchViewModel>(personalData)
             });
         }
 
@@ -99,23 +86,10 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            PersonalData oldPersonalData = enrollment.PersonalData;
+            PersonalData personalData = enrollment.PersonalData;
+            personalData = _mapper.Map<PersonalData>(obj);
 
-            Enrollment newEnrollment = (Enrollment)enrollment.Clone();
-
-            _enrollmentRepository.Update(enrollment, newEnrollment);
-
-            _context.Entry(newEnrollment).Reference(x => x.PersonalData).Load();
-
-            PersonalData newPersonalData = _mapper.Map<PersonalData>(obj);
-
-            newPersonalData.ExternalId = newEnrollment.PersonalData.ExternalId;
-            newPersonalData.EnrollmentId = newEnrollment.Id;
-            newPersonalData.RealName = oldPersonalData.RealName;
-            newPersonalData.CPF = oldPersonalData.CPF;
-            newPersonalData.Email = oldPersonalData.Email;
-
-            _personalDataRepository.Update(oldPersonalData, newPersonalData);
+            _personalDataRepository.Update(personalData);
 
             var errors = ModelState.ToDictionary(
                 modelState => modelState.Key,
@@ -125,7 +99,7 @@ namespace Onboarding.Controllers
             return new OkObjectResult(new
             {
                 errors,
-                data = obj
+                data = _mapper.Map<PersonalDataViewModel>(personalData)
             });
         }
 

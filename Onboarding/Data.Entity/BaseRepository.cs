@@ -32,12 +32,12 @@ namespace Onboarding.Data.Entity
 
         public virtual TEntity GetByExternalId(string externalId)
         {
-            return _context.Set<TEntity>().FirstOrDefault(x => x.ExternalId == externalId);
+            return _context.Set<TEntity>().SingleOrDefault(x => x.ExternalId == externalId);
         }
 
         public virtual TEntity GetById(int id)
         {
-            return _context.Set<TEntity>().FirstOrDefault(x => x.Id == id);
+            return _context.Set<TEntity>().SingleOrDefault(x => x.Id == id);
         }
 
         public virtual void Add(TEntity obj, bool? saveChanges = true)
