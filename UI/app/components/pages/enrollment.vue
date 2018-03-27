@@ -253,8 +253,9 @@
                     class="flex justify-between items-center">
                       <div>{{ doc.name }}</div>
                       <UploadButton
-                        v-model="personalDocuments[doc.id]"
-                        :prefix="data.externalId" />
+                        :prefix="token"
+                        :value="documentFor(doc.id)"
+                        @input="setDocument(doc.id, $event)" />
                   </div>
                   <hr
                     v-if="idx < options.personalDocuments.length - 1"
@@ -600,6 +601,7 @@
             highSchoolKindId: null,
             specialNeeds: [],
             disabilities: [],
+            documents: [],
           },
           financeData: {
             state: "empty",
@@ -634,15 +636,6 @@
             email: "",
             cityId: null,
             stateId: null,
-          },
-          documents: {
-            history: null,
-            birthCertificate: null,
-            rg: null,
-            voterId: null,
-            cpf: null,
-            vaccination: null,
-            military: null,
           },
         },
         options: {
@@ -706,6 +699,23 @@
         const token = this.id;
         const data = this.data.personalData;
         await this.$store.dispatch("setPersonalData", { token, data });
+      },
+      documentFor(id) {
+        const document = this.data.personalData.documents
+          .find(a => a.documentTypeId === id);
+        return document && document.id;
+      },
+      setDocument(id, value) {
+        const document = this.data.personalData.documents
+          .find(a => a.documentTypeId === id);
+        if (document) {
+          document.id = value;
+        } else {
+          this.data.personalData.documents.push({
+            id: value,
+            documentTypeId: id,
+          });
+        }
       },
     },
   };
