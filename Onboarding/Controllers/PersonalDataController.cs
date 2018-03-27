@@ -49,17 +49,9 @@ namespace Onboarding.Controllers
             }
 
             PersonalData oldPersonalData = enrollment.PersonalData;
-
-            Enrollment newEnrollment = (Enrollment)enrollment.Clone();
-
-            _enrollmentRepository.Update(enrollment, newEnrollment);
-
-            _context.Entry(newEnrollment).Reference(x => x.PersonalData).Load();
-
             PersonalData newPersonalData = _mapper.Map<PersonalData>(obj);
 
-            newPersonalData.ExternalId = newEnrollment.PersonalData.ExternalId;
-            newPersonalData.EnrollmentId = newEnrollment.Id;
+            newPersonalData.EnrollmentId = oldPersonalData.EnrollmentId;
             newPersonalData.RealName = oldPersonalData.RealName;
             newPersonalData.CPF = oldPersonalData.CPF;
             newPersonalData.Email = oldPersonalData.Email;
