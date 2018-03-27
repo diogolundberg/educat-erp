@@ -56,7 +56,11 @@ namespace Onboarding.Models
         [JsonIgnore]
         public virtual MaritalStatus MaritalStatus { get; set; }
 
-        public string BirthCity { get; set; }
+        [ForeignKey("BirthCity")]
+        public int? BirthCityId { get; set; }
+
+        [JsonIgnore]
+        public City BirthCity { get; set; }
 
         [ForeignKey("BirthState")]
         public int? BirthStateId { get; set; }
@@ -76,7 +80,11 @@ namespace Onboarding.Models
         [JsonIgnore]
         public virtual Country HighSchoolGraduationCountry { get; set; }
 
-        public string City { get; set; }
+        [ForeignKey("City")]
+        public int? CityId { get; set; }
+
+        [JsonIgnore]
+        public virtual City City { get; set; }
 
         [ForeignKey("State")]
         public int? StateId { get; set; }
