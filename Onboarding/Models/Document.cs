@@ -5,6 +5,8 @@ namespace Onboarding.Models
 {
     public class Document : BaseModel
     {
+        public string Url { get; set; }
+
         [ForeignKey("DocumentType")]
         public int DocumentTypeId { get; set; }
 
