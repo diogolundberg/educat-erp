@@ -116,50 +116,6 @@ namespace Onboarding.Controllers
             };
         }
 
-        [HttpPatch("{token}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
-        public IActionResult Update(string token)
-        {
-            if (string.IsNullOrEmpty(token))
-            {
-                return BadRequest();
-            }
-
-            Enrollment enrollment = _enrollmentRepository.GetByExternalId(token);
-
-            if (enrollment == null)
-            {
-                return NotFound();
-            }
-
-            if (enrollment.SendDate.HasValue || !enrollment.IsDeadlineValid())
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState.ToDictionary(
-                    modelState => modelState.Key,
-                    modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-                );
-
-                return new OkObjectResult(new
-                {
-                    errors,
-                    data = _mapper.Map<EnrollmentViewModel>(enrollment)
-                });
-            }
-
-            enrollment.SendDate = DateTime.Now;
-
-            _enrollmentRepository.Update(enrollment);
-
-            return new OkObjectResult(new
-            {
-                data = _mapper.Map<EnrollmentViewModel>(enrollment)
-            });
-        }
-
         [HttpPost("GenerateToken", Name = "ONBOARDING/ENROLLMENTS/GENERATETOKEN")]
         public IActionResult GenerateToken([FromBody]GenerateToken obj)
         {
