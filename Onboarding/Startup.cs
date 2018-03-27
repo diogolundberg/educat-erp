@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using SharpRaven.Core;
+using Onboarding.Bindings;
 
 namespace Onboarding
 {
@@ -87,10 +88,7 @@ namespace Onboarding
                 c.SwaggerDoc("v1", new Info { Title = "ONBOARDING", Version = "v1" });
             });
 
-            MapperConfiguration mapperConfiguration = new MapperConfiguration(c => c.AddProfiles(typeof(Profile)));
-            mapperConfiguration.AssertConfigurationIsValid();
-
-            services.AddSingleton<IMapper>(s => mapperConfiguration.CreateMapper());
+            services.AddAutoMapper();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
