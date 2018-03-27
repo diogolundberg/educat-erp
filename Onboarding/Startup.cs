@@ -74,9 +74,7 @@ namespace Onboarding
                 };
             });
 
-            services.AddMvc().AddJsonOptions(
-                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            services.AddMvc();
 
             services.Configure<MvcOptions>(options =>
             {

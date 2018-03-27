@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Onboarding.Validations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Onboarding.ViewModel
 {
@@ -22,5 +23,20 @@ namespace Onboarding.ViewModel
         public string CityId { get; set; }
 
         public string StateId { get; set; }
+    }
+
+    public class RepresentativeCompanyPatchViewModel : RepresentativePatchViewModel
+    {
+        public string Cnpj { get; set; }
+
+        public string Contact { get; set; }
+    }
+
+    public class RepresentativePersonPatchViewModel : RepresentativePatchViewModel
+    {
+        [Cpf]
+        public string Cpf { get; set; }
+
+        public string Relationship { get; set; }
     }
 }

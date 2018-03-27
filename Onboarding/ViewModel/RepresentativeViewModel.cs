@@ -1,6 +1,9 @@
-﻿namespace Onboarding.ViewModel
+﻿using Onboarding.Validations;
+using System.ComponentModel.DataAnnotations;
+
+namespace Onboarding.ViewModel
 {
-    public abstract class RepresentativeViewModel
+    public class RepresentativeViewModel
     {
         public string Name { get; set; }
 
@@ -19,5 +22,22 @@
         public string CityId { get; set; }
 
         public string StateId { get; set; }
+    }
+
+    public class RepresentativeCompanyViewModel : RepresentativeViewModel
+    {
+        public string Cnpj { get; set; }
+
+        public string Contact { get; set; }
+    }
+
+    public class RepresentativePersonViewModel : RepresentativeViewModel
+    {
+        [Cpf]
+        [Required]
+        public string Cpf { get; set; }
+
+        [Required]
+        public string Relationship { get; set; }
     }
 }
