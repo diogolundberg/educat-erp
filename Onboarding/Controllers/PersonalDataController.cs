@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -50,7 +52,7 @@ namespace Onboarding.Controllers
             }
 
             personalData = _mapper.Map<PersonalData>(obj);
-            
+
             foreach (PersonalDataDocument document in personalData.PersonalDataDocuments)
             {
                 if (document.Document.Id == 0)
@@ -84,7 +86,11 @@ namespace Onboarding.Controllers
 
         private string PersonalDataState(PersonalData personalData)
         {
-            if (personalData.UpdatedAt.HasValue)
+            var context = new System.ComponentModel.DataAnnotations.ValidationContext(personalData);
+            var result = new List<ValidationResult>();
+            var valid = Validator.TryValidateObject(personalData, context, result, true);
+
+            if (!personalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }

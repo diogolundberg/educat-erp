@@ -96,10 +96,8 @@ namespace Onboarding.ViewModel
         [Required]
         public string HighSchoolKindId { get; set; }
 
-        [Required]
         public IEnumerable<string> Disabilities { get; set; }
 
-        [Required]
         public IEnumerable<string> SpecialNeeds { get; set; }
 
         [Required]
