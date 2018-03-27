@@ -32,13 +32,6 @@ namespace Onboarding.Models
             foreach (var auditableEntity in ChangeTracker.Entries<BaseModel>())
             {
                 auditableEntity.Entity.ExternalId = !string.IsNullOrEmpty(auditableEntity.Entity.ExternalId) ? auditableEntity.Entity.ExternalId : auditableEntity.Entity.CreateExternalId();
-
-                if (auditableEntity.State == EntityState.Added)
-                {
-                    auditableEntity.Entity.Active = true;
-                    auditableEntity.Entity.CommitedBy = "";
-                    auditableEntity.Entity.CommittedAt = DateTime.Now;
-                }
             }
 
             return base.SaveChanges();
@@ -56,7 +49,6 @@ namespace Onboarding.Models
         public DbSet<SpecialNeed> SpecialNeeds { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<Document> Documents { get; set; }
-
         public DbSet<PersonalData> PersonalDatas { get; set; }
         public DbSet<FinanceData> FinanceDatas { get; set; }
         public DbSet<Representative> Representatives { get; set; }

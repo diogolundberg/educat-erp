@@ -150,11 +150,9 @@ namespace Onboarding.Controllers
                 });
             }
 
-            Enrollment newEnrollment = (Enrollment)enrollment.Clone();
+            enrollment.SendDate = DateTime.Now;
 
-            newEnrollment.SendDate = DateTime.Now;
-
-            _enrollmentRepository.Update(enrollment, newEnrollment);
+            _enrollmentRepository.Update(enrollment);
 
             return new OkObjectResult(new
             {
