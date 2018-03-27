@@ -24,6 +24,8 @@ namespace Onboarding.Bindings
             .ForMember(x => x.Gender, config => config.Ignore())
             .ForMember(x => x.BirthState, config => config.Ignore())
             .ForMember(x => x.BirthCountry, config => config.Ignore())
+            .ForMember(x => x.City, config => config.Ignore())
+            .ForMember(x => x.BirthCity, config => config.Ignore())
             .ForMember(x => x.HighSchoolGraduationCountry, config => config.Ignore())
             .ForMember(x => x.State, config => config.Ignore())
             .ForMember(x => x.AddressKind, config => config.Ignore())
