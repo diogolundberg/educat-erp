@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Onboarding.Data.Entity;
 using Onboarding.Models;
 using Onboarding.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
 
 namespace Onboarding.Controllers
@@ -115,7 +117,7 @@ namespace Onboarding.Controllers
         }
 
         [HttpPatch("{token}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
-        public IActionResult Update(string token, [FromBody]EnrollmentViewModel obj)
+        public IActionResult Update(string token)
         {
             if (string.IsNullOrEmpty(token))
             {
@@ -134,7 +136,30 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.ToDictionary(
+                    modelState => modelState.Key,
+                    modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+                return new OkObjectResult(new
+                {
+                    errors,
+                    data = _mapper.Map<EnrollmentViewModel>(enrollment)
+                });
+            }
+
+            Enrollment newEnrollment = (Enrollment)enrollment.Clone();
+
+            newEnrollment.SendDate = DateTime.Now;
+
+            _enrollmentRepository.Update(enrollment, newEnrollment);
+
+            return new OkObjectResult(new
+            {
+                data = _mapper.Map<EnrollmentViewModel>(enrollment)
+            });
         }
 
         [HttpPost("GenerateToken", Name = "ONBOARDING/ENROLLMENTS/GENERATETOKEN")]
