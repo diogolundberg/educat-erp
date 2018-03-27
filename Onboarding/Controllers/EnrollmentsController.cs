@@ -6,6 +6,7 @@ using Onboarding.Models;
 using Onboarding.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Mail;
 
@@ -85,6 +86,9 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
+            PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
+            personalData.State = PersonalDataState(enrollment.PersonalData);
+
             return new
             {
                 data = new
@@ -93,7 +97,6 @@ namespace Onboarding.Controllers
                     SendDate = enrollment.SendDate,
                     AcademicApproval = enrollment.AcademicApproval,
                     FinanceApproval = enrollment.FinanceApproval,
-                    PersonalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData),
                     FinanceData = enrollment.FinanceData != null ?
                                     _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData) :
                                     new FinanceDataViewModel { Representative = new RepresentativePersonViewModel() },
@@ -152,6 +155,27 @@ namespace Onboarding.Controllers
             }
 
             return new OkObjectResult(responseObj);
+        }
+
+        private string PersonalDataState(PersonalData personalData)
+        {
+            var context = new System.ComponentModel.DataAnnotations.ValidationContext(personalData);
+            var result = new List<ValidationResult>();
+            var valid = Validator.TryValidateObject(personalData, context, result, true);
+
+            if (!personalData.UpdatedAt.HasValue)
+            {
+                return "empty";
+            }
+
+            if (ModelState.IsValid)
+            {
+                return "valid";
+            }
+            else
+            {
+                return "invalid";
+            }
         }
     }
 }
