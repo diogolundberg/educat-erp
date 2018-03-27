@@ -8,11 +8,11 @@ namespace Onboarding.Bindings
     {
         public GuarantorProfile()
         {
-            CreateMap<GuarantorPatchViewModel, Guarantor>()
+            CreateMap<GuarantorViewModel, Guarantor>()
             .ForMember(x => x.City, config => config.Ignore())
             .ForMember(x => x.State, config => config.Ignore());
 
-            CreateMap<Guarantor, GuarantorPatchViewModel>();
+            CreateMap<Guarantor, GuarantorViewModel>();
         }
     }
 }

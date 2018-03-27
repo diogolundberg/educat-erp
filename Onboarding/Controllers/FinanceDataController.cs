@@ -27,42 +27,6 @@ namespace Onboarding.Controllers
             _financeDataRepository = new BaseRepository<FinanceData>(_context);
         }
 
-        [HttpPatch("{token}", Name = "ONBOARDING/FINANCEDATA/PATCHEDIT")]
-        public IActionResult Update([FromRoute]string token, [FromBody]FinanceDataPatchViewModel obj)
-        {
-            if (string.IsNullOrEmpty(token) || obj == null)
-            {
-                return BadRequest();
-            }
-
-            Enrollment enrollment = _enrollmentRepository.GetByExternalId(token);
-            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
-
-            if (enrollment == null)
-            {
-                return NotFound();
-            }
-
-            if (enrollment.SendDate.HasValue || !enrollment.IsDeadlineValid())
-            {
-                return BadRequest();
-            }
-
-            FinanceData financeData = _mapper.Map<FinanceData>(obj);
-            enrollment.FinanceData = financeData;
-
-            var errors = ModelState.ToDictionary(
-                modelState => modelState.Key,
-                modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-            );
-
-            return new OkObjectResult(new
-            {
-                errors,
-                data = obj
-            });
-        }
-
         [HttpPost("{token}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
         public IActionResult Update([FromRoute]string token, [FromBody]FinanceDataViewModel obj)
         {

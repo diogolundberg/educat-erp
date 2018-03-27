@@ -8,20 +8,20 @@ namespace Onboarding.Bindings
     {
         public RepresentativeProfile()
         {
-            CreateMap<RepresentativeCompany, RepresentativeCompanyPatchViewModel>();
-            CreateMap<RepresentativeCompanyPatchViewModel, RepresentativeCompany>()
+            CreateMap<RepresentativeCompany, RepresentativeCompanyViewModel>();
+            CreateMap<RepresentativeCompanyViewModel, RepresentativeCompany>()
             .ForMember(x => x.City, config => config.Ignore())
             .ForMember(x => x.State, config => config.Ignore());
 
-            CreateMap<RepresentativePerson, RepresentativePersonPatchViewModel>();
-            CreateMap<RepresentativePersonPatchViewModel, RepresentativeCompany>()
+            CreateMap<RepresentativePerson, RepresentativePersonViewModel>();
+            CreateMap<RepresentativePersonViewModel, RepresentativeCompany>()
             .ForMember(x => x.City, config => config.Ignore())
             .ForMember(x => x.State, config => config.Ignore());
 
-            CreateMap<Representative, RepresentativePatchViewModel>()
-            .Include<RepresentativeCompany, RepresentativeCompanyPatchViewModel>()
-            .Include<RepresentativePerson, RepresentativePersonPatchViewModel>();
-            CreateMap<RepresentativePatchViewModel, Representative>()
+            CreateMap<Representative, RepresentativeViewModel>()
+            .Include<RepresentativeCompany, RepresentativeCompanyViewModel>()
+            .Include<RepresentativePerson, RepresentativePersonViewModel>();
+            CreateMap<RepresentativeViewModel, Representative>()
             .ForMember(x => x.City, config => config.Ignore())
             .ForMember(x => x.FinanceData, config => config.Ignore())
             .ForMember(x => x.State, config => config.Ignore());

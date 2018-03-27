@@ -12,11 +12,6 @@ namespace Onboarding.Bindings
             .ForMember(x => x.Representative, config => config.MapFrom(x => x.Representative));
             CreateMap<FinanceDataViewModel, FinanceData>()
             .ForMember(x => x.Representative, config => config.MapFrom(x => x.Representative));
-
-            CreateMap<FinanceData, FinanceDataPatchViewModel>()
-            .ForMember(x => x.Representative, config => config.MapFrom(x => x.Representative));
-            CreateMap<FinanceDataPatchViewModel, FinanceData>()
-            .ForMember(x => x.Representative, config => config.MapFrom(x => x.Representative));
         }
     }
 }
