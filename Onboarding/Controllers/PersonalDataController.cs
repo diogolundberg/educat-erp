@@ -38,10 +38,11 @@ namespace Onboarding.Controllers
             }
 
             PersonalData personalData = _context.Set<PersonalData>()
-                                                .Include(x => x.Enrollment)
-                                                .Include(x => x.PersonalDataDisabilities)
-                                                .Include(x => x.PersonalDataSpecialNeeds)
-                                                .Include(x => x.PersonalDataDocuments)
+                                                .Include("Enrollment")
+                                                .Include("PersonalDataDisabilities")
+                                                .Include("PersonalDataSpecialNeeds")
+                                                .Include("PersonalDataDocuments")
+                                                .Include("PersonalDataDocuments.Document")
                                                 .Single(x => x.Enrollment.ExternalId == token);
 
             if (personalData == null)
@@ -61,7 +62,7 @@ namespace Onboarding.Controllers
             {
                 if (!personalDataMapped
                     .PersonalDataDocuments
-                    .Any(c => c.PersonalDataId == personalDataDocument.PersonalDataId && c.DocumentId == personalDataDocument.DocumentId))
+                    .Any(c => c.Document.Id == personalDataDocument.DocumentId || c.Document.DocumentTypeId == personalDataDocument.Document.DocumentTypeId))
                 {
                     _context.Set<PersonalDataDocument>().Remove(personalDataDocument);
                     _context.Set<Document>().Remove(_context.Set<Document>().Find(personalDataDocument.DocumentId));
@@ -70,16 +71,19 @@ namespace Onboarding.Controllers
             foreach (PersonalDataDocument personalDataDocument in personalDataMapped.PersonalDataDocuments)
             {
                 PersonalDataDocument existingPersonalDataDocument = personalData.PersonalDataDocuments
-                    .Where(c => c.PersonalDataId == personalDataDocument.PersonalDataId && c.DocumentId == personalDataDocument.DocumentId)
+                    .Where(c => c.DocumentId == personalDataDocument.Document.Id || c.Document.DocumentTypeId == personalDataDocument.Document.DocumentTypeId)
                     .SingleOrDefault();
 
                 if (existingPersonalDataDocument != null)
                 {
+                    personalDataDocument.Document.Id = existingPersonalDataDocument.Document.Id;
                     _context.Entry(existingPersonalDataDocument.Document).CurrentValues.SetValues(personalDataDocument.Document);
                 }
                 else
                 {
-                    personalData.PersonalDataDocuments.Add(personalDataDocument);
+                    personalDataDocument.PersonalDataId = personalData.Id;
+                    personalDataDocument.Document.Id = 0;
+                    _context.Set<PersonalDataDocument>().Add(personalDataDocument);
                 }
             }
 
