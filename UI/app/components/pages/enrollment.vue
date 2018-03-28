@@ -41,6 +41,7 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.realName"
+                  :errors="errors.personalData.RealName"
                   :size="6"
                   required
                   disabled
@@ -48,11 +49,13 @@
                   hint="Seu nome completo" />
                 <InputBox
                   v-model="data.personalData.assumedName"
+                  :errors="errors.personalData.AssumedName"
                   :size="6"
                   label="Nome Social"
                   hint="Seu nome social" />
                 <InputBox
                   v-model="data.personalData.cpf"
+                  :errors="errors.personalData.Cpf"
                   :size="3"
                   :min-size="14"
                   required
@@ -62,6 +65,7 @@
                   hint="Ex: 000.000.000-00" />
                 <Date
                   v-model="data.personalData.birthDate"
+                  :errors="errors.personalData.BirthDate"
                   :size="3"
                   :min-size="10"
                   required
@@ -70,12 +74,14 @@
                   hint="Ex: 18/12/2001" />
                 <DropDown
                   v-model="data.personalData.maritalStatusId"
+                  :errors="errors.personalData.MaritalStatusId"
                   :size="3"
                   :options="options.maritalStatuses"
                   required
                   label="Estado Civil" />
                 <DropDown
                   v-model="data.personalData.genderId"
+                  :errors="errors.personalData.GenderId"
                   :size="3"
                   :options="options.genders"
                   required
@@ -84,12 +90,14 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.nationality"
+                  :errors="errors.personalData.Nationality"
                   :size="3"
                   required
                   label="Nacionalidade"
                   hint="Ex: Brasileiro" />
                 <DropDown
                   v-model="data.personalData.birthCountryId"
+                  :errors="errors.personalData.BirthCountryId"
                   :size="3"
                   :options="options.countries"
                   required
@@ -97,12 +105,14 @@
                   hint="Ex: Brasil" />
                 <DropDown
                   v-model="data.personalData.birthStateId"
+                  :errors="errors.personalData.BirthStateId"
                   :size="3"
                   :options="options.states"
                   required
                   label="UF de Nascimento" />
                 <DropDown
                   v-model="data.personalData.birthCity"
+                  :errors="errors.personalData.BirthCity"
                   :size="3"
                   :options="birthCities"
                   key-id="name"
@@ -113,6 +123,7 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.highSchoolGraduationYear"
+                  :errors="errors.personalData.HighSchoolGraduationYear"
                   :size="6"
                   :min-size="4"
                   :max-size="4"
@@ -122,6 +133,7 @@
                   hint="Ex: 2017" />
                 <DropDown
                   v-model="data.personalData.highSchoolGraduationCountryId"
+                  :errors="errors.personalData.HighSchoolGraduationCountryId"
                   :size="6"
                   :options="options.countries"
                   required
@@ -132,6 +144,7 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.email"
+                  :errors="errors.personalData.Email"
                   :size="6"
                   :min-size="6"
                   :max-size="50"
@@ -141,6 +154,7 @@
                   label="E-mail" />
                 <InputBox
                   v-model="data.personalData.phoneNumber"
+                  :errors="errors.personalData.PhoneNumber"
                   :size="6"
                   :min-size="13"
                   :max-size="14"
@@ -154,6 +168,7 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.zipcode"
+                  :errors="errors.personalData.Zipcode"
                   :size="3"
                   :min-size="9"
                   required
@@ -162,12 +177,14 @@
                   hint="Ex: 30100-000" />
                 <DropDown
                   v-model="data.personalData.addressKindId"
+                  :errors="errors.personalData.AddressKindId"
                   :size="3"
                   :options="options.addressKinds"
                   required
                   label="Tipo de Endereço" />
                 <InputBox
                   v-model="data.personalData.streetAddress"
+                  :errors="errors.personalData.StreetAddress"
                   :size="6"
                   required
                   label="Logradouro"
@@ -176,43 +193,55 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.complementAddress"
+                  :errors="errors.personalData.ComplementAddress"
                   :size="3"
                   required
                   label="Complemento" />
                 <InputBox
                   v-model="data.personalData.neighborhood"
+                  :errors="errors.personalData.Neighborhood"
                   :size="3"
                   required
                   label="Bairro" />
                 <DropDown
                   v-model="data.personalData.stateId"
+                  :errors="errors.personalData.StateId"
                   :size="3"
                   :options="options.states"
                   required
                   label="Estado" />
-                <InputBox
-                  v-model="data.personalData.city"
+                <DropDown
+                  v-model="data.personalData.cityId"
+                  :errors="errors.personalData.cityId"
                   :size="3"
+                  :options="options.cities"
+                  :filter="data.personalData.stateId"
+                  filter-key="stateId"
+                  key-id="name"
                   required
-                  label="Cidade" />
+                  label="Cidade"
+                  hint="Cidade onde Mora" />
               </div>
             </Fieldset>
             <Fieldset title="Dados para o Censo">
               <div class="flex gutters flex-wrap">
                 <DropDown
                   v-model="data.personalData.raceId"
+                  :errors="errors.personalData.RaceId"
                   :size="3"
                   :options="options.races"
                   required
                   label="Raça" />
                 <DropDown
                   v-model="data.personalData.highSchoolKindId"
+                  :errors="errors.personalData.HighSchoolKindId"
                   :size="3"
                   :options="options.highSchoolKinds"
                   required
                   label="Escola" />
                 <InputBox
                   v-model="data.personalData.mothersName"
+                  :errors="errors.personalData.MothersName"
                   :size="6"
                   required
                   label="Nome completo da mãe" />
@@ -223,6 +252,7 @@
                 <RadioGroup
                   v-model="data.personalData.handicap"
                   :options="options.handicap"
+                  :errors="errors.personalData.Handicap"
                   required
                   label="Possui alguma Deficiência, Transtorno Global do
                     Desenvolvimento, ou Habilidades/Superdotação?" />
@@ -233,6 +263,7 @@
                 <h4>Selecione:</h4>
                 <CheckGroup
                   v-model="data.personalData.disabilities"
+                  :errors="errors.personalData.Disabilities"
                   :options="options.disabilities" />
               </div>
             </Fieldset>
@@ -241,6 +272,7 @@
                 <h4>Selecione:</h4>
                 <CheckGroup
                   v-model="data.personalData.specialNeeds"
+                  :errors="errors.personalData.SpecialNeeds"
                   :options="options.specialNeeds" />
               </div>
             </Fieldset>
