@@ -143,7 +143,18 @@ namespace Onboarding.Controllers
                     }
                 };
 
-                _enrollmentRepository.Add(enrollment);
+                string externalId = enrollment.CreateExternalId();
+
+                Enrollment existingEnrollment = _context.Enrollments.SingleOrDefault(x => x.ExternalId == externalId);
+
+                if (existingEnrollment == null)
+                {
+                    _enrollmentRepository.Add(enrollment);
+                }
+                else
+                {
+                    enrollment = existingEnrollment;
+                }
 
                 SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"], _configuration["SMTP_HOST"], _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
 
