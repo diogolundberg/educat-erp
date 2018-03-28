@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Onboarding.ViewModel
@@ -21,5 +22,7 @@ namespace Onboarding.ViewModel
         public RepresentativeViewModel Representative { get; set; }
 
         public ICollection<GuarantorViewModel> Guarantors { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
     }
 }
