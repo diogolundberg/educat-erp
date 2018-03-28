@@ -39,7 +39,9 @@ namespace Onboarding.Controllers
 
             PersonalData personalData = _context.Set<PersonalData>()
                                                 .Include(x => x.Enrollment)
-                                                .AsNoTracking()
+                                                .Include(x => x.PersonalDataDisabilities)
+                                                .Include(x => x.PersonalDataSpecialNeeds)
+                                                .Include(x => x.PersonalDataDocuments)
                                                 .Single(x => x.Enrollment.ExternalId == token);
 
             if (personalData == null)
@@ -52,23 +54,40 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            personalData = _mapper.Map<PersonalData>(obj);
-            foreach (PersonalDataDocument document in personalData.PersonalDataDocuments)
+            PersonalData personalDataMapped = _mapper.Map<PersonalData>(obj);
+            _context.Entry(personalData).CurrentValues.SetValues(personalDataMapped);
+
+            foreach (PersonalDataDocument personalDataDocument in personalData.PersonalDataDocuments.ToList())
             {
-                if (document.Document.Id == 0)
+                if (!personalDataMapped
+                    .PersonalDataDocuments
+                    .Any(c => c.PersonalDataId == personalDataDocument.PersonalDataId && c.DocumentId == personalDataDocument.DocumentId))
                 {
-                    _context.Set<PersonalDataDocument>().Add(document);
-                }
-                else
-                {
-                    _context.Set<PersonalDataDocument>().Update(document);
+                    _context.Set<PersonalDataDocument>().Remove(personalDataDocument);
+                    _context.Set<Document>().Remove(_context.Set<Document>().Find(personalDataDocument.DocumentId));
                 }
             }
 
-            _context.Set<PersonalData>().Update(personalData);
+            foreach (PersonalDataDocument personalDataDocument in personalDataMapped.PersonalDataDocuments)
+            {
+                PersonalDataDocument existingPersonalDataDocument = personalData.PersonalDataDocuments
+                    .Where(c => c.PersonalDataId == personalDataDocument.PersonalDataId && c.DocumentId == personalDataDocument.DocumentId)
+                    .SingleOrDefault();
+
+                if (existingPersonalDataDocument != null)
+                {
+                    _context.Entry(existingPersonalDataDocument).CurrentValues.SetValues(personalDataDocument);
+                }
+                else
+                {
+                    personalData.PersonalDataDocuments.Add(personalDataDocument);
+                }
+            }
+
             _context.Entry(personalData).Property(x => x.CPF).IsModified = false;
             _context.Entry(personalData).Property(x => x.RealName).IsModified = false;
             _context.Entry(personalData).Property(x => x.Email).IsModified = false;
+
             _context.SaveChanges();
             _context.Entry(personalData).Reload();
 
