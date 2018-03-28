@@ -311,7 +311,7 @@
               <Btn
                 primary
                 label="Próximo"
-                @click="step = 2" />
+                @click="savePersonalData" />
             </div>
           </Card>
         </Step>
@@ -613,8 +613,6 @@
 </template>
 
 <script>
-  import { debounce } from "lodash";
-
   export default {
     name: "Enrollment",
     props: {
@@ -732,11 +730,6 @@
         const day = 1000 * 60 * 60 * 24;
         return Math.floor((new Date(this.data.deadline) - new Date()) / day);
       },
-    watch: {
-      "data.personalData": {
-        deep: true,
-        handler: debounce(function save() { this.save(); }, 1000),
-      },
     },
     async mounted() {
       try {
@@ -750,10 +743,13 @@
       }
     },
     methods: {
-      async save() {
+      async savePersonalData() {
         const token = this.id;
         const data = this.data.personalData;
         await this.$store.dispatch("setPersonalData", { token, data });
+        if (this.data.personalData.state === "valid") {
+          this.step = 2;
+        }
       },
       documentUrl(id) {
         const document = this.data.personalData.documents
