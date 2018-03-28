@@ -67,7 +67,6 @@ namespace Onboarding.Controllers
                     _context.Set<Document>().Remove(_context.Set<Document>().Find(personalDataDocument.DocumentId));
                 }
             }
-
             foreach (PersonalDataDocument personalDataDocument in personalDataMapped.PersonalDataDocuments)
             {
                 PersonalDataDocument existingPersonalDataDocument = personalData.PersonalDataDocuments
@@ -81,6 +80,48 @@ namespace Onboarding.Controllers
                 else
                 {
                     personalData.PersonalDataDocuments.Add(personalDataDocument);
+                }
+            }
+
+            foreach (PersonalDataDisability personalDataDisibility in personalData.PersonalDataDisabilities.ToList())
+            {
+                if (!personalDataMapped
+                    .PersonalDataDisabilities
+                    .Any(c => c.DisabilityId == personalDataDisibility.DisabilityId))
+                {
+                    _context.Set<PersonalDataDisability>().Remove(personalDataDisibility);
+                }
+            }
+            foreach (PersonalDataDisability personalDataDisability in personalDataMapped.PersonalDataDisabilities)
+            {
+                PersonalDataDisability existingPersonalDataDisability = personalData.PersonalDataDisabilities
+                    .Where(c => c.DisabilityId == personalDataDisability.DisabilityId)
+                    .SingleOrDefault();
+
+                if (existingPersonalDataDisability == null)
+                {
+                    personalData.PersonalDataDisabilities.Add(personalDataDisability);
+                }
+            }
+
+            foreach (PersonalDataSpecialNeed personalDataSpecialNeed in personalData.PersonalDataSpecialNeeds.ToList())
+            {
+                if (!personalDataMapped
+                    .PersonalDataSpecialNeeds
+                    .Any(c => c.SpecialNeedId == personalDataSpecialNeed.SpecialNeedId))
+                {
+                    _context.Set<PersonalDataSpecialNeed>().Remove(personalDataSpecialNeed);
+                }
+            }
+            foreach (PersonalDataSpecialNeed personalDataSpecialNeed in personalDataMapped.PersonalDataSpecialNeeds)
+            {
+                PersonalDataSpecialNeed existingPersonalDataSpecialNeed = personalData.PersonalDataSpecialNeeds
+                    .Where(c => c.SpecialNeedId == personalDataSpecialNeed.SpecialNeedId)
+                    .SingleOrDefault();
+
+                if (existingPersonalDataSpecialNeed == null)
+                {
+                    personalData.PersonalDataSpecialNeeds.Add(personalDataSpecialNeed);
                 }
             }
 
