@@ -23,7 +23,7 @@
         <Step
           :disabled="data.sendDate"
           :complete="data.personalData.state === 'valid'"
-          :error="data.personalData.state === 'error'"
+          :error="data.personalData.state === 'invalid'"
           title="Seus Dados"
           description="Preencha seus dados pessoais">
           <Card
