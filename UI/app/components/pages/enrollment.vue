@@ -298,7 +298,7 @@
                       <div>{{ doc.name }}</div>
                       <UploadButton
                         :prefix="token"
-                        :value="documentFor(doc.id)"
+                        :value="documentUrl(doc.id)"
                         @input="setDocument(doc.id, $event)" />
                   </div>
                   <hr
@@ -754,21 +754,18 @@
         const data = this.data.personalData;
         await this.$store.dispatch("setPersonalData", { token, data });
       },
-      documentFor(id) {
+      documentUrl(id) {
         const document = this.data.personalData.documents
           .find(a => a.documentTypeId === id);
-        return document && document.id;
+        return document && document.url;
       },
-      setDocument(id, value) {
+      setDocument(documentTypeId, url) {
         const document = this.data.personalData.documents
-          .find(a => a.documentTypeId === id);
+          .find(a => a.documentTypeId === documentTypeId);
         if (document) {
-          document.id = value;
+          document.url = url;
         } else {
-          this.data.personalData.documents.push({
-            id: value,
-            documentTypeId: id,
-          });
+          this.data.personalData.documents.push({ url, documentTypeId });
         }
       },
     },
