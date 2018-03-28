@@ -96,5 +96,7 @@ namespace Onboarding.ViewModel
 
         [Required]
         public IEnumerable<DocumentViewModel> Documents { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
     }
 }
