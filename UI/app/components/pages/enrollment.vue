@@ -111,8 +111,8 @@
                   required
                   label="UF de Nascimento" />
                 <DropDown
-                  v-model="data.personalData.birthCity"
-                  :errors="errors.personalData.BirthCity"
+                  v-model="data.personalData.birthCityId"
+                  :errors="errors.personalData.BirthCityId"
                   :size="3"
                   :options="options.cities"
                   :filter="data.personalData.birthStateId"
@@ -147,7 +147,7 @@
                 <InputBox
                   v-model="data.personalData.email"
                   :errors="errors.personalData.Email"
-                  :size="6"
+                  :size="4"
                   :min-size="6"
                   :max-size="50"
                   email
@@ -157,13 +157,23 @@
                 <InputBox
                   v-model="data.personalData.phoneNumber"
                   :errors="errors.personalData.PhoneNumber"
-                  :size="6"
+                  :size="4"
                   :min-size="13"
                   :max-size="14"
                   required
                   label="Telefone"
                   mask="(##) #########?"
                   hint="Ex: (31) 999999999" />
+                <InputBox
+                  v-model="data.personalData.landline"
+                  :errors="errors.personalData.landline"
+                  :size="4"
+                  :min-size="13"
+                  :max-size="14"
+                  required
+                  label="Telefone Fixo"
+                  mask="(##) #########?"
+                  hint="Ex: (31) 322222222" />
               </div>
             </Fieldset>
             <Fieldset title="Endereço">
