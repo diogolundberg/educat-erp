@@ -2,8 +2,6 @@ import Vue from "vue";
 import VueX from "vuex";
 import axios from "axios";
 
-import { pickBy, identity } from "lodash";
-
 Vue.use(VueX);
 
 const url1 = process.env.SSO_HOST || "http://sso.sandbox.eti.br";
@@ -137,7 +135,8 @@ export default new VueX.Store({
   },
   actions: {
     async login({ commit }, credentials) {
-      const response = await axios.post(`${url1}/api/Token`, credentials);
+      const url = `${url1}/api/Token`;
+      const response = await axios.post(url, credentials);
       localStorage.setItem("token", response.data.token);
       commit("LOGIN", response.data.token);
     },
@@ -146,16 +145,23 @@ export default new VueX.Store({
       commit("LOGOUT");
     },
     async getEnrollment({ commit }, token) {
-      const response = await axios.get(`${url2}/api/Enrollments/${token}`);
+      const url = `${url2}/api/Enrollments/${token}`;
+      const response = await axios.get(url);
       commit("SET_ENROLLMENT", response.data);
     },
     async setPersonalData({ commit }, { token, data }) {
-      const filledData = pickBy(data, identity);
-      await axios.patch(`${url2}/api/PersonalData/${token}`, filledData);
-      commit("SET_PERSONAL_DATA", filledData);
+      const url = `${url2}/api/PersonalData/${token}`;
+      const response = await axios.post(url, data);
+      commit("SET_PERSONAL_DATA", response.data);
+    },
+    async setFinanceData({ commit }, { token, data }) {
+      const url = `${url2}/api/FinanceData/${token}`;
+      const response = await axios.post(url, data);
+      commit("SET_FINANCE_DATA", response.data);
     },
     async presign({ commit }, fileName) {
-      const response = await axios.post(`${url3}/api/Presign`, { fileName });
+      const url = `${url3}/api/Presign`;
+      const response = await axios.post(url, { fileName });
       commit("SET_UPLOAD_URL", response.data);
     },
   },
