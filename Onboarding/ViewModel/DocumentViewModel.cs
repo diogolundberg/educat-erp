@@ -2,10 +2,10 @@
 {
     public class DocumentViewModel
     {
-        public string Id { get; set; }
+        public int? Id { get; set; }
 
         public string Url { get; set; }
 
-        public string DocumentTypeId { get; set; }
+        public int DocumentTypeId { get; set; }
     }
 }

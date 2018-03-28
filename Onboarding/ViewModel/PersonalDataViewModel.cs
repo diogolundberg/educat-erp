@@ -9,10 +9,10 @@ namespace Onboarding.ViewModel
     public class PersonalDataViewModel
     {
         [Required]
-        public string Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
-        public string EnrollmentId { get; set; }
+        public int? EnrollmentId { get; set; }
 
         public string State { get; set; }
 
@@ -58,41 +58,41 @@ namespace Onboarding.ViewModel
         public string Handicap { get; set; }
 
         [Required]
-        public string GenderId { get; set; }
+        public int? GenderId { get; set; }
 
         [Required]
-        public string MaritalStatusId { get; set; }
+        public int? MaritalStatusId { get; set; }
 
         [Required]
-        public string BirthCityId { get; set; }
+        public int? BirthCityId { get; set; }
 
         [Required]
-        public string BirthStateId { get; set; }
+        public int? BirthStateId { get; set; }
 
         [Required]
-        public string BirthCountryId { get; set; }
+        public int? BirthCountryId { get; set; }
 
         [Required]
-        public string HighSchoolGraduationCountryId { get; set; }
+        public int? HighSchoolGraduationCountryId { get; set; }
 
         [Required]
-        public string CityId { get; set; }
+        public int? CityId { get; set; }
 
         [Required]
-        public string StateId { get; set; }
+        public int? StateId { get; set; }
 
         [Required]
-        public string AddressKindId { get; set; }
+        public int? AddressKindId { get; set; }
 
         [Required]
-        public string RaceId { get; set; }
+        public int? RaceId { get; set; }
 
         [Required]
-        public string HighSchoolKindId { get; set; }
+        public int? HighSchoolKindId { get; set; }
 
-        public IEnumerable<string> Disabilities { get; set; }
+        public IEnumerable<int> Disabilities { get; set; }
 
-        public IEnumerable<string> SpecialNeeds { get; set; }
+        public IEnumerable<int> SpecialNeeds { get; set; }
 
         [Required]
         public IEnumerable<DocumentViewModel> Documents { get; set; }

@@ -23,7 +23,7 @@
         <Step
           :disabled="data.sendDate"
           :complete="data.personalData.state === 'valid'"
-          :error="data.personalData.state === 'error'"
+          :error="data.personalData.state === 'invalid'"
           title="Seus Dados"
           description="Preencha seus dados pessoais">
           <Card
@@ -41,6 +41,7 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.realName"
+                  :errors="errors.personalData.RealName"
                   :size="6"
                   required
                   disabled
@@ -48,11 +49,13 @@
                   hint="Seu nome completo" />
                 <InputBox
                   v-model="data.personalData.assumedName"
+                  :errors="errors.personalData.AssumedName"
                   :size="6"
                   label="Nome Social"
                   hint="Seu nome social" />
                 <InputBox
                   v-model="data.personalData.cpf"
+                  :errors="errors.personalData.Cpf"
                   :size="3"
                   :min-size="14"
                   required
@@ -62,6 +65,7 @@
                   hint="Ex: 000.000.000-00" />
                 <Date
                   v-model="data.personalData.birthDate"
+                  :errors="errors.personalData.BirthDate"
                   :size="3"
                   :min-size="10"
                   required
@@ -70,12 +74,14 @@
                   hint="Ex: 18/12/2001" />
                 <DropDown
                   v-model="data.personalData.maritalStatusId"
+                  :errors="errors.personalData.MaritalStatusId"
                   :size="3"
                   :options="options.maritalStatuses"
                   required
                   label="Estado Civil" />
                 <DropDown
                   v-model="data.personalData.genderId"
+                  :errors="errors.personalData.GenderId"
                   :size="3"
                   :options="options.genders"
                   required
@@ -84,12 +90,14 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.nationality"
+                  :errors="errors.personalData.Nationality"
                   :size="3"
                   required
                   label="Nacionalidade"
                   hint="Ex: Brasileiro" />
                 <DropDown
                   v-model="data.personalData.birthCountryId"
+                  :errors="errors.personalData.BirthCountryId"
                   :size="3"
                   :options="options.countries"
                   required
@@ -97,14 +105,18 @@
                   hint="Ex: Brasil" />
                 <DropDown
                   v-model="data.personalData.birthStateId"
+                  :errors="errors.personalData.BirthStateId"
                   :size="3"
                   :options="options.states"
                   required
                   label="UF de Nascimento" />
                 <DropDown
-                  v-model="data.personalData.birthCity"
+                  v-model="data.personalData.birthCityId"
+                  :errors="errors.personalData.BirthCityId"
                   :size="3"
-                  :options="birthCities"
+                  :options="options.cities"
+                  :filter="data.personalData.birthStateId"
+                  filter-key="stateId"
                   key-id="name"
                   required
                   label="Naturalidade"
@@ -113,6 +125,7 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.highSchoolGraduationYear"
+                  :errors="errors.personalData.HighSchoolGraduationYear"
                   :size="6"
                   :min-size="4"
                   :max-size="4"
@@ -122,6 +135,7 @@
                   hint="Ex: 2017" />
                 <DropDown
                   v-model="data.personalData.highSchoolGraduationCountryId"
+                  :errors="errors.personalData.HighSchoolGraduationCountryId"
                   :size="6"
                   :options="options.countries"
                   required
@@ -132,7 +146,8 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.email"
-                  :size="6"
+                  :errors="errors.personalData.Email"
+                  :size="4"
                   :min-size="6"
                   :max-size="50"
                   email
@@ -141,19 +156,31 @@
                   label="E-mail" />
                 <InputBox
                   v-model="data.personalData.phoneNumber"
-                  :size="6"
+                  :errors="errors.personalData.PhoneNumber"
+                  :size="4"
                   :min-size="13"
                   :max-size="14"
                   required
                   label="Telefone"
                   mask="(##) #########?"
                   hint="Ex: (31) 999999999" />
+                <InputBox
+                  v-model="data.personalData.landline"
+                  :errors="errors.personalData.landline"
+                  :size="4"
+                  :min-size="13"
+                  :max-size="14"
+                  required
+                  label="Telefone Fixo"
+                  mask="(##) #########?"
+                  hint="Ex: (31) 322222222" />
               </div>
             </Fieldset>
             <Fieldset title="Endereço">
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.zipcode"
+                  :errors="errors.personalData.Zipcode"
                   :size="3"
                   :min-size="9"
                   required
@@ -162,12 +189,14 @@
                   hint="Ex: 30100-000" />
                 <DropDown
                   v-model="data.personalData.addressKindId"
+                  :errors="errors.personalData.AddressKindId"
                   :size="3"
                   :options="options.addressKinds"
                   required
                   label="Tipo de Endereço" />
                 <InputBox
                   v-model="data.personalData.streetAddress"
+                  :errors="errors.personalData.StreetAddress"
                   :size="6"
                   required
                   label="Logradouro"
@@ -176,43 +205,55 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.personalData.complementAddress"
+                  :errors="errors.personalData.ComplementAddress"
                   :size="3"
                   required
                   label="Complemento" />
                 <InputBox
                   v-model="data.personalData.neighborhood"
+                  :errors="errors.personalData.Neighborhood"
                   :size="3"
                   required
                   label="Bairro" />
                 <DropDown
                   v-model="data.personalData.stateId"
+                  :errors="errors.personalData.StateId"
                   :size="3"
                   :options="options.states"
                   required
                   label="Estado" />
-                <InputBox
-                  v-model="data.personalData.city"
+                <DropDown
+                  v-model="data.personalData.cityId"
+                  :errors="errors.personalData.cityId"
                   :size="3"
+                  :options="options.cities"
+                  :filter="data.personalData.stateId"
+                  filter-key="stateId"
+                  key-id="name"
                   required
-                  label="Cidade" />
+                  label="Cidade"
+                  hint="Cidade onde Mora" />
               </div>
             </Fieldset>
             <Fieldset title="Dados para o Censo">
               <div class="flex gutters flex-wrap">
                 <DropDown
                   v-model="data.personalData.raceId"
+                  :errors="errors.personalData.RaceId"
                   :size="3"
                   :options="options.races"
                   required
                   label="Raça" />
                 <DropDown
                   v-model="data.personalData.highSchoolKindId"
+                  :errors="errors.personalData.HighSchoolKindId"
                   :size="3"
                   :options="options.highSchoolKinds"
                   required
                   label="Escola" />
                 <InputBox
                   v-model="data.personalData.mothersName"
+                  :errors="errors.personalData.MothersName"
                   :size="6"
                   required
                   label="Nome completo da mãe" />
@@ -222,7 +263,8 @@
               <div>
                 <RadioGroup
                   v-model="data.personalData.handicap"
-                  :options="options.handicap"
+                  :errors="errors.personalData.Handicap"
+                  :options="handicap"
                   required
                   label="Possui alguma Deficiência, Transtorno Global do
                     Desenvolvimento, ou Habilidades/Superdotação?" />
@@ -233,6 +275,7 @@
                 <h4>Selecione:</h4>
                 <CheckGroup
                   v-model="data.personalData.disabilities"
+                  :errors="errors.personalData.Disabilities"
                   :options="options.disabilities" />
               </div>
             </Fieldset>
@@ -241,6 +284,7 @@
                 <h4>Selecione:</h4>
                 <CheckGroup
                   v-model="data.personalData.specialNeeds"
+                  :errors="errors.personalData.SpecialNeeds"
                   :options="options.specialNeeds" />
               </div>
             </Fieldset>
@@ -254,7 +298,7 @@
                       <div>{{ doc.name }}</div>
                       <UploadButton
                         :prefix="token"
-                        :value="documentFor(doc.id)"
+                        :value="documentUrl(doc.id)"
                         @input="setDocument(doc.id, $event)" />
                   </div>
                   <hr
@@ -267,11 +311,12 @@
               <Btn
                 primary
                 label="Próximo"
-                @click="step = 2" />
+                @click="savePersonalData" />
             </div>
           </Card>
         </Step>
         <Step
+          v-if="false"
           :disabled="data.sendDate"
           :complete="data.financeData && data.financeData.state == 'valid'"
           :error="data.financeData && data.financeData.state == 'invalid'"
@@ -282,18 +327,18 @@
             <Fieldset title="Responsável Financeiro">
               <div class="flex gutters flex-wrap">
                 <DropDown
-                  v-model="data.responsible.discriminator"
+                  v-model="data.financeData.responsible.discriminator"
                   :size="4"
                   :options="options.discriminators"
                   label="CPF ou CNPJ" />
                 <InputBox
-                  v-if="data.responsible.discriminator == null"
+                  v-if="data.financeData.responsible.discriminator == null"
                   :size="4"
                   disabled
                   label="Documento" />
                 <InputBox
-                  v-model="data.responsible.cpf"
-                  v-if="data.responsible.discriminator == 'Person'"
+                  v-model="data.financeData.responsible.cpf"
+                  v-if="data.financeData.responsible.discriminator == 'Person'"
                   :size="4"
                   :min-size="14"
                   cpf
@@ -301,8 +346,8 @@
                   mask="###.###.###-##"
                   hint="Ex: 000.000.000-00" />
                 <InputBox
-                  v-model="data.responsible.cnpj"
-                  v-if="data.responsible.discriminator == 'Company'"
+                  v-model="data.financeData.responsible.cnpj"
+                  v-if="data.financeData.responsible.discriminator == 'Company'"
                   :size="4"
                   :min-size="18"
                   cnpj
@@ -310,59 +355,59 @@
                   mask="##.###.###/####-##"
                   hint="Ex: 00.000.000/0000-00" />
                 <InputBox
-                  v-if="data.responsible.discriminator == null"
+                  v-if="data.financeData.responsible.discriminator == null"
                   :size="4"
                   disabled
                   label="Nome" />
                 <InputBox
-                  v-model="data.responsible.name"
-                  v-if="data.responsible.discriminator == 'Person'"
+                  v-model="data.financeData.responsible.name"
+                  v-if="data.financeData.responsible.discriminator == 'Person'"
                   :size="4"
                   label="Nome completo" />
                 <InputBox
-                  v-model="data.responsible.name"
-                  v-if="data.responsible.discriminator == 'Company'"
+                  v-model="data.financeData.responsible.name"
+                  v-if="data.financeData.responsible.discriminator == 'Company'"
                   :size="4"
                   label="Razão Social" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-if="data.responsible.discriminator == null"
+                  v-if="data.financeData.responsible.discriminator == null"
                   :size="4"
                   disabled
                   label="Contato" />
                 <InputBox
-                  v-if="data.responsible.discriminator == 'Company'"
-                  v-model="data.responsible.contact"
+                  v-if="data.financeData.responsible.discriminator == 'Company'"
+                  v-model="data.financeData.responsible.contact"
                   :size="4"
                   label="Pessoa de Contato" />
                 <InputBox
-                  v-if="data.responsible.discriminator == 'Person'"
-                  v-model="data.responsible.relationship"
+                  v-if="data.financeData.responsible.discriminator == 'Person'"
+                  v-model="data.financeData.responsible.relationship"
                   :size="4"
                   label="Relacionamento com o aluno" />
                 <InputBox
-                  v-model="data.responsible.streetAddress"
+                  v-model="data.financeData.responsible.streetAddress"
                   :size="4"
                   label="Logradouro" />
                 <InputBox
-                  v-model="data.responsible.complementAddress"
+                  v-model="data.financeData.responsible.complementAddress"
                   :size="4"
                   label="Complemento" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.responsible.neighborhood"
+                  v-model="data.financeData.responsible.neighborhood"
                   :size="4"
                   label="Bairro" />
                 <DropDown
-                  v-model="data.responsible.stateId"
+                  v-model="data.financeData.responsible.stateId"
                   :size="4"
                   :options="options.states"
                   required
                   label="Estado" />
                 <DropDown
-                  v-model="data.responsible.city"
+                  v-model="data.financeData.responsible.city"
                   :size="4"
                   :options="options.cities"
                   key-id="name"
@@ -371,36 +416,39 @@
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.responsible.landline"
+                  v-model="data.financeData.responsible.landline"
                   :size="4"
                   label="Telefone"
                   mask="(##) ####-####" />
                 <InputBox
-                  v-model="data.responsible.phoneNumber"
+                  v-model="data.financeData.responsible.phoneNumber"
                   :size="4"
                   label="Celular"
                   mask="(##) #####-####" />
                 <InputBox
-                  v-model="data.responsible.email"
+                  v-model="data.financeData.responsible.email"
                   :size="4"
                   label="E-mail" />
              </div>
             </Fieldset>
-            <Fieldset title="Fiador">
+            <Fieldset
+              v-for="(guarantor, index) in guarantors"
+              :key="index"
+              title="Fiador">
               <div class="flex gutters flex-wrap">
                 <DropDown
-                  v-model="data.guarantor.discriminator"
+                  v-model="guarantor.discriminator"
                   :size="4"
                   :options="options.discriminators"
                   label="CPF ou CNPJ" />
                 <InputBox
-                  v-if="data.guarantor.discriminator == null"
+                  v-if="guarantor.discriminator == null"
                   :size="4"
                   disabled
                   label="Documento" />
                 <InputBox
-                  v-model="data.guarantor.cpf"
-                  v-if="data.guarantor.discriminator == 'Person'"
+                  v-model="guarantor.cpf"
+                  v-if="guarantor.discriminator == 'Person'"
                   :size="4"
                   :min-size="14"
                   cpf
@@ -408,8 +456,8 @@
                   mask="###.###.###-##"
                   hint="Ex: 000.000.000-00" />
                 <InputBox
-                  v-model="data.guarantor.cnpj"
-                  v-if="data.guarantor.discriminator == 'Company'"
+                  v-model="guarantor.cnpj"
+                  v-if="guarantor.discriminator == 'Company'"
                   :size="4"
                   :min-size="18"
                   cnpj
@@ -417,37 +465,48 @@
                   mask="##.###.###/####-##"
                   hint="Ex: 00.000.000/0000-00" />
                 <InputBox
-                  v-model="data.guarantor.name"
+                  v-model="guarantor.name"
                   :size="4"
                   label="Razão Social" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.guarantor.contact"
+                  v-model="guarantor.contact"
                   :size="4"
                   label="Contato" />
                 <InputBox
-                  v-model="data.guarantor.streetAddress"
+                  v-model="guarantor.streetAddress"
                   :size="4"
                   label="Endereço Completo" />
                 <InputBox
-                  v-model="data.guarantor.complementAddress"
+                  v-model="guarantor.complementAddress"
                   :size="4"
                   label="Complemento" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.guarantor.neighborhood"
+                  v-model="guarantor.neighborhood"
                   :size="4"
                   label="Bairro" />
                 <DropDown
-                  v-model="data.guarantor.stateId"
+                  v-model="guarantor.stateId"
                   :size="4"
                   :options="options.states"
                   required
                   label="Estado" />
                 <DropDown
-                  v-model="data.guarantor.cityId"
+                  v-model="guarantor.cityId"
+                  :errors="errors.guarantor.cityId"
+                  :size="3"
+                  :options="options.cities"
+                  :filter="guarantor.stateId"
+                  filter-key="stateId"
+                  key-id="name"
+                  required
+                  label="Cidade"
+                  hint="Cidade onde Mora" />
+                <DropDown
+                  v-model="guarantor.cityId"
                   :size="4"
                   :options="options.cities"
                   key-id="name"
@@ -456,17 +515,17 @@
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.guarantor.landline"
+                  v-model="guarantor.landline"
                   :size="4"
                   label="Telefone"
                   mask="(##) ####-####" />
                 <InputBox
-                  v-model="data.guarantor.phoneNumber"
+                  v-model="guarantor.phoneNumber"
                   :size="4"
                   label="Celular"
                   mask="(##) #####-####" />
                 <InputBox
-                  v-model="data.guarantor.email"
+                  v-model="guarantor.email"
                   :size="4"
                   label="E-mail" />
              </div>
@@ -557,8 +616,6 @@
 </template>
 
 <script>
-  import { debounce } from "lodash";
-
   export default {
     name: "Enrollment",
     props: {
@@ -569,152 +626,59 @@
     },
     data() {
       return {
-        data: {
-          deadline: null,
-          personalData: {
-            state: "empty",
-            realName: null,
-            assumedName: null,
-            birthDate: null,
-            cpf: null,
-            nationality: null,
-            highSchoolGraduationYear: null,
-            email: null,
-            zipcode: null,
-            streetAddress: null,
-            complementAddress: null,
-            neighborhood: null,
-            phoneNumber: null,
-            landline: null,
-            mothersName: null,
-            handicap: null,
-            genderId: null,
-            maritalStatusId: null,
-            birthCity: null,
-            birthStateId: null,
-            birthCountryId: null,
-            highSchoolGraduationCountryId: null,
-            city: null,
-            stateId: null,
-            addressKindId: null,
-            raceId: null,
-            highSchoolKindId: null,
-            specialNeeds: [],
-            disabilities: [],
-            documents: [],
-          },
-          financeData: {
-            state: "empty",
-          },
-          responsible: {
-            discriminator: null,
-            cpf: "",
-            cnpj: "",
-            name: "",
-            contact: "",
-            relationship: "",
-            streetAddress: "",
-            complementAddress: "",
-            neighborhood: "",
-            phoneNumber: "",
-            landline: "",
-            email: "",
-            cityId: null,
-            stateId: null,
-          },
-          guarantor: {
-            discriminator: null,
-            cpf: "",
-            cnpj: "",
-            name: "",
-            contact: "",
-            streetAddress: "",
-            complementAddress: "",
-            neighborhood: "",
-            phoneNumber: "",
-            landline: "",
-            email: "",
-            cityId: null,
-            stateId: null,
-          },
-        },
-        options: {
-          genders: [],
-          maritalStatuses: [],
-          countries: [],
-          states: [],
-          cities: [],
-          addressKinds: [],
-          nationalities: [],
-          phoneType: [],
-          races: [],
-          highSchoolKinds: [],
-          disabilities: [],
-          specialNeeds: [],
-
-          discriminators: [
-            { id: "Person", name: "CPF" },
-            { id: "Company", name: "CNPJ" },
-          ],
-          handicap: [
-            { id: "yes", name: "Sim" },
-            { id: "no", name: "Não" },
-            { id: "unknown", name: "Não disponho da informação" },
-          ],
-        },
         step: 1,
         notifications: false,
-        personalDocuments: {},
+        handicap: [
+          { id: "yes", name: "Sim" },
+          { id: "no", name: "Não" },
+          { id: "unknown", name: "Não disponho da informação" },
+        ],
       };
     },
     computed: {
+      data() {
+        return this.$store.getters.enrollment.data;
+      },
+      options() {
+        return this.$store.getters.enrollment.options;
+      },
+      errors() {
+        return this.$store.getters.enrollment.errors;
+      },
       daysRemaining() {
         const day = 1000 * 60 * 60 * 24;
         return Math.floor((new Date(this.data.deadline) - new Date()) / day);
-      },
-      birthCities() {
-        const parentId = this.data.personalData.birthStateId;
-        return this.options.cities.filter(a => a.stateId === parentId);
-      },
-    },
-    watch: {
-      "data.personalData": {
-        deep: true,
-        handler: debounce(function save() { this.save(); }, 1000),
       },
     },
     async mounted() {
       try {
         await this.$store.dispatch("getEnrollment", this.id);
-
-        Object.assign(this.data, this.$store.getters.enrollment.data);
-        Object.assign(this.options, this.$store.getters.enrollment.options);
         this.step = this.$store.getters.enrollment.sendDate ? 3 : 1;
       } catch (ex) {
         this.$router.push("/404");
       }
     },
     methods: {
-      async save() {
+      async savePersonalData() {
         const token = this.id;
         const data = this.data.personalData;
         await this.$store.dispatch("setPersonalData", { token, data });
+        if (this.data.personalData.state === "valid") {
+          this.step = 2;
+        }
       },
-      documentFor(id) {
+      documentUrl(id) {
         const document = this.data.personalData.documents
           .find(a => a.documentTypeId === id);
-        return document && document.id;
+        return document && document.url;
       },
-      setDocument(id, value) {
+      setDocument(documentTypeId, url) {
         const document = this.data.personalData.documents
-          .find(a => a.documentTypeId === id);
+          .find(a => a.documentTypeId === documentTypeId);
         if (document) {
-          document.id = value;
+          document.url = url;
         } else {
-          this.data.personalData.documents.push({
-            id: value,
-            documentTypeId: id,
-          });
+          this.data.personalData.documents.push({ url, documentTypeId });
         }
       },
     },

@@ -121,6 +121,14 @@
         type: Boolean,
         default: false,
       },
+      filterKey: {
+        type: String,
+        default: null,
+      },
+      filter: {
+        type: [String, Number],
+        default: null,
+      },
     },
     data() {
       return {
@@ -132,7 +140,9 @@
     computed: {
       filteredOptions() {
         const query = this.search.toLowerCase();
-        return this.options.filter(a => a.name.toLowerCase().includes(query));
+        return this.options
+          .filter(a => !this.filterKey || a[this.filterKey] === this.filter)
+          .filter(a => a.name.toLowerCase().includes(query));
       },
       choice() {
         return this.options.find(a => a[this.idField] === this.value);

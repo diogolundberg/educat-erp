@@ -14,9 +14,9 @@ namespace Onboarding.Bindings
             .ForMember(x => x.SpecialNeeds, config => config.MapFrom(x => x.PersonalDataSpecialNeeds.Select(o => o.SpecialNeedId)))
             .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => new DocumentViewModel
             {
-                Id = o.Document.Id.ToString(),
-                Url = o.Document.Url.ToString(),
-                DocumentTypeId = o.Document.DocumentTypeId.ToString()
+                Id = o.Document.Id,
+                Url = o.Document.Url,
+                DocumentTypeId = o.Document.DocumentTypeId
             })));
 
             CreateMap<PersonalDataViewModel, PersonalData>()
@@ -34,19 +34,19 @@ namespace Onboarding.Bindings
             .ForMember(x => x.Enrollment, config => config.Ignore())
             .ForMember(x => x.PersonalDataDisabilities, config => config.MapFrom(cm => cm.Disabilities.Select(x => new PersonalDataDisability
             {
-                DisabilityId = int.Parse(x)
+                DisabilityId = x
             })))
             .ForMember(x => x.PersonalDataSpecialNeeds, config => config.MapFrom(cm => cm.SpecialNeeds.Select(x => new PersonalDataSpecialNeed
             {
-                SpecialNeedId = int.Parse(x)
+                SpecialNeedId = x
             })))
             .ForMember(x => x.PersonalDataDocuments, config => config.MapFrom(cm => cm.Documents.Select(x => new PersonalDataDocument
             {
                 Document = new Document
                 {
-                    Id = string.IsNullOrEmpty(x.Id) ? 0 : int.Parse(x.Id),
+                    Id = x.Id ?? 0,
                     Url = x.Url,
-                    DocumentTypeId = int.Parse(x.DocumentTypeId)
+                    DocumentTypeId = x.DocumentTypeId
                 }
             })));
         }
