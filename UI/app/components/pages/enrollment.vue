@@ -722,7 +722,7 @@
         handicap: [
           { id: "yes", name: "Sim" },
           { id: "no", name: "Não" },
-          { id: null, name: "Não disponho da informação" },
+          { id: "unknown", name: "Não disponho da informação" },
         ],
       };
     },
