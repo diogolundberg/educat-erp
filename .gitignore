@@ -276,3 +276,4 @@ appsettings.Development.json
 appsettings.json
 *.code-workspace
 *.sln
+/Upload/Properties/launchSettings.json
