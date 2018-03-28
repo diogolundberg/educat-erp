@@ -316,6 +316,7 @@
           </Card>
         </Step>
         <Step
+          v-if="false"
           :disabled="data.sendDate"
           :complete="data.financeData && data.financeData.state == 'valid'"
           :error="data.financeData && data.financeData.state == 'invalid'"
