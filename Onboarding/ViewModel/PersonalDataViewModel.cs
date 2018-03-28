@@ -90,9 +90,9 @@ namespace Onboarding.ViewModel
         [Required]
         public int? HighSchoolKindId { get; set; }
 
-        public IEnumerable<string> Disabilities { get; set; }
+        public IEnumerable<int> Disabilities { get; set; }
 
-        public IEnumerable<string> SpecialNeeds { get; set; }
+        public IEnumerable<int> SpecialNeeds { get; set; }
 
         [Required]
         public IEnumerable<DocumentViewModel> Documents { get; set; }

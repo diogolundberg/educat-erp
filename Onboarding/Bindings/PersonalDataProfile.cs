@@ -34,11 +34,11 @@ namespace Onboarding.Bindings
             .ForMember(x => x.Enrollment, config => config.Ignore())
             .ForMember(x => x.PersonalDataDisabilities, config => config.MapFrom(cm => cm.Disabilities.Select(x => new PersonalDataDisability
             {
-                DisabilityId = int.Parse(x)
+                DisabilityId = x
             })))
             .ForMember(x => x.PersonalDataSpecialNeeds, config => config.MapFrom(cm => cm.SpecialNeeds.Select(x => new PersonalDataSpecialNeed
             {
-                SpecialNeedId = int.Parse(x)
+                SpecialNeedId = x
             })))
             .ForMember(x => x.PersonalDataDocuments, config => config.MapFrom(cm => cm.Documents.Select(x => new PersonalDataDocument
             {
