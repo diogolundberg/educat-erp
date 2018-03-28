@@ -253,8 +253,8 @@
               <div>
                 <RadioGroup
                   v-model="data.personalData.handicap"
-                  :options="options.handicap"
                   :errors="errors.personalData.Handicap"
+                  :options="handicap"
                   required
                   label="Possui alguma Deficiência, Transtorno Global do
                     Desenvolvimento, ou Habilidades/Superdotação?" />
@@ -709,7 +709,11 @@
         },
         step: 1,
         notifications: false,
-        personalDocuments: {},
+        handicap: [
+          { id: "yes", name: "Sim" },
+          { id: "no", name: "Não" },
+          { id: null, name: "Não disponho da informação" },
+        ],
       };
     },
     computed: {
