@@ -9,7 +9,7 @@ namespace Onboarding.ViewModel
     public class PersonalDataViewModel
     {
         [Required]
-        public string Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
         public int? EnrollmentId { get; set; }
