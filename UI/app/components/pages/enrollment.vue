@@ -623,99 +623,6 @@
     },
     data() {
       return {
-        data: {
-          deadline: null,
-          personalData: {
-            state: "empty",
-            realName: null,
-            assumedName: null,
-            birthDate: null,
-            cpf: null,
-            nationality: null,
-            highSchoolGraduationYear: null,
-            email: null,
-            zipcode: null,
-            streetAddress: null,
-            complementAddress: null,
-            neighborhood: null,
-            phoneNumber: null,
-            landline: null,
-            mothersName: null,
-            handicap: null,
-            genderId: null,
-            maritalStatusId: null,
-            birthCity: null,
-            birthStateId: null,
-            birthCountryId: null,
-            highSchoolGraduationCountryId: null,
-            city: null,
-            stateId: null,
-            addressKindId: null,
-            raceId: null,
-            highSchoolKindId: null,
-            specialNeeds: [],
-            disabilities: [],
-            documents: [],
-          },
-          financeData: {
-            state: "empty",
-          },
-          responsible: {
-            discriminator: null,
-            cpf: "",
-            cnpj: "",
-            name: "",
-            contact: "",
-            relationship: "",
-            streetAddress: "",
-            complementAddress: "",
-            neighborhood: "",
-            phoneNumber: "",
-            landline: "",
-            email: "",
-            cityId: null,
-            stateId: null,
-          },
-          guarantor: {
-            discriminator: null,
-            cpf: "",
-            cnpj: "",
-            name: "",
-            contact: "",
-            streetAddress: "",
-            complementAddress: "",
-            neighborhood: "",
-            phoneNumber: "",
-            landline: "",
-            email: "",
-            cityId: null,
-            stateId: null,
-          },
-        },
-        options: {
-          genders: [],
-          maritalStatuses: [],
-          countries: [],
-          states: [],
-          cities: [],
-          addressKinds: [],
-          nationalities: [],
-          phoneType: [],
-          races: [],
-          highSchoolKinds: [],
-          disabilities: [],
-          specialNeeds: [],
-
-          discriminators: [
-            { id: "Person", name: "CPF" },
-            { id: "Company", name: "CNPJ" },
-          ],
-          handicap: [
-            { id: "yes", name: "Sim" },
-            { id: "no", name: "Não" },
-            { id: "unknown", name: "Não disponho da informação" },
-          ],
-        },
         step: 1,
         notifications: false,
         handicap: [
@@ -726,6 +633,15 @@
       };
     },
     computed: {
+      data() {
+        return this.$store.getters.enrollment.data;
+      },
+      options() {
+        return this.$store.getters.enrollment.options;
+      },
+      errors() {
+        return this.$store.getters.enrollment.errors;
+      },
       daysRemaining() {
         const day = 1000 * 60 * 60 * 24;
         return Math.floor((new Date(this.data.deadline) - new Date()) / day);
@@ -734,9 +650,6 @@
     async mounted() {
       try {
         await this.$store.dispatch("getEnrollment", this.id);
-
-        Object.assign(this.data, this.$store.getters.enrollment.data);
-        Object.assign(this.options, this.$store.getters.enrollment.options);
         this.step = this.$store.getters.enrollment.sendDate ? 3 : 1;
       } catch (ex) {
         this.$router.push("/404");

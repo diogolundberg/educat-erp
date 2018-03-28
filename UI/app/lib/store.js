@@ -13,7 +13,99 @@ const url3 = process.env.UPLOAD_HOST || "http://upload.sandbox.eti.br";
 export default new VueX.Store({
   state: {
     token: localStorage.getItem("token"),
-    enrollment: {},
+    enrollment: {
+      data: {
+        deadline: null,
+        personalData: {
+          state: "empty",
+          realName: null,
+          assumedName: null,
+          birthDate: null,
+          cpf: null,
+          nationality: null,
+          highSchoolGraduationYear: null,
+          email: null,
+          zipcode: null,
+          streetAddress: null,
+          complementAddress: null,
+          neighborhood: null,
+          phoneNumber: null,
+          landline: null,
+          mothersName: null,
+          handicap: null,
+          genderId: null,
+          maritalStatusId: null,
+          birthCity: null,
+          birthStateId: null,
+          birthCountryId: null,
+          highSchoolGraduationCountryId: null,
+          city: null,
+          stateId: null,
+          addressKindId: null,
+          raceId: null,
+          highSchoolKindId: null,
+          specialNeeds: [],
+          disabilities: [],
+          documents: [],
+        },
+        financeData: {
+          state: "empty",
+        },
+        responsible: {
+          discriminator: null,
+          cpf: "",
+          cnpj: "",
+          name: "",
+          contact: "",
+          relationship: "",
+          streetAddress: "",
+          complementAddress: "",
+          neighborhood: "",
+          phoneNumber: "",
+          landline: "",
+          email: "",
+          cityId: null,
+          stateId: null,
+        },
+        guarantor: {
+          discriminator: null,
+          cpf: "",
+          cnpj: "",
+          name: "",
+          contact: "",
+          streetAddress: "",
+          complementAddress: "",
+          neighborhood: "",
+          phoneNumber: "",
+          landline: "",
+          email: "",
+          cityId: null,
+          stateId: null,
+        },
+      },
+      options: {
+        genders: [],
+        maritalStatuses: [],
+        countries: [],
+        states: [],
+        cities: [],
+        addressKinds: [],
+        nationalities: [],
+        phoneType: [],
+        races: [],
+        highSchoolKinds: [],
+        disabilities: [],
+        specialNeeds: [],
+        discriminators: [
+          { id: "Person", name: "CPF" },
+          { id: "Company", name: "CNPJ" },
+        ],
+      },
+      errors: {
+        personalData: {},
+        financeData: {},
+      },
+    },
     uploadUrl: null,
   },
   getters: {
@@ -29,10 +121,15 @@ export default new VueX.Store({
       state.token = undefined;
     },
     SET_ENROLLMENT(state, data) {
-      state.enrollment = data;
+      Object.assign(state.enrollment, data);
     },
-    SET_PERSONAL_DATA(state, data) {
-      state.enrollment.personalData = data;
+    SET_PERSONAL_DATA(state, { data, errors }) {
+      Object.assign(state.enrollment.data.personalData, data);
+      Object.assign(state.enrollment.errors.personalData, errors);
+    },
+    SET_FINANCE_DATA(state, { data, errors }) {
+      Object.assign(state.enrollment.data.financeData, data);
+      Object.assign(state.enrollment.errors.financeData, errors);
     },
     SET_UPLOAD_URL(state, url) {
       state.uploadUrl = url;
