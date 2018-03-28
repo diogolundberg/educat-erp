@@ -114,7 +114,9 @@
                   v-model="data.personalData.birthCity"
                   :errors="errors.personalData.BirthCity"
                   :size="3"
-                  :options="birthCities"
+                  :options="options.cities"
+                  :filter="data.personalData.birthStateId"
+                  filter-key="stateId"
                   key-id="name"
                   required
                   label="Naturalidade"
@@ -480,6 +482,17 @@
                   label="Estado" />
                 <DropDown
                   v-model="data.guarantor.cityId"
+                  :errors="errors.guarantor.cityId"
+                  :size="3"
+                  :options="options.cities"
+                  :filter="data.guarantor.stateId"
+                  filter-key="stateId"
+                  key-id="name"
+                  required
+                  label="Cidade"
+                  hint="Cidade onde Mora" />
+                <DropDown
+                  v-model="data.guarantor.cityId"
                   :size="4"
                   :options="options.cities"
                   key-id="name"
@@ -704,11 +717,6 @@
         const day = 1000 * 60 * 60 * 24;
         return Math.floor((new Date(this.data.deadline) - new Date()) / day);
       },
-      birthCities() {
-        const parentId = this.data.personalData.birthStateId;
-        return this.options.cities.filter(a => a.stateId === parentId);
-      },
-    },
     watch: {
       "data.personalData": {
         deep: true,
