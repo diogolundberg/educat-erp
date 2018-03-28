@@ -75,7 +75,7 @@ namespace Onboarding.Controllers
 
                 if (existingPersonalDataDocument != null)
                 {
-                    _context.Entry(existingPersonalDataDocument).CurrentValues.SetValues(personalDataDocument);
+                    _context.Entry(existingPersonalDataDocument.Document).CurrentValues.SetValues(personalDataDocument.Document);
                 }
                 else
                 {

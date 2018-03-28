@@ -676,6 +676,7 @@
         const document = this.data.personalData.documents
           .find(a => a.documentTypeId === documentTypeId);
         if (document) {
+          document.id = 0;
           document.url = url;
         } else {
           this.data.personalData.documents.push({ url, documentTypeId });
