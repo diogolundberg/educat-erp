@@ -17,15 +17,11 @@ namespace Onboarding.Controllers
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
-        private readonly BaseRepository<Enrollment> _enrollmentRepository;
-        private readonly BaseRepository<PersonalData> _personalDataRepository;
 
         public PersonalDataController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
         {
             _context = databaseContext;
             _mapper = mapper;
-            _enrollmentRepository = new BaseRepository<Enrollment>(_context);
-            _personalDataRepository = new BaseRepository<PersonalData>(_context);
         }
 
         [HttpPost("{token}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
