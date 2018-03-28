@@ -87,16 +87,17 @@ namespace Onboarding.Controllers
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
-            personalData.State = PersonalDataState(enrollment.PersonalData);
+            personalData.State = PersonalDataState(personalData);
 
             return new
             {
                 data = new
                 {
-                    Deadline = enrollment.Deadline,
-                    SendDate = enrollment.SendDate,
-                    AcademicApproval = enrollment.AcademicApproval,
-                    FinanceApproval = enrollment.FinanceApproval,
+                    enrollment.Deadline,
+                    enrollment.SendDate,
+                    enrollment.AcademicApproval,
+                    enrollment.FinanceApproval,
+                    personalData,
                     FinanceData = enrollment.FinanceData != null ?
                                     _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData) :
                                     new FinanceDataViewModel { Representative = new RepresentativePersonViewModel() },
@@ -157,18 +158,18 @@ namespace Onboarding.Controllers
             return new OkObjectResult(responseObj);
         }
 
-        private string PersonalDataState(PersonalData personalData)
+        private string PersonalDataState(PersonalDataViewModel personalData)
         {
-            var context = new System.ComponentModel.DataAnnotations.ValidationContext(personalData);
-            var result = new List<ValidationResult>();
-            var valid = Validator.TryValidateObject(personalData, context, result, true);
+            System.ComponentModel.DataAnnotations.ValidationContext context = new System.ComponentModel.DataAnnotations.ValidationContext(personalData);
+            List<ValidationResult> result = new List<ValidationResult>();
+            bool valid = Validator.TryValidateObject(personalData, context, result, true);
 
             if (!personalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
 
-            if (ModelState.IsValid)
+            if (valid)
             {
                 return "valid";
             }

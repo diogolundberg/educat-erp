@@ -73,7 +73,7 @@ namespace Onboarding.Controllers
             _context.Entry(personalData).Reload();
 
             PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
-            viewModel.State = PersonalDataState(personalData);
+            viewModel.State = PersonalDataState(viewModel);
 
             var errors = ModelState.ToDictionary(
                 modelState => modelState.Key,
@@ -87,18 +87,18 @@ namespace Onboarding.Controllers
             });
         }
 
-        private string PersonalDataState(PersonalData personalData)
+        private string PersonalDataState(PersonalDataViewModel personalData)
         {
-            var context = new System.ComponentModel.DataAnnotations.ValidationContext(personalData);
-            var result = new List<ValidationResult>();
-            var valid = Validator.TryValidateObject(personalData, context, result, true);
+            System.ComponentModel.DataAnnotations.ValidationContext context = new System.ComponentModel.DataAnnotations.ValidationContext(personalData);
+            List<ValidationResult> result = new List<ValidationResult>();
+            bool valid = Validator.TryValidateObject(personalData, context, result, true);
 
             if (!personalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
 
-            if (ModelState.IsValid)
+            if (valid)
             {
                 return "valid";
             }
