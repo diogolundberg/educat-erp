@@ -327,18 +327,18 @@
             <Fieldset title="Responsável Financeiro">
               <div class="flex gutters flex-wrap">
                 <DropDown
-                  v-model="data.responsible.discriminator"
+                  v-model="data.financeData.responsible.discriminator"
                   :size="4"
                   :options="options.discriminators"
                   label="CPF ou CNPJ" />
                 <InputBox
-                  v-if="data.responsible.discriminator == null"
+                  v-if="data.financeData.responsible.discriminator == null"
                   :size="4"
                   disabled
                   label="Documento" />
                 <InputBox
-                  v-model="data.responsible.cpf"
-                  v-if="data.responsible.discriminator == 'Person'"
+                  v-model="data.financeData.responsible.cpf"
+                  v-if="data.financeData.responsible.discriminator == 'Person'"
                   :size="4"
                   :min-size="14"
                   cpf
@@ -346,8 +346,8 @@
                   mask="###.###.###-##"
                   hint="Ex: 000.000.000-00" />
                 <InputBox
-                  v-model="data.responsible.cnpj"
-                  v-if="data.responsible.discriminator == 'Company'"
+                  v-model="data.financeData.responsible.cnpj"
+                  v-if="data.financeData.responsible.discriminator == 'Company'"
                   :size="4"
                   :min-size="18"
                   cnpj
@@ -355,59 +355,59 @@
                   mask="##.###.###/####-##"
                   hint="Ex: 00.000.000/0000-00" />
                 <InputBox
-                  v-if="data.responsible.discriminator == null"
+                  v-if="data.financeData.responsible.discriminator == null"
                   :size="4"
                   disabled
                   label="Nome" />
                 <InputBox
-                  v-model="data.responsible.name"
-                  v-if="data.responsible.discriminator == 'Person'"
+                  v-model="data.financeData.responsible.name"
+                  v-if="data.financeData.responsible.discriminator == 'Person'"
                   :size="4"
                   label="Nome completo" />
                 <InputBox
-                  v-model="data.responsible.name"
-                  v-if="data.responsible.discriminator == 'Company'"
+                  v-model="data.financeData.responsible.name"
+                  v-if="data.financeData.responsible.discriminator == 'Company'"
                   :size="4"
                   label="Razão Social" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-if="data.responsible.discriminator == null"
+                  v-if="data.financeData.responsible.discriminator == null"
                   :size="4"
                   disabled
                   label="Contato" />
                 <InputBox
-                  v-if="data.responsible.discriminator == 'Company'"
-                  v-model="data.responsible.contact"
+                  v-if="data.financeData.responsible.discriminator == 'Company'"
+                  v-model="data.financeData.responsible.contact"
                   :size="4"
                   label="Pessoa de Contato" />
                 <InputBox
-                  v-if="data.responsible.discriminator == 'Person'"
-                  v-model="data.responsible.relationship"
+                  v-if="data.financeData.responsible.discriminator == 'Person'"
+                  v-model="data.financeData.responsible.relationship"
                   :size="4"
                   label="Relacionamento com o aluno" />
                 <InputBox
-                  v-model="data.responsible.streetAddress"
+                  v-model="data.financeData.responsible.streetAddress"
                   :size="4"
                   label="Logradouro" />
                 <InputBox
-                  v-model="data.responsible.complementAddress"
+                  v-model="data.financeData.responsible.complementAddress"
                   :size="4"
                   label="Complemento" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.responsible.neighborhood"
+                  v-model="data.financeData.responsible.neighborhood"
                   :size="4"
                   label="Bairro" />
                 <DropDown
-                  v-model="data.responsible.stateId"
+                  v-model="data.financeData.responsible.stateId"
                   :size="4"
                   :options="options.states"
                   required
                   label="Estado" />
                 <DropDown
-                  v-model="data.responsible.city"
+                  v-model="data.financeData.responsible.city"
                   :size="4"
                   :options="options.cities"
                   key-id="name"
@@ -416,36 +416,39 @@
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.responsible.landline"
+                  v-model="data.financeData.responsible.landline"
                   :size="4"
                   label="Telefone"
                   mask="(##) ####-####" />
                 <InputBox
-                  v-model="data.responsible.phoneNumber"
+                  v-model="data.financeData.responsible.phoneNumber"
                   :size="4"
                   label="Celular"
                   mask="(##) #####-####" />
                 <InputBox
-                  v-model="data.responsible.email"
+                  v-model="data.financeData.responsible.email"
                   :size="4"
                   label="E-mail" />
              </div>
             </Fieldset>
-            <Fieldset title="Fiador">
+            <Fieldset
+              v-for="(guarantor, index) in guarantors"
+              :key="index"
+              title="Fiador">
               <div class="flex gutters flex-wrap">
                 <DropDown
-                  v-model="data.guarantor.discriminator"
+                  v-model="guarantor.discriminator"
                   :size="4"
                   :options="options.discriminators"
                   label="CPF ou CNPJ" />
                 <InputBox
-                  v-if="data.guarantor.discriminator == null"
+                  v-if="guarantor.discriminator == null"
                   :size="4"
                   disabled
                   label="Documento" />
                 <InputBox
-                  v-model="data.guarantor.cpf"
-                  v-if="data.guarantor.discriminator == 'Person'"
+                  v-model="guarantor.cpf"
+                  v-if="guarantor.discriminator == 'Person'"
                   :size="4"
                   :min-size="14"
                   cpf
@@ -453,8 +456,8 @@
                   mask="###.###.###-##"
                   hint="Ex: 000.000.000-00" />
                 <InputBox
-                  v-model="data.guarantor.cnpj"
-                  v-if="data.guarantor.discriminator == 'Company'"
+                  v-model="guarantor.cnpj"
+                  v-if="guarantor.discriminator == 'Company'"
                   :size="4"
                   :min-size="18"
                   cnpj
@@ -462,48 +465,48 @@
                   mask="##.###.###/####-##"
                   hint="Ex: 00.000.000/0000-00" />
                 <InputBox
-                  v-model="data.guarantor.name"
+                  v-model="guarantor.name"
                   :size="4"
                   label="Razão Social" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.guarantor.contact"
+                  v-model="guarantor.contact"
                   :size="4"
                   label="Contato" />
                 <InputBox
-                  v-model="data.guarantor.streetAddress"
+                  v-model="guarantor.streetAddress"
                   :size="4"
                   label="Endereço Completo" />
                 <InputBox
-                  v-model="data.guarantor.complementAddress"
+                  v-model="guarantor.complementAddress"
                   :size="4"
                   label="Complemento" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.guarantor.neighborhood"
+                  v-model="guarantor.neighborhood"
                   :size="4"
                   label="Bairro" />
                 <DropDown
-                  v-model="data.guarantor.stateId"
+                  v-model="guarantor.stateId"
                   :size="4"
                   :options="options.states"
                   required
                   label="Estado" />
                 <DropDown
-                  v-model="data.guarantor.cityId"
+                  v-model="guarantor.cityId"
                   :errors="errors.guarantor.cityId"
                   :size="3"
                   :options="options.cities"
-                  :filter="data.guarantor.stateId"
+                  :filter="guarantor.stateId"
                   filter-key="stateId"
                   key-id="name"
                   required
                   label="Cidade"
                   hint="Cidade onde Mora" />
                 <DropDown
-                  v-model="data.guarantor.cityId"
+                  v-model="guarantor.cityId"
                   :size="4"
                   :options="options.cities"
                   key-id="name"
@@ -512,17 +515,17 @@
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.guarantor.landline"
+                  v-model="guarantor.landline"
                   :size="4"
                   label="Telefone"
                   mask="(##) ####-####" />
                 <InputBox
-                  v-model="data.guarantor.phoneNumber"
+                  v-model="guarantor.phoneNumber"
                   :size="4"
                   label="Celular"
                   mask="(##) #####-####" />
                 <InputBox
-                  v-model="data.guarantor.email"
+                  v-model="guarantor.email"
                   :size="4"
                   label="E-mail" />
              </div>
