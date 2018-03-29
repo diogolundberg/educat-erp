@@ -332,7 +332,7 @@
                 <DropDown
                   v-model="data.financeData.responsible.discriminator"
                   :size="4"
-                  :options="options.discriminators"
+                  :options="discriminators"
                   label="CPF ou CNPJ" />
                 <InputBox
                   v-if="data.financeData.responsible.discriminator == null"
@@ -442,7 +442,7 @@
                 <DropDown
                   v-model="guarantor.discriminator"
                   :size="4"
-                  :options="options.discriminators"
+                  :options="discriminators"
                   label="CPF ou CNPJ" />
                 <InputBox
                   v-if="guarantor.discriminator == null"
@@ -640,6 +640,10 @@
           { id: "yes", name: "Sim" },
           { id: "no", name: "Não" },
           { id: "unknown", name: "Não disponho da informação" },
+        ],
+        discriminators: [
+          { id: "Person", name: "CPF" },
+          { id: "Company", name: "CNPJ" },
         ],
       };
     },
