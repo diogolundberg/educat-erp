@@ -21,7 +21,7 @@
         header
         class="max-width-4 m-auto">
         <Step
-          :disabled="data.sendDate"
+          :disabled="!!data.sendDate"
           :complete="data.personalData.state === 'valid'"
           :error="data.personalData.state === 'invalid'"
           title="Seus Dados"
@@ -318,8 +318,7 @@
           </Card>
         </Step>
         <Step
-          v-if="false"
-          :disabled="data.sendDate"
+          :disabled="!!data.sendDate"
           :complete="data.financeData && data.financeData.state == 'valid'"
           :error="data.financeData && data.financeData.state == 'invalid'"
           title="Dados Financeiros"
