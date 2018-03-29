@@ -291,24 +291,10 @@
               </div>
             </Fieldset>
             <Fieldset title="Documentos">
-              <div class="p2 shadow0 rounded">
-                <template v-for="(doc, idx) in options.personalDocuments">
-                  <div
-                    :id="`doc_${doc.id}`"
-                    :key="doc.id"
-                    class="flex justify-between items-center">
-                      <div>{{ doc.name }}</div>
-                      <UploadButton
-                        :prefix="`onboarding/enrollment/${ id
-                          }/personalData/${ doc.id }/`"
-                        :value="documentUrl(doc.id)"
-                        @input="setDocument(doc.id, $event)" />
-                  </div>
-                  <hr
-                    v-if="idx < options.personalDocuments.length - 1"
-                    :key="`hr${doc.id}`">
-                </template>
-              </div>
+              <Documents
+                v-model="data.personalData.documents"
+                :types="options.personalDocuments"
+                :prefix="`onboarding/enrollment/${ id }/personalData/`" />
             </Fieldset>
             <div class="flex justify-end">
               <Btn
@@ -712,21 +698,6 @@
       async submitEnrollment() {
         const token = this.id;
         await this.$store.dispatch("submitEnrollment", { token });
-      },
-      documentUrl(id) {
-        const document = this.data.personalData.documents
-          .find(a => a.documentTypeId === id);
-        return document && document.url;
-      },
-      setDocument(documentTypeId, url) {
-        const document = this.data.personalData.documents
-          .find(a => a.documentTypeId === documentTypeId);
-        if (document) {
-          document.id = 0;
-          document.url = url;
-        } else {
-          this.data.personalData.documents.push({ url, documentTypeId });
-        }
       },
     },
   };
