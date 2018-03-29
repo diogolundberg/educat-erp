@@ -65,5 +65,7 @@ namespace Onboarding.Models
         public DbSet<Representative> Representatives { get; set; }
         public DbSet<Guarantor> Guarantors { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<Plan> Plans { get; set; }
+        public DbSet<PaymentMethod> PaymentMethod { get; set; }
     }
 }
