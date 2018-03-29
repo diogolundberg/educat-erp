@@ -14,17 +14,20 @@ namespace Onboarding.Bindings
             .ForMember(x => x.State, config => config.Ignore());
 
             CreateMap<RepresentativePerson, RepresentativePersonViewModel>();
-            CreateMap<RepresentativePersonViewModel, RepresentativeCompany>()
+            CreateMap<RepresentativePersonViewModel, RepresentativePerson>()
             .ForMember(x => x.City, config => config.Ignore())
             .ForMember(x => x.State, config => config.Ignore());
 
             CreateMap<Representative, RepresentativeViewModel>()
             .Include<RepresentativeCompany, RepresentativeCompanyViewModel>()
             .Include<RepresentativePerson, RepresentativePersonViewModel>();
+
             CreateMap<RepresentativeViewModel, Representative>()
             .ForMember(x => x.City, config => config.Ignore())
             .ForMember(x => x.FinanceData, config => config.Ignore())
-            .ForMember(x => x.State, config => config.Ignore());
+            .ForMember(x => x.State, config => config.Ignore())
+            .Include<RepresentativeCompanyViewModel, RepresentativeCompany>()
+            .Include<RepresentativePersonViewModel, RepresentativePerson>();
         }
     }
 }
