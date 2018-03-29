@@ -642,8 +642,8 @@
           { id: "unknown", name: "Não disponho da informação" },
         ],
         discriminators: [
-          { id: "Person", name: "CPF" },
-          { id: "Company", name: "CNPJ" },
+          { id: "RepresentativePerson", name: "CPF" },
+          { id: "RepresentativeCompany", name: "CNPJ" },
         ],
         emptyGuarantor: {
           discriminator: "Person",
