@@ -524,29 +524,12 @@
                   v-model="guarantor.email"
                   :size="4"
                   label="E-mail" />
-             </div>
-            </Fieldset>
-            <Fieldset title="Documentos do Fiador">
+              </div>
               <div class="p2 shadow0 rounded">
-                <div class="flex justify-between items-center">
-                  <div>Carteira de Identidade</div>
-                  <Btn />
-                </div>
-                <hr>
-                <div class="flex justify-between items-center">
-                  <div>CPF</div>
-                  <Btn />
-                </div>
-                <hr>
-                <div class="flex justify-between items-center">
-                  <div>Comprovante de Endereço</div>
-                  <Btn />
-                </div>
-                <hr>
-                <div class="flex justify-between items-center">
-                  <div>Certidão de Nasciment ou Casamento</div>
-                  <Btn />
-                </div>
+                <Documents
+                  v-model="guarantor.documents"
+                  :types="options.guarantorDocuments"
+                  :prefix="`onboarding/enrollment/${ id }/financeData/`" />
               </div>
             </Fieldset>
             <div class="flex justify-end">
