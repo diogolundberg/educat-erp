@@ -329,7 +329,7 @@
                 <InputBox
                   v-model="data.financeData.representative.cpf"
                   v-if="data.financeData.representative.discriminator
-                    == 'Person'"
+                    == 'RepresentativePerson'"
                   :size="4"
                   :min-size="14"
                   cpf
@@ -339,7 +339,7 @@
                 <InputBox
                   v-model="data.financeData.representative.cnpj"
                   v-if="data.financeData.representative.discriminator
-                    == 'Company'"
+                    == 'RepresentativeCompany'"
                   :size="4"
                   :min-size="18"
                   cnpj
@@ -354,13 +354,13 @@
                 <InputBox
                   v-model="data.financeData.representative.name"
                   v-if="data.financeData.representative.discriminator
-                    == 'Person'"
+                    == 'RepresentativePerson'"
                   :size="4"
                   label="Nome completo" />
                 <InputBox
                   v-model="data.financeData.representative.name"
                   v-if="data.financeData.representative.discriminator
-                    == 'Company'"
+                    == 'RepresentativeCompany'"
                   :size="4"
                   label="Razão Social" />
               </div>
@@ -372,13 +372,13 @@
                   label="Contato" />
                 <InputBox
                   v-if="data.financeData.representative.discriminator
-                    == 'Company'"
+                    == 'RepresentativeCompany'"
                   v-model="data.financeData.representative.contact"
                   :size="4"
                   label="Pessoa de Contato" />
                 <InputBox
                   v-if="data.financeData.representative.discriminator
-                    == 'Person'"
+                    == 'RepresentativePerson'"
                   v-model="data.financeData.representative.relationship"
                   :size="4"
                   label="Relacionamento com o aluno" />
@@ -446,7 +446,7 @@
                       label="Documento" />
                     <InputBox
                       v-model="item.cpf"
-                      v-if="item.discriminator == 'Person'"
+                      v-if="item.discriminator == 'RepresentativePerson'"
                       :size="4"
                       :min-size="14"
                       cpf
@@ -455,7 +455,7 @@
                       hint="Ex: 000.000.000-00" />
                     <InputBox
                       v-model="item.cnpj"
-                      v-if="item.discriminator == 'Company'"
+                      v-if="item.discriminator == 'RepresentativeCompany'"
                       :size="4"
                       :min-size="18"
                       cnpj
