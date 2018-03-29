@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="fixed top-0 z3 w100 shadow1 bg-green-grad white">
+    <header class="fixed top-0 z3 w100 bg-green-grad white">
       <div class="max-width-4 m-auto flex items-center justify-between p2">
         <div class="flex-auto flex items-center">
           <div class="h3">CMMG</div>

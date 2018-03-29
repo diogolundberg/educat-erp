@@ -1,5 +1,5 @@
 <template>
-  <div class="mb3 shadow2 rounded bg-white">
+  <div class="mb3 shadow1 rounded bg-white">
     <template v-if="title">
       <div class="p3 bg-brown-grad rounded-top white relative">
         <h2 class="m0 thin">
