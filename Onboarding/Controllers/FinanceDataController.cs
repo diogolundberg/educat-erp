@@ -8,6 +8,7 @@ using Onboarding.ViewModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Onboarding.Controllers
 {
@@ -162,7 +163,7 @@ namespace Onboarding.Controllers
                                     Url = guarantorDocumentViewModel.Url,
                                     DocumentTypeId = guarantorDocumentViewModel.DocumentTypeId
                                 },
-                                GuarantorId= existingGuarantor.Id
+                                GuarantorId = existingGuarantor.Id
                             };
 
                             _context.Set<GuarantorDocument>().Add(guarantorDocument);
@@ -188,7 +189,7 @@ namespace Onboarding.Controllers
             viewModel.State = FinanceDataState(viewModel);
 
             var errors = ModelState.ToDictionary(
-                modelState => modelState.Key,
+                modelState => modelState.Key.UnCapitalize(),
                 modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
             );
 
