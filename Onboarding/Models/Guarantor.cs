@@ -30,5 +30,11 @@ namespace Onboarding.Models
 
         [JsonIgnore]
         public virtual State State { get; set; }
+
+        [ForeignKey("FinanceData")]
+        public int? FinanceDataId { get; set; }
+
+        [JsonIgnore]
+        public virtual FinanceData FinanceData { get; set; }
     }
 }
