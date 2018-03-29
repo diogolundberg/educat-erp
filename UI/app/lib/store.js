@@ -51,8 +51,8 @@ export default new VueX.Store({
         },
         financeData: {
           state: "empty",
-          responsible: {
-            discriminator: null,
+          representative: {
+            discriminator: "Person",
             cpf: "",
             cnpj: "",
             name: "",
