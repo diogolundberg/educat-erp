@@ -299,7 +299,8 @@
                     class="flex justify-between items-center">
                       <div>{{ doc.name }}</div>
                       <UploadButton
-                        :prefix="token"
+                        :prefix="`onboarding/enrollment/${ id
+                          }/personalData/${ doc.id }/`"
                         :value="documentUrl(doc.id)"
                         @input="setDocument(doc.id, $event)" />
                   </div>
