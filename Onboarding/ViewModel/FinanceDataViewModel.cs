@@ -24,5 +24,11 @@ namespace Onboarding.ViewModel
         public ICollection<GuarantorViewModel> Guarantors { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
+
+        [Required]
+        public int? PlanId { get; set; }
+
+        [Required]
+        public int? PaymentMethodId { get; set; }
     }
 }
