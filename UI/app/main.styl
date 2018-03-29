@@ -28,6 +28,8 @@ input:invalid
 
 // Helpers
 
+.table-row
+  display table-row
 .btn-primary
   background-color $green
 .thin
@@ -176,6 +178,8 @@ input:invalid
   @keyframes spin
     100%
       transform rotate(360deg)
+.divider-bottom:not(:last-child)
+  background linear-gradient($silver, $silver) center bottom/100% 1px no-repeat
 .input-line
   background linear-gradient($green, $green) center bottom/0 2px no-repeat,
     linear-gradient($dim, $dim) center bottom/100% 1px no-repeat
