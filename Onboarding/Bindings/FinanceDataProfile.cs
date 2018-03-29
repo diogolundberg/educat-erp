@@ -8,10 +8,8 @@ namespace Onboarding.Bindings
     {
         public FinanceDataProfile()
         {
-            CreateMap<FinanceData, FinanceDataViewModel>()
-            .ForMember(x => x.Representative, config => config.MapFrom(x => x.Representative));
-            CreateMap<FinanceDataViewModel, FinanceData>()
-            .ForMember(x => x.Representative, config => config.MapFrom(x => x.Representative));
+            CreateMap<FinanceData, FinanceDataViewModel>();
+            CreateMap<FinanceDataViewModel, FinanceData>();
         }
     }
 }

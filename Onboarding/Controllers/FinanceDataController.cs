@@ -36,6 +36,8 @@ namespace Onboarding.Controllers
                                               .Include("Enrollment")
                                               .Include("Representative")
                                               .Include("Guarantors")
+                                              .Include("Guarantors.GuarantorDocuments")
+                                              .Include("Guarantors.GuarantorDocuments.Document")
                                               .SingleOrDefault(x => x.Id == obj.Id);
 
             if (financeData == null)
@@ -57,6 +59,8 @@ namespace Onboarding.Controllers
                     .Guarantors
                     .Any(c => c.Id == guarantor.Id))
                 {
+                    _context.Set<GuarantorDocument>().RemoveRange(guarantor.GuarantorDocuments);
+                    _context.Set<Document>().RemoveRange(guarantor.GuarantorDocuments.Select(x => x.Document));
                     _context.Set<Guarantor>().Remove(guarantor);
                 }
             }
@@ -71,6 +75,35 @@ namespace Onboarding.Controllers
                     guarantor.Id = existingGuarantor.Id;
                     guarantor.FinanceDataId = financeData.Id;
                     _context.Entry(guarantor).CurrentValues.SetValues(guarantor);
+
+                    foreach (GuarantorDocument guarantorDocument in existingGuarantor.GuarantorDocuments.ToList())
+                    {
+                        if (!guarantor
+                            .GuarantorDocuments
+                            .Any(c => c.Document.Id == guarantorDocument.DocumentId || c.Document.DocumentTypeId == guarantorDocument.Document.DocumentTypeId))
+                        {
+                            _context.Set<GuarantorDocument>().Remove(guarantorDocument);
+                            _context.Set<Document>().Remove(_context.Set<Document>().Find(guarantorDocument.DocumentId));
+                        }
+                    }
+                    foreach (GuarantorDocument guarantorDocument in guarantor.GuarantorDocuments)
+                    {
+                        GuarantorDocument existingGuarantorDocument = existingGuarantor.GuarantorDocuments
+                            .Where(c => c.DocumentId == guarantorDocument.Document.Id || c.Document.DocumentTypeId == guarantorDocument.Document.DocumentTypeId)
+                            .SingleOrDefault();
+
+                        if (existingGuarantorDocument != null)
+                        {
+                            guarantorDocument.Document.Id = existingGuarantorDocument.Document.Id;
+                            _context.Entry(existingGuarantorDocument.Document).CurrentValues.SetValues(guarantorDocument.Document);
+                        }
+                        else
+                        {
+                            guarantorDocument.GuarantorId = existingGuarantor.Id;
+                            guarantorDocument.Document.Id = 0;
+                            _context.Set<GuarantorDocument>().Add(guarantorDocument);
+                        }
+                    }
                 }
                 else
                 {
