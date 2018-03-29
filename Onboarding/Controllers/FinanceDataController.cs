@@ -50,12 +50,56 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            FinanceData financeDataMapper = _mapper.Map<FinanceData>(obj);
-            _context.Entry(financeData).CurrentValues.SetValues(financeDataMapper);
+            if (obj.Representative is RepresentativePersonViewModel)
+            {
+                RepresentativePerson representativePerson = _mapper.Map<RepresentativePerson>((RepresentativePersonViewModel)obj.Representative);
+                representativePerson.FinanceDataId = financeData.Id;
+
+                if (financeData.Representative == null)
+                {
+                    _context.Set<RepresentativePerson>().Add(representativePerson);
+                }
+                else
+                {
+                    if (financeData.Representative is RepresentativeCompany)
+                    {
+                        _context.Set<RepresentativeCompany>().Remove((RepresentativeCompany)financeData.Representative);
+                        _context.Set<RepresentativePerson>().Add(representativePerson);
+                    }
+                    else
+                    {
+                        representativePerson.Id = financeData.Representative.Id;
+                        _context.Entry(financeData.Representative).CurrentValues.SetValues(representativePerson);
+                    }
+                }
+            }
+            else
+            {
+                RepresentativeCompany representativeCompany = _mapper.Map<RepresentativeCompany>((RepresentativeCompanyViewModel)obj.Representative);
+                representativeCompany.FinanceDataId = financeData.Id;
+
+                if (financeData.Representative == null)
+                {
+                    _context.Set<RepresentativeCompany>().Add(representativeCompany);
+                }
+                else
+                {
+                    if (financeData.Representative is RepresentativePerson)
+                    {
+                        _context.Set<RepresentativePerson>().Remove((RepresentativePerson)financeData.Representative);
+                        _context.Set<RepresentativeCompany>().Add(representativeCompany);
+                    }
+                    else
+                    {
+                        representativeCompany.Id = financeData.Representative.Id;
+                        _context.Entry(financeData.Representative).CurrentValues.SetValues(representativeCompany);
+                    }
+                }
+            }
 
             foreach (Guarantor guarantor in financeData.Guarantors.ToList())
             {
-                if (!financeDataMapper
+                if (!obj
                     .Guarantors
                     .Any(c => c.Id == guarantor.Id))
                 {
@@ -64,41 +108,44 @@ namespace Onboarding.Controllers
                     _context.Set<Guarantor>().Remove(guarantor);
                 }
             }
-            foreach (Guarantor guarantor in financeDataMapper.Guarantors)
+            foreach (GuarantorViewModel guarantorViewModel in obj.Guarantors)
             {
                 Guarantor existingGuarantor = financeData.Guarantors
-                    .Where(c => c.Id == guarantor.Id)
+                    .Where(c => c.Id == guarantorViewModel.Id)
                     .SingleOrDefault();
 
                 if (existingGuarantor != null)
                 {
+                    Guarantor guarantor = _mapper.Map<Guarantor>(guarantorViewModel);
                     guarantor.Id = existingGuarantor.Id;
                     guarantor.FinanceDataId = financeData.Id;
                     _context.Entry(guarantor).CurrentValues.SetValues(guarantor);
 
                     foreach (GuarantorDocument guarantorDocument in existingGuarantor.GuarantorDocuments.ToList())
                     {
-                        if (!guarantor
-                            .GuarantorDocuments
-                            .Any(c => c.Document.Id == guarantorDocument.DocumentId || c.Document.DocumentTypeId == guarantorDocument.Document.DocumentTypeId))
+                        if (!guarantorViewModel
+                            .Documents
+                            .Any(c => c.Id == guarantorDocument.DocumentId || c.DocumentTypeId == guarantorDocument.Document.DocumentTypeId))
                         {
                             _context.Set<GuarantorDocument>().Remove(guarantorDocument);
                             _context.Set<Document>().Remove(_context.Set<Document>().Find(guarantorDocument.DocumentId));
                         }
                     }
-                    foreach (GuarantorDocument guarantorDocument in guarantor.GuarantorDocuments)
+                    foreach (DocumentViewModel guarantorDocumentViewModel in guarantorViewModel.Documents)
                     {
                         GuarantorDocument existingGuarantorDocument = existingGuarantor.GuarantorDocuments
-                            .Where(c => c.DocumentId == guarantorDocument.Document.Id || c.Document.DocumentTypeId == guarantorDocument.Document.DocumentTypeId)
+                            .Where(c => c.DocumentId == guarantorDocumentViewModel.Id || c.Document.DocumentTypeId == guarantorDocumentViewModel.DocumentTypeId)
                             .SingleOrDefault();
 
                         if (existingGuarantorDocument != null)
                         {
+                            GuarantorDocument guarantorDocument = _mapper.Map<GuarantorDocument>(guarantorDocumentViewModel);
                             guarantorDocument.Document.Id = existingGuarantorDocument.Document.Id;
                             _context.Entry(existingGuarantorDocument.Document).CurrentValues.SetValues(guarantorDocument.Document);
                         }
                         else
                         {
+                            GuarantorDocument guarantorDocument = _mapper.Map<GuarantorDocument>(guarantorDocumentViewModel);
                             guarantorDocument.GuarantorId = existingGuarantor.Id;
                             guarantorDocument.Document.Id = 0;
                             _context.Set<GuarantorDocument>().Add(guarantorDocument);
@@ -107,6 +154,7 @@ namespace Onboarding.Controllers
                 }
                 else
                 {
+                    Guarantor guarantor = _mapper.Map<Guarantor>(guarantorViewModel);
                     guarantor.Id = 0;
                     guarantor.FinanceDataId = financeData.Id;
                     _context.Set<Guarantor>().Add(guarantor);
