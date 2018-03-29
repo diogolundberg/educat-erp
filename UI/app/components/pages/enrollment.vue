@@ -589,13 +589,12 @@
           title="Aguardando Aprovação"
           description="A secretaria e o departamento financeiro estão analisando
             seus documentos">
-          <Card title="Aguardando Aprovação">
-            <p>A secretaria e o departamento financeiro estão analisando
-              seus documentos.</p>
-            <div class="flex justify-end">
-              <Btn
-                primary
-                label="Enviar" />
+          <Card title="Dados enviados">
+            <p>Seus dados foram enviados. Agora a secretaria e o departamento
+              financeiro estão analisando seus documentos.</p>
+            <div class="center">
+              <Animation
+                name="success" />
             </div>
           </Card>
         </Step>
