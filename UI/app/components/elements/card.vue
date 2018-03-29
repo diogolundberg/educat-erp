@@ -11,7 +11,7 @@
           </Ball>
           <Ball
             v-if="error"
-            class="bg-green shadow1 p6x ml1 inline-block">
+            class="bg-red shadow1 p6x ml1 inline-block">
             <Icon name="error" />
           </Ball>
         </h2>
