@@ -112,7 +112,10 @@ namespace Onboarding.Controllers
                         Email = enrollmentParameterObj.Email,
                         CPF = enrollmentParameterObj.CPF,
                     },
-                    FinanceData = new FinanceData()
+                    FinanceData = new FinanceData
+                    {
+                        Representative = new RepresentativePerson()
+                    }
                 };
 
                 string externalId = enrollment.CreateExternalId();
