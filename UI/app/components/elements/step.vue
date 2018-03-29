@@ -2,7 +2,7 @@
   <div>
     <div
       v-if="!visible || disabled"
-      class="p2 mb3 bg-white shadow2 rounded flex items-center"
+      class="p2 mb3 bg-white shadow1 rounded flex items-center"
       :class="{ pointer: !disabled }"
       @click="$parent.goTo(index)">
       <Ball class="mr2">
