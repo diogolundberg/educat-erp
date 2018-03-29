@@ -566,10 +566,16 @@
           title="Enviar para Análise"
           description="Enviar para aprovação da secretaria e departamento
             financeiro">
-          <Card title="Enviar para Análise">
-
-            <p>Envie seus dados para a secetaria e para o departamento
-              financeiro para aprovação.</p>
+          <Card
+            closeable
+            title="Enviar para Análise">
+            <p>Envie seus dados para a secetaria e para o
+              departamento financeiro para aprovação.</p>
+            <div class="center">
+              <img
+                :style="{ 'max-width': '8rem' }"
+                src="../../assets/img/card.svg">
+            </div>
             <div class="flex justify-end">
               <Btn
                 primary
