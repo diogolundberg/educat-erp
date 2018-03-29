@@ -5,6 +5,11 @@ namespace Onboarding.ViewModel
 {
     public class GuarantorViewModel
     {
+        public GuarantorViewModel()
+        {
+            Documents = new HashSet<DocumentViewModel>();
+        }
+
         public int? Id { get; set; }
 
         [Required]

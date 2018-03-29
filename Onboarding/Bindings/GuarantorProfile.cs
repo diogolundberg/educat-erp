@@ -12,7 +12,13 @@ namespace Onboarding.Bindings
             .ForMember(x => x.City, config => config.Ignore())
             .ForMember(x => x.State, config => config.Ignore());
 
-            CreateMap<Guarantor, GuarantorViewModel>();
+            CreateMap<Guarantor, GuarantorViewModel>()
+            .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => new DocumentViewModel
+            {
+                Id = o.Document.Id,
+                Url = o.Document.Url,
+                DocumentTypeId = o.Document.DocumentTypeId
+            })));
         }
     }
 }
