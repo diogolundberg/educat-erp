@@ -43,6 +43,10 @@ namespace Onboarding.Controllers
                                             .Include("PersonalData.PersonalDataDocuments")
                                             .Include("PersonalData.PersonalDataDocuments.Document")
                                             .Include("FinanceData")
+                                            .Include("FinanceData.Representative")
+                                            .Include("FinanceData.Guarantors")
+                                            .Include("FinanceData.Guarantors.GuarantorDocuments")
+                                            .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
                                             .Single(x => x.ExternalId == token);
 
             if (!enrollment.IsDeadlineValid())
