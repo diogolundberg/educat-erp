@@ -1,10 +1,16 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Onboarding.Models
 {
     public class Guarantor : BaseModel
     {
+        public Guarantor()
+        {
+            GuarantorDocuments = new HashSet<GuarantorDocumentType>();
+        }
+
         public string Name { get; set; }
 
         public string StreetAddress { get; set; }
@@ -36,5 +42,7 @@ namespace Onboarding.Models
 
         [JsonIgnore]
         public virtual FinanceData FinanceData { get; set; }
+
+        public virtual ICollection<GuarantorDocument> GuarantorDocuments { get; set; }
     }
 }
