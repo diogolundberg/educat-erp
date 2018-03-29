@@ -19,7 +19,7 @@ namespace Onboarding.Bindings
             .ForMember(x => x.State, config => config.Ignore());
 
             CreateMap<Representative, RepresentativeViewModel>()
-            .ForMember(x => x.Discriminator, config => config.MapFrom(x => x is RepresentativePerson ? "person" : "company"))
+            .ForMember(x => x.Discriminator, config => config.MapFrom(x => x is RepresentativePerson ? "RepresentativePerson" : "RepresentativeCompany"))
             .Include<RepresentativeCompany, RepresentativeCompanyViewModel>()
             .Include<RepresentativePerson, RepresentativePersonViewModel>();
 

@@ -18,11 +18,11 @@ namespace Onboarding.JsonFormatter
 
             RepresentativeViewModel representative;
 
-            if (obj["discriminator"] != null && obj["discriminator"].ToString() == "person")
+            if (obj["discriminator"] != null && obj["discriminator"].ToString() == "RepresentativePerson")
             {
                 representative = new RepresentativePersonViewModel();
             }
-            else if (obj["discriminator"] != null && obj["discriminator"].ToString() == "company")
+            else if (obj["discriminator"] != null && obj["discriminator"].ToString() == "RepresentativeCompany")
             {
                 representative = new RepresentativeCompanyViewModel();
             }
