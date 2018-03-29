@@ -14,6 +14,9 @@ export default new VueX.Store({
     enrollment: {
       data: {
         deadline: null,
+        sendDate: null,
+        academicApproval: false,
+        financeApproval: false,
         personalData: {
           state: "empty",
           realName: null,

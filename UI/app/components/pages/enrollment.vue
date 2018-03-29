@@ -606,12 +606,34 @@
           :complete="data.academicApproval"
           title="Aprovação da Secretaria"
           description="A secretaria irá analisar seus documentos para aprovar
-            sua matrícula." />
+            sua matrícula.">
+          <Card
+            v-if="!data.academicApproval"
+            title="Aprovação da Secretaria">
+            Sua aprovação ainda está pendente.
+          </Card>
+          <Card
+            v-if="data.academicApproval"
+            title="Matrícula Aprovada pela Secretaria">
+            A secretaria já aprovou sua matrícula.
+          </Card>
+        </Step>
         <Step
           :complete="data.financeApproval"
           title="Aprovação do Financeiro"
           description="O financeiro irá analisar sua matrícula para aprovar
-            sua matrícula." />
+            sua matrícula.">
+          <Card
+            v-if="!data.academicApproval"
+            title="Aprovação do Financeiro">
+            Sua aprovação ainda está pendente.
+          </Card>
+          <Card
+            v-if="data.academicApproval"
+            title="Matrícula Aprovada pelo Financeiro">
+            Nosso departamento financeiro já aprovou sua matrícula.
+          </Card>
+        </Step>
         <Step
           title="Agende uma Visita"
           description="Após a aprovação da secretaria e do financeiro, é hora
