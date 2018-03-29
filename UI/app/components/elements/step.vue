@@ -12,16 +12,16 @@
         <div>{{ title }}</div>
         <small class="dim">{{ description }}</small>
       </div>
-      <div v-if="complete">
-        <div class="x1 y1 circle relative pointer x2 y2 p6x shadow1 bg-green">
-          <Icon name="check" />
-        </div>
-      </div>
-      <div v-if="error">
-        <div class="x1 y1 circle relative pointer x2 y2 p6x shadow1 bg-red">
-          <Icon name="error" />
-        </div>
-      </div>
+      <Ball
+        v-if="complete"
+        class="bg-green shadow1 p6x">
+        <Icon name="check" />
+      </Ball>
+      <Ball
+        v-if="error"
+        class="bg-red shadow1 p6x">
+        <Icon name="error" />
+      </Ball>
     </div>
     <div
       v-if="visible && !disabled"

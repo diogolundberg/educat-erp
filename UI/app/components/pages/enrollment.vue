@@ -29,6 +29,8 @@
           <Card
             title="Seus Dados"
             closeable
+            :complete="data.personalData.state === 'valid'"
+            :error="data.personalData.state === 'invalid'"
             @close="step = 0">
             <div
               slot="title"
@@ -323,6 +325,8 @@
           title="Dados Financeiros"
           description="Aqui você insere seus dados de pagamento.">
           <Card
+            :complete="data.personalData.state === 'valid'"
+            :error="data.personalData.state === 'invalid'"
             title="Dados Financeiros">
             <Fieldset title="Responsável Financeiro">
               <div class="flex gutters flex-wrap">
