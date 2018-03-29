@@ -34,6 +34,8 @@ namespace Onboarding.ViewModel
 
         [Required]
         public int? StateId { get; set; }
+
+        public string Discriminator { get; set; }
     }
 
     public class RepresentativeCompanyViewModel : RepresentativeViewModel
