@@ -139,15 +139,32 @@ namespace Onboarding.Controllers
 
                         if (existingGuarantorDocument != null)
                         {
-                            GuarantorDocument guarantorDocument = _mapper.Map<GuarantorDocument>(guarantorDocumentViewModel);
-                            guarantorDocument.Document.Id = existingGuarantorDocument.Document.Id;
+                            GuarantorDocument guarantorDocument = new GuarantorDocument
+                            {
+                                Document = new Document
+                                {
+                                    Id = existingGuarantorDocument.Document.Id,
+                                    Url = guarantorDocumentViewModel.Url,
+                                    DocumentTypeId = guarantorDocumentViewModel.DocumentTypeId,
+                                },
+                                GuarantorId = existingGuarantor.Id
+                            };
+
                             _context.Entry(existingGuarantorDocument.Document).CurrentValues.SetValues(guarantorDocument.Document);
                         }
                         else
                         {
-                            GuarantorDocument guarantorDocument = _mapper.Map<GuarantorDocument>(guarantorDocumentViewModel);
-                            guarantorDocument.GuarantorId = existingGuarantor.Id;
-                            guarantorDocument.Document.Id = 0;
+                            GuarantorDocument guarantorDocument = new GuarantorDocument
+                            {
+                                Document = new Document
+                                {
+                                    Id = 0,
+                                    Url = guarantorDocumentViewModel.Url,
+                                    DocumentTypeId = guarantorDocumentViewModel.DocumentTypeId
+                                },
+                                GuarantorId= existingGuarantor.Id
+                            };
+
                             _context.Set<GuarantorDocument>().Add(guarantorDocument);
                         }
                     }
