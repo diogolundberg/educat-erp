@@ -8,7 +8,7 @@ namespace Onboarding.Models
     {
         public Guarantor()
         {
-            GuarantorDocuments = new HashSet<GuarantorDocumentType>();
+            GuarantorDocuments = new HashSet<GuarantorDocument>();
         }
 
         public string Name { get; set; }
