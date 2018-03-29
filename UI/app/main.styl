@@ -5,7 +5,7 @@
 
 $silver = rgba(black, .03)
 $gray = rgba(black, .1)
-$shadow = rgba(black, .2)
+$shadow = rgba(black, .1)
 $dim = rgba(black, .6)
 $blue = rgb(69, 192, 245)
 $green = rgb(0, 184, 151)
@@ -28,6 +28,8 @@ input:invalid
 
 // Helpers
 
+.table-row
+  display table-row
 .btn-primary
   background-color $green
 .thin
@@ -150,7 +152,7 @@ input:invalid
   transform translate(-10%, -50%) scale(0.8)
 .left2n
   left -2.5em
-.right0
+.right0, .right0-ch > div
   transform translateX(100%)
 .left0
   transform translateX(-100%)
@@ -176,6 +178,8 @@ input:invalid
   @keyframes spin
     100%
       transform rotate(360deg)
+.divider-bottom:not(:last-child)
+  background linear-gradient($silver, $silver) center bottom/100% 1px no-repeat
 .input-line
   background linear-gradient($green, $green) center bottom/0 2px no-repeat,
     linear-gradient($dim, $dim) center bottom/100% 1px no-repeat

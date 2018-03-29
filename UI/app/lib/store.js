@@ -83,6 +83,8 @@ export default new VueX.Store({
         highSchoolKinds: [],
         disabilities: [],
         specialNeeds: [],
+        personalDocuments: [],
+        guarantorDocuments: [],
       },
       errors: {
         personalData: {},

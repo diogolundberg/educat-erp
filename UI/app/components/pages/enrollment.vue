@@ -291,24 +291,10 @@
               </div>
             </Fieldset>
             <Fieldset title="Documentos">
-              <div class="p2 shadow0 rounded">
-                <template v-for="(doc, idx) in options.personalDocuments">
-                  <div
-                    :id="`doc_${doc.id}`"
-                    :key="doc.id"
-                    class="flex justify-between items-center">
-                      <div>{{ doc.name }}</div>
-                      <UploadButton
-                        :prefix="`onboarding/enrollment/${ id
-                          }/personalData/${ doc.id }/`"
-                        :value="documentUrl(doc.id)"
-                        @input="setDocument(doc.id, $event)" />
-                  </div>
-                  <hr
-                    v-if="idx < options.personalDocuments.length - 1"
-                    :key="`hr${doc.id}`">
-                </template>
-              </div>
+              <Documents
+                v-model="data.personalData.documents"
+                :types="options.personalDocuments"
+                :prefix="`onboarding/enrollment/${ id }/personalData/`" />
             </Fieldset>
             <div class="flex justify-end">
               <Btn
@@ -442,126 +428,110 @@
              </div>
             </Fieldset>
             <Fieldset
-              v-for="(guarantor, index) in guarantors"
-              :key="index"
-              title="Fiador">
-              <div class="flex gutters flex-wrap">
-                <DropDown
-                  v-model="guarantor.discriminator"
-                  :size="4"
-                  :options="discriminators"
-                  label="CPF ou CNPJ" />
-                <InputBox
-                  v-if="guarantor.discriminator == null"
-                  :size="4"
-                  disabled
-                  label="Documento" />
-                <InputBox
-                  v-model="guarantor.cpf"
-                  v-if="guarantor.discriminator == 'Person'"
-                  :size="4"
-                  :min-size="14"
-                  cpf
-                  label="CPF"
-                  mask="###.###.###-##"
-                  hint="Ex: 000.000.000-00" />
-                <InputBox
-                  v-model="guarantor.cnpj"
-                  v-if="guarantor.discriminator == 'Company'"
-                  :size="4"
-                  :min-size="18"
-                  cnpj
-                  label="CNPJ"
-                  mask="##.###.###/####-##"
-                  hint="Ex: 00.000.000/0000-00" />
-                <InputBox
-                  v-model="guarantor.name"
-                  :size="4"
-                  label="Razão Social" />
-              </div>
-              <div class="flex gutters flex-wrap">
-                <InputBox
-                  v-model="guarantor.contact"
-                  :size="4"
-                  label="Contato" />
-                <InputBox
-                  v-model="guarantor.streetAddress"
-                  :size="4"
-                  label="Endereço Completo" />
-                <InputBox
-                  v-model="guarantor.complementAddress"
-                  :size="4"
-                  label="Complemento" />
-              </div>
-              <div class="flex gutters flex-wrap">
-                <InputBox
-                  v-model="guarantor.neighborhood"
-                  :size="4"
-                  label="Bairro" />
-                <DropDown
-                  v-model="guarantor.stateId"
-                  :size="4"
-                  :options="options.states"
-                  required
-                  label="Estado" />
-                <DropDown
-                  v-model="guarantor.cityId"
-                  :errors="errors.guarantor.cityId"
-                  :size="3"
-                  :options="options.cities"
-                  :filter="guarantor.stateId"
-                  filter-key="stateId"
-                  key-id="name"
-                  required
-                  label="Cidade"
-                  hint="Cidade onde Mora" />
-                <DropDown
-                  v-model="guarantor.cityId"
-                  :size="4"
-                  :options="options.cities"
-                  key-id="name"
-                  required
-                  label="Cidade" />
-              </div>
-              <div class="flex gutters flex-wrap">
-                <InputBox
-                  v-model="guarantor.landline"
-                  :size="4"
-                  label="Telefone"
-                  mask="(##) ####-####" />
-                <InputBox
-                  v-model="guarantor.phoneNumber"
-                  :size="4"
-                  label="Celular"
-                  mask="(##) #####-####" />
-                <InputBox
-                  v-model="guarantor.email"
-                  :size="4"
-                  label="E-mail" />
-             </div>
-            </Fieldset>
-            <Fieldset title="Documentos do Fiador">
-              <div class="p2 shadow0 rounded">
-                <div class="flex justify-between items-center">
-                  <div>Carteira de Identidade</div>
-                  <Btn />
-                </div>
-                <hr>
-                <div class="flex justify-between items-center">
-                  <div>CPF</div>
-                  <Btn />
-                </div>
-                <hr>
-                <div class="flex justify-between items-center">
-                  <div>Comprovante de Endereço</div>
-                  <Btn />
-                </div>
-                <hr>
-                <div class="flex justify-between items-center">
-                  <div>Certidão de Nasciment ou Casamento</div>
-                  <Btn />
-                </div>
-              </div>
+              title="Fiadores">
+              <Multi
+                v-model="data.financeData.guarantors"
+                :default="emptyGuarantor">
+                <template slot-scope="{ item }">
+                  <div class="flex gutters flex-wrap">
+                    <DropDown
+                      v-model="item.discriminator"
+                      :size="4"
+                      :options="discriminators"
+                      label="CPF ou CNPJ" />
+                    <InputBox
+                      v-if="item.discriminator == null"
+                      :size="4"
+                      disabled
+                      label="Documento" />
+                    <InputBox
+                      v-model="item.cpf"
+                      v-if="item.discriminator == 'Person'"
+                      :size="4"
+                      :min-size="14"
+                      cpf
+                      label="CPF"
+                      mask="###.###.###-##"
+                      hint="Ex: 000.000.000-00" />
+                    <InputBox
+                      v-model="item.cnpj"
+                      v-if="item.discriminator == 'Company'"
+                      :size="4"
+                      :min-size="18"
+                      cnpj
+                      label="CNPJ"
+                      mask="##.###.###/####-##"
+                      hint="Ex: 00.000.000/0000-00" />
+                    <InputBox
+                      v-model="item.name"
+                      :size="4"
+                      label="Razão Social" />
+                  </div>
+                  <div class="flex gutters flex-wrap">
+                    <InputBox
+                      v-model="item.contact"
+                      :size="4"
+                      label="Contato" />
+                    <InputBox
+                      v-model="item.streetAddress"
+                      :size="4"
+                      label="Endereço Completo" />
+                    <InputBox
+                      v-model="item.complementAddress"
+                      :size="4"
+                      label="Complemento" />
+                  </div>
+                  <div class="flex gutters flex-wrap">
+                    <InputBox
+                      v-model="item.neighborhood"
+                      :size="4"
+                      label="Bairro" />
+                    <DropDown
+                      v-model="item.stateId"
+                      :size="4"
+                      :options="options.states"
+                      required
+                      label="Estado" />
+                    <DropDown
+                      v-model="item.cityId"
+                      :size="3"
+                      :options="options.cities"
+                      :filter="item.stateId"
+                      filter-key="stateId"
+                      key-id="name"
+                      required
+                      label="Cidade"
+                      hint="Cidade onde Mora" />
+                    <DropDown
+                      v-model="item.cityId"
+                      :size="4"
+                      :options="options.cities"
+                      key-id="name"
+                      required
+                      label="Cidade" />
+                  </div>
+                  <div class="flex gutters flex-wrap">
+                    <InputBox
+                      v-model="item.landline"
+                      :size="4"
+                      label="Telefone"
+                      mask="(##) ####-####" />
+                    <InputBox
+                      v-model="item.phoneNumber"
+                      :size="4"
+                      label="Celular"
+                      mask="(##) #####-####" />
+                    <InputBox
+                      v-model="item.email"
+                      :size="4"
+                      label="E-mail" />
+                  </div>
+                  <Documents
+                    v-model="item.documents"
+                    :types="options.guarantorDocuments"
+                    :prefix="`onboarding/enrollment/${ id }/financeData/`" />
+                </template>
+              </Multi>
             </Fieldset>
             <div class="flex justify-end">
               <Btn
@@ -675,6 +645,22 @@
           { id: "Person", name: "CPF" },
           { id: "Company", name: "CNPJ" },
         ],
+        emptyGuarantor: {
+          discriminator: "Person",
+          cpf: "",
+          cnpj: "",
+          name: "",
+          contact: "",
+          relationship: "",
+          streetAddress: "",
+          complementAddress: "",
+          neighborhood: "",
+          phoneNumber: "",
+          landline: "",
+          email: "",
+          cityId: null,
+          stateId: null,
+        },
       };
     },
     computed: {
@@ -712,21 +698,6 @@
       async submitEnrollment() {
         const token = this.id;
         await this.$store.dispatch("submitEnrollment", { token });
-      },
-      documentUrl(id) {
-        const document = this.data.personalData.documents
-          .find(a => a.documentTypeId === id);
-        return document && document.url;
-      },
-      setDocument(documentTypeId, url) {
-        const document = this.data.personalData.documents
-          .find(a => a.documentTypeId === documentTypeId);
-        if (document) {
-          document.id = 0;
-          document.url = url;
-        } else {
-          this.data.personalData.documents.push({ url, documentTypeId });
-        }
       },
     },
   };
