@@ -178,6 +178,9 @@ namespace Onboarding.Controllers
                 }
             }
 
+            financeData.PlanId = obj.PlanId;
+            financeData.PaymentMethodId = obj.PaymentMethodId;
+
             _context.SaveChanges();
             _context.Entry(financeData).Reload();
 
