@@ -51,6 +51,35 @@ namespace Onboarding.Controllers
             FinanceData financeDataMapper = _mapper.Map<FinanceData>(obj);
             _context.Entry(financeData).CurrentValues.SetValues(financeDataMapper);
 
+            foreach (Guarantor guarantor in financeData.Guarantors.ToList())
+            {
+                if (!financeDataMapper
+                    .Guarantors
+                    .Any(c => c.Id == guarantor.Id))
+                {
+                    _context.Set<Guarantor>().Remove(guarantor);
+                }
+            }
+            foreach (Guarantor guarantor in financeDataMapper.Guarantors)
+            {
+                Guarantor existingGuarantor = financeData.Guarantors
+                    .Where(c => c.Id == guarantor.Id)
+                    .SingleOrDefault();
+
+                if (existingGuarantor != null)
+                {
+                    guarantor.Id = existingGuarantor.Id;
+                    guarantor.FinanceDataId = financeData.Id;
+                    _context.Entry(guarantor).CurrentValues.SetValues(guarantor);
+                }
+                else
+                {
+                    guarantor.Id = 0;
+                    guarantor.FinanceDataId = financeData.Id;
+                    _context.Set<Guarantor>().Add(guarantor);
+                }
+            }
+
             _context.SaveChanges();
             _context.Entry(financeData).Reload();
 
