@@ -6,6 +6,11 @@ namespace Onboarding.ViewModel
 {
     public class FinanceDataViewModel
     {
+        public FinanceDataViewModel()
+        {
+            Guarantors = new HashSet<GuarantorViewModel>();
+        }
+
         [Required]
         public int? Id { get; set; }
 
@@ -13,11 +18,6 @@ namespace Onboarding.ViewModel
         public int? EnrollmentId { get; set; }
 
         public string State { get; set; }
-
-        public FinanceDataViewModel()
-        {
-            Guarantors = new HashSet<GuarantorViewModel>();
-        }
 
         public RepresentativeViewModel Representative { get; set; }
 

@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Onboarding.Data.Entity;
 using Onboarding.Models;
 using Onboarding.ViewModel;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Onboarding.Controllers
 {
@@ -13,43 +16,46 @@ namespace Onboarding.Controllers
     public class FinanceDataController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IConfiguration _configuration;
         private readonly DatabaseContext _context;
-        private readonly BaseRepository<Enrollment> _enrollmentRepository;
-        private readonly BaseRepository<FinanceData> _financeDataRepository;
 
-        public FinanceDataController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
+        public FinanceDataController(DatabaseContext databaseContext, IMapper mapper)
         {
-            _context = databaseContext;
-            _configuration = configuration;
             _mapper = mapper;
-            _enrollmentRepository = new BaseRepository<Enrollment>(_context);
-            _financeDataRepository = new BaseRepository<FinanceData>(_context);
+            _context = databaseContext;
         }
 
         [HttpPost("{token}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
         public IActionResult Update([FromRoute]string token, [FromBody]FinanceDataViewModel obj)
         {
-            if (string.IsNullOrEmpty(token) || obj == null)
+            if (string.IsNullOrEmpty(token))
             {
                 return BadRequest();
             }
 
-            Enrollment enrollment = _enrollmentRepository.GetByExternalId(token);
-            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
+            FinanceData financeData = _context.Set<FinanceData>()
+                                              .Include("Enrollment")
+                                              .Include("Representative")
+                                              .Include("Guarantors")
+                                              .SingleOrDefault(x => x.Id == obj.Id);
 
-            if (enrollment == null)
+            if (financeData == null)
             {
                 return NotFound();
             }
 
-            if (enrollment.SendDate.HasValue || !enrollment.IsDeadlineValid())
+            if (financeData.Enrollment.SendDate.HasValue || !financeData.Enrollment.IsDeadlineValid())
             {
                 return BadRequest();
             }
 
-            FinanceData financeData = _mapper.Map<FinanceData>(obj);
-            enrollment.FinanceData = financeData;
+            FinanceData financeDataMapper = _mapper.Map<FinanceData>(obj);
+            _context.Entry(financeData).CurrentValues.SetValues(financeDataMapper);
+
+            _context.SaveChanges();
+            _context.Entry(financeData).Reload();
+
+            FinanceDataViewModel viewModel = _mapper.Map<FinanceDataViewModel>(financeData);
+            viewModel.State = FinanceDataState(viewModel);
 
             var errors = ModelState.ToDictionary(
                 modelState => modelState.Key,
@@ -59,8 +65,30 @@ namespace Onboarding.Controllers
             return new OkObjectResult(new
             {
                 errors,
-                data = obj
+                data = viewModel
             });
         }
+
+        private string FinanceDataState(FinanceDataViewModel financeData)
+        {
+            System.ComponentModel.DataAnnotations.ValidationContext context = new System.ComponentModel.DataAnnotations.ValidationContext(financeData);
+            List<ValidationResult> result = new List<ValidationResult>();
+            bool valid = Validator.TryValidateObject(financeData, context, result, true);
+
+            if (!financeData.UpdatedAt.HasValue)
+            {
+                return "empty";
+            }
+
+            if (valid)
+            {
+                return "valid";
+            }
+            else
+            {
+                return "invalid";
+            }
+        }
+
     }
 }
