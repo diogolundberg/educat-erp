@@ -589,7 +589,8 @@
             <div class="flex justify-end">
               <Btn
                 primary
-                label="Enviar" />
+                label="Enviar"
+                @click="submitEnrollment" />
             </div>
           </Card>
         </Step>
@@ -707,6 +708,10 @@
         if (this.data.personalData.state === "valid") {
           this.step = 2;
         }
+      },
+      async submitEnrollment() {
+        const token = this.id;
+        await this.$store.dispatch("submitEnrollment", { token });
       },
       documentUrl(id) {
         const document = this.data.personalData.documents

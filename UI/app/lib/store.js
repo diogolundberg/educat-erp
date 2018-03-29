@@ -114,6 +114,10 @@ export default new VueX.Store({
       Object.assign(state.enrollment.data.financeData, data);
       Object.assign(state.enrollment.errors.financeData, errors);
     },
+    SET_ENROLLMENT_SENDDATE(state, { data, errors }) {
+      state.enrollment.data.sendDate = data.sendDate;
+      Object.assign(state.enrollment.errors, errors);
+    },
     SET_UPLOAD_URL(state, url) {
       state.uploadUrl = url;
     },
@@ -143,6 +147,11 @@ export default new VueX.Store({
       const url = `${url2}/api/FinanceData/${token}`;
       const response = await axios.post(url, data);
       commit("SET_FINANCE_DATA", response.data);
+    },
+    async submitEnrollment({ commit }, { token }) {
+      const url = `${url2}/api/Enrollments/${token}`;
+      const response = await axios.post(url);
+      commit("SET_ENROLLMENT_SENDDATE", response.data);
     },
     async presign({ commit }, fileName) {
       const url = `${url3}/api/Presign`;
