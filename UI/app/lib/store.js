@@ -80,10 +80,6 @@ export default new VueX.Store({
         highSchoolKinds: [],
         disabilities: [],
         specialNeeds: [],
-        discriminators: [
-          { id: "Person", name: "CPF" },
-          { id: "Company", name: "CNPJ" },
-        ],
       },
       errors: {
         personalData: {},

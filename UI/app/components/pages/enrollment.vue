@@ -21,7 +21,7 @@
         header
         class="max-width-4 m-auto">
         <Step
-          :disabled="data.sendDate"
+          :disabled="!!data.sendDate"
           :complete="data.personalData.state === 'valid'"
           :error="data.personalData.state === 'invalid'"
           title="Seus Dados"
@@ -29,6 +29,8 @@
           <Card
             title="Seus Dados"
             closeable
+            :complete="data.personalData.state === 'valid'"
+            :error="data.personalData.state === 'invalid'"
             @close="step = 0">
             <div
               slot="title"
@@ -297,7 +299,8 @@
                     class="flex justify-between items-center">
                       <div>{{ doc.name }}</div>
                       <UploadButton
-                        :prefix="token"
+                        :prefix="`onboarding/enrollment/${ id
+                          }/personalData/${ doc.id }/`"
                         :value="documentUrl(doc.id)"
                         @input="setDocument(doc.id, $event)" />
                   </div>
@@ -316,20 +319,21 @@
           </Card>
         </Step>
         <Step
-          v-if="false"
-          :disabled="data.sendDate"
+          :disabled="!!data.sendDate"
           :complete="data.financeData && data.financeData.state == 'valid'"
           :error="data.financeData && data.financeData.state == 'invalid'"
           title="Dados Financeiros"
           description="Aqui você insere seus dados de pagamento.">
           <Card
+            :complete="data.personalData.state === 'valid'"
+            :error="data.personalData.state === 'invalid'"
             title="Dados Financeiros">
             <Fieldset title="Responsável Financeiro">
               <div class="flex gutters flex-wrap">
                 <DropDown
                   v-model="data.financeData.responsible.discriminator"
                   :size="4"
-                  :options="options.discriminators"
+                  :options="discriminators"
                   label="CPF ou CNPJ" />
                 <InputBox
                   v-if="data.financeData.responsible.discriminator == null"
@@ -439,7 +443,7 @@
                 <DropDown
                   v-model="guarantor.discriminator"
                   :size="4"
-                  :options="options.discriminators"
+                  :options="discriminators"
                   label="CPF ou CNPJ" />
                 <InputBox
                   v-if="guarantor.discriminator == null"
@@ -566,10 +570,16 @@
           title="Enviar para Análise"
           description="Enviar para aprovação da secretaria e departamento
             financeiro">
-          <Card title="Enviar para Análise">
-
-            <p>Envie seus dados para a secetaria e para o departamento
-              financeiro para aprovação.</p>
+          <Card
+            closeable
+            title="Enviar para Análise">
+            <p>Envie seus dados para a secetaria e para o
+              departamento financeiro para aprovação.</p>
+            <div class="center">
+              <img
+                :style="{ 'max-width': '8rem' }"
+                src="../../assets/img/card.svg">
+            </div>
             <div class="flex justify-end">
               <Btn
                 primary
@@ -583,13 +593,12 @@
           title="Aguardando Aprovação"
           description="A secretaria e o departamento financeiro estão analisando
             seus documentos">
-          <Card title="Aguardando Aprovação">
-            <p>A secretaria e o departamento financeiro estão analisando
-              seus documentos.</p>
-            <div class="flex justify-end">
-              <Btn
-                primary
-                label="Enviar" />
+          <Card title="Dados enviados">
+            <p>Seus dados foram enviados. Agora a secretaria e o departamento
+              financeiro estão analisando seus documentos.</p>
+            <div class="center">
+              <Animation
+                name="success" />
             </div>
           </Card>
         </Step>
@@ -632,6 +641,10 @@
           { id: "yes", name: "Sim" },
           { id: "no", name: "Não" },
           { id: "unknown", name: "Não disponho da informação" },
+        ],
+        discriminators: [
+          { id: "Person", name: "CPF" },
+          { id: "Company", name: "CNPJ" },
         ],
       };
     },

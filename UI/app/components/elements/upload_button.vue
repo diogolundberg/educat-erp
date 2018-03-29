@@ -59,7 +59,7 @@
         this.loaded = 0;
 
         const file = this.$refs.file.files[0];
-        await this.$store.dispatch("presign", `${this.prefix}-${file.name}`);
+        await this.$store.dispatch("presign", `${this.prefix}${file.name}`);
         const url = this.$store.getters.uploadUrl;
 
         const headers = { "x-ms-blob-type": "BlockBlob" };
