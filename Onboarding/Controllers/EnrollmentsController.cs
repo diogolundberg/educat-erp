@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Data.Entity;
 using Onboarding.Models;
@@ -17,42 +18,13 @@ namespace Onboarding.Controllers
     public class EnrollmentsController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IConfiguration _configuration;
         private readonly DatabaseContext _context;
-        private readonly BaseRepository<AddressKind> _addressKindRepository;
-        private readonly BaseRepository<MaritalStatus> _maritalStatusRepository;
-        private readonly BaseRepository<Country> _countryRepository;
-        private readonly BaseRepository<Gender> _genderRepository;
-        private readonly BaseRepository<Race> _RaceRepository;
-        private readonly BaseRepository<HighSchoolKind> _highSchoolKindRepository;
-        private readonly BaseRepository<State> _stateRepository;
-        private readonly BaseRepository<Disability> _disabilitiesRepository;
-        private readonly BaseRepository<Enrollment> _enrollmentRepository;
-        private readonly BaseRepository<City> _cityRepository;
-        private readonly BaseRepository<SpecialNeed> _specialNeedsRepository;
-        private readonly BaseRepository<PersonalData> _personalDataRepository;
-        private readonly BaseRepository<PersonalDocument> _personalDocumentsRepository;
-        private readonly BaseRepository<GuarantorDocument> _guarantorDocumentsRepository;
+        private readonly IConfiguration _configuration;
 
-        public EnrollmentsController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
+        public EnrollmentsController(DatabaseContext databaseContext, IMapper mapper, IConfiguration configuration)
         {
-            _context = databaseContext;
-            _addressKindRepository = new BaseRepository<AddressKind>(_context);
-            _maritalStatusRepository = new BaseRepository<MaritalStatus>(_context);
-            _countryRepository = new BaseRepository<Country>(_context);
-            _genderRepository = new BaseRepository<Gender>(_context);
-            _RaceRepository = new BaseRepository<Race>(_context);
-            _highSchoolKindRepository = new BaseRepository<HighSchoolKind>(_context);
-            _stateRepository = new BaseRepository<State>(_context);
-            _disabilitiesRepository = new BaseRepository<Disability>(_context);
-            _enrollmentRepository = new BaseRepository<Enrollment>(_context);
-            _cityRepository = new BaseRepository<City>(_context);
-            _specialNeedsRepository = new BaseRepository<SpecialNeed>(_context);
-            _personalDataRepository = new BaseRepository<PersonalData>(_context);
-            _personalDocumentsRepository = new BaseRepository<PersonalDocument>(_context);
-            _guarantorDocumentsRepository = new BaseRepository<GuarantorDocument>(_context);
-
             _configuration = configuration;
+            _context = databaseContext;
             _mapper = mapper;
         }
 
@@ -64,22 +36,14 @@ namespace Onboarding.Controllers
                 return BadRequest();
             }
 
-            Enrollment enrollment = _enrollmentRepository.GetByExternalId(token);
-
-            if (enrollment == null)
-            {
-                return NotFound();
-            }
-
-            _context.Entry(enrollment).Reference(x => x.PersonalData).Load();
-            _context.Entry(enrollment.PersonalData).Collection(x => x.PersonalDataDisabilities).Load();
-            _context.Entry(enrollment.PersonalData).Collection(x => x.PersonalDataSpecialNeeds).Load();
-            _context.Entry(enrollment.PersonalData).Collection(x => x.PersonalDataDocuments).Load();
-
-            foreach (PersonalDataDocument personalDataDocument in enrollment.PersonalData.PersonalDataDocuments)
-            {
-                _context.Entry(personalDataDocument).Reference(x => x.Document).Load();
-            }
+            Enrollment enrollment = _context.Enrollments
+                                            .Include("PersonalData")
+                                            .Include("PersonalData.PersonalDataDisabilities")
+                                            .Include("PersonalData.PersonalDataSpecialNeeds")
+                                            .Include("PersonalData.PersonalDataDocuments")
+                                            .Include("PersonalData.PersonalDataDocuments.Document")
+                                            .Include("FinanceData")
+                                            .Single(x => x.ExternalId == token);
 
             if (!enrollment.IsDeadlineValid())
             {
@@ -88,6 +52,9 @@ namespace Onboarding.Controllers
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
             personalData.State = PersonalDataState(personalData);
+
+            FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
+            financeData.State = FinanceDataState(financeData);
 
             return new
             {
@@ -98,24 +65,22 @@ namespace Onboarding.Controllers
                     enrollment.AcademicApproval,
                     enrollment.FinanceApproval,
                     personalData,
-                    FinanceData = enrollment.FinanceData != null ?
-                                    _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData) :
-                                    new FinanceDataViewModel { Representative = new RepresentativePersonViewModel() },
+                    financeData,
                 },
                 options = new
                 {
-                    Genders = _genderRepository.List(),
-                    MaritalStatuses = _maritalStatusRepository.List(),
-                    States = _stateRepository.List(),
-                    Cities = _cityRepository.List(),
-                    Countries = _countryRepository.List(),
-                    AddressKinds = _addressKindRepository.List(),
-                    Races = _RaceRepository.List(),
-                    HighSchoolKinds = _highSchoolKindRepository.List(),
-                    Disabilities = _disabilitiesRepository.List(),
-                    SpecialNeeds = _specialNeedsRepository.List(),
-                    PersonalDocuments = _personalDocumentsRepository.List(),
-                    GuarantorDocuments = _guarantorDocumentsRepository.List()
+                    _context.Genders,
+                    _context.MaritalStatuses,
+                    _context.States,
+                    _context.Cities,
+                    _context.Countries,
+                    _context.AddressKinds,
+                    _context.Races,
+                    _context.HighSchoolKinds,
+                    _context.Disabilities,
+                    _context.SpecialNeeds,
+                    PersonalDocuments = _context.Set<PersonalDocument>(),
+                    GuarantorDocuments = _context.Set<GuarantorDocument>()
                 }
             };
         }
@@ -140,7 +105,8 @@ namespace Onboarding.Controllers
                         RealName = enrollmentParameterObj.Name,
                         Email = enrollmentParameterObj.Email,
                         CPF = enrollmentParameterObj.CPF,
-                    }
+                    },
+                    FinanceData = new FinanceData()
                 };
 
                 string externalId = enrollment.CreateExternalId();
@@ -149,7 +115,8 @@ namespace Onboarding.Controllers
 
                 if (existingEnrollment == null)
                 {
-                    _enrollmentRepository.Add(enrollment);
+                    _context.Enrollments.Add(enrollment);
+                    _context.SaveChanges();
                 }
                 else
                 {
@@ -189,5 +156,27 @@ namespace Onboarding.Controllers
                 return "invalid";
             }
         }
+
+        private string FinanceDataState(FinanceDataViewModel financeData)
+        {
+            System.ComponentModel.DataAnnotations.ValidationContext context = new System.ComponentModel.DataAnnotations.ValidationContext(financeData);
+            List<ValidationResult> result = new List<ValidationResult>();
+            bool valid = Validator.TryValidateObject(financeData, context, result, true);
+
+            if (!financeData.UpdatedAt.HasValue)
+            {
+                return "empty";
+            }
+
+            if (valid)
+            {
+                return "valid";
+            }
+            else
+            {
+                return "invalid";
+            }
+        }
+
     }
 }
