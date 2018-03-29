@@ -24,6 +24,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using SharpRaven.Core;
 using Onboarding.Bindings;
+using Onboarding.JsonFormatter;
 
 namespace Onboarding
 {
@@ -74,7 +75,12 @@ namespace Onboarding
                 };
             });
 
-            services.AddMvc();
+            services
+                .AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.Converters.Add(new PolymorphicRepresentativeViewModelConverter());
+                });
 
             services.Configure<MvcOptions>(options =>
             {
