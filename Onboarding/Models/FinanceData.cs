@@ -20,5 +20,15 @@ namespace Onboarding.Models
         public virtual Representative Representative { get; set; }
 
         public virtual ICollection<Guarantor> Guarantors { get; set; }
+
+        [ForeignKey("Plan")]
+        public int? PlanId { get; set; }
+
+        public virtual Plan Plan { get; set; }
+
+        [ForeignKey("PaymentMethod")]
+        public int? PaymentMethodId { get; set; }
+
+        public virtual PaymentMethod PaymentMethod { get; set; }
     }
 }
