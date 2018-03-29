@@ -331,18 +331,19 @@
             <Fieldset title="Responsável Financeiro">
               <div class="flex gutters flex-wrap">
                 <DropDown
-                  v-model="data.financeData.responsible.discriminator"
+                  v-model="data.financeData.representative.discriminator"
                   :size="4"
                   :options="discriminators"
                   label="CPF ou CNPJ" />
                 <InputBox
-                  v-if="data.financeData.responsible.discriminator == null"
+                  v-if="data.financeData.representative.discriminator == null"
                   :size="4"
                   disabled
                   label="Documento" />
                 <InputBox
-                  v-model="data.financeData.responsible.cpf"
-                  v-if="data.financeData.responsible.discriminator == 'Person'"
+                  v-model="data.financeData.representative.cpf"
+                  v-if="data.financeData.representative.discriminator
+                    == 'Person'"
                   :size="4"
                   :min-size="14"
                   cpf
@@ -350,8 +351,9 @@
                   mask="###.###.###-##"
                   hint="Ex: 000.000.000-00" />
                 <InputBox
-                  v-model="data.financeData.responsible.cnpj"
-                  v-if="data.financeData.responsible.discriminator == 'Company'"
+                  v-model="data.financeData.representative.cnpj"
+                  v-if="data.financeData.representative.discriminator
+                    == 'Company'"
                   :size="4"
                   :min-size="18"
                   cnpj
@@ -359,59 +361,63 @@
                   mask="##.###.###/####-##"
                   hint="Ex: 00.000.000/0000-00" />
                 <InputBox
-                  v-if="data.financeData.responsible.discriminator == null"
+                  v-if="data.financeData.representative.discriminator == null"
                   :size="4"
                   disabled
                   label="Nome" />
                 <InputBox
-                  v-model="data.financeData.responsible.name"
-                  v-if="data.financeData.responsible.discriminator == 'Person'"
+                  v-model="data.financeData.representative.name"
+                  v-if="data.financeData.representative.discriminator
+                    == 'Person'"
                   :size="4"
                   label="Nome completo" />
                 <InputBox
-                  v-model="data.financeData.responsible.name"
-                  v-if="data.financeData.responsible.discriminator == 'Company'"
+                  v-model="data.financeData.representative.name"
+                  v-if="data.financeData.representative.discriminator
+                    == 'Company'"
                   :size="4"
                   label="Razão Social" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-if="data.financeData.responsible.discriminator == null"
+                  v-if="data.financeData.representative.discriminator == null"
                   :size="4"
                   disabled
                   label="Contato" />
                 <InputBox
-                  v-if="data.financeData.responsible.discriminator == 'Company'"
-                  v-model="data.financeData.responsible.contact"
+                  v-if="data.financeData.representative.discriminator
+                    == 'Company'"
+                  v-model="data.financeData.representative.contact"
                   :size="4"
                   label="Pessoa de Contato" />
                 <InputBox
-                  v-if="data.financeData.responsible.discriminator == 'Person'"
-                  v-model="data.financeData.responsible.relationship"
+                  v-if="data.financeData.representative.discriminator
+                    == 'Person'"
+                  v-model="data.financeData.representative.relationship"
                   :size="4"
                   label="Relacionamento com o aluno" />
                 <InputBox
-                  v-model="data.financeData.responsible.streetAddress"
+                  v-model="data.financeData.representative.streetAddress"
                   :size="4"
                   label="Logradouro" />
                 <InputBox
-                  v-model="data.financeData.responsible.complementAddress"
+                  v-model="data.financeData.representative.complementAddress"
                   :size="4"
                   label="Complemento" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.financeData.responsible.neighborhood"
+                  v-model="data.financeData.representative.neighborhood"
                   :size="4"
                   label="Bairro" />
                 <DropDown
-                  v-model="data.financeData.responsible.stateId"
+                  v-model="data.financeData.representative.stateId"
                   :size="4"
                   :options="options.states"
                   required
                   label="Estado" />
                 <DropDown
-                  v-model="data.financeData.responsible.city"
+                  v-model="data.financeData.representative.city"
                   :size="4"
                   :options="options.cities"
                   key-id="name"
@@ -420,17 +426,17 @@
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="data.financeData.responsible.landline"
+                  v-model="data.financeData.representative.landline"
                   :size="4"
                   label="Telefone"
                   mask="(##) ####-####" />
                 <InputBox
-                  v-model="data.financeData.responsible.phoneNumber"
+                  v-model="data.financeData.representative.phoneNumber"
                   :size="4"
                   label="Celular"
                   mask="(##) #####-####" />
                 <InputBox
-                  v-model="data.financeData.responsible.email"
+                  v-model="data.financeData.representative.email"
                   :size="4"
                   label="E-mail" />
              </div>
@@ -583,7 +589,8 @@
             <div class="flex justify-end">
               <Btn
                 primary
-                label="Enviar" />
+                label="Enviar"
+                @click="submitEnrollment" />
             </div>
           </Card>
         </Step>
@@ -606,12 +613,34 @@
           :complete="data.academicApproval"
           title="Aprovação da Secretaria"
           description="A secretaria irá analisar seus documentos para aprovar
-            sua matrícula." />
+            sua matrícula.">
+          <Card
+            v-if="!data.academicApproval"
+            title="Aprovação da Secretaria">
+            Sua aprovação ainda está pendente.
+          </Card>
+          <Card
+            v-if="data.academicApproval"
+            title="Matrícula Aprovada pela Secretaria">
+            A secretaria já aprovou sua matrícula.
+          </Card>
+        </Step>
         <Step
           :complete="data.financeApproval"
           title="Aprovação do Financeiro"
           description="O financeiro irá analisar sua matrícula para aprovar
-            sua matrícula." />
+            sua matrícula.">
+          <Card
+            v-if="!data.academicApproval"
+            title="Aprovação do Financeiro">
+            Sua aprovação ainda está pendente.
+          </Card>
+          <Card
+            v-if="data.academicApproval"
+            title="Matrícula Aprovada pelo Financeiro">
+            Nosso departamento financeiro já aprovou sua matrícula.
+          </Card>
+        </Step>
         <Step
           title="Agende uma Visita"
           description="Após a aprovação da secretaria e do financeiro, é hora
@@ -679,6 +708,10 @@
         if (this.data.personalData.state === "valid") {
           this.step = 2;
         }
+      },
+      async submitEnrollment() {
+        const token = this.id;
+        await this.$store.dispatch("submitEnrollment", { token });
       },
       documentUrl(id) {
         const document = this.data.personalData.documents
