@@ -25,8 +25,8 @@ namespace Onboarding
                 BaseRepository<Race> raceRepository = new BaseRepository<Race>(context);
                 BaseRepository<HighSchoolKind> highSchoolRepository = new BaseRepository<HighSchoolKind>(context);
                 BaseRepository<State> stateRepository = new BaseRepository<State>(context);
-                BaseRepository<PersonalDocument> personalDocumentRepository = new BaseRepository<PersonalDocument>(context);
-                BaseRepository<GuarantorDocument> guarantorDocumentRepository = new BaseRepository<GuarantorDocument>(context);
+                BaseRepository<PersonalDocumentType> personalDocumentRepository = new BaseRepository<PersonalDocumentType>(context);
+                BaseRepository<GuarantorDocumentType> guarantorDocumentRepository = new BaseRepository<GuarantorDocumentType>(context);
 
                 if (!addressKindRepository.Any())
                 {
@@ -162,24 +162,24 @@ namespace Onboarding
 
                 if (!personalDocumentRepository.Any())
                 {
-                    personalDocumentRepository.Add(new PersonalDocument { Name = "Histórico Escolar do Ensino Médio" });
-                    personalDocumentRepository.Add(new PersonalDocument { Name = "Certidão de Nascimento ou Casamento" });
-                    personalDocumentRepository.Add(new PersonalDocument { Name = "Carteira de Identidade" });
-                    personalDocumentRepository.Add(new PersonalDocument { Name = "Título de Eleitor e Comprovante de Votação" });
-                    personalDocumentRepository.Add(new PersonalDocument { Name = "CPF" });
-                    personalDocumentRepository.Add(new PersonalDocument { Name = "Cartão de Vacinação (constanto 3 doses de vacina contra Hepatite B e vacina Dupla-adulto" });
-                    personalDocumentRepository.Add(new PersonalDocument { Name = "Documento Militar" });
+                    personalDocumentRepository.Add(new PersonalDocumentType { Name = "Histórico Escolar do Ensino Médio" });
+                    personalDocumentRepository.Add(new PersonalDocumentType { Name = "Certidão de Nascimento ou Casamento" });
+                    personalDocumentRepository.Add(new PersonalDocumentType { Name = "Carteira de Identidade" });
+                    personalDocumentRepository.Add(new PersonalDocumentType { Name = "Título de Eleitor e Comprovante de Votação" });
+                    personalDocumentRepository.Add(new PersonalDocumentType { Name = "CPF" });
+                    personalDocumentRepository.Add(new PersonalDocumentType { Name = "Cartão de Vacinação (constanto 3 doses de vacina contra Hepatite B e vacina Dupla-adulto" });
+                    personalDocumentRepository.Add(new PersonalDocumentType { Name = "Documento Militar" });
                 }
 
                 if (!guarantorDocumentRepository.Any())
                 {
-                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Histórico Escolar do Ensino Médio" });
-                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Certidão de Nascimento ou Casamento" });
-                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Carteira de Identidade" });
-                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Título de Eleitor e Comprovante de Votação" });
-                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "CPF" });
-                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Cartão de Vacinação (constanto 3 doses de vacina contra Hepatite B e vacina Dupla-adulto" });
-                    guarantorDocumentRepository.Add(new GuarantorDocument { Name = "Documento Militar" });
+                    guarantorDocumentRepository.Add(new GuarantorDocumentType { Name = "Histórico Escolar do Ensino Médio" });
+                    guarantorDocumentRepository.Add(new GuarantorDocumentType { Name = "Certidão de Nascimento ou Casamento" });
+                    guarantorDocumentRepository.Add(new GuarantorDocumentType { Name = "Carteira de Identidade" });
+                    guarantorDocumentRepository.Add(new GuarantorDocumentType { Name = "Título de Eleitor e Comprovante de Votação" });
+                    guarantorDocumentRepository.Add(new GuarantorDocumentType { Name = "CPF" });
+                    guarantorDocumentRepository.Add(new GuarantorDocumentType { Name = "Cartão de Vacinação (constanto 3 doses de vacina contra Hepatite B e vacina Dupla-adulto" });
+                    guarantorDocumentRepository.Add(new GuarantorDocumentType { Name = "Documento Militar" });
                 }
                 if (!stateRepository.Any())
                 {

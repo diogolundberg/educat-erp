@@ -79,8 +79,8 @@ namespace Onboarding.Controllers
                     _context.HighSchoolKinds,
                     _context.Disabilities,
                     _context.SpecialNeeds,
-                    PersonalDocuments = _context.Set<PersonalDocument>(),
-                    GuarantorDocuments = _context.Set<GuarantorDocument>()
+                    PersonalDocuments = _context.Set<PersonalDocumentType>(),
+                    GuarantorDocuments = _context.Set<GuarantorDocumentType>()
                 }
             };
         }

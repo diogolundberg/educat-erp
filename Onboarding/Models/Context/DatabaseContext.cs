@@ -19,9 +19,9 @@ namespace Onboarding.Models
             builder.Entity<PersonalDataSpecialNeed>().HasKey(t => new { t.PersonalDataId, t.SpecialNeedId });
             builder.Entity<PersonalDataDocument>().HasKey(t => new { t.PersonalDataId, t.DocumentId });
 
-            builder.Entity<PersonalDocument>().HasBaseType<DocumentType>();
-            builder.Entity<ResponsibleDocument>().HasBaseType<DocumentType>();
-            builder.Entity<GuarantorDocument>().HasBaseType<DocumentType>();
+            builder.Entity<PersonalDocumentType>().HasBaseType<DocumentType>();
+            builder.Entity<ResponsibleDocumentType>().HasBaseType<DocumentType>();
+            builder.Entity<GuarantorDocumentType>().HasBaseType<DocumentType>();
 
             builder.Entity<RepresentativePerson>().HasBaseType<Representative>();
             builder.Entity<RepresentativeCompany>().HasBaseType<Representative>();

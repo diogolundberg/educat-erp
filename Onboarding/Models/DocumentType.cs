@@ -8,15 +8,15 @@ namespace Onboarding.Models
         public string Name { get; set; }
     }
 
-    public class PersonalDocument : DocumentType
+    public class PersonalDocumentType : DocumentType
     {
     }
 
-    public class GuarantorDocument : DocumentType
+    public class GuarantorDocumentType : DocumentType
     {
     }
 
-    public class ResponsibleDocument : DocumentType
+    public class ResponsibleDocumentType : DocumentType
     {
     }
 }
