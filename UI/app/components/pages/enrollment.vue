@@ -537,7 +537,7 @@
               <Btn
                 primary
                 label="Próximo"
-                @click="step = 3" />
+                @click="saveFinanceData" />
             </div>
           </Card>
         </Step>
@@ -693,6 +693,14 @@
         await this.$store.dispatch("setPersonalData", { token, data });
         if (this.data.personalData.state === "valid") {
           this.step = 2;
+        }
+      },
+      async saveFinanceData() {
+        const token = this.id;
+        const data = this.data.financeData;
+        await this.$store.dispatch("setFinanceData", { token, data });
+        if (this.data.financeData.state === "valid") {
+          this.step = 3;
         }
       },
       async submitEnrollment() {
