@@ -83,6 +83,8 @@ namespace Onboarding.Controllers
                     _context.HighSchoolKinds,
                     _context.Disabilities,
                     _context.SpecialNeeds,
+                    _context.Plans,
+                    _context.PaymentMethod,
                     PersonalDocuments = _context.Set<PersonalDocumentType>(),
                     GuarantorDocuments = _context.Set<GuarantorDocumentType>()
                 }
