@@ -4,6 +4,8 @@ namespace Onboarding.ViewModel
 {
     public class GuarantorViewModel
     {
+        public int? Id { get; set; }
+
         [Required]
         public string Name { get; set; }
 
