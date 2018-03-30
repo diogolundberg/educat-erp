@@ -448,11 +448,14 @@
               title="Fiadores">
               <Multi
                 v-model="data.financeData.guarantors"
-                :default="emptyGuarantor">
-                <template slot-scope="{ item }">
+                :errors="errors.financeData"
+                :default="emptyGuarantor"
+                error-key="guarantors">
+                <template slot-scope="{ item, error }">
                   <div class="flex gutters flex-wrap">
                     <InputBox
                       v-model="item.cpf"
+                      :errors="error.cpf"
                       :size="4"
                       :min-size="14"
                       cpf
@@ -468,30 +471,36 @@
                   <div class="flex gutters flex-wrap">
                     <InputBox
                       v-model="item.relationship"
+                      :errors="error.relationship"
                       :size="4"
                       label="Relacionamento" />
                     <InputBox
                       v-model="item.streetAddress"
+                      :errors="error.streetAddress"
                       :size="4"
                       label="Endereço Completo" />
                     <InputBox
                       v-model="item.complementAddress"
+                      :errors="error.complementAddress"
                       :size="4"
                       label="Complemento" />
                   </div>
                   <div class="flex gutters flex-wrap">
                     <InputBox
                       v-model="item.neighborhood"
+                      :errors="error.neighborhood"
                       :size="4"
                       label="Bairro" />
                     <DropDown
                       v-model="item.stateId"
+                      :errors="error.stateId"
                       :size="4"
                       :options="options.states"
                       required
                       label="Estado" />
                     <DropDown
                       v-model="item.cityId"
+                      :errors="error.cityId"
                       :size="4"
                       :options="options.cities"
                       :filter="item.stateId"
@@ -504,21 +513,25 @@
                   <div class="flex gutters flex-wrap">
                     <InputBox
                       v-model="item.landline"
+                      :errors="error.landline"
                       :size="4"
                       label="Telefone"
                       mask="(##) ####-####" />
                     <InputBox
                       v-model="item.phoneNumber"
+                      :errors="error.phoneNumber"
                       :size="4"
                       label="Celular"
                       mask="(##) #####-####" />
                     <InputBox
                       v-model="item.email"
+                      :errors="error.email"
                       :size="4"
                       label="E-mail" />
                   </div>
                   <Documents
                     v-model="item.documents"
+                    :errors="error.documents"
                     :types="options.guarantorDocuments"
                     :prefix="`onboarding/enrollment/${ id }/financeData/`" />
                 </template>
