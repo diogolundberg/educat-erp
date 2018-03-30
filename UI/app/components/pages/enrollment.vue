@@ -451,19 +451,8 @@
                 :default="emptyGuarantor">
                 <template slot-scope="{ item }">
                   <div class="flex gutters flex-wrap">
-                    <DropDown
-                      v-model="item.discriminator"
-                      :size="4"
-                      :options="discriminators"
-                      label="CPF ou CNPJ" />
-                    <InputBox
-                      v-if="item.discriminator == null"
-                      :size="4"
-                      disabled
-                      label="Documento" />
                     <InputBox
                       v-model="item.cpf"
-                      v-if="item.discriminator == 'RepresentativePerson'"
                       :size="4"
                       :min-size="14"
                       cpf
@@ -471,24 +460,16 @@
                       mask="###.###.###-##"
                       hint="Ex: 000.000.000-00" />
                     <InputBox
-                      v-model="item.cnpj"
-                      v-if="item.discriminator == 'RepresentativeCompany'"
-                      :size="4"
-                      :min-size="18"
-                      cnpj
-                      label="CNPJ"
-                      mask="##.###.###/####-##"
-                      hint="Ex: 00.000.000/0000-00" />
-                    <InputBox
                       v-model="item.name"
-                      :size="4"
-                      label="Razão Social" />
+                      :errors="error.name"
+                      :size="8"
+                      label="Nome" />
                   </div>
                   <div class="flex gutters flex-wrap">
                     <InputBox
-                      v-model="item.contact"
+                      v-model="item.relationship"
                       :size="4"
-                      label="Contato" />
+                      label="Relacionamento" />
                     <InputBox
                       v-model="item.streetAddress"
                       :size="4"
@@ -511,7 +492,7 @@
                       label="Estado" />
                     <DropDown
                       v-model="item.cityId"
-                      :size="3"
+                      :size="4"
                       :options="options.cities"
                       :filter="item.stateId"
                       filter-key="stateId"
@@ -519,13 +500,6 @@
                       required
                       label="Cidade"
                       hint="Cidade onde Mora" />
-                    <DropDown
-                      v-model="item.cityId"
-                      :size="4"
-                      :options="options.cities"
-                      key-id="name"
-                      required
-                      label="Cidade" />
                   </div>
                   <div class="flex gutters flex-wrap">
                     <InputBox
