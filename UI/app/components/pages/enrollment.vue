@@ -663,7 +663,7 @@
           { id: "RepresentativeCompany", name: "CNPJ" },
         ],
         emptyGuarantor: {
-          discriminator: "Person",
+          discriminator: "RepresentativePerson",
           cpf: "",
           cnpj: "",
           name: "",
