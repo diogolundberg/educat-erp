@@ -52,7 +52,7 @@ export default new VueX.Store({
         financeData: {
           state: "empty",
           representative: {
-            discriminator: "Person",
+            discriminator: "RepresentativePerson",
             cpf: "",
             cnpj: "",
             name: "",
