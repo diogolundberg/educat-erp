@@ -151,7 +151,7 @@ namespace Onboarding.Controllers
             List<ValidationResult> result = new List<ValidationResult>();
             bool valid = Validator.TryValidateObject(personalData, context, result, true);
 
-            if (!personalData.UpdatedAt.HasValue)
+            if (string.IsNullOrEmpty(personalData.UpdatedAt))
             {
                 return "empty";
             }
@@ -172,7 +172,7 @@ namespace Onboarding.Controllers
             List<ValidationResult> result = new List<ValidationResult>();
             bool valid = Validator.TryValidateObject(financeData, context, result, true);
 
-            if (!financeData.UpdatedAt.HasValue)
+            if (string.IsNullOrEmpty(financeData.UpdatedAt))
             {
                 return "empty";
             }

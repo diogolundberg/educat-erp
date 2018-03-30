@@ -75,7 +75,7 @@ namespace Onboarding.Controllers
                     }
                 }
             }
-            else if(obj.Representative is RepresentativeCompanyViewModel)
+            else if (obj.Representative is RepresentativeCompanyViewModel)
             {
                 RepresentativeCompany representativeCompany = _mapper.Map<RepresentativeCompany>((RepresentativeCompanyViewModel)obj.Representative);
                 representativeCompany.FinanceDataId = financeData.Id;
@@ -227,7 +227,7 @@ namespace Onboarding.Controllers
             List<ValidationResult> result = new List<ValidationResult>();
             bool valid = Validator.TryValidateObject(financeData, context, result, true);
 
-            if (!financeData.UpdatedAt.HasValue)
+            if (string.IsNullOrEmpty(financeData.UpdatedAt))
             {
                 return "empty";
             }
