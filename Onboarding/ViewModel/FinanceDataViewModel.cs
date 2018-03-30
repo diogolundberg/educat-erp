@@ -31,6 +31,6 @@ namespace Onboarding.ViewModel
         public int? PaymentMethodId { get; set; }
 
         [JsonIgnore]
-        public DateTime? UpdatedAt { get; set; }
+        public string UpdatedAt { get; set; }
     }
 }

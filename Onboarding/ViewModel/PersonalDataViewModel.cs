@@ -99,6 +99,6 @@ namespace Onboarding.ViewModel
         public IEnumerable<DocumentViewModel> Documents { get; set; }
 
         [JsonIgnore]
-        public DateTime? UpdatedAt { get; set; }
+        public string UpdatedAt { get; set; }
     }
 }
