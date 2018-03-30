@@ -306,13 +306,13 @@
         </Step>
         <Step
           :disabled="!!data.sendDate"
-          :complete="data.financeData && data.financeData.state == 'valid'"
-          :error="data.financeData && data.financeData.state == 'invalid'"
+          :complete="data.financeData.state == 'valid'"
+          :error="data.financeData.state == 'invalid'"
           title="Dados Financeiros"
           description="Aqui você insere seus dados de pagamento.">
           <Card
-            :complete="data.personalData.state === 'valid'"
-            :error="data.personalData.state === 'invalid'"
+            :complete="data.financeData.state === 'valid'"
+            :error="data.financeData.state === 'invalid'"
             title="Dados Financeiros">
             <Fieldset title="Responsável Financeiro">
               <div class="flex gutters flex-wrap">
