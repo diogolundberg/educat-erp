@@ -1,11 +1,5 @@
 <template>
   <div>
-    <div class="my2 right-align">
-      <Btn
-        label="Inserir"
-        primary
-        @click="add" />
-    </div>
     <template v-for="item in value">
       <slot
         :item="item"
@@ -15,6 +9,13 @@
       v-if="!value.length"
       class="bg-silver thin rounded p2 center">
       Nenhum item! Clique em "Inserir" para adicionar um novo.
+    </div>
+    <div class="my2">
+      <Btn
+        label="Inserir"
+        primary
+        class="block col-12"
+        @click="add" />
     </div>
   </div>
 </template>
