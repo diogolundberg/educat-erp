@@ -1,6 +1,15 @@
 <template>
   <div>
-    <template v-for="item in value">
+    <template v-for="(item, index) in value">
+      <div
+        :key="index"
+        class="my2 right-align">
+        <Btn
+          :key="index"
+          label="Remover"
+          danger
+          @click="remove(item)" />
+      </div>
       <slot
         :item="item"
         :error="errorsFor(index)" />
@@ -45,6 +54,10 @@
       add() {
         const value = [...this.value, this.default];
         this.$emit("input", value);
+      },
+      remove(item) {
+        const values = this.value.filter(a => a !== item);
+        this.$emit("input", values);
       },
       errorsFor(index) {
         const errors = this.errors && this.errors[`${this.errorKey}[${index}]`];
