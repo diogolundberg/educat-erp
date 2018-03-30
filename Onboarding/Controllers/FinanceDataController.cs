@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 
 namespace Onboarding.Controllers
 {
@@ -188,10 +189,30 @@ namespace Onboarding.Controllers
             FinanceDataViewModel viewModel = _mapper.Map<FinanceDataViewModel>(financeData);
             viewModel.State = FinanceDataState(viewModel);
 
-            var errors = ModelState.ToDictionary(
+            var errors = new Hashtable();
+            Dictionary<string, string[]> modelStateErrors = ModelState.ToDictionary(
                 modelState => modelState.Key.UnCapitalize(),
                 modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
             );
+
+            foreach (var error in modelStateErrors)
+            {
+                string[] split = error.Key.Split('.');
+
+                if (split.Length == 1)
+                {
+                    errors.Add(error.Key, error.Value);
+                }
+                else
+                {
+                    if (!errors.ContainsKey(split[0]))
+                    {
+                        errors.Add(split[0], new Hashtable());
+                    }
+
+                    ((Hashtable)errors[split[0]]).Add(split[1].UnCapitalize(), error.Value);
+                }
+            }
 
             return new OkObjectResult(new
             {
