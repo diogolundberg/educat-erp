@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace Onboarding.ViewModel
 {
@@ -23,12 +24,13 @@ namespace Onboarding.ViewModel
 
         public ICollection<GuarantorViewModel> Guarantors { get; set; }
 
-        public DateTime? UpdatedAt { get; set; }
-
         [Required]
         public int? PlanId { get; set; }
 
         [Required]
         public int? PaymentMethodId { get; set; }
+
+        [JsonIgnore]
+        public DateTime? UpdatedAt { get; set; }
     }
 }

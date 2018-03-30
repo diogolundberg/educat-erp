@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using Onboarding.Validations;
+using Newtonsoft.Json;
 
 namespace Onboarding.ViewModel
 {
@@ -31,7 +32,6 @@ namespace Onboarding.ViewModel
 
         [Required]
         public string HighSchoolGraduationYear { get; set; }
-
 
         [Required]
         public string Zipcode { get; set; }
@@ -97,6 +97,7 @@ namespace Onboarding.ViewModel
         [Required]
         public IEnumerable<DocumentViewModel> Documents { get; set; }
 
+        [JsonIgnore]
         public DateTime? UpdatedAt { get; set; }
     }
 }
