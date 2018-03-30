@@ -318,6 +318,7 @@
               <div class="flex gutters flex-wrap">
                 <DropDown
                   v-model="data.financeData.representative.discriminator"
+                  :errors="errors.financeData.representative.discriminator"
                   :size="4"
                   :options="discriminators"
                   label="CPF ou CNPJ" />
@@ -328,6 +329,7 @@
                   label="Documento" />
                 <InputBox
                   v-model="data.financeData.representative.cpf"
+                  :errors="errors.financeData.representative.cpf"
                   v-if="data.financeData.representative.discriminator
                     == 'RepresentativePerson'"
                   :size="4"
@@ -338,6 +340,7 @@
                   hint="Ex: 000.000.000-00" />
                 <InputBox
                   v-model="data.financeData.representative.cnpj"
+                  :errors="errors.financeData.representative.cnpj"
                   v-if="data.financeData.representative.discriminator
                     == 'RepresentativeCompany'"
                   :size="4"
@@ -353,12 +356,14 @@
                   label="Nome" />
                 <InputBox
                   v-model="data.financeData.representative.name"
+                  :errors="errors.financeData.representative.name"
                   v-if="data.financeData.representative.discriminator
                     == 'RepresentativePerson'"
                   :size="4"
                   label="Nome completo" />
                 <InputBox
                   v-model="data.financeData.representative.name"
+                  :errors="errors.financeData.representative.name"
                   v-if="data.financeData.representative.discriminator
                     == 'RepresentativeCompany'"
                   :size="4"
@@ -374,36 +379,43 @@
                   v-if="data.financeData.representative.discriminator
                     == 'RepresentativeCompany'"
                   v-model="data.financeData.representative.contact"
+                  :errors="errors.financeData.representative.contact"
                   :size="4"
                   label="Pessoa de Contato" />
                 <InputBox
                   v-if="data.financeData.representative.discriminator
                     == 'RepresentativePerson'"
                   v-model="data.financeData.representative.relationship"
+                  :errors="errors.financeData.representative.relationship"
                   :size="4"
                   label="Relacionamento com o aluno" />
                 <InputBox
                   v-model="data.financeData.representative.streetAddress"
+                  :errors="errors.financeData.representative.streetAddress"
                   :size="4"
                   label="Logradouro" />
                 <InputBox
                   v-model="data.financeData.representative.complementAddress"
+                  :errors="errors.financeData.representative.complementAddress"
                   :size="4"
                   label="Complemento" />
               </div>
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.financeData.representative.neighborhood"
+                  :errors="errors.financeData.representative.neighborhood"
                   :size="4"
                   label="Bairro" />
                 <DropDown
                   v-model="data.financeData.representative.stateId"
+                  :errors="errors.financeData.representative.stateId"
                   :size="4"
                   :options="options.states"
                   required
                   label="Estado" />
                 <DropDown
-                  v-model="data.financeData.representative.city"
+                  v-model="data.financeData.representative.cityId"
+                  :errors="errors.financeData.representative.cityId"
                   :size="4"
                   :options="options.cities"
                   :filter="data.financeData.representative.stateId"
@@ -415,16 +427,19 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="data.financeData.representative.landline"
+                  :errors="errors.financeData.representative.landline"
                   :size="4"
                   label="Telefone"
                   mask="(##) ####-####" />
                 <InputBox
                   v-model="data.financeData.representative.phoneNumber"
+                  :errors="errors.financeData.representative.phoneNumber"
                   :size="4"
                   label="Celular"
                   mask="(##) #####-####" />
                 <InputBox
                   v-model="data.financeData.representative.email"
+                  :errors="errors.financeData.representative.email"
                   :size="4"
                   label="E-mail" />
              </div>

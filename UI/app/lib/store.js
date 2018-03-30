@@ -88,7 +88,9 @@ export default new VueX.Store({
       },
       errors: {
         personalData: {},
-        financeData: {},
+        financeData: {
+          representative: {},
+        },
       },
     },
     uploadUrl: null,
