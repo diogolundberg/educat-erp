@@ -8,7 +8,9 @@ namespace Onboarding.ViewModel
     public class GenerateToken
     {
         public DateTime Start { get; set; }
+
         public DateTime End { get; set; }
+
         public List<GenerateTokenEnrollment> List { get; set; }
     }
 

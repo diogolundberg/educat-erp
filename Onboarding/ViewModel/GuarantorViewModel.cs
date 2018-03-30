@@ -33,11 +33,9 @@ namespace Onboarding.ViewModel
         public string Email { get; set; }
 
         [Required]
-
         public int? CityId { get; set; }
 
         [Required]
-
         public int? StateId { get; set; }
 
         [Required]
