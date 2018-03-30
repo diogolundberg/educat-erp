@@ -75,7 +75,7 @@ namespace Onboarding.Controllers
                     }
                 }
             }
-            else
+            else if(obj.Representative is RepresentativeCompanyViewModel)
             {
                 RepresentativeCompany representativeCompany = _mapper.Map<RepresentativeCompany>((RepresentativeCompanyViewModel)obj.Representative);
                 representativeCompany.FinanceDataId = financeData.Id;

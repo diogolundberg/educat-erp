@@ -28,7 +28,7 @@ namespace Onboarding.JsonFormatter
             }
             else
             {
-                throw new NotSupportedException("Não é possível converter.");
+                representative = new RepresentativeViewModel();
             }
 
             serializer.Populate(obj.CreateReader(), representative);

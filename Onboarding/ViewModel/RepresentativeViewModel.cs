@@ -35,6 +35,7 @@ namespace Onboarding.ViewModel
         [Required]
         public int? StateId { get; set; }
 
+        [Required]
         public string Discriminator { get; set; }
     }
 
