@@ -121,7 +121,7 @@ namespace Onboarding.Controllers
                     Guarantor guarantor = _mapper.Map<Guarantor>(guarantorViewModel);
                     guarantor.Id = existingGuarantor.Id;
                     guarantor.FinanceDataId = financeData.Id;
-                    _context.Entry(guarantor).CurrentValues.SetValues(guarantor);
+                    _context.Entry(existingGuarantor).CurrentValues.SetValues(guarantor);
 
                     foreach (GuarantorDocument guarantorDocument in existingGuarantor.GuarantorDocuments.ToList())
                     {
