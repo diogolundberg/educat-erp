@@ -11,6 +11,8 @@ namespace Onboarding.Models
             GuarantorDocuments = new HashSet<GuarantorDocument>();
         }
 
+        public string Cpf { get; set; }
+
         public string Name { get; set; }
 
         public string StreetAddress { get; set; }

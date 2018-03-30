@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Onboarding.Validations;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Onboarding.ViewModel
@@ -37,6 +38,10 @@ namespace Onboarding.ViewModel
 
         [Required]
         public int? StateId { get; set; }
+
+        [Required]
+        [Cpf]
+        public string Cpf { get; set; }
 
         [Required]
         public IEnumerable<DocumentViewModel> Documents { get; set; }
