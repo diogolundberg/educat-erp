@@ -26,8 +26,7 @@ namespace Onboarding.ViewModel
         public string AssumedName { get; set; }
 
         [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
 
         [Required]
         public string Nationality { get; set; }
