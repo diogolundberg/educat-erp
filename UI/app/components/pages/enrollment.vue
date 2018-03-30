@@ -314,6 +314,22 @@
             :complete="data.financeData.state === 'valid'"
             :error="data.financeData.state === 'invalid'"
             title="Dados Financeiros">
+            <Fieldset title="Dados Financeiros">
+              <div class="flex gutters flex-wrap">
+                <DropDown
+                  v-model="data.financeData.paymentMethodId"
+                  :errors="errors.financeData.paymentMethodId"
+                  :size="6"
+                  :options="options.paymentMethod"
+                  label="Meio de Pagamento" />
+                <DropDown
+                  v-model="data.financeData.planId"
+                  :errors="errors.financeData.planId"
+                  :size="6"
+                  :options="options.plans"
+                  label="Meio de Pagamento" />
+              </div>
+            </Fieldset>
             <Fieldset title="Responsável Financeiro">
               <div class="flex gutters flex-wrap">
                 <DropDown
