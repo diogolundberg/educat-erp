@@ -406,6 +406,8 @@
                   v-model="data.financeData.representative.city"
                   :size="4"
                   :options="options.cities"
+                  :filter="data.financeData.representative.stateId"
+                  filter-key="stateId"
                   key-id="name"
                   required
                   label="Cidade" />
