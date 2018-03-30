@@ -7,7 +7,9 @@
         @click="add" />
     </div>
     <template v-for="item in value">
-      <slot :item="item" />
+      <slot
+        :item="item"
+        :error="errorsFor(index)" />
     </template>
     <div
       v-if="!value.length"
@@ -25,6 +27,14 @@
         type: Array,
         default: () => [],
       },
+      errors: {
+        type: Object,
+        default: () => [],
+      },
+      errorKey: {
+        type: String,
+        default: "",
+      },
       default: {
         type: Object,
         default: () => ({}),
@@ -34,6 +44,10 @@
       add() {
         const value = [...this.value, this.default];
         this.$emit("input", value);
+      },
+      errorsFor(index) {
+        const errors = this.errors && this.errors[`${this.errorKey}[${index}]`];
+        return errors || {};
       },
     },
   };
