@@ -26,7 +26,7 @@
           v-for="column in columns"
           :key="column.name"
           class="block sm-table-cell px2 sm-px4 py1 sm-py2">
-          <strong class="sm-hide">
+          <strong class="sm-hide md-hide lg-hide">
             {{ column.title }}:
           </strong>
           <template v-if="$scopedSlots[column.name]">
@@ -84,7 +84,7 @@
       },
       filtered() {
         const filterRow = row => Object.values(row).some(a =>
-        a.toString().includes(this.filter));
+        a && a.toString().includes(this.filter));
         return this.value.filter(filterRow);
       },
     },
