@@ -5,8 +5,12 @@
         <div
           v-for="column in columns"
           :key="column.name"
-          class="table-cell px4 py2">
+          :class="{ bold: sortColumn === column.name }"
+          class="table-cell px4 py2 no-select pointer"
+          @click="sortBy(column)">
           {{ column.title }}
+          <span v-if="sortColumn === column.name && reverse">↑</span>
+          <span v-if="sortColumn === column.name && !reverse">↓</span>
         </div>
       </div>
       <div
@@ -29,6 +33,8 @@
 </template>
 
 <script>
+  import { sortBy } from "lodash";
+
   export default {
     name: "List",
     props: {
@@ -49,12 +55,22 @@
     data() {
       return {
         currentPage: 1,
+        sortColumn: null,
+        reverse: false,
       };
     },
     computed: {
       rows() {
+        const sorted = sortBy(this.value, [this.sortColumn]);
+        const reversed = this.reverse ? sorted.reverse() : sorted;
         const offset = (this.currentPage - 1) * this.perPage;
-        return this.value.slice(offset, this.perPage + offset);
+        return reversed.slice(offset, this.perPage + offset);
+      },
+    },
+    methods: {
+      sortBy({ name }) {
+        this.reverse = this.sortColumn === name ? !this.reverse : false;
+        this.sortColumn = name;
       },
     },
   };
