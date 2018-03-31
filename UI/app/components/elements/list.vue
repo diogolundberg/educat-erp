@@ -1,5 +1,8 @@
 <template>
   <div class="m2 flex flex-column items-center">
+    <InputBox
+      v-model="filter"
+      label="Filtro" />
     <div class="table bg-white shadow2 m2">
       <div class="table-row divider-bottom">
         <div
@@ -27,7 +30,7 @@
     </div>
     <Pager
       v-model="currentPage"
-      :records="value.length"
+      :records="filtered.length"
       :per-page="perPage" />
   </div>
 </template>
@@ -54,6 +57,7 @@
     },
     data() {
       return {
+        filter: "",
         currentPage: 1,
         sortColumn: null,
         reverse: false,
@@ -61,10 +65,20 @@
     },
     computed: {
       rows() {
-        const sorted = sortBy(this.value, [this.sortColumn]);
+        const sorted = sortBy(this.filtered, [this.sortColumn]);
         const reversed = this.reverse ? sorted.reverse() : sorted;
         const offset = (this.currentPage - 1) * this.perPage;
         return reversed.slice(offset, this.perPage + offset);
+      },
+      filtered() {
+        const filterRow = row => Object.values(row).some(a =>
+        a.toString().includes(this.filter));
+        return this.value.filter(filterRow);
+      },
+    },
+    watch: {
+      filter() {
+        this.currentPage = 1;
       },
     },
     methods: {
