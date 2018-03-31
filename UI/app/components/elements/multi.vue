@@ -6,7 +6,7 @@
         class="my2 right-align">
         <Btn
           :key="index"
-          label="Remover"
+          :label="removeLabel"
           danger
           @click="remove(item)" />
       </div>
@@ -17,11 +17,11 @@
     <div
       v-if="!value.length"
       class="bg-silver thin rounded p2 center">
-      Nenhum item! Clique em "Inserir" para adicionar um novo.
+      {{ emptyLabel }}
     </div>
     <div class="my2">
       <Btn
-        label="Inserir"
+        :label="addLabel"
         primary
         class="block col-12"
         @click="add" />
@@ -48,6 +48,18 @@
       default: {
         type: Object,
         default: () => ({}),
+      },
+      removeLabel: {
+        type: String,
+        default: "Remover",
+      },
+      addLabel: {
+        type: String,
+        default: "Inserir",
+      },
+      emptyLabel: {
+        type: String,
+        default: "Nenhum item! Clique em 'Inserir' para adicionar um novo.",
       },
     },
     methods: {
