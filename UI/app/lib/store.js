@@ -94,6 +94,8 @@ export default new VueX.Store({
       },
     },
     uploadUrl: null,
+    academicApprovals: [],
+    financeApprovals: [],
   },
   getters: {
     logged: state => !!state.token,
@@ -124,6 +126,12 @@ export default new VueX.Store({
     },
     SET_UPLOAD_URL(state, url) {
       state.uploadUrl = url;
+    },
+    SET_ACADEMIC_APPROVALS(state, data) {
+      state.academicApprovals = data;
+    },
+    SET_FINANCE_APPROVALS(state, data) {
+      state.financeApprovals = data;
     },
   },
   actions: {
@@ -161,6 +169,18 @@ export default new VueX.Store({
       const url = `${url3}/api/Presign`;
       const response = await axios.post(url, { fileName });
       commit("SET_UPLOAD_URL", response.data);
+    },
+    async getAcademicApprovals({ commit, state }) {
+      const url = `${url2}/api/AcademicApproval`;
+      const headers = { Authorization: `Bearer ${state.token}` };
+      const response = await axios.get(url, { headers });
+      commit("SET_ACADEMIC_APPROVALS", response.data);
+    },
+    async getFinanceApproval({ commit, state }) {
+      const url = `${url2}/api/FinanceApproval`;
+      const headers = { Authorization: `Bearer ${state.token}` };
+      const response = await axios.get(url, { headers });
+      commit("SET_FINANCE_APPROVALS", response.data);
     },
   },
 });
