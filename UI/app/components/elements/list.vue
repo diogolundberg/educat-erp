@@ -19,7 +19,9 @@
       <div
         v-for="(row, index) in rows"
         :key="index"
-        class="block sm-table-row divider-bottom sm-block">
+        class="block sm-table-row divider-bottom sm-block h-bg-silver pointer"
+        @click="$emit('click', row)">
+        {{ $option }}
         <div
           v-for="column in columns"
           :key="column.name"

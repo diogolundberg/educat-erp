@@ -35,6 +35,8 @@ input:invalid
 .sm-table-row
   @media (min-width: 40em)
     display table-row
+.divider-bottom:not(:last-child)
+  background linear-gradient($silver, $silver) center bottom/100% 1px no-repeat
 .btn-primary
   background-color $green
 .thin
@@ -47,6 +49,7 @@ input:invalid
   background-color $gray
 .bg-silver, .h-bg-silver:hover
   background-color $silver
+  background-size 100%
 .bg-blue
   background-color $blue
 .bg-blue-grad
@@ -188,8 +191,6 @@ input:invalid
   @keyframes spin
     100%
       transform rotate(360deg)
-.divider-bottom:not(:last-child)
-  background linear-gradient($silver, $silver) center bottom/100% 1px no-repeat
 .input-line
   background linear-gradient($green, $green) center bottom/0 2px no-repeat,
     linear-gradient($dim, $dim) center bottom/100% 1px no-repeat
