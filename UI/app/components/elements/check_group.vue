@@ -5,7 +5,7 @@
         :value="isChecked(item)"
         :label="item[labelField]"
         :key="item.id"
-        class="col-3"
+        class="col-12 py1 sm-col-3"
         @input="toggle(item)" />
     </template>
   </span>
