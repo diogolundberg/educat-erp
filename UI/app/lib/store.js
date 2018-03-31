@@ -101,6 +101,8 @@ export default new VueX.Store({
     logged: state => !!state.token,
     enrollment: state => state.enrollment,
     uploadUrl: state => state.uploadUrl,
+    academicApprovals: state => state.academicApprovals,
+    financeApprovals: state => state.financeApprovals,
   },
   mutations: {
     LOGIN(state, token) {
@@ -127,11 +129,11 @@ export default new VueX.Store({
     SET_UPLOAD_URL(state, url) {
       state.uploadUrl = url;
     },
-    SET_ACADEMIC_APPROVALS(state, data) {
-      state.academicApprovals = data;
+    SET_ACADEMIC_APPROVALS(state, { records }) {
+      state.academicApprovals = records;
     },
-    SET_FINANCE_APPROVALS(state, data) {
-      state.financeApprovals = data;
+    SET_FINANCE_APPROVALS(state, { records }) {
+      state.financeApprovals = records;
     },
   },
   actions: {
