@@ -29,7 +29,14 @@
           <strong class="sm-hide">
             {{ column.title }}:
           </strong>
-          {{ row[column.name] }}
+          <template v-if="$scopedSlots[column.name]">
+            <slot
+              :name="`column-${column.name}`"
+              :row="row" />
+          </template>
+          <template v-else>
+            {{ row[column.name] }}
+          </template>
         </div>
       </div>
     </div>
