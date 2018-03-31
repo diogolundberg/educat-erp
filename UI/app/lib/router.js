@@ -22,7 +22,7 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: "/list",
+      path: "/enrollments",
       component: lazy("Enrollments"),
     },
     {
