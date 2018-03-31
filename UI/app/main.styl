@@ -28,8 +28,13 @@ input:invalid
 
 // Helpers
 
+.hidden
+  display none
 .table-row
   display table-row
+.sm-table-row
+  @media (min-width: 40em)
+    display table-row
 .btn-primary
   background-color $green
 .thin
