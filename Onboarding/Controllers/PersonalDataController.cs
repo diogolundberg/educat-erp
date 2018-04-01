@@ -26,28 +26,27 @@ namespace Onboarding.Controllers
         [HttpPost("{token}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
         public IActionResult Update([FromRoute]string token, [FromBody]PersonalDataViewModel obj)
         {
-
-            if (string.IsNullOrEmpty(token))
-            {
-                return BadRequest();
-            }
-
             PersonalData personalData = _context.Set<PersonalData>()
                                                 .Include("Enrollment")
                                                 .Include("PersonalDataDisabilities")
                                                 .Include("PersonalDataSpecialNeeds")
                                                 .Include("PersonalDataDocuments")
                                                 .Include("PersonalDataDocuments.Document")
-                                                .Single(x => x.Enrollment.ExternalId == token);
+                                                .SingleOrDefault(x => x.Enrollment.ExternalId == token);
 
             if (personalData == null)
             {
-                return NotFound();
+                return new BadRequestObjectResult(new { messages = new List<string> { "Link para matrícula inválido." } });
             }
 
-            if (personalData.Enrollment.SendDate.HasValue || !personalData.Enrollment.IsDeadlineValid())
+            if (!personalData.Enrollment.IsDeadlineValid())
             {
-                return BadRequest();
+                return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado." } });
+            }
+
+            if (personalData.Enrollment.SendDate.HasValue)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { "Estes dados já foram enviados para a análises e não pode ser editados no momento." } });
             }
 
             PersonalData personalDataMapped = _mapper.Map<PersonalData>(obj);

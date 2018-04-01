@@ -29,27 +29,27 @@ namespace Onboarding.Controllers
         [HttpPost("{token}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
         public IActionResult Update([FromRoute]string token, [FromBody]FinanceDataViewModel obj)
         {
-            if (string.IsNullOrEmpty(token))
-            {
-                return BadRequest();
-            }
-
             FinanceData financeData = _context.Set<FinanceData>()
                                               .Include("Enrollment")
                                               .Include("Representative")
                                               .Include("Guarantors")
                                               .Include("Guarantors.GuarantorDocuments")
                                               .Include("Guarantors.GuarantorDocuments.Document")
-                                              .SingleOrDefault(x => x.Id == obj.Id);
+                                              .SingleOrDefault(x => x.Enrollment.ExternalId == token);
 
             if (financeData == null)
             {
-                return NotFound();
+                return new BadRequestObjectResult(new { messages = new List<string> { "Link para matrícula inválido." } });
             }
 
-            if (financeData.Enrollment.SendDate.HasValue || !financeData.Enrollment.IsDeadlineValid())
+            if (!financeData.Enrollment.IsDeadlineValid())
             {
-                return BadRequest();
+                return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado." } });
+            }
+
+            if (financeData.Enrollment.SendDate.HasValue)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { "Estes dados já foram enviados para a análises e não pode ser editados no momento." } });
             }
 
             if (obj.Representative is RepresentativePersonViewModel)
