@@ -28,7 +28,7 @@ namespace Onboarding.Controllers
         [HttpGet("", Name = "ONBOARDING/FINANCEAPPROVAL/LIST")]
         public dynamic GetList()
         {
-            List<Enrollment> enrollments = _context.Enrollments.Include("FinanceData").Where(x => x.SentAt.HasValue).ToList();
+            List<Enrollment> enrollments = _context.Enrollments.Include("PersonalData").Where(x => x.SentAt.HasValue).ToList();
             List<Records> records = _mapper.Map<List<Records>>(enrollments);
             return new { records };
         }
