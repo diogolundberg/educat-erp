@@ -1,6 +1,6 @@
-namespace Onboarding.ViewModels
+namespace Onboarding.ViewModels.AcademicApprovals
 {
-    public class AcademicApprovalViewModel
+    public class Records
     {
         public string Name { get; set; }
 
