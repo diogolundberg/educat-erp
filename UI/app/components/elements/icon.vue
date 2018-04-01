@@ -1,6 +1,10 @@
 <template>
   <span :class="{ 'fill-white': white, 'fill-black': black }">
     <svg
+      v-if="name === 'menu'">
+      <path d="M6 36h36v-4h-36v4zm0-10h36v-4h-36v4zm0-14v4h36v-4h-36z"/>
+    </svg>
+    <svg
       v-if="name === 'error'"
       viewBox="0 0 21.9 21.9">
       <path

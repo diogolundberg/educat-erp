@@ -1,6 +1,13 @@
 <template>
   <div>
     <header class="fixed top-0 z3 w100 bg-green-grad white">
+      <div
+        v-if="menu"
+        class="absolute top-0 left-0 m1 pointer"
+        @click="$emit('sidebar')">
+        <Icon
+          name="menu" />
+      </div>
       <div class="max-width-4 m-auto flex items-center justify-between p1">
         <div class="flex-auto flex items-center">
           <div>
@@ -40,5 +47,11 @@
 <script>
   export default {
     name: "Header",
+    props: {
+      menu: {
+        type: Boolean,
+        default: false,
+      },
+    },
   };
 </script>
