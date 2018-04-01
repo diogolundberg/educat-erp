@@ -26,6 +26,9 @@ namespace Onboarding.Models
 
             builder.Entity<RepresentativePerson>().HasBaseType<Representative>();
             builder.Entity<RepresentativeCompany>().HasBaseType<Representative>();
+
+            builder.Entity<AcademicPendency>().HasBaseType<Pendency>();
+            builder.Entity<FinancePendency>().HasBaseType<Pendency>();
         }
 
         public override int SaveChanges()
