@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,6 +91,8 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { errors });
             }
 
+            bool havePendency = false;
+
             foreach (Models.EnrollmentPendency enrollmentPendency in enrollment.EnrollmentPendencies.ToList())
             {
                 if (!form.AcademicPendencies.Any(c => c.Id == enrollmentPendency.PendencyId))
@@ -103,6 +106,8 @@ namespace Onboarding.Controllers
             }
             foreach (ViewModels.Pendency pendency in form.AcademicPendencies)
             {
+                havePendency = true;
+
                 Models.EnrollmentPendency existingEnrolmentPendency = enrollment.EnrollmentPendencies.Where(c => c.Pendency.Id == pendency.Id).SingleOrDefault();
 
                 if (existingEnrolmentPendency == null)
@@ -116,7 +121,6 @@ namespace Onboarding.Controllers
                         },
                         EnrollmentId = enrollment.Id
                     };
-
                     _context.Set<EnrollmentPendency>().Add(enrollmentPendency);
                 }
                 else
@@ -128,16 +132,30 @@ namespace Onboarding.Controllers
                 }
             }
 
+            if (!havePendency)
+            {
+                enrollment.AcademicApproval = DateTime.Now;
+            }
+
+            if ((enrollment.AcademicApproval.HasValue || havePendency)
+                && (enrollment.FinanceApproval.HasValue || enrollment.EnrollmentPendencies.Count() > 0))
+            {
+                enrollment.ReviewedAt = DateTime.Now;
+            }
+
+            if (enrollment.ReviewedAt.HasValue)
+            {
+                enrollment.SentAt = null;
+            }
+
             List<string> messages = new List<string>();
+
+            _context.Set<Enrollment>().Update(enrollment);
 
             _context.SaveChanges();
 
-            messages.Add("Pendências cadastradas com sucesso.");
+            messages.Add("Procedimento realizado com sucesso.");
 
-            // TODO: Adicionar lógica da maquina de estado
-            //   -> Quando não houver pendências, aprovar (preencher AcademicApproval)
-            //   -> (academicAppoval || academicPendencies) && (financeAppoval || financePendencies) = preenche reviewed at
-            //   -> (reviewed_at && (academicPendencies || financePendencies)) = sent at zerado
 
             return new OkObjectResult(new { messages });
         }

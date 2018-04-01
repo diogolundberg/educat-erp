@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,6 +91,8 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { errors });
             }
 
+            bool havePendency = false;
+
             foreach (Models.EnrollmentPendency enrollmentPendency in enrollment.EnrollmentPendencies.ToList())
             {
                 if (!form.FinancePendencies.Any(c => c.Id == enrollmentPendency.PendencyId))
@@ -103,6 +106,8 @@ namespace Onboarding.Controllers
             }
             foreach (ViewModels.Pendency pendency in form.FinancePendencies)
             {
+                havePendency = true;
+
                 Models.EnrollmentPendency existingEnrolmentPendency = enrollment.EnrollmentPendencies.Where(c => c.Pendency.Id == pendency.Id).SingleOrDefault();
 
                 if (existingEnrolmentPendency == null)
@@ -128,17 +133,29 @@ namespace Onboarding.Controllers
                 }
             }
 
+            if (!havePendency)
+            {
+                enrollment.FinanceApproval = DateTime.Now;
+            }
+
+            if ((enrollment.AcademicApproval.HasValue || enrollment.EnrollmentPendencies.Count() > 0)
+                && (enrollment.FinanceApproval.HasValue || havePendency))
+            {
+                enrollment.ReviewedAt = DateTime.Now;
+            }
+
+            if (enrollment.ReviewedAt.HasValue)
+            {
+                enrollment.SentAt = null;
+            }
+
             List<string> messages = new List<string>();
+
+            _context.Set<Enrollment>().Update(enrollment);
 
             _context.SaveChanges();
 
-            messages.Add("Pendências cadastradas com sucesso.");
-
-            // TODO: Persistir as pendencias
-            // TODO: Adicionar lógica da maquina de estado
-            //   -> Quando não houver pendências, aprovar (preencher AcademicApproval)
-            //   -> (academicAppoval || academicPendencies) && (financeAppoval || financePendencies) = preenche reviewed at
-            //   -> (reviewed_at && (academicPendencies || financePendencies)) = sent at zerado
+            messages.Add("Procedimento realizado com sucesso.");
 
             return new OkObjectResult(new { messages });
         }
