@@ -186,7 +186,7 @@ export default new VueX.Store({
       const response = await axios.get(url, { headers });
       commit("SET_ACADEMIC_APPROVALS", response.data);
     },
-    async getFinanceApproval({ commit, state }) {
+    async getFinanceApprovals({ commit, state }) {
       const url = `${url2}/api/FinanceApproval`;
       const headers = { Authorization: `Bearer ${state.token}` };
       const response = await axios.get(url, { headers });
