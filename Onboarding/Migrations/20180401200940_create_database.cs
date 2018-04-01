@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Onboarding.Migrations
 {
-    public partial class initial_database : Migration
+    public partial class create_database : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,12 +80,13 @@ namespace Onboarding.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AcademicApproval = table.Column<bool>(nullable: false),
+                    AcademicApproval = table.Column<DateTime>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: true),
                     Deadline = table.Column<DateTime>(nullable: false),
                     ExternalId = table.Column<string>(nullable: true),
-                    FinanceApproval = table.Column<bool>(nullable: false),
-                    SendDate = table.Column<DateTime>(nullable: true),
+                    FinanceApproval = table.Column<DateTime>(nullable: true),
+                    ReviewedAt = table.Column<DateTime>(nullable: true),
+                    SentAt = table.Column<DateTime>(nullable: true),
                     UpdatedAt = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
@@ -142,6 +143,42 @@ namespace Onboarding.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PaymentMethod",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: true),
+                    ExternalId = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    UpdatedAt = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentMethod", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Plans",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    DueDate = table.Column<DateTime>(nullable: false),
+                    ExternalId = table.Column<string>(nullable: true),
+                    Installments = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    UpdatedAt = table.Column<DateTime>(nullable: true),
+                    Value = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Plans", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Races",
                 columns: table => new
                 {
@@ -155,6 +192,22 @@ namespace Onboarding.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Races", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: true),
+                    ExternalId = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sections", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -228,6 +281,8 @@ namespace Onboarding.Migrations
                     CreatedAt = table.Column<DateTime>(nullable: true),
                     EnrollmentId = table.Column<int>(nullable: true),
                     ExternalId = table.Column<string>(nullable: true),
+                    PaymentMethodId = table.Column<int>(nullable: true),
+                    PlanId = table.Column<int>(nullable: true),
                     UpdatedAt = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
@@ -239,6 +294,41 @@ namespace Onboarding.Migrations
                         principalTable: "Enrollments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FinanceDatas_PaymentMethod_PaymentMethodId",
+                        column: x => x.PaymentMethodId,
+                        principalTable: "PaymentMethod",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FinanceDatas_Plans_PlanId",
+                        column: x => x.PlanId,
+                        principalTable: "Plans",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pendencies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: true),
+                    Description = table.Column<string>(nullable: false),
+                    ExternalId = table.Column<string>(nullable: true),
+                    SectionId = table.Column<int>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pendencies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Pendencies_Sections_SectionId",
+                        column: x => x.SectionId,
+                        principalTable: "Sections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -272,6 +362,7 @@ namespace Onboarding.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CityId = table.Column<int>(nullable: true),
                     ComplementAddress = table.Column<string>(nullable: true),
+                    Cpf = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     ExternalId = table.Column<string>(nullable: true),
@@ -583,6 +674,16 @@ namespace Onboarding.Migrations
                 filter: "[EnrollmentId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FinanceDatas_PaymentMethodId",
+                table: "FinanceDatas",
+                column: "PaymentMethodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FinanceDatas_PlanId",
+                table: "FinanceDatas",
+                column: "PlanId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GuarantorDocument_DocumentId",
                 table: "GuarantorDocument",
                 column: "DocumentId");
@@ -601,6 +702,11 @@ namespace Onboarding.Migrations
                 name: "IX_Guarantors_StateId",
                 table: "Guarantors",
                 column: "StateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pendencies_SectionId",
+                table: "Pendencies",
+                column: "SectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonalDataDisability_DisabilityId",
@@ -708,6 +814,9 @@ namespace Onboarding.Migrations
                 name: "GuarantorDocument");
 
             migrationBuilder.DropTable(
+                name: "Pendencies");
+
+            migrationBuilder.DropTable(
                 name: "PersonalDataDisability");
 
             migrationBuilder.DropTable(
@@ -721,6 +830,9 @@ namespace Onboarding.Migrations
 
             migrationBuilder.DropTable(
                 name: "Guarantors");
+
+            migrationBuilder.DropTable(
+                name: "Sections");
 
             migrationBuilder.DropTable(
                 name: "Documents");
@@ -763,6 +875,12 @@ namespace Onboarding.Migrations
 
             migrationBuilder.DropTable(
                 name: "Enrollments");
+
+            migrationBuilder.DropTable(
+                name: "PaymentMethod");
+
+            migrationBuilder.DropTable(
+                name: "Plans");
 
             migrationBuilder.DropTable(
                 name: "States");

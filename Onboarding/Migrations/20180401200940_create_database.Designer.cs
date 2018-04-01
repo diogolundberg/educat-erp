@@ -12,8 +12,8 @@ using System;
 namespace Onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20180329012639_initial_database")]
-    partial class initial_database
+    [Migration("20180401200940_create_database")]
+    partial class create_database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -153,7 +153,7 @@ namespace Onboarding.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("AcademicApproval");
+                    b.Property<DateTime?>("AcademicApproval");
 
                     b.Property<DateTime?>("CreatedAt");
 
@@ -161,9 +161,11 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("ExternalId");
 
-                    b.Property<bool>("FinanceApproval");
+                    b.Property<DateTime?>("FinanceApproval");
 
-                    b.Property<DateTime?>("SendDate");
+                    b.Property<DateTime?>("ReviewedAt");
+
+                    b.Property<DateTime?>("SentAt");
 
                     b.Property<DateTime?>("UpdatedAt");
 
@@ -183,6 +185,10 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("ExternalId");
 
+                    b.Property<int?>("PaymentMethodId");
+
+                    b.Property<int?>("PlanId");
+
                     b.Property<DateTime?>("UpdatedAt");
 
                     b.HasKey("Id");
@@ -190,6 +196,10 @@ namespace Onboarding.Migrations
                     b.HasIndex("EnrollmentId")
                         .IsUnique()
                         .HasFilter("[EnrollmentId] IS NOT NULL");
+
+                    b.HasIndex("PaymentMethodId");
+
+                    b.HasIndex("PlanId");
 
                     b.ToTable("FinanceDatas");
                 });
@@ -221,6 +231,8 @@ namespace Onboarding.Migrations
                     b.Property<int?>("CityId");
 
                     b.Property<string>("ComplementAddress");
+
+                    b.Property<string>("Cpf");
 
                     b.Property<DateTime?>("CreatedAt");
 
@@ -304,6 +316,47 @@ namespace Onboarding.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MaritalStatuses");
+                });
+
+            modelBuilder.Entity("Onboarding.Models.PaymentMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<string>("ExternalId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentMethod");
+                });
+
+            modelBuilder.Entity("Onboarding.Models.Pendency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<string>("ExternalId");
+
+                    b.Property<int>("SectionId");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SectionId");
+
+                    b.ToTable("Pendencies");
                 });
 
             modelBuilder.Entity("Onboarding.Models.PersonalData", b =>
@@ -441,6 +494,32 @@ namespace Onboarding.Migrations
                     b.ToTable("PersonalDataSpecialNeed");
                 });
 
+            modelBuilder.Entity("Onboarding.Models.Plan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("DueDate");
+
+                    b.Property<string>("ExternalId");
+
+                    b.Property<int>("Installments");
+
+                    b.Property<string>("Name");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<decimal>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Plans");
+                });
+
             modelBuilder.Entity("Onboarding.Models.Race", b =>
                 {
                     b.Property<int>("Id")
@@ -507,6 +586,25 @@ namespace Onboarding.Migrations
                     b.ToTable("Representatives");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Representative");
+                });
+
+            modelBuilder.Entity("Onboarding.Models.Section", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<string>("ExternalId");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sections");
                 });
 
             modelBuilder.Entity("Onboarding.Models.SpecialNeed", b =>
@@ -628,6 +726,14 @@ namespace Onboarding.Migrations
                     b.HasOne("Onboarding.Models.Enrollment", "Enrollment")
                         .WithOne("FinanceData")
                         .HasForeignKey("Onboarding.Models.FinanceData", "EnrollmentId");
+
+                    b.HasOne("Onboarding.Models.PaymentMethod", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId");
+
+                    b.HasOne("Onboarding.Models.Plan", "Plan")
+                        .WithMany()
+                        .HasForeignKey("PlanId");
                 });
 
             modelBuilder.Entity("Onboarding.Models.Guarantor", b =>
@@ -655,6 +761,14 @@ namespace Onboarding.Migrations
                     b.HasOne("Onboarding.Models.Guarantor", "Guarantor")
                         .WithMany("GuarantorDocuments")
                         .HasForeignKey("GuarantorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Onboarding.Models.Pendency", b =>
+                {
+                    b.HasOne("Onboarding.Models.Section", "Section")
+                        .WithMany()
+                        .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
