@@ -756,7 +756,7 @@
     async mounted() {
       try {
         await this.$store.dispatch("getEnrollment", this.id);
-        this.step = this.$store.getters.enrollment.sendDate ? 3 : 1;
+        this.step = this.data.sendDate ? 3 : 1;
       } catch (ex) {
         this.$router.push("/404");
       }
