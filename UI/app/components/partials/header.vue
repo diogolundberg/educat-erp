@@ -1,9 +1,13 @@
 <template>
   <div>
     <header class="fixed top-0 z3 w100 bg-green-grad white">
-      <div class="max-width-4 m-auto flex items-center justify-between p2">
+      <div class="max-width-4 m-auto flex items-center justify-between p1">
         <div class="flex-auto flex items-center">
-          <div class="h3">CMMG</div>
+          <div>
+            <img
+              src="../../assets/img/logo.svg"
+              :style="{ height: '3rem' }">
+          </div>
           <h2 class="my0 mx2 px2 thin border-white-50 h4 md-h2">
             Matrícula Online
           </h2>
