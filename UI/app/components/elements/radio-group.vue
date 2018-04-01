@@ -11,7 +11,7 @@
       :key="option[idField]"
       class="pointer my2"
       role="radiogroup"
-      @click="$emit('input', option[idField])">
+      @click="!disabled && $emit('input', option[idField])">
       <span
         :aria-checked="option[idField] == value"
         class="inline-block align-middle x1 y1 p4x circle bg-white shadow0"
@@ -55,6 +55,10 @@
         type: String,
         required: false,
         default: null,
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
       },
     },
   };

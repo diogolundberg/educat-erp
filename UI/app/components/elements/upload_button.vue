@@ -2,10 +2,10 @@
   <span>
     <Btn
       :id="`uploadBtn${_uid}`"
-      :disabled="loading"
+      :disabled="loading || disabled"
       primary
       class="relative"
-      @click="$refs.file.click()">
+      @click="!disabled && $refs.file.click()">
       <span
         v-show="loading"
         :style="{ width: `${Math.floor(loaded)}%` }"
@@ -45,6 +45,10 @@
         type: String,
         required: false,
         default: "OK",
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
       },
     },
     data() {

@@ -6,7 +6,7 @@
         :label="item[labelField]"
         :key="item.id"
         class="col-12 py1 sm-col-3"
-        @input="toggle(item)" />
+        @input="!disabled && toggle(item)" />
     </template>
   </span>
 </template>
@@ -32,6 +32,10 @@
       labelField: {
         type: String,
         default: "name",
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
       },
     },
     methods: {

@@ -7,6 +7,7 @@
         <Btn
           :key="index"
           :label="removeLabel"
+          :disabled="disabled"
           danger
           @click="remove(item)" />
       </div>
@@ -22,6 +23,7 @@
     <div class="my2">
       <Btn
         :label="addLabel"
+        :disabled="disabled"
         primary
         class="block col-12"
         @click="add" />
@@ -60,6 +62,10 @@
       emptyLabel: {
         type: String,
         default: "Nenhum item! Clique em 'Inserir' para adicionar um novo.",
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
       },
     },
     methods: {
