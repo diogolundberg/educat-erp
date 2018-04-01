@@ -6,6 +6,7 @@ using Onboarding.Data.Entity;
 using Onboarding.Models;
 using Onboarding.ViewModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -89,6 +90,62 @@ namespace Onboarding.Controllers
                     GuarantorDocuments = _context.Set<GuarantorDocumentType>()
                 }
             };
+        }
+
+        [HttpPost("{token}", Name = "ONBOARDING/ENROLLMENTS/SEND")]
+        public dynamic Send(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest();
+            }
+
+            Enrollment enrollment = _context.Enrollments
+                                            .Include("PersonalData")
+                                            .Include("PersonalData.PersonalDataDisabilities")
+                                            .Include("PersonalData.PersonalDataSpecialNeeds")
+                                            .Include("PersonalData.PersonalDataDocuments")
+                                            .Include("PersonalData.PersonalDataDocuments.Document")
+                                            .Include("FinanceData")
+                                            .Include("FinanceData.Representative")
+                                            .Include("FinanceData.Guarantors")
+                                            .Include("FinanceData.Guarantors.GuarantorDocuments")
+                                            .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
+                                            .Single(x => x.ExternalId == token);
+
+            if (!enrollment.IsDeadlineValid())
+            {
+                return BadRequest();
+            }
+
+            PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
+            personalData.State = PersonalDataState(personalData);
+
+            FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
+            financeData.State = FinanceDataState(financeData);
+
+            var errors = new Hashtable();
+
+            if (personalData.State == "valid" && financeData.State == "valid")
+            {
+                enrollment.SendDate = DateTime.Now;
+                _context.Set<Enrollment>().Update(enrollment);
+                _context.SaveChanges();
+            }
+            else
+            {
+                if (personalData.State != "valid")
+                {
+                    errors.Add("personalData", "Os dados pessoais estão inválidos");
+                }
+                if (financeData.State != "valid")
+                {
+                    errors.Add("financeData", "Os dados financeiros estão inválidos");
+                }
+
+            }
+
+            return new { errors };
         }
 
         [HttpPost("GenerateToken", Name = "ONBOARDING/ENROLLMENTS/GENERATETOKEN")]
