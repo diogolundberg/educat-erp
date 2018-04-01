@@ -647,6 +647,9 @@
           description="A secretaria e o departamento financeiro estão analisando
             seus documentos">
           <Card title="Dados enviados">
+            <BaseErrors
+              success
+              v-model="messages" />
             <p>Seus dados foram enviados. Agora a secretaria e o departamento
               financeiro estão analisando seus documentos.</p>
             <div class="center">
@@ -760,27 +763,34 @@
     async mounted() {
       try {
         await this.$store.dispatch("getEnrollment", this.id);
-        this.step = this.data.sendDate ? 3 : 1;
+        this.goToStep();
       } catch (ex) {
         this.$router.push("/404");
       }
     },
     methods: {
+      goToStep() {
+        if (this.data.personalData.state === "valid") {
+          this.step = 2;
+        }
+        if (this.data.financeData.state === "valid") {
+          this.step = 3;
+        }
+        if (this.data.sendDate) {
+          this.step = 3;
+        }
+      },
       async savePersonalData() {
         const token = this.id;
         const data = this.data.personalData;
         await this.$store.dispatch("setPersonalData", { token, data });
-        if (this.data.personalData.state === "valid") {
-          this.step = 2;
-        }
+        this.goToStep();
       },
       async saveFinanceData() {
         const token = this.id;
         const data = this.data.financeData;
         await this.$store.dispatch("setFinanceData", { token, data });
-        if (this.data.financeData.state === "valid") {
-          this.step = 3;
-        }
+        this.goToStep();
       },
       async submitEnrollment() {
         const token = this.id;

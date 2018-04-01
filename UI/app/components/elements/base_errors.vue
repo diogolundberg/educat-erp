@@ -4,7 +4,7 @@
       v-for="error in value"
       :key="error"
       :message="error"
-      error />
+      :error="!success" />
   </div>
 </template>
 
@@ -15,6 +15,10 @@
       value: {
         type: Array,
         default: () => [],
+      },
+      success: {
+        type: Boolean,
+        default: false,
       },
     },
   };
