@@ -624,6 +624,7 @@
           <Card
             closeable
             title="Enviar para Análise">
+            <BaseErrors v-model="messages" />
             <p>Envie seus dados para a secetaria e para o
               departamento financeiro para aprovação.</p>
             <div class="center">
@@ -747,6 +748,9 @@
       },
       errors() {
         return this.$store.getters.enrollment.errors;
+      },
+      messages() {
+        return this.$store.getters.enrollment.messages;
       },
       daysRemaining() {
         const day = 1000 * 60 * 60 * 24;

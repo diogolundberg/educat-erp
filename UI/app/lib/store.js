@@ -92,6 +92,7 @@ export default new VueX.Store({
           representative: {},
         },
       },
+      messages: [],
     },
     uploadUrl: null,
     academicApprovals: [],
@@ -125,6 +126,9 @@ export default new VueX.Store({
     SET_ENROLLMENT_SENDDATE(state, { data, errors }) {
       state.enrollment.data.sendDate = data.sendDate;
       Object.assign(state.enrollment.errors, errors);
+    },
+    SET_ENROLLMENT_MESSAGES(state, { messages }) {
+      state.enrollment.messages = messages;
     },
     SET_UPLOAD_URL(state, url) {
       state.uploadUrl = url;
@@ -163,9 +167,13 @@ export default new VueX.Store({
       commit("SET_FINANCE_DATA", response.data);
     },
     async submitEnrollment({ commit }, { token }) {
-      const url = `${url2}/api/Enrollments/${token}`;
-      const response = await axios.post(url);
-      commit("SET_ENROLLMENT_SENDDATE", response.data);
+      try {
+        const url = `${url2}/api/Enrollments/${token}`;
+        const response = await axios.post(url);
+        commit("SET_ENROLLMENT_SENDDATE", response.data);
+      } catch (ex) {
+        commit("SET_ENROLLMENT_MESSAGES", ex.response.data);
+      }
     },
     async presign({ commit }, fileName) {
       const url = `${url3}/api/Presign`;
