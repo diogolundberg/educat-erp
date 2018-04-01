@@ -57,6 +57,7 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
             }
 
+
             // TODO: Persistir as pendencias
             // TODO: Adicionar lógica da maquina de estado
             //   -> Quando não houver pendências, aprovar (preencher AcademicApproval)

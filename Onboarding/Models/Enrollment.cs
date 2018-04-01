@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Onboarding.Models
@@ -7,6 +9,7 @@ namespace Onboarding.Models
     {
         public Enrollment()
         {
+            Pendencies = new HashSet<Pendency>();
         }
 
         public virtual PersonalData PersonalData { get; set; }
@@ -33,6 +36,8 @@ namespace Onboarding.Models
         {
             return DateTime.Now <= Deadline;
         }
+
+        public IEnumerable<Pendency> Pendencies { get; set; }
     }
 }
 
