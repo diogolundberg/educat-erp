@@ -67,5 +67,7 @@ namespace Onboarding.Models
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Plan> Plans { get; set; }
         public DbSet<PaymentMethod> PaymentMethod { get; set; }
+        public DbSet<Pendency> Pendencies { get; set; }
+        public DbSet<Section> Sections { get; set; }
     }
 }
