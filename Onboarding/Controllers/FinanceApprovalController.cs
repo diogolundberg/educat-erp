@@ -27,9 +27,22 @@ namespace Onboarding.Controllers
         [HttpGet("", Name = "ONBOARDING/FINANCEAPPROVAL/LIST")]
         public dynamic GetList()
         {
-            List<Enrollment> enrollments = _context.Enrollments.Include("PersonalData").ToList();
+            List<Enrollment> enrollments = _context.Enrollments.Include("FinanceData").ToList();
             List<Records> approvalList = _mapper.Map<List<Records>>(enrollments);
             return new { records = approvalList };
+        }
+
+        [HttpPost("", Name = "ONBOARDING/FINANCEAPPROVAL/NEW")]
+        public dynamic Create(Form form)
+        {
+            Enrollment enrollment = _context.Enrollments.SingleOrDefault(x => x.ExternalId == form.EnrollmentNumber);
+
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
+            }
+
+            return new OkObjectResult(new { });
         }
     }
 }
