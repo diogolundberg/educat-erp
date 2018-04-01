@@ -32,6 +32,21 @@ namespace Onboarding.Controllers
             return new { records = approvalList };
         }
 
+        [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/FINANCEAPPROVAL/GET")]
+        public IActionResult GetById(string enrollmentNumber, [FromQuery]int id)
+        {
+            Enrollment enrollment = _context.Enrollments.SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
+            }
+
+            Record data = _mapper.Map<Record>(enrollment);
+
+            return new OkObjectResult(new { data });
+        }
+
         [HttpPost("", Name = "ONBOARDING/FINANCEAPPROVAL/NEW")]
         public dynamic Create(Form form)
         {
