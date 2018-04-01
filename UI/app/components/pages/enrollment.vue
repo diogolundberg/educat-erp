@@ -21,7 +21,6 @@
         header
         class="max-width-4 m-auto">
         <Step
-          :disabled="!!data.sendDate"
           :complete="data.personalData.state === 'valid'"
           :error="data.personalData.state === 'invalid'"
           title="Seus Dados"
@@ -70,6 +69,7 @@
                   :errors="errors.personalData.BirthDate"
                   :size="3"
                   :min-size="10"
+                  :disabled="!!data.sendDate"
                   required
                   label="Nascimento"
                   mask="##/##/####"
@@ -79,6 +79,7 @@
                   :errors="errors.personalData.MaritalStatusId"
                   :size="3"
                   :options="options.maritalStatuses"
+                  :disabled="!!data.sendDate"
                   required
                   label="Estado Civil" />
                 <DropDown
@@ -86,6 +87,7 @@
                   :errors="errors.personalData.GenderId"
                   :size="3"
                   :options="options.genders"
+                  :disabled="!!data.sendDate"
                   required
                   label="Sexo" />
               </div>
@@ -94,6 +96,7 @@
                   v-model="data.personalData.nationality"
                   :errors="errors.personalData.Nationality"
                   :size="3"
+                  :disabled="!!data.sendDate"
                   required
                   label="Nacionalidade"
                   hint="Ex: Brasileiro" />
@@ -102,6 +105,7 @@
                   :errors="errors.personalData.BirthCountryId"
                   :size="3"
                   :options="options.countries"
+                  :disabled="!!data.sendDate"
                   required
                   label="País de Origem"
                   hint="Ex: Brasil" />
@@ -110,6 +114,7 @@
                   :errors="errors.personalData.BirthStateId"
                   :size="3"
                   :options="options.states"
+                  :disabled="!!data.sendDate"
                   required
                   label="UF de Nascimento" />
                 <DropDown
@@ -118,6 +123,7 @@
                   :size="3"
                   :options="options.cities"
                   :filter="data.personalData.birthStateId"
+                  :disabled="!!data.sendDate"
                   filter-key="stateId"
                   key-id="name"
                   required
@@ -131,6 +137,7 @@
                   :size="6"
                   :min-size="4"
                   :max-size="4"
+                  :disabled="!!data.sendDate"
                   mask="####"
                   required
                   label="Ano de conclusão do ensino médio"
@@ -140,6 +147,7 @@
                   :errors="errors.personalData.HighSchoolGraduationCountryId"
                   :size="6"
                   :options="options.countries"
+                  :disabled="!!data.sendDate"
                   required
                   label="País de conclusão do ensino médio" />
               </div>
@@ -162,6 +170,7 @@
                   :size="4"
                   :min-size="13"
                   :max-size="14"
+                  :disabled="!!data.sendDate"
                   required
                   label="Telefone"
                   mask="(##) #########?"
@@ -172,6 +181,7 @@
                   :size="4"
                   :min-size="13"
                   :max-size="14"
+                  :disabled="!!data.sendDate"
                   required
                   label="Telefone Fixo"
                   mask="(##) #########?"
@@ -185,6 +195,7 @@
                   :errors="errors.personalData.Zipcode"
                   :size="3"
                   :min-size="9"
+                  :disabled="!!data.sendDate"
                   required
                   label="CEP"
                   mask="#####-###"
@@ -194,12 +205,14 @@
                   :errors="errors.personalData.AddressKindId"
                   :size="3"
                   :options="options.addressKinds"
+                  :disabled="!!data.sendDate"
                   required
                   label="Tipo de Endereço" />
                 <InputBox
                   v-model="data.personalData.streetAddress"
                   :errors="errors.personalData.StreetAddress"
                   :size="6"
+                  :disabled="!!data.sendDate"
                   required
                   label="Logradouro"
                   hint="Sua rua, avenida, etc." />
@@ -209,12 +222,14 @@
                   v-model="data.personalData.complementAddress"
                   :errors="errors.personalData.ComplementAddress"
                   :size="3"
+                  :disabled="!!data.sendDate"
                   required
                   label="Complemento" />
                 <InputBox
                   v-model="data.personalData.neighborhood"
                   :errors="errors.personalData.Neighborhood"
                   :size="3"
+                  :disabled="!!data.sendDate"
                   required
                   label="Bairro" />
                 <DropDown
@@ -222,6 +237,7 @@
                   :errors="errors.personalData.StateId"
                   :size="3"
                   :options="options.states"
+                  :disabled="!!data.sendDate"
                   required
                   label="Estado" />
                 <DropDown
@@ -230,6 +246,7 @@
                   :size="3"
                   :options="options.cities"
                   :filter="data.personalData.stateId"
+                  :disabled="!!data.sendDate"
                   filter-key="stateId"
                   key-id="name"
                   required
@@ -244,6 +261,7 @@
                   :errors="errors.personalData.RaceId"
                   :size="3"
                   :options="options.races"
+                  :disabled="!!data.sendDate"
                   required
                   label="Raça" />
                 <DropDown
@@ -251,12 +269,14 @@
                   :errors="errors.personalData.HighSchoolKindId"
                   :size="3"
                   :options="options.highSchoolKinds"
+                  :disabled="!!data.sendDate"
                   required
                   label="Escola" />
                 <InputBox
                   v-model="data.personalData.mothersName"
                   :errors="errors.personalData.MothersName"
                   :size="6"
+                  :disabled="!!data.sendDate"
                   required
                   label="Nome completo da mãe" />
               </div>
@@ -267,6 +287,7 @@
                   v-model="data.personalData.handicap"
                   :errors="errors.personalData.Handicap"
                   :options="handicap"
+                  :disabled="!!data.sendDate"
                   required
                   label="Possui alguma Deficiência, Transtorno Global do
                     Desenvolvimento, ou Habilidades/Superdotação?" />
@@ -278,7 +299,8 @@
                 <CheckGroup
                   v-model="data.personalData.disabilities"
                   :errors="errors.personalData.Disabilities"
-                  :options="options.disabilities" />
+                  :options="options.disabilities"
+                  :disabled="!!data.sendDate" />
               </div>
             </Fieldset>
             <Fieldset title="Necessidades Especiais">
@@ -287,17 +309,20 @@
                 <CheckGroup
                   v-model="data.personalData.specialNeeds"
                   :errors="errors.personalData.SpecialNeeds"
-                  :options="options.specialNeeds" />
+                  :options="options.specialNeeds"
+                  :disabled="!!data.sendDate" />
               </div>
             </Fieldset>
             <Fieldset title="Documentos">
               <Documents
                 v-model="data.personalData.documents"
                 :types="options.personalDocuments"
-                :prefix="`onboarding/enrollment/${ id }/personalData/`" />
+                :prefix="`onboarding/enrollment/${ id }/personalData/`"
+                :disabled="!!data.sendDate" />
             </Fieldset>
             <div class="flex justify-end">
               <Btn
+                :disabled="!!data.sendDate"
                 primary
                 label="Próximo"
                 @click="savePersonalData" />
@@ -305,7 +330,6 @@
           </Card>
         </Step>
         <Step
-          :disabled="!!data.sendDate"
           :complete="data.financeData.state == 'valid'"
           :error="data.financeData.state == 'invalid'"
           title="Dados Financeiros"
@@ -321,12 +345,14 @@
                   :errors="errors.financeData.paymentMethodId"
                   :size="6"
                   :options="options.paymentMethod"
+                  :disabled="!!data.sendDate"
                   label="Meio de Pagamento" />
                 <DropDown
                   v-model="data.financeData.planId"
                   :errors="errors.financeData.planId"
                   :size="6"
                   :options="options.plans"
+                  :disabled="!!data.sendDate"
                   label="Meio de Pagamento" />
               </div>
             </Fieldset>
@@ -337,6 +363,7 @@
                   :errors="errors.financeData.representative.discriminator"
                   :size="4"
                   :options="discriminators"
+                  :disabled="!!data.sendDate"
                   label="CPF ou CNPJ" />
                 <InputBox
                   v-if="data.financeData.representative.discriminator == null"
@@ -350,6 +377,7 @@
                     == 'RepresentativePerson'"
                   :size="4"
                   :min-size="14"
+                  :disabled="!!data.sendDate"
                   cpf
                   label="CPF"
                   mask="###.###.###-##"
@@ -361,6 +389,7 @@
                     == 'RepresentativeCompany'"
                   :size="4"
                   :min-size="18"
+                  :disabled="!!data.sendDate"
                   cnpj
                   label="CNPJ"
                   mask="##.###.###/####-##"
@@ -376,6 +405,7 @@
                   v-if="data.financeData.representative.discriminator
                     == 'RepresentativePerson'"
                   :size="4"
+                  :disabled="!!data.sendDate"
                   label="Nome completo" />
                 <InputBox
                   v-model="data.financeData.representative.name"
@@ -383,6 +413,7 @@
                   v-if="data.financeData.representative.discriminator
                     == 'RepresentativeCompany'"
                   :size="4"
+                  :disabled="!!data.sendDate"
                   label="Razão Social" />
               </div>
               <div class="flex gutters flex-wrap">
@@ -397,6 +428,7 @@
                   v-model="data.financeData.representative.contact"
                   :errors="errors.financeData.representative.contact"
                   :size="4"
+                  :disabled="!!data.sendDate"
                   label="Pessoa de Contato" />
                 <InputBox
                   v-if="data.financeData.representative.discriminator
@@ -404,16 +436,19 @@
                   v-model="data.financeData.representative.relationship"
                   :errors="errors.financeData.representative.relationship"
                   :size="4"
+                  :disabled="!!data.sendDate"
                   label="Relacionamento com o aluno" />
                 <InputBox
                   v-model="data.financeData.representative.streetAddress"
                   :errors="errors.financeData.representative.streetAddress"
                   :size="4"
+                  :disabled="!!data.sendDate"
                   label="Logradouro" />
                 <InputBox
                   v-model="data.financeData.representative.complementAddress"
                   :errors="errors.financeData.representative.complementAddress"
                   :size="4"
+                  :disabled="!!data.sendDate"
                   label="Complemento" />
               </div>
               <div class="flex gutters flex-wrap">
@@ -421,12 +456,14 @@
                   v-model="data.financeData.representative.neighborhood"
                   :errors="errors.financeData.representative.neighborhood"
                   :size="4"
+                  :disabled="!!data.sendDate"
                   label="Bairro" />
                 <DropDown
                   v-model="data.financeData.representative.stateId"
                   :errors="errors.financeData.representative.stateId"
                   :size="4"
                   :options="options.states"
+                  :disabled="!!data.sendDate"
                   required
                   label="Estado" />
                 <DropDown
@@ -435,6 +472,7 @@
                   :size="4"
                   :options="options.cities"
                   :filter="data.financeData.representative.stateId"
+                  :disabled="!!data.sendDate"
                   filter-key="stateId"
                   key-id="name"
                   required
@@ -445,18 +483,21 @@
                   v-model="data.financeData.representative.landline"
                   :errors="errors.financeData.representative.landline"
                   :size="4"
+                  :disabled="!!data.sendDate"
                   label="Telefone"
                   mask="(##) ####-####" />
                 <InputBox
                   v-model="data.financeData.representative.phoneNumber"
                   :errors="errors.financeData.representative.phoneNumber"
                   :size="4"
+                  :disabled="!!data.sendDate"
                   label="Celular"
                   mask="(##) #####-####" />
                 <InputBox
                   v-model="data.financeData.representative.email"
                   :errors="errors.financeData.representative.email"
                   :size="4"
+                  :disabled="!!data.sendDate"
                   label="E-mail" />
              </div>
             </Fieldset>
@@ -466,6 +507,7 @@
                 v-model="data.financeData.guarantors"
                 :errors="errors.financeData"
                 :default="emptyGuarantor"
+                :disabled="!!data.sendDate"
                 error-key="guarantors">
                 <template slot-scope="{ item, error }">
                   <div class="flex gutters flex-wrap">
@@ -474,6 +516,7 @@
                       :errors="error.cpf"
                       :size="4"
                       :min-size="14"
+                      :disabled="!!data.sendDate"
                       cpf
                       label="CPF"
                       mask="###.###.###-##"
@@ -482,6 +525,7 @@
                       v-model="item.name"
                       :errors="error.name"
                       :size="8"
+                      :disabled="!!data.sendDate"
                       label="Nome" />
                   </div>
                   <div class="flex gutters flex-wrap">
@@ -489,16 +533,19 @@
                       v-model="item.relationship"
                       :errors="error.relationship"
                       :size="4"
+                      :disabled="!!data.sendDate"
                       label="Relacionamento" />
                     <InputBox
                       v-model="item.streetAddress"
                       :errors="error.streetAddress"
                       :size="4"
+                      :disabled="!!data.sendDate"
                       label="Endereço Completo" />
                     <InputBox
                       v-model="item.complementAddress"
                       :errors="error.complementAddress"
                       :size="4"
+                      :disabled="!!data.sendDate"
                       label="Complemento" />
                   </div>
                   <div class="flex gutters flex-wrap">
@@ -506,12 +553,14 @@
                       v-model="item.neighborhood"
                       :errors="error.neighborhood"
                       :size="4"
+                      :disabled="!!data.sendDate"
                       label="Bairro" />
                     <DropDown
                       v-model="item.stateId"
                       :errors="error.stateId"
                       :size="4"
                       :options="options.states"
+                      :disabled="!!data.sendDate"
                       required
                       label="Estado" />
                     <DropDown
@@ -520,6 +569,7 @@
                       :size="4"
                       :options="options.cities"
                       :filter="item.stateId"
+                      :disabled="!!data.sendDate"
                       filter-key="stateId"
                       key-id="name"
                       required
@@ -531,25 +581,29 @@
                       v-model="item.landline"
                       :errors="error.landline"
                       :size="4"
+                      :disabled="!!data.sendDate"
                       label="Telefone"
                       mask="(##) ####-####" />
                     <InputBox
                       v-model="item.phoneNumber"
                       :errors="error.phoneNumber"
                       :size="4"
+                      :disabled="!!data.sendDate"
                       label="Celular"
                       mask="(##) #####-####" />
                     <InputBox
                       v-model="item.email"
                       :errors="error.email"
                       :size="4"
+                      :disabled="!!data.sendDate"
                       label="E-mail" />
                   </div>
                   <Documents
                     v-model="item.documents"
                     :errors="error.documents"
                     :types="options.guarantorDocuments"
-                    :prefix="`onboarding/enrollment/${ id }/financeData/`" />
+                    :prefix="`onboarding/enrollment/${ id }/financeData/`"
+                    :disabled="!!data.sendDate" />
                 </template>
               </Multi>
             </Fieldset>
@@ -557,6 +611,7 @@
               <Btn
                 primary
                 label="Próximo"
+                :disabled="!!data.sendDate"
                 @click="saveFinanceData" />
             </div>
           </Card>

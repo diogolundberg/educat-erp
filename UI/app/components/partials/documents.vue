@@ -9,6 +9,7 @@
           <UploadButton
             :prefix="`${ prefix }${ type.id }/`"
             :value="get(type.id)"
+            :disabled="disabled"
             @input="set(type.id, $event)" />
       </div>
       <hr
@@ -33,6 +34,10 @@
       prefix: {
         type: String,
         default: "",
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
       },
     },
     methods: {
