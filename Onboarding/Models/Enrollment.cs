@@ -13,18 +13,20 @@ namespace Onboarding.Models
 
         public virtual FinanceData FinanceData { get; set; }
 
-        public DateTime? SendDate { get; set; }
+        public DateTime? SentAt { get; set; }
 
-        public bool AcademicApproval { get; set; }
+        public DateTime? ReviewedAt { get; set; }
 
-        public bool FinanceApproval { get; set; }
+        public DateTime? AcademicApproval { get; set; }
+
+        public DateTime? FinanceApproval { get; set; }
 
         public DateTime Deadline { get; set; }
 
         public override string CreateExternalId()
         {
             string semester = DateTime.Now.Month > 6 ? "2" : "1";
-            return DateTime.Now.Year  + semester + Regex.Replace(PersonalData.CPF, @"\D" , string.Empty); ;
+            return DateTime.Now.Year + semester + Regex.Replace(PersonalData.CPF, @"\D", string.Empty); ;
         }
 
         internal bool IsDeadlineValid()

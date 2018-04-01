@@ -66,7 +66,7 @@ namespace Onboarding.Controllers
                 data = new
                 {
                     enrollment.Deadline,
-                    enrollment.SendDate,
+                    enrollment.SentAt,
                     enrollment.AcademicApproval,
                     enrollment.FinanceApproval,
                     personalData,
@@ -128,7 +128,7 @@ namespace Onboarding.Controllers
 
             if (personalData.State == "valid" && financeData.State == "valid")
             {
-                enrollment.SendDate = DateTime.Now;
+                enrollment.SentAt = DateTime.Now;
                 _context.Set<Enrollment>().Update(enrollment);
                 _context.SaveChanges();
                 messages.Add("A matrícula foi enviada para aprovação");
