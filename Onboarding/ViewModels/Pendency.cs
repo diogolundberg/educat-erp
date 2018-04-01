@@ -1,10 +1,13 @@
-﻿namespace Onboarding.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Onboarding.ViewModels
 {
     public class Pendency
     {
-        public int SectionId { get; set; }
+        public int Id { get; set; }
 
-        public Section Section { get; set; }
+        [Required]
+        public int? SectionId { get; set; }
 
         public string Description { get; set; }
     }
