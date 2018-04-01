@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Onboarding.Data.Entity;
 using Onboarding.Models;
-using Onboarding.ViewModel;
+using Onboarding.ViewModels;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;

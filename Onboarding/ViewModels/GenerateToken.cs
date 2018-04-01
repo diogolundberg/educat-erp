@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Onboarding.Validations;
 
-namespace Onboarding.ViewModel
+namespace Onboarding.ViewModels
 {
     public class GenerateToken
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Onboarding.Validations;
 using Newtonsoft.Json;
 
-namespace Onboarding.ViewModel
+namespace Onboarding.ViewModels
 {
     public class PersonalDataViewModel
     {

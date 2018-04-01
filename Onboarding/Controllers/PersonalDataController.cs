@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Models;
-using Onboarding.ViewModel;
+using Onboarding.ViewModels;
 
 namespace Onboarding.Controllers
 {

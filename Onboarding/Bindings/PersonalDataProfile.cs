@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Onboarding.Models;
-using Onboarding.ViewModel;
+using Onboarding.ViewModels;
 using System.Linq;
 
 namespace Onboarding.Bindings

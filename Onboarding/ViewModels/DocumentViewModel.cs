@@ -1,4 +1,4 @@
-﻿namespace Onboarding.ViewModel
+﻿namespace Onboarding.ViewModels
 {
     public class DocumentViewModel
     {
