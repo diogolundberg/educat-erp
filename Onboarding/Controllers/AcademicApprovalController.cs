@@ -31,5 +31,18 @@ namespace Onboarding.Controllers
             List<Records> records = _mapper.Map<List<Records>>(enrollments);
             return new { records };
         }
+
+        [HttpPost("", Name = "ONBOARDING/ACADEMICAPPROVAL/NEW")]
+        public dynamic Create(Form form)
+        {
+            Enrollment enrollment = _context.Enrollments.SingleOrDefault(x => x.ExternalId == form.EnrollmentNumber);
+
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
+            }
+
+            return new OkObjectResult(new { });
+        }
     }
 }
