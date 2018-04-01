@@ -90,6 +90,7 @@ namespace Onboarding
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "ONBOARDING", Version = "v1" });
+                c.CustomSchemaIds(x => x.FullName);
             });
 
             services.AddAutoMapper();
