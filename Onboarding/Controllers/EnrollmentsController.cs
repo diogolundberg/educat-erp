@@ -32,11 +32,6 @@ namespace Onboarding.Controllers
         [HttpGet("{token}", Name = "ONBOARDING/ENROLLMENTS/GET")]
         public dynamic Get(string token)
         {
-            if (string.IsNullOrEmpty(token))
-            {
-                return BadRequest();
-            }
-
             Enrollment enrollment = _context.Enrollments
                                             .Include("PersonalData")
                                             .Include("PersonalData.PersonalDataDisabilities")
@@ -48,11 +43,16 @@ namespace Onboarding.Controllers
                                             .Include("FinanceData.Guarantors")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
-                                            .Single(x => x.ExternalId == token);
+                                            .SingleOrDefault(x => x.ExternalId == token);
+
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { "Link para matrícula inválido" } });
+            }
 
             if (!enrollment.IsDeadlineValid())
             {
-                return BadRequest();
+                return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado" } });
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
@@ -95,11 +95,6 @@ namespace Onboarding.Controllers
         [HttpPost("{token}", Name = "ONBOARDING/ENROLLMENTS/SEND")]
         public dynamic Send(string token)
         {
-            if (string.IsNullOrEmpty(token))
-            {
-                return BadRequest();
-            }
-
             Enrollment enrollment = _context.Enrollments
                                             .Include("PersonalData")
                                             .Include("PersonalData.PersonalDataDisabilities")
@@ -113,9 +108,14 @@ namespace Onboarding.Controllers
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
                                             .Single(x => x.ExternalId == token);
 
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { "Link para matrícula inválido" } });
+            }
+
             if (!enrollment.IsDeadlineValid())
             {
-                return BadRequest();
+                return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado" } });
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
@@ -124,28 +124,30 @@ namespace Onboarding.Controllers
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
             financeData.State = FinanceDataState(financeData);
 
-            var errors = new Hashtable();
+            var messages = new List<string>();
 
             if (personalData.State == "valid" && financeData.State == "valid")
             {
                 enrollment.SendDate = DateTime.Now;
                 _context.Set<Enrollment>().Update(enrollment);
                 _context.SaveChanges();
+                messages.Add("A matrícula foi enviada para aprovação");
+
+                return new OkObjectResult(new { messages });
             }
             else
             {
                 if (personalData.State != "valid")
                 {
-                    errors.Add("personalData", "Os dados pessoais estão inválidos");
+                    messages.Add("Os dados pessoais estão inválidos");
                 }
                 if (financeData.State != "valid")
                 {
-                    errors.Add("financeData", "Os dados financeiros estão inválidos");
+                    messages.Add("Os dados financeiros estão inválidos");
                 }
 
+                return new BadRequestObjectResult(new { messages });
             }
-
-            return new { errors };
         }
 
         [HttpPost("GenerateToken", Name = "ONBOARDING/ENROLLMENTS/GENERATETOKEN")]
