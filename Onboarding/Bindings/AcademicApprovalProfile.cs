@@ -21,6 +21,17 @@ namespace Onboarding.Bindings
 
             CreateMap<Models.Pendency, ViewModels.Pendency>();
             CreateMap<ViewModels.Pendency, Models.Pendency>();
+
+            CreateMap<ViewModels.AcademicApprovals.AcademicPendency, Models.EnrollmentPendency>()
+            .ForMember(x => x.Pendency, config => config.MapFrom(c => new EnrollmentPendency
+            {
+                Pendency = new Models.AcademicPendency
+                {
+                    Id = c.Id,
+                    SectionId = c.SectionId.Value,
+                    Description = c.Description
+                }
+            }));
         }
     }
 }
