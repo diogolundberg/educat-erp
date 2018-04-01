@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Onboarding.Models;
-using Onboarding.ViewModels;
+using Onboarding.ViewModels.FinanceApprovals;
 
 namespace Onboarding.Controllers
 {
@@ -28,7 +28,7 @@ namespace Onboarding.Controllers
         public dynamic GetList()
         {
             List<Enrollment> enrollments = _context.Enrollments.Include("PersonalData").ToList();
-            List<FinanceApprovalViewModel> approvalList = _mapper.Map<List<FinanceApprovalViewModel>>(enrollments);
+            List<Records> approvalList = _mapper.Map<List<Records>>(enrollments);
             return new { records = approvalList };
         }
     }
