@@ -33,7 +33,7 @@ namespace Onboarding.Controllers
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ACADEMICAPPROVAL/GET")]
-        public IActionResult GetById(string enrollmentNumber, [FromQuery]int id)
+        public IActionResult GetById([FromRoute]string enrollmentNumber)
         {
             Enrollment enrollment = _context.Enrollments.SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -42,13 +42,13 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
             }
 
-            Record data = _mapper.Map<Record>(enrollment);
+            Record data = _mapper.Map<Record>(enrollment); // TODO: Adicionar todos os dados para a visualização
 
             return new OkObjectResult(new { data });
         }
 
         [HttpPost("", Name = "ONBOARDING/ACADEMICAPPROVAL/NEW")]
-        public dynamic Create(Form form)
+        public dynamic Create([FromBody]Form form)
         {
             Enrollment enrollment = _context.Enrollments.SingleOrDefault(x => x.ExternalId == form.EnrollmentNumber);
 
@@ -56,6 +56,12 @@ namespace Onboarding.Controllers
             {
                 return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
             }
+
+            // TODO: Persistir as pendencias
+            // TODO: Adicionar lógica da maquina de estado
+            //   -> Quando não houver pendências, aprovar (preencher AcademicApproval)
+            //   -> (academicAppoval || academicPendencies) && (financeAppoval || financePendencies) = preenche reviewed at
+            //   -> (reviewed_at && (academicPendencies || financePendencies)) = sent at zerado
 
             return new OkObjectResult(new { });
         }
