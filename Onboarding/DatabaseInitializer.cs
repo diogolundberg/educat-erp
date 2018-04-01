@@ -157,6 +157,11 @@ namespace Onboarding
                     context.PaymentMethod.Add(new PaymentMethod { Name = "BOLETO" });
                 }
 
+                if (!context.Sections.Any())
+                {
+                    context.Sections.Add(new Section { Name = "Dados pessoais" });
+                }
+
                 context.SaveChanges();
             }
         }
