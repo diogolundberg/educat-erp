@@ -94,8 +94,11 @@ namespace Onboarding.Controllers
             {
                 if (!form.AcademicPendencies.Any(c => c.Id == enrollmentPendency.PendencyId))
                 {
-                    _context.Set<Models.EnrollmentPendency>().Remove(enrollmentPendency);
-                    _context.Set<Models.Pendency>().Remove(enrollmentPendency.Pendency);
+                    if (enrollmentPendency.Pendency is Models.AcademicPendency)
+                    {
+                        _context.Set<Models.EnrollmentPendency>().Remove(enrollmentPendency);
+                        _context.Set<Models.Pendency>().Remove(enrollmentPendency.Pendency);
+                    }
                 }
             }
             foreach (ViewModels.Pendency pendency in form.AcademicPendencies)
