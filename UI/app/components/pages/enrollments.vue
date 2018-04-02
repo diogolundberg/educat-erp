@@ -2,7 +2,7 @@
   <div class="max-width-4 m-auto">
     <h2>{{ title }}</h2>
     <List
-      v-model="enrollemnts"
+      v-model="enrollments"
       :columns="[{name: 'name', title: 'Nome'},{name: 'cpf', title: 'CPF'}]"
       @click="show($event)" />
     <EnrollmentInfo
@@ -27,7 +27,7 @@
         }
         return "Aprovação - Financeira";
       },
-      enrollemnts() {
+      enrollments() {
         if (this.type === "academic") {
           return this.$store.getters.academicApprovals;
         }
