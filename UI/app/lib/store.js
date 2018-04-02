@@ -98,10 +98,13 @@ export default new VueX.Store({
     academicApprovals: [],
     financeApprovals: [],
     enrollmentInfo: {
-      data: {},
-      options: {
-        pendencyList: [],
+      data: {
+        pendencies: [],
       },
+      options: {
+        sections: [],
+      },
+      errors: {},
       messages: [],
     },
   },

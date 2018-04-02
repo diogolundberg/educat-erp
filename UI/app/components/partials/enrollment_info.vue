@@ -8,11 +8,25 @@
       Nome: {{ enrollment.data.name }}<br>
       CPF: {{ enrollment.data.cpf }}<br>
       ID: {{ enrollment.data.enrollmentNumber }}<br>
-      <h2>Pendências</h2>
-      <CheckGroup
-        v-model="enrollment.data.pendencies"
-        :options="enrollment.options.pendencyList"
-        vertical />
+      <Fieldset title="Pendências">
+        <Multi
+          v-model="enrollment.data.pendencies"
+          :errors="enrollment.errors"
+          :default="{ sectionId: null, description: '' }"
+          :error-key="pendencies">
+          <template slot-scope="{ item, error }">
+            <DropDown
+              v-model="item.sectionId"
+              :errors="error.sectionId"
+              :options="enrollment.options.sections"
+              label="Documento" />
+            <InputBox
+              v-model="item.description"
+              :errors="error.description"
+              label="Descrição" />
+          </template>
+        </Multi>
+      </Fieldset>
     </div>
     <template slot="footer">
       <Btn
