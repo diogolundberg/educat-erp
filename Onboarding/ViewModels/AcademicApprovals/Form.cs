@@ -6,12 +6,12 @@ namespace Onboarding.ViewModels.AcademicApprovals
     {
         public Form()
         {
-            AcademicPendencies = new HashSet<AcademicPendency>();
+            Pendencies = new HashSet<AcademicPendency>();
         }
 
         public string EnrollmentNumber { get; set; }
 
-        public IEnumerable<AcademicPendency> AcademicPendencies { get; set; }
+        public IEnumerable<AcademicPendency> Pendencies { get; set; }
     }
 }
 
