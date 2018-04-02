@@ -97,7 +97,7 @@ namespace Onboarding.Controllers
 
             foreach (Models.Pendency pendency in enrollment.Pendencies.ToList())
             {
-                if (!form.AcademicPendencies.Any(c => c.Id == pendency.Id))
+                if (!form.Pendencies.Any(c => c.Id == pendency.Id))
                 {
                     if (pendency is Models.AcademicPendency)
                     {
@@ -105,7 +105,7 @@ namespace Onboarding.Controllers
                     }
                 }
             }
-            foreach (ViewModels.Pendency pendency in form.AcademicPendencies)
+            foreach (ViewModels.Pendency pendency in form.Pendencies)
             {
                 Models.Pendency existingPendency = enrollment.Pendencies.Where(c => c.Id == pendency.Id).SingleOrDefault();
 
@@ -127,18 +127,18 @@ namespace Onboarding.Controllers
                 }
             }
 
-            if (form.AcademicPendencies.Count() == 0)
+            if (form.Pendencies.Count() == 0)
             {
                 enrollment.AcademicApproval = DateTime.Now;
             }
 
-            if ((enrollment.AcademicApproval.HasValue || form.AcademicPendencies.Count() > 0)
+            if ((enrollment.AcademicApproval.HasValue || form.Pendencies.Count() > 0)
                 && (enrollment.FinanceApproval.HasValue || enrollment.Pendencies.OfType<Models.AcademicPendency>().Count() > 0))
             {
                 enrollment.ReviewedAt = DateTime.Now;
             }
 
-            if (enrollment.ReviewedAt.HasValue && (form.AcademicPendencies.Count() > 0 || enrollment.Pendencies.OfType<Models.AcademicPendency>().Count() > 0))
+            if (enrollment.ReviewedAt.HasValue && (form.Pendencies.Count() > 0 || enrollment.Pendencies.OfType<Models.AcademicPendency>().Count() > 0))
             {
                 enrollment.SentAt = null;
             }
@@ -148,9 +148,6 @@ namespace Onboarding.Controllers
             _context.Set<Enrollment>().Update(enrollment);
 
             _context.SaveChanges();
-
-            messages.Add("Procedimento realizado com sucesso.");
-
 
             return new OkObjectResult(new { messages });
         }
