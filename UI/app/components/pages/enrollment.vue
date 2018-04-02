@@ -64,7 +64,7 @@
                   label="CPF"
                   mask="###.###.###-##"
                   hint="Ex: 000.000.000-00" />
-                <Date
+                <InputBox
                   v-model="enrollment.data.personalData.birthDate"
                   :errors="enrollment.errors.personalData.BirthDate"
                   :size="3"
