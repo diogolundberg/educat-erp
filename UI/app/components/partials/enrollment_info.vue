@@ -52,9 +52,10 @@
         await this.$store.dispatch(`get${type}ApprovalInfo`, enrollment);
         this.modal = true;
       },
-      approve(enrollment) {
-        const type = this.type === "academic" ? "Academic" : "Finance";
-        this.$store.dispatch(`approve${type}`, enrollment);
+      async approve() {
+        await this.$store.dispatch(`${this.type}Approve`, this.enrollment.data);
+        this.enrollment.messages.forEach(this.notify);
+        this.modal = false;
       },
     },
   };
