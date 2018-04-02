@@ -22,16 +22,11 @@
     },
     computed: {
       title() {
-        if (this.type === "academic") {
-          return "Aprovação - Acadêmica";
-        }
-        return "Aprovação - Financeira";
+        const type = this.type === "academic" ? "Acadêmica" : "Financeira";
+        return `Aprovação - ${type}`;
       },
       enrollments() {
-        if (this.type === "academic") {
-          return this.$store.getters.academicApprovals;
-        }
-        return this.$store.getters.financeApprovals;
+        return this.$store.getters[`${this.type}Approvals`];
       },
     },
     watch: {
@@ -44,11 +39,8 @@
     },
     methods: {
       load() {
-        if (this.type === "academic") {
-          this.$store.dispatch("getAcademicApprovals");
-        } else if (this.type === "finance") {
-          this.$store.dispatch("getFinanceApprovals");
-        }
+        const type = this.type === "academic" ? "Academic" : "Finance";
+        this.$store.dispatch(`get${type}Approvals`);
       },
       show(enrollment) {
         this.$refs.modal.show(enrollment);

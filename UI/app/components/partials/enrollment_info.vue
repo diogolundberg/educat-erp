@@ -34,26 +34,19 @@
     },
     computed: {
       title() {
-        if (this.type === "academic") {
-          return "Aprovação - Acadêmica";
-        }
-        return "Aprovação - Financeira";
+        const type = this.type === "academic" ? "Acadêmica" : "Financeira";
+        return `Aprovação - ${type}`;
       },
     },
     methods: {
       show(enrollment) {
-        if (this.type === "academic") {
-          this.$store.dispatch("getAcademicApprovalInfo", enrollment);
-        } else if (this.type === "finance") {
-          this.$store.dispatch("getFinanceApprovalInfo", enrollment);
-        }
+        const type = this.type === "academic" ? "Academic" : "Finance";
+        this.$store.dispatch(`get${type}ApprovalInfo`, enrollment);
         this.modal = true;
       },
       approve(enrollment) {
-        if (this.type === "academic") {
-          this.$store.dispatch("approveAcademic", enrollment);
-        }
-        this.$store.dispatch("approveFinance", enrollment);
+        const type = this.type === "academic" ? "Academic" : "Finance";
+        this.$store.dispatch(`approve${type}`, enrollment);
       },
     },
   };
