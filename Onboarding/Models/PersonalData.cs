@@ -18,7 +18,7 @@ namespace Onboarding.Models
 
         public string AssumedName { get; set; }
 
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         public string CPF { get; set; }
 
