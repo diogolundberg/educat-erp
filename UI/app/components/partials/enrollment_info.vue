@@ -3,11 +3,16 @@
     v-model="modal"
     :title="title">
     <div
-      v-if="$store.getters.enrollmentInfo"
       class="m2">
-      Nome: {{ $store.getters.enrollmentInfo.name }}<br>
-      CPF: {{ $store.getters.enrollmentInfo.cpf }}<br>
-      ID: {{ $store.getters.enrollmentInfo.enrollmentNumber }}<br>
+      <h2>Dados da Matrícula</h2>
+      Nome: {{ data.name }}<br>
+      CPF: {{ data.cpf }}<br>
+      ID: {{ data.enrollmentNumber }}<br>
+      <h2>Pendências</h2>
+      <CheckGroup
+        v-model="data.pendencies"
+        :options="options.pendencyList"
+        vertical />
     </div>
     <template slot="footer">
       <Btn
@@ -33,15 +38,21 @@
       };
     },
     computed: {
+      data() {
+        return this.$store.getters.enrollmentInfo.data;
+      },
+      options() {
+        return this.$store.getters.enrollmentInfo.options;
+      },
       title() {
         const type = this.type === "academic" ? "Acadêmica" : "Financeira";
         return `Aprovação - ${type}`;
       },
     },
     methods: {
-      show(enrollment) {
+      async show(enrollment) {
         const type = this.type === "academic" ? "Academic" : "Finance";
-        this.$store.dispatch(`get${type}ApprovalInfo`, enrollment);
+        await this.$store.dispatch(`get${type}ApprovalInfo`, enrollment);
         this.modal = true;
       },
       approve(enrollment) {
