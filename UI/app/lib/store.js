@@ -14,7 +14,7 @@ export default new VueX.Store({
     enrollment: {
       data: {
         deadline: null,
-        sendDate: null,
+        sentAt: null,
         academicApproval: false,
         financeApproval: false,
         personalData: {
@@ -130,8 +130,8 @@ export default new VueX.Store({
       Object.assign(state.enrollment.data.financeData, data);
       Object.assign(state.enrollment.errors.financeData, errors);
     },
-    SET_ENROLLMENT_SENDDATE(state) {
-      state.enrollment.data.sendDate = new Date();
+    SET_ENROLLMENT_SENTAT(state) {
+      state.enrollment.data.sentAt = new Date();
     },
     SET_ENROLLMENT_MESSAGES(state, { messages }) {
       state.enrollment.messages = messages;
@@ -180,7 +180,7 @@ export default new VueX.Store({
       try {
         const url = `${url2}/api/Enrollments/${token}`;
         const response = await axios.post(url);
-        commit("SET_ENROLLMENT_SENDDATE");
+        commit("SET_ENROLLMENT_SENTAT");
         commit("SET_ENROLLMENT_MESSAGES", response.data);
       } catch (ex) {
         commit("SET_ENROLLMENT_MESSAGES", ex.response.data);
