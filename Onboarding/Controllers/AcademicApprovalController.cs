@@ -45,7 +45,12 @@ namespace Onboarding.Controllers
 
             Record data = _mapper.Map<Record>(enrollment); // TODO: Adicionar todos os dados para a visualização
 
-            return new OkObjectResult(new { data, options = _context.Sections });
+            return new OkObjectResult(new
+            {
+                data,
+                options = new
+                { _context.Sections }
+            });
         }
 
         [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/ACADEMICAPPROVAL/NEW")]
