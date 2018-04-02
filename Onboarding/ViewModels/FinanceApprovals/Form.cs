@@ -6,11 +6,11 @@ namespace Onboarding.ViewModels.FinanceApprovals
     {
         public Form()
         {
-            FinancePendencies = new HashSet<FinancePendency>();
+            Pendencies = new HashSet<FinancePendency>();
         }
 
         public string EnrollmentNumber { get; set; }
 
-        public IEnumerable<FinancePendency> FinancePendencies { get; set; }
+        public IEnumerable<FinancePendency> Pendencies { get; set; }
     }
 }
