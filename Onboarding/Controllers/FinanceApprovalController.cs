@@ -48,12 +48,12 @@ namespace Onboarding.Controllers
             return new OkObjectResult(new { data });
         }
 
-        [HttpPost("", Name = "ONBOARDING/FINANCEAPPROVAL/NEW")]
-        public dynamic Create([FromBody]Form form)
+        [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/FINANCEAPPROVAL/NEW")]
+        public dynamic Create([FromRoute]string enrollmentNumber, [FromBody]Form form)
         {
             Enrollment enrollment = _context.Enrollments
                                             .Include("Pendencies")
-                                            .SingleOrDefault(x => x.ExternalId == form.EnrollmentNumber);
+                                            .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {
