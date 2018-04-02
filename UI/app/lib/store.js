@@ -106,20 +106,31 @@ export default new VueX.Store({
     },
   },
   getters: {
+    // Agnostic services
     logged: state => !!state.token,
-    enrollment: state => state.enrollment,
     uploadUrl: state => state.uploadUrl,
+
+    // Enrollment
+    enrollment: state => state.enrollment,
+
+    // Backoffice enrollment approval
     academicApprovals: state => state.academicApprovals,
     financeApprovals: state => state.financeApprovals,
     enrollmentInfo: state => state.enrollmentInfo,
   },
   mutations: {
+    // Agnostic services
     LOGIN(state, token) {
       state.token = token;
     },
     LOGOUT(state) {
       state.token = undefined;
     },
+    SET_UPLOAD_URL(state, url) {
+      state.uploadUrl = url;
+    },
+
+    // Enrollment
     SET_ENROLLMENT(state, data) {
       Object.assign(state.enrollment, data);
     },
@@ -137,9 +148,8 @@ export default new VueX.Store({
     SET_ENROLLMENT_MESSAGES(state, { messages }) {
       state.enrollment.messages = messages;
     },
-    SET_UPLOAD_URL(state, url) {
-      state.uploadUrl = url;
-    },
+
+    // Backoffice enrollment approval
     SET_ACADEMIC_APPROVALS(state, { records }) {
       state.academicApprovals = records;
     },
@@ -153,6 +163,7 @@ export default new VueX.Store({
     },
   },
   actions: {
+    // Agnostic services
     async login({ commit }, credentials) {
       const url = `${url1}/api/Token`;
       const response = await axios.post(url, credentials);
@@ -163,6 +174,13 @@ export default new VueX.Store({
       localStorage.removeItem("token");
       commit("LOGOUT");
     },
+    async presign({ commit }, fileName) {
+      const url = `${url3}/api/Presign`;
+      const response = await axios.post(url, { fileName });
+      commit("SET_UPLOAD_URL", response.data);
+    },
+
+    // Enrollment
     async getEnrollment({ commit }, token) {
       const url = `${url2}/api/Enrollments/${token}`;
       const response = await axios.get(url);
@@ -188,11 +206,8 @@ export default new VueX.Store({
         commit("SET_ENROLLMENT_MESSAGES", ex.response.data);
       }
     },
-    async presign({ commit }, fileName) {
-      const url = `${url3}/api/Presign`;
-      const response = await axios.post(url, { fileName });
-      commit("SET_UPLOAD_URL", response.data);
-    },
+
+    // Backoffice enrollment approval
     async getAcademicApprovals({ commit, state }) {
       const url = `${url2}/api/AcademicApproval`;
       const headers = { Authorization: `Bearer ${state.token}` };
