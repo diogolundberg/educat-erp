@@ -14,7 +14,7 @@ namespace Onboarding.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public class FinanceApprovalController : Controller
+    public class FinanceApprovalController : BaseController
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
@@ -28,7 +28,11 @@ namespace Onboarding.Controllers
         [HttpGet("", Name = "ONBOARDING/FINANCEAPPROVAL/LIST")]
         public dynamic GetList()
         {
-            List<Enrollment> enrollments = _context.Enrollments.Include("PersonalData").Where(x => x.SentAt.HasValue).ToList();
+            List<Enrollment> enrollments = _context.Enrollments
+                                                    .Include("PersonalData")
+                                                    .Where(x => x.SentAt.HasValue)
+                                                    .ToList();
+
             List<Records> records = _mapper.Map<List<Records>>(enrollments);
             return new { records };
         }
@@ -36,26 +40,29 @@ namespace Onboarding.Controllers
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/FINANCEAPPROVAL/GET")]
         public IActionResult GetById([FromRoute]string enrollmentNumber)
         {
-            Enrollment enrollment = _context.Enrollments.Include("PersonalData").Include("Pendencies").SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+            Enrollment enrollment = _context.Enrollments
+                                            .Include("PersonalData")
+                                            .Include("Pendencies")
+                                            .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {
                 return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
             }
 
-            Record data = _mapper.Map<Record>(enrollment); // TODO: Adicionar todos os dados para a visualização
+            Record data = _mapper.Map<Record>(enrollment);
 
             return new OkObjectResult(new
             {
                 data,
-                options = new
-                { _context.Sections }
+                options = new { _context.Sections }
             });
         }
 
         [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/FINANCEAPPROVAL/NEW")]
         public dynamic Create([FromRoute]string enrollmentNumber, [FromBody]Form form)
         {
+            Hashtable errors = new Hashtable();
             Enrollment enrollment = _context.Enrollments
                                             .Include("Pendencies")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
@@ -65,93 +72,68 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var errors = new Hashtable();
-                Dictionary<string, string[]> modelStateErrors = ModelState.ToDictionary(
-                    modelState => modelState.Key.UnCapitalize(),
-                    modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-                );
-
-                foreach (var error in modelStateErrors)
+                foreach (Models.Pendency pendency in enrollment.Pendencies.ToList())
                 {
-                    string[] split = error.Key.Split('.');
-
-                    if (split.Length == 1)
+                    if (!form.Pendencies.Any(c => c.Id == pendency.Id))
                     {
-                        errors.Add(error.Key, error.Value);
+                        if (pendency is Models.FinancePendency)
+                        {
+                            _context.Set<Models.Pendency>().Remove(pendency);
+                        }
+                    }
+                }
+                foreach (ViewModels.Pendency pendency in form.Pendencies)
+                {
+                    Models.Pendency existingPendency = enrollment.Pendencies.Where(c => c.Id == pendency.Id).SingleOrDefault();
+
+                    if (existingPendency == null)
+                    {
+                        _context.Set<Models.FinancePendency>().Add(new Models.FinancePendency
+                        {
+                            SectionId = pendency.SectionId.Value,
+                            Description = pendency.Description,
+                            EnrollmentId = enrollment.Id
+                        });
                     }
                     else
                     {
-                        if (!errors.ContainsKey(split[0]))
-                        {
-                            errors.Add(split[0], new Hashtable());
-                        }
+                        existingPendency.Description = pendency.Description;
+                        existingPendency.SectionId = pendency.SectionId.Value;
 
-                        ((Hashtable)errors[split[0]]).Add(split[1].UnCapitalize(), error.Value);
+                        _context.Set<Models.Pendency>().Update(existingPendency);
                     }
                 }
 
-                return new BadRequestObjectResult(new { errors });
-            }
-
-            foreach (Models.Pendency pendency in enrollment.Pendencies.ToList())
-            {
-                if (!form.FinancePendencies.Any(c => c.Id == pendency.Id))
+                if (form.Pendencies.Count() == 0)
                 {
-                    if (pendency is Models.FinancePendency)
-                    {
-                        _context.Set<Models.Pendency>().Remove(pendency);
-                    }
+                    enrollment.FinanceApproval = DateTime.Now;
                 }
-            }
-            foreach (ViewModels.Pendency pendency in form.FinancePendencies)
-            {
-                Models.Pendency existingPendency = enrollment.Pendencies.Where(c => c.Id == pendency.Id).SingleOrDefault();
 
-                if (existingPendency == null)
+                if ((enrollment.AcademicApproval.HasValue || enrollment.Pendencies.OfType<AcademicPendency>().Count() > 0)
+                    && (enrollment.FinanceApproval.HasValue || form.Pendencies.Count() > 0))
                 {
-                    _context.Set<Models.FinancePendency>().Add(new Models.FinancePendency
-                    {
-                        SectionId = pendency.SectionId.Value,
-                        Description = pendency.Description,
-                        EnrollmentId = enrollment.Id
-                    });
+                    enrollment.ReviewedAt = DateTime.Now;
                 }
-                else
+
+                if (enrollment.ReviewedAt.HasValue && (form.Pendencies.Count() > 0 || enrollment.Pendencies.OfType<AcademicPendency>().Count() > 0))
                 {
-                    existingPendency.Description = pendency.Description;
-                    existingPendency.SectionId = pendency.SectionId.Value;
-
-                    _context.Set<Models.Pendency>().Update(existingPendency);
+                    enrollment.SentAt = null;
                 }
-            }
 
-            if (form.FinancePendencies.Count() == 0)
+                List<string> messages = new List<string>();
+
+                _context.Set<Enrollment>().Update(enrollment);
+
+                _context.SaveChanges();
+            }
+            else
             {
-                enrollment.FinanceApproval = DateTime.Now;
+                errors = GetErrors();
             }
 
-            if ((enrollment.AcademicApproval.HasValue || enrollment.Pendencies.OfType<AcademicPendency>().Count() > 0)
-                && (enrollment.FinanceApproval.HasValue || form.FinancePendencies.Count() > 0))
-            {
-                enrollment.ReviewedAt = DateTime.Now;
-            }
-
-            if (enrollment.ReviewedAt.HasValue && (form.FinancePendencies.Count() > 0 || enrollment.Pendencies.OfType<AcademicPendency>().Count() > 0))
-            {
-                enrollment.SentAt = null;
-            }
-
-            List<string> messages = new List<string>();
-
-            _context.Set<Enrollment>().Update(enrollment);
-
-            _context.SaveChanges();
-
-            messages.Add("Procedimento realizado com sucesso.");
-
-            return new OkObjectResult(new { messages });
+            return new OkObjectResult(new { errors, data = _mapper.Map<Record>(enrollment) });
         }
     }
 }
