@@ -5,7 +5,8 @@
         :value="isChecked(item)"
         :label="item[labelField]"
         :key="item.id"
-        class="col-12 py1 sm-col-3"
+        :class="{ 'sm-col-3': !vertical }"
+        class="col-12 py1 "
         @input="!disabled && toggle(item)" />
     </template>
   </span>
@@ -34,6 +35,10 @@
         default: "name",
       },
       disabled: {
+        type: Boolean,
+        default: false,
+      },
+      vertical: {
         type: Boolean,
         default: false,
       },
