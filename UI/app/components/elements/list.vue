@@ -19,7 +19,7 @@
       <div
         v-for="(row, index) in rows"
         :key="index"
-        class="block sm-table-row divider-bottom sm-block h-bg-silver pointer"
+        class="block sm-table-row divider-bottom h-bg-silver pointer"
         @click="$emit('click', row)">
         {{ $option }}
         <div
@@ -38,6 +38,11 @@
             {{ row[column.name] }}
           </template>
         </div>
+      </div>
+      <div
+        v-if="!rows.length"
+        class="block px2 sm-px4 py1 sm-py2">
+        {{ noneMessage }}
       </div>
     </div>
     <Pager
@@ -65,6 +70,10 @@
         type: Number,
         required: false,
         default: 5,
+      },
+      noneMessage: {
+        type: String,
+        default: "Nenhum item encontrado",
       },
     },
     data() {

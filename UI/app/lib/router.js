@@ -22,12 +22,10 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: "/enrollments",
+      path: "/enrollments/:type",
       component: lazy("Enrollments"),
-    },
-    {
-      path: "/style",
-      component: lazy("StyleGuide"),
+      meta: { header: true },
+      props: true,
     },
     {
       path: "/logout",
