@@ -7,7 +7,7 @@ namespace Onboarding.Controllers
 {
     public class BaseController : Controller
     {
-        public Hashtable GetErrors()
+        protected Hashtable GetErrors()
         {
             Hashtable errors = new Hashtable();
 
@@ -37,6 +37,5 @@ namespace Onboarding.Controllers
 
             return errors;
         }
-
     }
 }
