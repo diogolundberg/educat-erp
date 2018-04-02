@@ -5,13 +5,13 @@
     <div
       class="m2">
       <h2>Dados da Matrícula</h2>
-      Nome: {{ data.name }}<br>
-      CPF: {{ data.cpf }}<br>
-      ID: {{ data.enrollmentNumber }}<br>
+      Nome: {{ enrollment.data.name }}<br>
+      CPF: {{ enrollment.data.cpf }}<br>
+      ID: {{ enrollment.data.enrollmentNumber }}<br>
       <h2>Pendências</h2>
       <CheckGroup
-        v-model="data.pendencies"
-        :options="options.pendencyList"
+        v-model="enrollment.data.pendencies"
+        :options="enrollment.options.pendencyList"
         vertical />
     </div>
     <template slot="footer">
@@ -38,11 +38,8 @@
       };
     },
     computed: {
-      data() {
-        return this.$store.getters.enrollmentInfo.data;
-      },
-      options() {
-        return this.$store.getters.enrollmentInfo.options;
+      enrollment() {
+        return this.$store.state.enrollmentInfo;
       },
       title() {
         const type = this.type === "academic" ? "Acadêmica" : "Financeira";
