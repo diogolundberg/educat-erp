@@ -9,7 +9,7 @@ namespace Onboarding.Models
     {
         public Enrollment()
         {
-            EnrollmentPendencies = new HashSet<EnrollmentPendency>();
+            Pendencies = new HashSet<Pendency>();
         }
 
         public virtual PersonalData PersonalData { get; set; }
@@ -37,7 +37,7 @@ namespace Onboarding.Models
             return DateTime.Now <= Deadline;
         }
 
-        public IEnumerable<EnrollmentPendency> EnrollmentPendencies { get; set; }
+        public IEnumerable<Pendency> Pendencies { get; set; }
     }
 }
 

@@ -16,5 +16,10 @@ namespace Onboarding.Models
 
         [Required]
         public string Description { get; set; }
+
+        [ForeignKey("Enrollment")]
+        public int EnrollmentId { get; set; }
+
+        public virtual Enrollment Enrollment { get; set; }
     }
 }

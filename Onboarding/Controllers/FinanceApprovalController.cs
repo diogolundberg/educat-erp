@@ -52,8 +52,7 @@ namespace Onboarding.Controllers
         public dynamic Create([FromBody]Form form)
         {
             Enrollment enrollment = _context.Enrollments
-                                            .Include("EnrollmentPendencies")
-                                            .Include("EnrollmentPendencies.Pendency")
+                                            .Include("Pendencies")
                                             .SingleOrDefault(x => x.ExternalId == form.EnrollmentNumber);
 
             if (enrollment == null)
@@ -91,60 +90,50 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { errors });
             }
 
-            bool havePendency = false;
-
-            foreach (Models.EnrollmentPendency enrollmentPendency in enrollment.EnrollmentPendencies.ToList())
+            foreach (Models.Pendency pendency in enrollment.Pendencies.ToList())
             {
-                if (!form.FinancePendencies.Any(c => c.Id == enrollmentPendency.PendencyId))
+                if (!form.FinancePendencies.Any(c => c.Id == pendency.Id))
                 {
-                    if (enrollmentPendency.Pendency is Models.FinancePendency)
+                    if (pendency is Models.FinancePendency)
                     {
-                        _context.Set<Models.EnrollmentPendency>().Remove(enrollmentPendency);
-                        _context.Set<Models.Pendency>().Remove(enrollmentPendency.Pendency);
+                        _context.Set<Models.Pendency>().Remove(pendency);
                     }
                 }
             }
             foreach (ViewModels.Pendency pendency in form.FinancePendencies)
             {
-                havePendency = true;
+                Models.Pendency existingPendency = enrollment.Pendencies.Where(c => c.Id == pendency.Id).SingleOrDefault();
 
-                Models.EnrollmentPendency existingEnrolmentPendency = enrollment.EnrollmentPendencies.Where(c => c.Pendency.Id == pendency.Id).SingleOrDefault();
-
-                if (existingEnrolmentPendency == null)
+                if (existingPendency == null)
                 {
-                    Models.EnrollmentPendency enrollmentPendency = new EnrollmentPendency
+                    _context.Set<Models.FinancePendency>().Add(new Models.FinancePendency
                     {
-                        Pendency = new Models.FinancePendency
-                        {
-                            SectionId = pendency.SectionId.Value,
-                            Description = pendency.Description,
-                        },
+                        SectionId = pendency.SectionId.Value,
+                        Description = pendency.Description,
                         EnrollmentId = enrollment.Id
-                    };
-
-                    _context.Set<EnrollmentPendency>().Add(enrollmentPendency);
+                    });
                 }
                 else
                 {
-                    existingEnrolmentPendency.Pendency.Description = pendency.Description;
-                    existingEnrolmentPendency.Pendency.SectionId = pendency.SectionId.Value;
+                    existingPendency.Description = pendency.Description;
+                    existingPendency.SectionId = pendency.SectionId.Value;
 
-                    _context.Set<Models.Pendency>().Update(existingEnrolmentPendency.Pendency);
+                    _context.Set<Models.Pendency>().Update(existingPendency);
                 }
             }
 
-            if (!havePendency)
+            if (form.FinancePendencies.Count() == 0)
             {
                 enrollment.FinanceApproval = DateTime.Now;
             }
 
-            if ((enrollment.AcademicApproval.HasValue || enrollment.EnrollmentPendencies.Count() > 0)
-                && (enrollment.FinanceApproval.HasValue || havePendency))
+            if ((enrollment.AcademicApproval.HasValue || enrollment.Pendencies.OfType<AcademicPendency>().Count() > 0)
+                && (enrollment.FinanceApproval.HasValue || form.FinancePendencies.Count() > 0))
             {
                 enrollment.ReviewedAt = DateTime.Now;
             }
 
-            if (enrollment.ReviewedAt.HasValue)
+            if (enrollment.ReviewedAt.HasValue && (form.FinancePendencies.Count() > 0 || enrollment.Pendencies.OfType<AcademicPendency>().Count() > 0))
             {
                 enrollment.SentAt = null;
             }
