@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Onboarding.Models;
 using Onboarding.ViewModels;
+using System;
+using System.Globalization;
 using System.Linq;
 
 namespace Onboarding.Bindings
@@ -10,6 +12,7 @@ namespace Onboarding.Bindings
         public PersonalDataProfile()
         {
             CreateMap<PersonalData, PersonalDataViewModel>()
+            .ForMember(x => x.BirthDate, config => config.MapFrom(x => x.BirthDate == null ? string.Empty : ((DateTime)x.BirthDate).ToString("dd/MM/yyyy")))
             .ForMember(x => x.Disabilities, config => config.MapFrom(x => x.PersonalDataDisabilities.Select(o => o.DisabilityId)))
             .ForMember(x => x.SpecialNeeds, config => config.MapFrom(x => x.PersonalDataSpecialNeeds.Select(o => o.SpecialNeedId)))
             .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => new DocumentViewModel
@@ -22,7 +25,7 @@ namespace Onboarding.Bindings
             CreateMap<PersonalDataViewModel, PersonalData>()
             .ForMember(x => x.MaritalStatus, config => config.Ignore())
             .ForMember(x => x.Gender, config => config.Ignore())
-            .ForMember(x => x.BirthState, config => config.Ignore())
+            .ForMember(x => x.BirthDate, config => config.MapFrom(x => string.IsNullOrEmpty(x.BirthDate) ? null : (DateTime?)DateTime.ParseExact(x.BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
             .ForMember(x => x.BirthCountry, config => config.Ignore())
             .ForMember(x => x.City, config => config.Ignore())
             .ForMember(x => x.BirthCity, config => config.Ignore())
