@@ -1,0 +1,60 @@
+<template>
+  <SideModal
+    v-model="modal"
+    :title="title">
+    <div
+      v-if="$store.getters.enrollmentInfo"
+      class="m2">
+      Nome: {{ $store.getters.enrollmentInfo.name }}<br>
+      CPF: {{ $store.getters.enrollmentInfo.cpf }}<br>
+      ID: {{ $store.getters.enrollmentInfo.enrollmentNumber }}<br>
+    </div>
+    <template slot="footer">
+      <Btn
+        primary
+        label="Aprovar"
+        @click="approve" />
+    </template>
+  </SideModal>
+</template>
+
+<script>
+  export default {
+    name: "EnrollmentInfo",
+    props: {
+      type: {
+        type: String,
+        default: "academic",
+      },
+    },
+    data() {
+      return {
+        modal: false,
+      };
+    },
+    computed: {
+      title() {
+        if (this.type === "academic") {
+          return "Aprovação - Acadêmica";
+        }
+        return "Aprovação - Financeira";
+      },
+    },
+    methods: {
+      show(enrollment) {
+        if (this.type === "academic") {
+          this.$store.dispatch("getAcademicApprovalInfo", enrollment);
+        } else if (this.type === "finance") {
+          this.$store.dispatch("getFinanceApprovalInfo", enrollment);
+        }
+        this.modal = true;
+      },
+      approve(enrollment) {
+        if (this.type === "academic") {
+          this.$store.dispatch("approveAcademic", enrollment);
+        }
+        this.$store.dispatch("approveFinance", enrollment);
+      },
+    },
+  };
+</script>
