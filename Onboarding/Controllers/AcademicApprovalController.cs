@@ -61,6 +61,7 @@ namespace Onboarding.Controllers
             Hashtable errors = new Hashtable();
             Enrollment enrollment = _context.Enrollments
                                             .Include("Pendencies")
+                                            .Include("PersonalData")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
@@ -108,12 +109,12 @@ namespace Onboarding.Controllers
                 }
 
                 if ((enrollment.AcademicApproval.HasValue || form.Pendencies.Count() > 0)
-                    && (enrollment.FinanceApproval.HasValue || enrollment.Pendencies.OfType<Models.AcademicPendency>().Count() > 0))
+                    && (enrollment.FinanceApproval.HasValue || enrollment.Pendencies.OfType<Models.FinancePendency>().Count() > 0))
                 {
                     enrollment.ReviewedAt = DateTime.Now;
                 }
 
-                if (enrollment.ReviewedAt.HasValue && (form.Pendencies.Count() > 0 || enrollment.Pendencies.OfType<Models.AcademicPendency>().Count() > 0))
+                if (enrollment.ReviewedAt.HasValue && (form.Pendencies.Count() > 0 || enrollment.Pendencies.OfType<Models.FinancePendency>().Count() > 0))
                 {
                     enrollment.SentAt = null;
                 }

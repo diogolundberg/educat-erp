@@ -65,6 +65,7 @@ namespace Onboarding.Controllers
             Hashtable errors = new Hashtable();
             Enrollment enrollment = _context.Enrollments
                                             .Include("Pendencies")
+                                            .Include("PersonalData")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
