@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Onboarding.ViewModels.FinanceApprovals
 {
     public class Record
@@ -7,5 +9,7 @@ namespace Onboarding.ViewModels.FinanceApprovals
         public string CPF { get; set; }
 
         public string EnrollmentNumber { get; set; }
+
+        public IEnumerable<FinancePendency> Pendencies { get; set; }
     }
 }

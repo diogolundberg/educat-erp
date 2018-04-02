@@ -36,7 +36,7 @@ namespace Onboarding.Controllers
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ACADEMICAPPROVAL/GET")]
         public IActionResult GetById([FromRoute]string enrollmentNumber)
         {
-            Enrollment enrollment = _context.Enrollments.SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+            Enrollment enrollment = _context.Enrollments.Include("PersonalData").Include("Pendencies").SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {
