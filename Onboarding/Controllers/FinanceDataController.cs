@@ -16,7 +16,7 @@ namespace Onboarding.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public class FinanceDataController : Controller
+    public class FinanceDataController : BaseController
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
@@ -189,40 +189,11 @@ namespace Onboarding.Controllers
             _context.Entry(financeData).Reload();
 
             FinanceDataViewModel viewModel = _mapper.Map<FinanceDataViewModel>(financeData);
-            viewModel.State = FinanceDataState(viewModel, financeData.Enrollment);
-
-            var errors = new Hashtable();
-            Dictionary<string, string[]> modelStateErrors = ModelState.ToDictionary(
-                modelState => modelState.Key.UnCapitalize(),
-                modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-            );
+            viewModel.State = FinanceDataState(financeData.Enrollment);
 
             EnrollmentValidator validator = new EnrollmentValidator();
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData.Enrollment);
-
-            modelStateErrors = modelStateErrors.Union(results.Errors.ToDictionary(
-                error => error.PropertyName,
-                error => new string[] { error.ErrorMessage }
-            )).ToDictionary(s => s.Key, s => s.Value);
-
-            foreach (var error in modelStateErrors)
-            {
-                string[] split = error.Key.Split('.');
-
-                if (split.Length == 1)
-                {
-                    errors.Add(error.Key, error.Value);
-                }
-                else
-                {
-                    if (!errors.ContainsKey(split[0]))
-                    {
-                        errors.Add(split[0], new Hashtable());
-                    }
-
-                    ((Hashtable)errors[split[0]]).Add(split[1].UnCapitalize(), error.Value);
-                }
-            }
+            Hashtable errors = FormatErrors(results);
 
             return new OkObjectResult(new
             {
@@ -231,22 +202,17 @@ namespace Onboarding.Controllers
             });
         }
 
-        private string FinanceDataState(FinanceDataViewModel financeData, Enrollment enrollment)
+        private string FinanceDataState(Enrollment enrollment)
         {
-            System.ComponentModel.DataAnnotations.ValidationContext context = new System.ComponentModel.DataAnnotations.ValidationContext(financeData);
-            List<ValidationResult> result = new List<ValidationResult>();
-
             EnrollmentValidator validator = new EnrollmentValidator();
             FluentValidation.Results.ValidationResult results = validator.Validate(enrollment);
 
-            bool valid = Validator.TryValidateObject(financeData, context, result, true) && results.IsValid;
-
-            if (string.IsNullOrEmpty(financeData.UpdatedAt))
+            if (!enrollment.FinanceData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
 
-            if (valid)
+            if (results.IsValid)
             {
                 return "valid";
             }

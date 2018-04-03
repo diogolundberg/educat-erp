@@ -154,14 +154,12 @@ namespace Onboarding.Controllers
             EnrollmentValidator validator = new EnrollmentValidator();
             FluentValidation.Results.ValidationResult results = validator.Validate(enrollment);
 
-            bool valid = results.IsValid;
-
-            if (enrollment.PersonalData.UpdatedAt.HasValue)
+            if (!enrollment.PersonalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
 
-            if (valid)
+            if (results.IsValid)
             {
                 return "valid";
             }
