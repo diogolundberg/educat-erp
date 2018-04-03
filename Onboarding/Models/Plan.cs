@@ -15,5 +15,7 @@ namespace Onboarding.Models
 
         [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Valor inválido")]
         public decimal Value { get; set; }
+
+        public int Guarantors { get; set; }
     }
 }

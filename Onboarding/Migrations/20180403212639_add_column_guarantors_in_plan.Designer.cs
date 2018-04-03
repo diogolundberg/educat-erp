@@ -12,9 +12,10 @@ using System;
 namespace Onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180403212639_add_column_guarantors_in_plan")]
+    partial class add_column_guarantors_in_plan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -531,7 +532,7 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<DateTime?>("DueDate");
+                    b.Property<DateTime>("DueDate");
 
                     b.Property<string>("ExternalId");
 
