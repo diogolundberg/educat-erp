@@ -101,7 +101,6 @@ namespace Onboarding
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                DatabaseInitializer.Seed(app);
             }
 
             app.UseCors("MyPolicy");
