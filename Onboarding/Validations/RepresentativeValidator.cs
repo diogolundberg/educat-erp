@@ -16,6 +16,31 @@ namespace Onboarding.Validations
             RuleFor(representative => representative.Email).NotEmpty().EmailAddress();
             RuleFor(representative => representative.CityId).NotEmpty();
             RuleFor(representative => representative.StateId).NotEmpty();
+            RuleFor(representative => representative).Custom((representative, context) =>
+            {
+                if (representative is RepresentativePerson)
+                {
+                    if (string.IsNullOrEmpty(((RepresentativePerson)representative).Relationship))
+                    {
+                        context.AddFailure("relationship", "'Relacionamento' deve ser informado.");
+                    }
+                    if (string.IsNullOrEmpty(((RepresentativePerson)representative).Cpf))
+                    {
+                        context.AddFailure("cpf", "'Cpf' deve ser informado.");
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(((RepresentativeCompany)representative).Cnpj))
+                    {
+                        context.AddFailure("cnpj", "'CNPJ' deve ser informado.");
+                    }
+                if (string.IsNullOrEmpty(((RepresentativeCompany)representative).Contact))
+                    {
+                        context.AddFailure("relationship", "'Contato' deve ser informado.");
+                    }
+                }
+            });
         }
     }
 }

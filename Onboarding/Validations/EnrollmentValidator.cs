@@ -21,17 +21,18 @@ namespace Onboarding.Validations
                     context.AddFailure("financeData.representative", "Obrigatório prenchimento responsável.");
                 }
 
-                ValidationResult results = representativeValidator.Validate(enrollment.FinanceData.Representative);
+                ValidationResult representativeResults = representativeValidator.Validate(enrollment.FinanceData.Representative);
 
-                if (age < 18 && !results.IsValid)
+                if (age < 18 && !representativeResults.IsValid)
                 {
-                    foreach (var error in results.Errors)
+                    foreach (var error in representativeResults.Errors)
                     {
                         context.AddFailure("financeData.representative." + error.PropertyName, error.ErrorMessage);
                     }
                 }
             });
-            RuleFor(enrollment => enrollment.PersonalData).SetValidator((new PersonalDataValidator()));
+            RuleFor(enrollment => enrollment.PersonalData).SetValidator(new PersonalDataValidator());
+            RuleFor(enrollment => enrollment.FinanceData.Guarantors).SetCollectionValidator(new GuarantorValidator());
         }
     }
 }
