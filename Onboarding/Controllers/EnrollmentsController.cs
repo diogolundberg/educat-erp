@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Data.Entity;
 using Onboarding.Models;
+using Onboarding.Validations;
 using Onboarding.ViewModels;
 using System;
 using System.Collections;
@@ -56,10 +57,10 @@ namespace Onboarding.Controllers
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
-            personalData.State = PersonalDataState(personalData);
+            personalData.State = PersonalDataState(enrollment);
 
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
-            financeData.State = FinanceDataState(financeData);
+            financeData.State = FinanceDataState(enrollment);
 
             return new
             {
@@ -119,10 +120,10 @@ namespace Onboarding.Controllers
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
-            personalData.State = PersonalDataState(personalData);
+            personalData.State = PersonalDataState(enrollment);
 
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
-            financeData.State = FinanceDataState(financeData);
+            financeData.State = FinanceDataState(enrollment);
 
             var messages = new List<string>();
 
@@ -204,18 +205,17 @@ namespace Onboarding.Controllers
             return new OkObjectResult(responseObj);
         }
 
-        private string PersonalDataState(PersonalDataViewModel personalData)
+        private string PersonalDataState(Enrollment enrollment)
         {
-            System.ComponentModel.DataAnnotations.ValidationContext context = new System.ComponentModel.DataAnnotations.ValidationContext(personalData);
-            List<ValidationResult> result = new List<ValidationResult>();
-            bool valid = Validator.TryValidateObject(personalData, context, result, true);
+            EnrollmentValidator validator = new EnrollmentValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(enrollment);
 
-            if (string.IsNullOrEmpty(personalData.UpdatedAt))
+            if (!enrollment.PersonalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
 
-            if (valid)
+            if (results.IsValid)
             {
                 return "valid";
             }
@@ -225,18 +225,17 @@ namespace Onboarding.Controllers
             }
         }
 
-        private string FinanceDataState(FinanceDataViewModel financeData)
+        private string FinanceDataState(Enrollment enrollment)
         {
-            System.ComponentModel.DataAnnotations.ValidationContext context = new System.ComponentModel.DataAnnotations.ValidationContext(financeData);
-            List<ValidationResult> result = new List<ValidationResult>();
-            bool valid = Validator.TryValidateObject(financeData, context, result, true);
+            EnrollmentValidator validator = new EnrollmentValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(enrollment);
 
-            if (string.IsNullOrEmpty(financeData.UpdatedAt))
+            if (!enrollment.FinanceData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
 
-            if (valid)
+            if (results.IsValid)
             {
                 return "valid";
             }
@@ -245,6 +244,5 @@ namespace Onboarding.Controllers
                 return "invalid";
             }
         }
-
     }
 }
