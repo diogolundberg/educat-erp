@@ -35,6 +35,7 @@ namespace Onboarding.Bindings
             .ForMember(x => x.Race, config => config.Ignore())
             .ForMember(x => x.HighSchollKind, config => config.Ignore())
             .ForMember(x => x.Enrollment, config => config.Ignore())
+            .ForMember(x => x.Nationality, config => config.Ignore())
             .ForMember(x => x.PersonalDataDisabilities, config => config.MapFrom(cm => cm.Disabilities.Select(x => new PersonalDataDisability
             {
                 DisabilityId = x

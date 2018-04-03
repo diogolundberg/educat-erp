@@ -12,7 +12,7 @@ namespace Onboarding.Validations
             RuleFor(personalData => personalData.AssumedName).NotEmpty();
             RuleFor(personalData => personalData.BirthDate).NotEmpty();
             RuleFor(personalData => personalData.CPF).NotEmpty().Must(cpf => Cpf.ValidCPF(cpf));
-            RuleFor(personalData => personalData.Nationality).NotEmpty();
+            RuleFor(personalData => personalData.NationalityId).NotEmpty();
             RuleFor(personalData => personalData.HighSchoolGraduationYear).NotEmpty();
             RuleFor(personalData => personalData.Email).NotEmpty().EmailAddress();
             RuleFor(personalData => personalData.Zipcode).NotEmpty();

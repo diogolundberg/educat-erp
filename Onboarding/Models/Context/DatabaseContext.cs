@@ -72,5 +72,6 @@ namespace Onboarding.Models
         public DbSet<PaymentMethod> PaymentMethod { get; set; }
         public DbSet<Pendency> Pendencies { get; set; }
         public DbSet<Section> Sections { get; set; }
+        public DbSet<Nationality> Nationalities { get; set; }
     }
 }

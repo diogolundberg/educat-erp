@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using Onboarding.Validations;
 using Newtonsoft.Json;
 
 namespace Onboarding.ViewModels
@@ -29,7 +26,7 @@ namespace Onboarding.ViewModels
         public string BirthDate { get; set; }
 
         [Required]
-        public string Nationality { get; set; }
+        public int? NationalityId { get; set; }
 
         [Required]
         public string HighSchoolGraduationYear { get; set; }

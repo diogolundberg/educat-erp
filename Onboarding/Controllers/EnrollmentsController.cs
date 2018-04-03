@@ -88,7 +88,8 @@ namespace Onboarding.Controllers
                     _context.Plans,
                     _context.PaymentMethod,
                     PersonalDocuments = _context.Set<PersonalDocumentType>(),
-                    GuarantorDocuments = _context.Set<GuarantorDocumentType>()
+                    GuarantorDocuments = _context.Set<GuarantorDocumentType>(),
+                    _context.Nationalities
                 }
             };
         }

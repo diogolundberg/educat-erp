@@ -22,7 +22,6 @@ namespace Onboarding.Models
 
         public string CPF { get; set; }
 
-        public string Nationality { get; set; }
 
         public string HighSchoolGraduationYear { get; set; }
 
@@ -109,6 +108,12 @@ namespace Onboarding.Models
 
         [JsonIgnore]
         public virtual HighSchoolKind HighSchollKind { get; set; }
+
+        [ForeignKey("Nationality")]
+        public int? NationalityId { get; set; }
+
+        [JsonIgnore]
+        public virtual Nationality Nationality { get; set; }
 
         [ForeignKey("Enrollment")]
         public int? EnrollmentId { get; set; }
