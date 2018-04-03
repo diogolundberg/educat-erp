@@ -35,7 +35,7 @@ namespace Onboarding.Validations
             return ret;
         }
 
-        private bool ValidCPF(string cpf)
+        public static bool ValidCPF(string cpf)
         {
             cpf = RemoveAndFormat(cpf);
 

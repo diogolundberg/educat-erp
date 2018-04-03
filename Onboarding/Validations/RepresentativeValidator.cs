@@ -28,6 +28,13 @@ namespace Onboarding.Validations
                     {
                         context.AddFailure("cpf", "'Cpf' deve ser informado.");
                     }
+                    else
+                    {
+                        if (!Cpf.ValidCPF(((RepresentativePerson)representative).Cpf))
+                        {
+                            context.AddFailure("cpf", "'Cpf' não é válido.");
+                        }
+                    }
                 }
                 else
                 {
