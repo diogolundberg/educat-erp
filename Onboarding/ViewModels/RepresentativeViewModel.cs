@@ -55,6 +55,6 @@ namespace Onboarding.ViewModels
         public string Cpf { get; set; }
 
         [Required]
-        public string Relationship { get; set; }
+        public int? RelationshipId { get; set; }
     }
 }

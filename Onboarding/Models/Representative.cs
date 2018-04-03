@@ -42,7 +42,10 @@ namespace Onboarding.Models
     {
         public string Cpf { get; set; }
 
-        public string Relationship { get; set; }
+        [ForeignKey("Relationship")]
+        public int? RelationshipId { get; set; }
+
+        public virtual Relationship Relationship { get; set; }
     }
 
     public class RepresentativeCompany : Representative

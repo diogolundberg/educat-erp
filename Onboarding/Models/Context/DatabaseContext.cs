@@ -73,5 +73,6 @@ namespace Onboarding.Models
         public DbSet<Pendency> Pendencies { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<Nationality> Nationalities { get; set; }
+        public DbSet<Relationship> Relationships { get; set; }
     }
 }

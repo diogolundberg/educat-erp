@@ -20,7 +20,7 @@ namespace Onboarding.Validations
             {
                 if (representative is RepresentativePerson)
                 {
-                    if (string.IsNullOrEmpty(((RepresentativePerson)representative).Relationship))
+                    if (((RepresentativePerson)representative).RelationshipId != null)
                     {
                         context.AddFailure("relationship", "'Relacionamento' deve ser informado.");
                     }
