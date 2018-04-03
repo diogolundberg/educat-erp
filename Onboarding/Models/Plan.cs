@@ -9,7 +9,7 @@ namespace Onboarding.Models
 
         public  int Installments { get; set; }
 
-        public DateTime DueDate { get; set; }
+        public DateTime? DueDate { get; set; }
 
         public string Description { get; set; }
 
