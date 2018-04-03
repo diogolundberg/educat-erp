@@ -659,7 +659,7 @@
           </Card>
         </Step>
         <Step
-          :complete="enrollment.data.academicApproval"
+          :complete="!!enrollment.data.academicApproval"
           title="Aprovação da Secretaria"
           description="A secretaria irá analisar seus documentos para aprovar
             sua matrícula.">
@@ -675,7 +675,7 @@
           </Card>
         </Step>
         <Step
-          :complete="enrollment.data.financeApproval"
+          :complete="!!enrollment.data.financeApproval"
           title="Aprovação do Financeiro"
           description="O financeiro irá analisar sua matrícula para aprovar
             sua matrícula.">
