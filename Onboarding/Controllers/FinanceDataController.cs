@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
+using Onboarding.Validations;
 
 namespace Onboarding.Controllers
 {
@@ -31,6 +32,7 @@ namespace Onboarding.Controllers
         {
             FinanceData financeData = _context.Set<FinanceData>()
                                               .Include("Enrollment")
+                                              .Include("Enrollment.PersonalData")
                                               .Include("Representative")
                                               .Include("Guarantors")
                                               .Include("Guarantors.GuarantorDocuments")
@@ -187,13 +189,21 @@ namespace Onboarding.Controllers
             _context.Entry(financeData).Reload();
 
             FinanceDataViewModel viewModel = _mapper.Map<FinanceDataViewModel>(financeData);
-            viewModel.State = FinanceDataState(viewModel);
+            viewModel.State = FinanceDataState(viewModel, financeData.Enrollment);
 
             var errors = new Hashtable();
             Dictionary<string, string[]> modelStateErrors = ModelState.ToDictionary(
                 modelState => modelState.Key.UnCapitalize(),
                 modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
             );
+
+            EnrollmentValidator validator = new EnrollmentValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(financeData.Enrollment);
+
+            modelStateErrors = modelStateErrors.Union(results.Errors.ToDictionary(
+                error => error.PropertyName,
+                error => new string[] { error.ErrorMessage }
+            )).ToDictionary(s => s.Key, s => s.Value);
 
             foreach (var error in modelStateErrors)
             {
@@ -221,11 +231,15 @@ namespace Onboarding.Controllers
             });
         }
 
-        private string FinanceDataState(FinanceDataViewModel financeData)
+        private string FinanceDataState(FinanceDataViewModel financeData, Enrollment enrollment)
         {
             System.ComponentModel.DataAnnotations.ValidationContext context = new System.ComponentModel.DataAnnotations.ValidationContext(financeData);
             List<ValidationResult> result = new List<ValidationResult>();
-            bool valid = Validator.TryValidateObject(financeData, context, result, true);
+
+            EnrollmentValidator validator = new EnrollmentValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(enrollment);
+
+            bool valid = Validator.TryValidateObject(financeData, context, result, true) && results.IsValid;
 
             if (string.IsNullOrEmpty(financeData.UpdatedAt))
             {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using AutoMapper;
@@ -6,13 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Models;
+using Onboarding.Validations;
 using Onboarding.ViewModels;
 
 namespace Onboarding.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public class PersonalDataController : Controller
+    public class PersonalDataController : BaseController
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
@@ -28,9 +30,12 @@ namespace Onboarding.Controllers
         {
             PersonalData personalData = _context.Set<PersonalData>()
                                                 .Include("Enrollment")
-                                                .Include("PersonalDataDisabilities")
-                                                .Include("PersonalDataSpecialNeeds")
+                                                .Include("Enrollment.FinanceData")
+                                                .Include("Enrollment.FinanceData.Guarantors")
+                                                .Include("Enrollment.FinanceData.Representative")
                                                 .Include("PersonalDataDocuments")
+                                                .Include("PersonalDataSpecialNeeds")
+                                                .Include("PersonalDataDisabilities")
                                                 .Include("PersonalDataDocuments.Document")
                                                 .SingleOrDefault(x => x.Enrollment.ExternalId == token);
 
@@ -131,12 +136,11 @@ namespace Onboarding.Controllers
             _context.Entry(personalData).Reload();
 
             PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
-            viewModel.State = PersonalDataState(viewModel);
+            viewModel.State = PersonalDataState(personalData.Enrollment);
 
-            var errors = ModelState.ToDictionary(
-                modelState => modelState.Key,
-                modelState => modelState.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-            );
+            EnrollmentValidator validator = new EnrollmentValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(personalData.Enrollment);
+            Hashtable errors = FormatErrors(results);
 
             return new OkObjectResult(new
             {
@@ -145,13 +149,14 @@ namespace Onboarding.Controllers
             });
         }
 
-        private string PersonalDataState(PersonalDataViewModel personalData)
+        private string PersonalDataState(Enrollment enrollment)
         {
-            System.ComponentModel.DataAnnotations.ValidationContext context = new System.ComponentModel.DataAnnotations.ValidationContext(personalData);
-            List<ValidationResult> result = new List<ValidationResult>();
-            bool valid = Validator.TryValidateObject(personalData, context, result, true);
+            EnrollmentValidator validator = new EnrollmentValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(enrollment);
 
-            if (string.IsNullOrEmpty(personalData.UpdatedAt))
+            bool valid = results.IsValid;
+
+            if (enrollment.PersonalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
