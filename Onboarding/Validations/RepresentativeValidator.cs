@@ -40,9 +40,9 @@ namespace Onboarding.Validations
                 {
                     if (string.IsNullOrEmpty(((RepresentativeCompany)representative).Cnpj))
                     {
-                        context.AddFailure("cnpj", "'CNPJ' deve ser informado.");
+                        context.AddFailure("cnpj", "'Cnpj' deve ser informado.");
                     }
-                if (string.IsNullOrEmpty(((RepresentativeCompany)representative).Contact))
+                    if (string.IsNullOrEmpty(((RepresentativeCompany)representative).Contact))
                     {
                         context.AddFailure("relationship", "'Contato' deve ser informado.");
                     }
