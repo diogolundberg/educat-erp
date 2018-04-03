@@ -136,10 +136,10 @@ namespace Onboarding.Controllers
             _context.Entry(personalData).Reload();
 
             PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
-            viewModel.State = PersonalDataState(personalData.Enrollment);
+            viewModel.State = PersonalDataState(personalData);
 
-            EnrollmentValidator validator = new EnrollmentValidator();
-            FluentValidation.Results.ValidationResult results = validator.Validate(personalData.Enrollment);
+            PersonalDataValidator validator = new PersonalDataValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
             Hashtable errors = FormatErrors(results);
 
             return new OkObjectResult(new
@@ -149,12 +149,12 @@ namespace Onboarding.Controllers
             });
         }
 
-        private string PersonalDataState(Enrollment enrollment)
+        private string PersonalDataState(PersonalData personalData)
         {
-            EnrollmentValidator validator = new EnrollmentValidator();
-            FluentValidation.Results.ValidationResult results = validator.Validate(enrollment);
+            PersonalDataValidator validator = new PersonalDataValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
 
-            if (!enrollment.PersonalData.UpdatedAt.HasValue)
+            if (!personalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
