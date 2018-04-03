@@ -57,10 +57,10 @@ namespace Onboarding.Controllers
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
-            personalData.State = PersonalDataState(enrollment);
+            personalData.State = PersonalDataState(enrollment.PersonalData);
 
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
-            financeData.State = FinanceDataState(enrollment);
+            financeData.State = FinanceDataState(enrollment.FinanceData);
 
             return new
             {
@@ -120,10 +120,10 @@ namespace Onboarding.Controllers
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
-            personalData.State = PersonalDataState(enrollment);
+            personalData.State = PersonalDataState(enrollment.PersonalData);
 
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
-            financeData.State = FinanceDataState(enrollment);
+            financeData.State = FinanceDataState(enrollment.FinanceData);
 
             var messages = new List<string>();
 
@@ -205,12 +205,12 @@ namespace Onboarding.Controllers
             return new OkObjectResult(responseObj);
         }
 
-        private string PersonalDataState(Enrollment enrollment)
+        private string PersonalDataState(PersonalData personalData)
         {
-            EnrollmentValidator validator = new EnrollmentValidator();
-            FluentValidation.Results.ValidationResult results = validator.Validate(enrollment);
+            PersonalDataValidator validator = new PersonalDataValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
 
-            if (!enrollment.PersonalData.UpdatedAt.HasValue)
+            if (!personalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
@@ -225,12 +225,12 @@ namespace Onboarding.Controllers
             }
         }
 
-        private string FinanceDataState(Enrollment enrollment)
+        private string FinanceDataState(FinanceData financeData)
         {
-            EnrollmentValidator validator = new EnrollmentValidator();
-            FluentValidation.Results.ValidationResult results = validator.Validate(enrollment);
+            FinanceDataValidator validator = new FinanceDataValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
 
-            if (!enrollment.FinanceData.UpdatedAt.HasValue)
+            if (!financeData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
