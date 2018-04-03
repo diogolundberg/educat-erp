@@ -189,10 +189,10 @@ namespace Onboarding.Controllers
             _context.Entry(financeData).Reload();
 
             FinanceDataViewModel viewModel = _mapper.Map<FinanceDataViewModel>(financeData);
-            viewModel.State = FinanceDataState(financeData.Enrollment);
+            viewModel.State = FinanceDataState(financeData);
 
-            EnrollmentValidator validator = new EnrollmentValidator();
-            FluentValidation.Results.ValidationResult results = validator.Validate(financeData.Enrollment);
+            FinanceDataValidator validator = new FinanceDataValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
             Hashtable errors = FormatErrors(results);
 
             return new OkObjectResult(new
@@ -202,12 +202,12 @@ namespace Onboarding.Controllers
             });
         }
 
-        private string FinanceDataState(Enrollment enrollment)
+        private string FinanceDataState(FinanceData financeData)
         {
-            EnrollmentValidator validator = new EnrollmentValidator();
-            FluentValidation.Results.ValidationResult results = validator.Validate(enrollment);
+            FinanceDataValidator validator = new FinanceDataValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
 
-            if (!enrollment.FinanceData.UpdatedAt.HasValue)
+            if (!financeData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
