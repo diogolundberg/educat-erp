@@ -134,16 +134,22 @@ namespace Onboarding.Controllers
 
             _context.SaveChanges();
             _context.Entry(personalData).Reload();
+            _context.Entry(personalData).Reference(x => x.Nationality).Load();
+            _context.Entry(personalData).Reference(x => x.Gender).Load();
+            _context.Entry(personalData).Reference(x => x.HighSchoolGraduationCountry).Load();
 
             PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
             viewModel.State = PersonalDataState(personalData);
 
             PersonalDataValidator validator = new PersonalDataValidator();
-            FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
-            Hashtable errors = FormatErrors(results);
+            Hashtable errors = FormatErrors(validator.Validate(personalData));
+
+            PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator();
+            List<string> messages = messagesValidator.Validate(personalData).Errors.Select(x => x.ErrorMessage).ToList();
 
             return new OkObjectResult(new
             {
+                messages,
                 errors,
                 data = viewModel
             });
