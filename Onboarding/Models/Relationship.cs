@@ -3,5 +3,7 @@
     public class Relationship : BaseModel
     {
         public string Name { get; set; }
+
+        public bool IsSpouse { get; set; }
     }
 }
