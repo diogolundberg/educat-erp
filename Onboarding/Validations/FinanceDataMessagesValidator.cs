@@ -3,6 +3,7 @@ using FluentValidation.Validators;
 using Newtonsoft.Json;
 using Onboarding.Enums;
 using Onboarding.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,6 +21,7 @@ namespace Onboarding.Validations
             {
                 databaseContext.Entry(financeData).Reference(x => x.Plan).Load();
                 databaseContext.Entry(financeData).Collection(x => x.Guarantors).Load();
+                databaseContext.Entry(financeData).Reference(x => x.Representative).Load();
 
                 foreach (Guarantor guarantor in financeData.Guarantors)
                 {
@@ -28,6 +30,7 @@ namespace Onboarding.Validations
                 }
 
                 CheckPlan(financeData, context);
+                CheckRepresentative(financeData, context);
             });
         }
 
@@ -86,6 +89,49 @@ namespace Onboarding.Validations
             {
                 context.AddFailure("guarantors[0]", string.Format("Documento {0} é obrigatório.", documentType));
             }
+        }
+
+        private void CheckRepresentative(FinanceData financeData, CustomContext context)
+        {
+            PersonalData personalData = financeData.Enrollment.PersonalData;
+            Representative representative = financeData.Representative;
+
+            if (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18)
+            {
+                bool isDiff = false;
+
+                if (representative is RepresentativePerson)
+                {
+                    isDiff = representative.Name != personalData.RealName ? true : isDiff;
+                    isDiff = representative.StreetAddress != personalData.StreetAddress ? true : isDiff;
+                    isDiff = representative.Neighborhood != personalData.Neighborhood ? true : isDiff;
+                    isDiff = representative.PhoneNumber != personalData.PhoneNumber ? true : isDiff;
+                    isDiff = representative.Landline != personalData.Landline ? true : isDiff;
+                    isDiff = representative.Email != personalData.Email ? true : isDiff;
+                    isDiff = representative.CityId != personalData.CityId ? true : isDiff;
+                    isDiff = representative.StateId != personalData.StateId ? true : isDiff;
+                    isDiff = ((RepresentativePerson)representative).Cpf != personalData.CPF ? true : isDiff;
+
+                }
+
+                if (isDiff)
+                {
+                    context.AddFailure("Dados do responsável não são os mesmos dos dados pessoais.");
+                }
+            }
+        }
+
+        private int GetAge(DateTime birthDate)
+        {
+            DateTime today = DateTime.Today;
+            int age = today.Year - birthDate.Year;
+
+            if (birthDate > today.AddYears(-age))
+            {
+                age--;
+            }
+
+            return age;
         }
 
         private string GetMessageError(string validation)
