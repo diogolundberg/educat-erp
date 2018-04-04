@@ -43,6 +43,8 @@ namespace Onboarding.ViewModels
         [Cpf]
         public string Cpf { get; set; }
 
+        public string RelationshipId { get; set; }
+
         [Required]
         public IEnumerable<DocumentViewModel> Documents { get; set; }
 
