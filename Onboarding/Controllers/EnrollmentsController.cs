@@ -127,9 +127,11 @@ namespace Onboarding.Controllers
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
             financeData.State = FinanceDataState(enrollment.FinanceData);
 
-            var messages = new List<string>();
+            EnrollmentMessagesValidator enrollmentValidator = new EnrollmentMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
+            List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).ToList();
 
-            if (personalData.State == "valid" && financeData.State == "valid")
+            if (personalData.State == "valid" && financeData.State == "valid" && enrollmentValidatorResult.IsValid)
             {
                 enrollment.SentAt = DateTime.Now;
                 _context.Set<Enrollment>().Update(enrollment);
