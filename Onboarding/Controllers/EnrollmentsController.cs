@@ -129,7 +129,7 @@ namespace Onboarding.Controllers
 
             EnrollmentMessagesValidator enrollmentValidator = new EnrollmentMessagesValidator(_context);
             FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
-            List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).ToList();
+            List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).Distinct().ToList();
 
             if (personalData.State == "valid" && financeData.State == "valid" && enrollmentValidatorResult.IsValid)
             {
