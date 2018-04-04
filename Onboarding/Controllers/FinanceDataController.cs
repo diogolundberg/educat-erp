@@ -129,7 +129,7 @@ namespace Onboarding.Controllers
                     {
                         if (!guarantorViewModel
                             .Documents
-                            .Any(c => c.Id == guarantorDocument.DocumentId || c.DocumentTypeId == guarantorDocument.Document.DocumentTypeId))
+                            .Any(c => c.Id == guarantorDocument.DocumentId))
                         {
                             _context.Set<GuarantorDocument>().Remove(guarantorDocument);
                             _context.Set<Document>().Remove(_context.Set<Document>().Find(guarantorDocument.DocumentId));
@@ -138,7 +138,7 @@ namespace Onboarding.Controllers
                     foreach (DocumentViewModel guarantorDocumentViewModel in guarantorViewModel.Documents)
                     {
                         GuarantorDocument existingGuarantorDocument = existingGuarantor.GuarantorDocuments
-                            .Where(c => c.DocumentId == guarantorDocumentViewModel.Id || c.Document.DocumentTypeId == guarantorDocumentViewModel.DocumentTypeId)
+                            .Where(c => c.DocumentId == guarantorDocumentViewModel.Id)
                             .SingleOrDefault();
 
                         if (existingGuarantorDocument != null)

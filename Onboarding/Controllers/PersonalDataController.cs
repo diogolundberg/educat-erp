@@ -61,7 +61,7 @@ namespace Onboarding.Controllers
             {
                 if (!personalDataMapped
                     .PersonalDataDocuments
-                    .Any(c => c.Document.Id == personalDataDocument.DocumentId || c.Document.DocumentTypeId == personalDataDocument.Document.DocumentTypeId))
+                    .Any(c => c.Document.Id == personalDataDocument.DocumentId))
                 {
                     _context.Set<PersonalDataDocument>().Remove(personalDataDocument);
                     _context.Set<Document>().Remove(_context.Set<Document>().Find(personalDataDocument.DocumentId));
@@ -70,7 +70,7 @@ namespace Onboarding.Controllers
             foreach (PersonalDataDocument personalDataDocument in personalDataMapped.PersonalDataDocuments)
             {
                 PersonalDataDocument existingPersonalDataDocument = personalData.PersonalDataDocuments
-                    .Where(c => c.DocumentId == personalDataDocument.Document.Id || c.Document.DocumentTypeId == personalDataDocument.Document.DocumentTypeId)
+                    .Where(c => c.DocumentId == personalDataDocument.Document.Id)
                     .SingleOrDefault();
 
                 if (existingPersonalDataDocument != null)
