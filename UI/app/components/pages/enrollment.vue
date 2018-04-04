@@ -292,8 +292,11 @@
                   label="Possui alguma Deficiência, Transtorno Global do
                     Desenvolvimento, ou Habilidades/Superdotação?" />
               </div>
+            </Fieldset>
+            <Fieldset
+              v-if="enrollment.data.personalData.handicap == 'yes'"
+              title="Necessidades Especiais">
               <div
-                v-if="enrollment.data.personalData.handicap == 'yes'"
                 class="flex gutters flex-wrap">
                 <h4>Selecione:</h4>
                 <CheckGroup
@@ -303,14 +306,18 @@
                   :disabled="!!enrollment.data.sentAt" />
               </div>
             </Fieldset>
-            <Fieldset title="Necessidades Especiais">
+            <Fieldset
+              v-if="enrollment.data.personalData.handicap == 'yes'"
+              title="Necessidades Especiais">
               <div class="flex gutters flex-wrap">
                 <h4>Selecione:</h4>
                 <CheckGroup
                   v-model="enrollment.data.personalData.specialNeeds"
                   :errors="enrollment.errors.personalData.SpecialNeeds"
                   :options="enrollment.options.specialNeeds"
-                  :disabled="!!enrollment.data.sentAt" />
+                  :disabled="!!enrollment.data.sentAt"
+                  :filter="enrollment.data.personalData.disabilities"
+                  filter-key="disabilityId" />
               </div>
             </Fieldset>
             <Fieldset title="Documentos">
