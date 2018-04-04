@@ -45,6 +45,11 @@ namespace Onboarding.Models
         [JsonIgnore]
         public virtual FinanceData FinanceData { get; set; }
 
+        [ForeignKey("Relationship")]
+        public int? RelationshipId { get; set; }
+
+        public virtual Relationship Relationship { get; set; }
+
         public virtual ICollection<GuarantorDocument> GuarantorDocuments { get; set; }
     }
 }
