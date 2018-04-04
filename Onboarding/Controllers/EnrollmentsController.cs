@@ -211,13 +211,15 @@ namespace Onboarding.Controllers
         {
             PersonalDataValidator validator = new PersonalDataValidator();
             FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
+            PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(personalData);
 
             if (!personalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
 
-            if (results.IsValid)
+            if (results.IsValid && resultsMessages.IsValid)
             {
                 return "valid";
             }
