@@ -41,6 +41,11 @@ namespace Onboarding.Models
 
         public string MothersName { get; set; }
 
+        internal bool Any(Func<object, object> p)
+        {
+            throw new NotImplementedException();
+        }
+
         public string Handicap { get; set; }
 
         [ForeignKey("Gender")]

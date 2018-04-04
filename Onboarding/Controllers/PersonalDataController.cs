@@ -144,7 +144,7 @@ namespace Onboarding.Controllers
             PersonalDataValidator validator = new PersonalDataValidator();
             Hashtable errors = FormatErrors(validator.Validate(personalData));
 
-            PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator();
+            PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator(_context);
             List<string> messages = messagesValidator.Validate(personalData).Errors.Select(x => x.ErrorMessage).ToList();
 
             return new OkObjectResult(new

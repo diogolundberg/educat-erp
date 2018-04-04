@@ -6,6 +6,7 @@
         MilitaryDraft = 2,
         ForeignGraduation = 3,
         MinorAge = 4,
-        GraduationYear = 5
+        GraduationYear = 5,
+        Native = 6
     }
 }

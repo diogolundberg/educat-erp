@@ -1,74 +1,96 @@
 ﻿using FluentValidation;
+using FluentValidation.Validators;
+using Newtonsoft.Json;
 using Onboarding.Enums;
 using Onboarding.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Onboarding.Validations
 {
     public class PersonalDataMessagesValidator : AbstractValidator<PersonalData>
     {
-        public PersonalDataMessagesValidator()
+        private List<PersonalDocumentType> documentTypes { get; set; }
+
+        public PersonalDataMessagesValidator(DatabaseContext databaseContext)
         {
-            RuleFor(personalData => personalData)
-                .Must(BeForeign)
-                .When(x => x.Nationality != null && x.Nationality.IsForeign)
-                .WithMessage("Documento RNE é obrigatório.");
+            documentTypes = databaseContext.Set<PersonalDocumentType>().Where(x => x.Validations == null).ToList();
 
-            RuleFor(personalData => personalData)
-                .Must(BeMilitaryDraft)
-                .When(x => x.Gender != null && x.Gender.CheckMilitaryDraft)
-                .WithMessage("Documento Militar é obrigatório.");
+            RuleFor(personalData => personalData).Custom((personalData, context) =>
+            {
+                List<string> validations = new List<string>();
+                validations.Add(BeForeign(personalData));
+                validations.Add(BeMilitaryDraft(personalData));
+                validations.Add(BeForeignGraduation(personalData));
+                validations.Add(BeMinorAge(personalData));
+                validations.Add(BeGraduationYear(personalData));
+                validations = validations.Where(x => !string.IsNullOrEmpty(x)).ToList();
 
-            RuleFor(personalData => personalData)
-                .Must(BeForeignGraduation)
-                .When(x => x.HighSchoolGraduationCountry != null && x.HighSchoolGraduationCountry.Name.ToLower() != "brasil")
-                .WithMessage("Parecer da secretaria de educação e publicação no diário oficial é obrigatório.");
+                List<Document> documents = personalData.PersonalDataDocuments.Select(x => x.Document).ToList();
+                List<string> documentTypeValidations = GetPersonalDataDocumentValidations(documents);
+                List<string> requiredDocumentValidations = validations.Where(x => !documentTypeValidations.Contains(x)).ToList();
+                List<string> requiredDocumentTypes = documentTypes.Where(x => !documents.Any(o => o.DocumentTypeId == x.Id)).Select(x => x.Name).ToList();
 
-            RuleFor(personalData => personalData)
-                .Must(BeMinorAge)
-                .When(x => x.BirthDate.HasValue && GetAge(x.BirthDate.Value) > 18)
-                .WithMessage("Título de Eleitor e Comprovante de Votação é obrigatório.");
+
+                foreach (string requiredDocument in requiredDocumentValidations)
+                {
+                    context.AddFailure(GetMessageError(requiredDocument));
+                }
+                foreach (string documentType in requiredDocumentTypes)
+                {
+                    context.AddFailure(string.Format("Documento {0} é obrigatório.", documentType));
+                }
+            });
+
         }
 
-        private bool BeForeign(PersonalData personalData)
+        private string BeForeign(PersonalData personalData)
         {
-            if (personalData.PersonalDataDocuments.Any(x => x.Document.DocumentType.Validations.Contains(DocumentValidations.Foreigner.ToString())))
+            if (personalData.Nationality != null && personalData.Nationality.IsForeign)
             {
-                return true;
+                return DocumentValidations.Foreigner.ToString();
             }
-
-            return false;
+            else
+            {
+                return DocumentValidations.Native.ToString();
+            }
         }
 
-        private bool BeMilitaryDraft(PersonalData personalData)
+        private string BeMilitaryDraft(PersonalData personalData)
         {
-            if (personalData.PersonalDataDocuments.Any(x => x.Document.DocumentType.Validations.Contains(DocumentValidations.MilitaryDraft.ToString())))
+            if (personalData.Gender != null && personalData.Gender.CheckMilitaryDraft)
             {
-                return true;
+                return DocumentValidations.MilitaryDraft.ToString();
             }
-
-            return false;
+            return string.Empty;
         }
 
-        private bool BeForeignGraduation(PersonalData personalData)
+        private string BeForeignGraduation(PersonalData personalData)
         {
-            if (personalData.PersonalDataDocuments.Any(x => x.Document.DocumentType.Validations.Contains(DocumentValidations.ForeignGraduation.ToString())))
+            if (personalData.HighSchoolGraduationCountry != null && personalData.HighSchoolGraduationCountry.Name.ToLower() != "brasil")
             {
-                return true;
+                return DocumentValidations.ForeignGraduation.ToString();
             }
-
-            return false;
+            return string.Empty;
         }
 
-        private bool BeMinorAge(PersonalData personalData)
+        private string BeMinorAge(PersonalData personalData)
         {
-            if (personalData.PersonalDataDocuments.Any(x => x.Document.DocumentType.Validations.Contains(DocumentValidations.MinorAge.ToString())))
+            if (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18)
             {
-                return true;
+                return DocumentValidations.MinorAge.ToString();
             }
+            return string.Empty;
+        }
 
-            return false;
+        private string BeGraduationYear(PersonalData personalData)
+        {
+            if (!string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) && personalData.HighSchoolGraduationYear == personalData.Enrollment.Deadline.Year.ToString())
+            {
+                return DocumentValidations.GraduationYear.ToString();
+            }
+            return string.Empty;
         }
 
         private int GetAge(DateTime birthDate)
@@ -82,6 +104,53 @@ namespace Onboarding.Validations
             }
 
             return age;
+        }
+
+        private List<String> GetPersonalDataDocumentValidations(List<Document> documents)
+        {
+            List<string> documentTypeValidations = new List<string>();
+
+            foreach (Document document in documents)
+            {
+                if (!string.IsNullOrEmpty(document.DocumentType.Validations))
+                {
+                    List<string> documentValidations = JsonConvert.DeserializeObject<List<string>>(document.DocumentType.Validations);
+                    documentTypeValidations.AddRange(documentValidations.Where(x => !documentTypeValidations.Contains(x)));
+                }
+            }
+
+            return documentTypeValidations;
+        }
+
+        private string GetMessageError(string validation)
+        {
+            if (validation == DocumentValidations.Foreigner.ToString())
+            {
+                return "Documento RNE é obrigatório.";
+            }
+            else if (validation == DocumentValidations.MilitaryDraft.ToString())
+            {
+                return "Documento Militar é obrigatório.";
+            }
+            else if (validation == DocumentValidations.ForeignGraduation.ToString())
+            {
+                return "Parecer da secretaria de educação e publicação no diário oficial é obrigatório.";
+            }
+            else if (validation == DocumentValidations.MinorAge.ToString())
+            {
+                return "Título de Eleitor e Comprovante de Votação é obrigatório.";
+
+            }
+            else if (validation == DocumentValidations.GraduationYear.ToString())
+            {
+                return "Declaração de conclusão do ensino médio ou histórico escolar é obrigatório.";
+            }
+            else if (validation == DocumentValidations.Native.ToString())
+            {
+                return "CPF é obrigatório.";
+            }
+
+            return string.Empty;
         }
     }
 }
