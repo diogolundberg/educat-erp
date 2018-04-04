@@ -24,24 +24,7 @@ namespace Onboarding.Validations
                 foreach (Guarantor guarantor in financeData.Guarantors)
                 {
                     databaseContext.Entry(guarantor).Reference(x => x.Relationship).Load();
-
-                    List<string> validations = new List<string>();
-                    validations.Add(BeSpouse(guarantor));
-                    validations = validations.Where(x => !string.IsNullOrEmpty(x)).ToList();
-
-                    List<Document> documents = guarantor.GuarantorDocuments.Select(x => x.Document).ToList();
-                    List<string> documentTypeValidations = GetGuarantorDocumentValidations(documents);
-                    List<string> requiredDocumentValidations = validations.Where(x => !documentTypeValidations.Contains(x)).ToList();
-                    List<string> requiredDocumentTypes = documentTypes.Where(x => !documents.Any(o => o.DocumentTypeId == x.Id)).Select(x => x.Name).ToList();
-
-                    foreach (string requiredDocument in requiredDocumentValidations)
-                    {
-                        context.AddFailure("guarantors[0]", GetMessageError(requiredDocument));
-                    }
-                    foreach (string documentType in requiredDocumentTypes)
-                    {
-                        context.AddFailure("guarantors[0]",string.Format("Documento {0} é obrigatório.", documentType));
-                    }
+                    CheckGuarantors(guarantor, context);
                 }
 
                 CheckPlan(financeData, context);
@@ -50,7 +33,7 @@ namespace Onboarding.Validations
 
         private string BeSpouse(Guarantor guarantor)
         {
-            if(guarantor.Relationship != null && guarantor.Relationship.IsSpouse)
+            if (guarantor.Relationship != null && guarantor.Relationship.IsSpouse)
             {
                 return DocumentValidations.Spouse.ToString();
             }
@@ -81,6 +64,27 @@ namespace Onboarding.Validations
                 {
                     context.AddFailure(string.Format("Para o plano {0} é necessário preencher {1} fiador(es)", financeData.Plan.Name, financeData.Plan.Guarantors));
                 }
+            }
+        }
+
+        private void CheckGuarantors(Guarantor guarantor, CustomContext context)
+        {
+            List<string> validations = new List<string>();
+            validations.Add(BeSpouse(guarantor));
+            validations = validations.Where(x => !string.IsNullOrEmpty(x)).ToList();
+
+            List<Document> documents = guarantor.GuarantorDocuments.Select(x => x.Document).ToList();
+            List<string> documentTypeValidations = GetGuarantorDocumentValidations(documents);
+            List<string> requiredDocumentValidations = validations.Where(x => !documentTypeValidations.Contains(x)).ToList();
+            List<string> requiredDocumentTypes = documentTypes.Where(x => !documents.Any(o => o.DocumentTypeId == x.Id)).Select(x => x.Name).ToList();
+
+            foreach (string requiredDocument in requiredDocumentValidations)
+            {
+                context.AddFailure("guarantors[0]", GetMessageError(requiredDocument));
+            }
+            foreach (string documentType in requiredDocumentTypes)
+            {
+                context.AddFailure("guarantors[0]", string.Format("Documento {0} é obrigatório.", documentType));
             }
         }
 
