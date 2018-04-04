@@ -7,6 +7,7 @@
         ForeignGraduation = 3,
         MinorAge = 4,
         GraduationYear = 5,
-        Native = 6
+        Native = 6,
+        Spouse = 7
     }
 }
