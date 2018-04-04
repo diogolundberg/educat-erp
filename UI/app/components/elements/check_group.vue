@@ -1,6 +1,6 @@
 <template>
   <span class="flex gutters flex-wrap">
-    <template v-for="item in options">
+    <template v-for="item in filteredOptions">
       <Checkbox
         :value="isChecked(item)"
         :label="item[labelField]"
@@ -41,6 +41,27 @@
       vertical: {
         type: Boolean,
         default: false,
+      },
+      filterKey: {
+        type: String,
+        default: null,
+      },
+      filter: {
+        type: [String, Number, Array],
+        default: null,
+      },
+    },
+    computed: {
+      filteredOptions() {
+        return this.options.filter(a => !this.filterKey || a[this.filterKey] ===
+        this.filter || this.filter.includes(a[this.filterKey]));
+      },
+    },
+    watch: {
+      filter() {
+        const keys = this.filteredOptions.map(a => a[this.idField]);
+        const values = this.value.filter(a => keys.includes(a));
+        this.$emit("input", values);
       },
     },
     methods: {
