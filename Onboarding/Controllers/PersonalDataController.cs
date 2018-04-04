@@ -166,7 +166,6 @@ namespace Onboarding.Controllers
             {
                 return "empty";
             }
-
             if (results.IsValid && resultsMessages.IsValid)
             {
                 return "valid";

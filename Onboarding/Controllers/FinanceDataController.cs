@@ -187,6 +187,7 @@ namespace Onboarding.Controllers
 
             _context.SaveChanges();
             _context.Entry(financeData).Reload();
+            _context.Entry(financeData).Collection(x => x.Guarantors).Load();
 
             FinanceDataViewModel viewModel = _mapper.Map<FinanceDataViewModel>(financeData);
             viewModel.State = FinanceDataState(financeData);
@@ -195,8 +196,12 @@ namespace Onboarding.Controllers
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
             Hashtable errors = FormatErrors(results);
 
+            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
+            List<string> messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).ToList();
+
             return new OkObjectResult(new
             {
+                messages,
                 errors,
                 data = viewModel
             });
@@ -206,13 +211,14 @@ namespace Onboarding.Controllers
         {
             FinanceDataValidator validator = new FinanceDataValidator();
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
+            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(financeData);
 
             if (!financeData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
-
-            if (results.IsValid)
+            if (results.IsValid && resultsMessages.IsValid)
             {
                 return "valid";
             }

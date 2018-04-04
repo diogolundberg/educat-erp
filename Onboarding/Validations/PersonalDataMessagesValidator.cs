@@ -32,7 +32,6 @@ namespace Onboarding.Validations
                 List<string> requiredDocumentValidations = validations.Where(x => !documentTypeValidations.Contains(x)).ToList();
                 List<string> requiredDocumentTypes = documentTypes.Where(x => !documents.Any(o => o.DocumentTypeId == x.Id)).Select(x => x.Name).ToList();
 
-
                 foreach (string requiredDocument in requiredDocumentValidations)
                 {
                     context.AddFailure(GetMessageError(requiredDocument));
