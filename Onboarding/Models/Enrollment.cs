@@ -26,6 +26,8 @@ namespace Onboarding.Models
 
         public DateTime Deadline { get; set; }
 
+        public string Photo { get; set; }
+
         public override string CreateExternalId()
         {
             string semester = DateTime.Now.Month > 6 ? "2" : "1";
