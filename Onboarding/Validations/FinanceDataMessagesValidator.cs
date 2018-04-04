@@ -19,6 +19,8 @@ namespace Onboarding.Validations
             {
                 foreach (Guarantor guarantor in financeData.Guarantors)
                 {
+                    databaseContext.Entry(guarantor).Reference(x => x.Relationship).Load();
+
                     List<string> validations = new List<string>();
                     validations.Add(BeSpouse(guarantor));
                     validations = validations.Where(x => !string.IsNullOrEmpty(x)).ToList();
@@ -42,7 +44,11 @@ namespace Onboarding.Validations
 
         private string BeSpouse(Guarantor guarantor)
         {
-            return DocumentValidations.Spouse.ToString();
+            if(guarantor.Relationship != null && guarantor.Relationship.IsSpouse)
+            {
+                return DocumentValidations.Spouse.ToString();
+            }
+            return string.Empty;
         }
 
         private List<string> GetGuarantorDocumentValidations(List<Document> documents)

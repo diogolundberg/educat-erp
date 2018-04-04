@@ -35,6 +35,7 @@ namespace Onboarding.Controllers
                                               .Include("Enrollment.PersonalData")
                                               .Include("Representative")
                                               .Include("Guarantors")
+                                              .Include("Guarantors.Relationship")
                                               .Include("Guarantors.GuarantorDocuments")
                                               .Include("Guarantors.GuarantorDocuments.Document")
                                               .SingleOrDefault(x => x.Enrollment.ExternalId == token);
