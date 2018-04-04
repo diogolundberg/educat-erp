@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Validators;
 using Newtonsoft.Json;
 using Onboarding.Enums;
 using Onboarding.Models;
@@ -17,6 +18,9 @@ namespace Onboarding.Validations
 
             RuleFor(financeData => financeData).Custom((financeData, context) =>
             {
+                databaseContext.Entry(financeData).Reference(x => x.Plan).Load();
+                databaseContext.Entry(financeData).Collection(x => x.Guarantors).Load();
+
                 foreach (Guarantor guarantor in financeData.Guarantors)
                 {
                     databaseContext.Entry(guarantor).Reference(x => x.Relationship).Load();
@@ -39,6 +43,8 @@ namespace Onboarding.Validations
                         context.AddFailure("guarantors[0]",string.Format("Documento {0} é obrigatório.", documentType));
                     }
                 }
+
+                CheckPlan(financeData, context);
             });
         }
 
@@ -65,6 +71,17 @@ namespace Onboarding.Validations
             }
 
             return documentTypeValidations;
+        }
+
+        private void CheckPlan(FinanceData financeData, CustomContext context)
+        {
+            if (financeData.Plan != null && financeData.Plan.Guarantors > 0)
+            {
+                if (financeData.Plan.Guarantors > financeData.Guarantors.Count)
+                {
+                    context.AddFailure(string.Format("Para o plano {0} é necessário preencher {1} fiador(es)", financeData.Plan.Name, financeData.Plan.Guarantors));
+                }
+            }
         }
 
         private string GetMessageError(string validation)
