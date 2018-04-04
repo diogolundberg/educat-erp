@@ -233,13 +233,14 @@ namespace Onboarding.Controllers
         {
             FinanceDataValidator validator = new FinanceDataValidator();
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
+            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(financeData);
 
             if (!financeData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
-
-            if (results.IsValid)
+            if (results.IsValid && resultsMessages.IsValid)
             {
                 return "valid";
             }
