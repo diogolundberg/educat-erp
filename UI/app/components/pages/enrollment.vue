@@ -710,6 +710,8 @@
 </template>
 
 <script>
+  import { debounce } from "lodash";
+
   export default {
     name: "Enrollment",
     props: {
@@ -758,6 +760,11 @@
         const remaining = new Date(this.enrollment.data.deadline) - new Date();
         return Math.floor(remaining / day);
       },
+    },
+    watch: {
+      "enrollment.data.personalData.zipcode": debounce(function findZipcode() {
+        this.$store.dispatch("findZipcode");
+      }, 500),
     },
     async mounted() {
       try {

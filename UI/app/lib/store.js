@@ -7,6 +7,7 @@ Vue.use(VueX);
 const url1 = process.env.SSO_HOST || "http://sso.sandbox.eti.br";
 const url2 = process.env.ONBOARDING_HOST || "http://onboarding.sandbox.eti.br";
 const url3 = process.env.UPLOAD_HOST || "http://upload.sandbox.eti.br";
+const url4 = process.env.ZIPCODE_HOST || "http://api.postmon.com.br/v1/cep";
 
 export default new VueX.Store({
   state: {
@@ -151,6 +152,16 @@ export default new VueX.Store({
     SET_ENROLLMENT_MESSAGES(state, { messages }) {
       state.enrollment.messages = messages;
     },
+    SET_ENROLLMENT_ADDRESS(state, response) {
+      const { options } = state.enrollment;
+      const stateb = options.state.find(a => a.name === response.estado);
+      const city = options.city.find(a => a.name === response.cidade);
+
+      state.enrollment.neighborhood = response.bairro;
+      state.enrollment.streetAddress = response.logradouro;
+      state.enrollment.stateId = stateb && stateb.id;
+      state.enrollment.city = city && city.id;
+    },
 
     // Backoffice enrollment approval
     SET_ACADEMIC_APPROVALS(state, { records }) {
@@ -208,6 +219,12 @@ export default new VueX.Store({
       } catch (ex) {
         commit("SET_ENROLLMENT_MESSAGES", ex.response.data);
       }
+    },
+    async findZipcode({ commit, state }) {
+      const { zipcode } = state.enrollment.data.personalData;
+      const url = `${url4}/${zipcode}`;
+      const response = await axios.get(url);
+      commit("SET_ENROLLMENT_ADDRESS", response);
     },
 
     // Backoffice enrollment approval
