@@ -6,6 +6,8 @@ namespace Onboarding.Models
     {
         [Required]
         public string Name { get; set; }
+
+        public string Validations { get; set; }
     }
 
     public class PersonalDocumentType : DocumentType
