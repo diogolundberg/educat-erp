@@ -198,7 +198,7 @@ namespace Onboarding.Controllers
             Hashtable errors = FormatErrors(results);
 
             FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
-            List<string> messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).ToList();
+            List<string> messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).Distinct().ToList();
 
             return new OkObjectResult(new
             {
