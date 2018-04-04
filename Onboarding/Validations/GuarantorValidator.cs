@@ -18,6 +18,7 @@ namespace Onboarding.Validations
             RuleFor(guarantor => guarantor.CityId).NotEmpty();
             RuleFor(guarantor => guarantor.StateId).NotEmpty();
             RuleFor(guarantor => guarantor.FinanceDataId).NotEmpty();
+            RuleFor(guarantor => guarantor.RelationshipId).NotEmpty();
         }
     }
 }
