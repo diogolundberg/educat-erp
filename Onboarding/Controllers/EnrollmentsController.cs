@@ -70,6 +70,7 @@ namespace Onboarding.Controllers
                     enrollment.SentAt,
                     enrollment.AcademicApproval,
                     enrollment.FinanceApproval,
+                    enrollment.Photo,
                     personalData,
                     financeData,
                 },
