@@ -26,6 +26,8 @@ namespace Onboarding.Models
 
         public DateTime Deadline { get; set; }
 
+        public DateTime? StartAt { get; set; }
+
         public string Photo { get; set; }
 
         public override string CreateExternalId()
