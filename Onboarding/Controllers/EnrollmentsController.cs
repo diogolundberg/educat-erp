@@ -66,6 +66,7 @@ namespace Onboarding.Controllers
             {
                 data = new
                 {
+                    enrollment.StartAt,
                     enrollment.Deadline,
                     enrollment.SentAt,
                     enrollment.AcademicApproval,
@@ -120,6 +121,16 @@ namespace Onboarding.Controllers
             if (!enrollment.IsDeadlineValid())
             {
                 return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado" } });
+            }
+
+            if (!enrollment.StartAt.HasValue)
+            {
+                enrollment.StartAt = DateTime.Now;
+
+                _context.Set<Enrollment>().Update(enrollment);
+                _context.SaveChanges();
+
+                return Ok();
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
