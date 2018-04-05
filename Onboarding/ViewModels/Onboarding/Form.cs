@@ -5,6 +5,7 @@ namespace Onboarding.ViewModels.Onboarding
     public class Form
     {
         public List<Item> Items { get; set; }
+        public string Deadline { get; set; }
     }
 
     public class Item
