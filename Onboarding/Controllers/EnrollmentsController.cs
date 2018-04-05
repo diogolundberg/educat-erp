@@ -167,60 +167,6 @@ namespace Onboarding.Controllers
             }
         }
 
-        [HttpPost("GenerateToken", Name = "ONBOARDING/ENROLLMENTS/GENERATETOKEN")]
-        public IActionResult GenerateToken([FromBody]GenerateToken obj)
-        {
-            if (!ModelState.IsValid || obj.List.Count == 0)
-            {
-                return BadRequest();
-            }
-
-            List<string> responseObj = new List<string>();
-
-            foreach (GenerateTokenEnrollment enrollmentParameterObj in obj.List)
-            {
-                Enrollment enrollment = new Enrollment
-                {
-                    Deadline = obj.End,
-                    PersonalData = new PersonalData
-                    {
-                        RealName = enrollmentParameterObj.Name,
-                        Email = enrollmentParameterObj.Email,
-                        CPF = enrollmentParameterObj.CPF,
-                    },
-                    FinanceData = new FinanceData
-                    {
-                        Representative = new RepresentativePerson()
-                    }
-                };
-
-                string externalId = enrollment.CreateExternalId();
-
-                Enrollment existingEnrollment = _context.Enrollments.SingleOrDefault(x => x.ExternalId == externalId);
-
-                if (existingEnrollment == null)
-                {
-                    _context.Enrollments.Add(enrollment);
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    enrollment = existingEnrollment;
-                }
-
-                SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"], _configuration["SMTP_HOST"], _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
-
-                string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + enrollment.ExternalId);
-                string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
-
-                smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]), new MailAddress(enrollmentParameterObj.Email), body, subject);
-
-                responseObj.Add(string.Format("{0} - {1}", enrollmentParameterObj.Email, enrollment.ExternalId));
-            }
-
-            return new OkObjectResult(responseObj);
-        }
-
         private string PersonalDataState(PersonalData personalData)
         {
             PersonalDataValidator validator = new PersonalDataValidator();
