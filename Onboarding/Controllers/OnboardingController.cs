@@ -10,6 +10,7 @@ using System.Net.Mail;
 using System.Globalization;
 using System;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace Onboarding.Controllers
 {
@@ -56,7 +57,7 @@ namespace Onboarding.Controllers
                     }
                 };
 
-                string externalId = enrollment.CreateExternalId();
+                string externalId = obj.Year + obj.Semester + Regex.Replace(item.Cpf, @"\D", string.Empty);
 
                 Enrollment existingEnrollment = _context.Enrollments.Include("PersonalData").SingleOrDefault(x => x.ExternalId == externalId);
 

@@ -6,6 +6,8 @@ namespace Onboarding.ViewModels.Onboarding
     {
         public List<Item> Items { get; set; }
         public string Deadline { get; set; }
+        public string Year { get; set; }
+        public string Semester { get; set; }
     }
 
     public class Item
