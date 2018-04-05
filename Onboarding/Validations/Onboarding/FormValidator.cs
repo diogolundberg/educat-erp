@@ -6,9 +6,8 @@ namespace Onboarding.Validations.Onboarding
     {
         public FormValidator()
         {
-            RuleFor(x => x.Name).NotNull();
-            RuleFor(x => x.Email).NotNull().EmailAddress();
-            RuleFor(x => x.Cpf).Must(x => Cpf.ValidCPF(x));
+            RuleFor(x => x.Items).SetCollectionValidator(new ItemValidator());
+            RuleFor(x => x.Deadline).NotNull();
         }
     }
 }
