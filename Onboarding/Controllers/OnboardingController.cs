@@ -31,7 +31,6 @@ namespace Onboarding.Controllers
         [HttpPost("", Name = "ONBOARDING/CREATE")]
         public dynamic Post([FromBody]ViewModels.Onboarding.Form obj)
         {
-            List<Enrollment> enrollments = new List<Enrollment>();
             FormValidator formValidator = new FormValidator();
             ValidationResult validationResult = formValidator.Validate(obj);
 
@@ -40,51 +39,30 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { Errors = FormatErrors(validationResult) });
             }
 
-            foreach (var item in obj.Enrollments)
+            Models.Onboarding existingOnboarding = _context.Onboardings.SingleOrDefault(x => x.Semester == obj.Semester && x.Year == obj.Year);
+
+            if (existingOnboarding != null)
             {
-                Enrollment enrollment = new Enrollment
-                {
-                    Deadline = DateTime.ParseExact(obj.End, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                    PersonalData = new PersonalData
-                    {
-                        RealName = item.Name,
-                        Email = item.Email,
-                        CPF = item.Cpf,
-                    },
-                    FinanceData = new FinanceData
-                    {
-                        Representative = new RepresentativePerson()
-                    }
-                };
-
-                string externalId = obj.Year + obj.Semester + Regex.Replace(item.Cpf, @"\D", string.Empty);
-
-                Enrollment existingEnrollment = _context.Enrollments.Include("PersonalData").SingleOrDefault(x => x.ExternalId == externalId);
-
-                if (existingEnrollment == null)
-                {
-                    _context.Enrollments.Add(enrollment);
-                    _context.SaveChanges();
-
-                    SendEmail(enrollment.ExternalId, enrollment.PersonalData.Email);
-                }
-                else
-                {
-                    enrollment = existingEnrollment;
-                }
-
-                enrollments.Add(enrollment);
+                return new BadRequestObjectResult(new { Messages = new List<string> { "Já existe um período de matrícula cadastrado para este semestre e ano." } });
             }
+
+            Models.Onboarding onboarding = _mapper.Map<Models.Onboarding>(obj);
+
+            foreach (Enrollment enrollment in onboarding.Enrollments)
+            {
+                enrollment.ExternalId = onboarding.Year + onboarding.Semester + Regex.Replace(enrollment.PersonalData.CPF, @"\D", string.Empty);
+                enrollment.FinanceData = new FinanceData
+                {
+                    Representative = new RepresentativePerson()
+                };
+            }
+
+            _context.Onboardings.Add(onboarding);
+            _context.SaveChanges();
 
             return new OkObjectResult(new
             {
-                data = enrollments.Select(x => new
-                {
-                    token = x.ExternalId,
-                    name = x.PersonalData.RealName,
-                    email = x.PersonalData.Email,
-                    cpf = x.PersonalData.CPF
-                })
+                data = obj
             });
         }
 

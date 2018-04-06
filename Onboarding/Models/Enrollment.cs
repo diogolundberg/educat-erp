@@ -32,7 +32,7 @@ namespace Onboarding.Models
 
         public override string CreateExternalId()
         {
-            return Onboarding.Year + Onboarding.Semester + Regex.Replace(PersonalData.CPF, @"\D", string.Empty); ;
+            return Onboarding.Year + Onboarding.Semester + Regex.Replace(PersonalData.CPF, @"\D", string.Empty); 
         }
 
         internal bool IsDeadlineValid()
