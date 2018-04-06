@@ -74,6 +74,40 @@ namespace Onboarding.Controllers
             });
         }
 
+        [HttpDelete("{id}", Name = "ONBOARDING/DELETE")]
+        public dynamic Delete(int id)
+        {
+            Models.Onboarding existingOnboarding = _context.Onboardings
+                                                           .Include("Enrollments")
+                                                           .Include("Enrollments.PersonalData")
+                                                           .Include("Enrollments.FinanceData")
+                                                           .Include("Enrollments.FinanceData.Representative")
+                                                           .SingleOrDefault(x => x.Id == id);
+
+            if (existingOnboarding == null)
+            {
+                return new NotFoundObjectResult(new { Messages = new List<string> { "Esse período de matrícula não existe." } });
+            }
+
+            if (existingOnboarding.Enrollments.Any(x => x.StartAt.HasValue))
+            {
+                return new NotFoundObjectResult(new { Messages = new List<string> { "Não é possível excluir o período pois existem matriculas iniciadas." } });
+            }
+
+            foreach (Enrollment enrollment in existingOnboarding.Enrollments)
+            {
+                _context.Representatives.Remove(enrollment.FinanceData.Representative);
+                _context.FinanceDatas.Remove(enrollment.FinanceData);
+                _context.PersonalDatas.Remove(enrollment.PersonalData);
+                _context.Enrollments.Remove(enrollment);
+            }
+            
+            _context.Onboardings.Remove(existingOnboarding);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
         private void SendEmail(string externalId, string email)
         {
             SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"], _configuration["SMTP_HOST"], _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
