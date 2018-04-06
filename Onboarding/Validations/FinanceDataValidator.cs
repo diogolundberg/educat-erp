@@ -9,6 +9,8 @@ namespace Onboarding.Validations
         {
             RuleFor(financeData => financeData.Representative).SetValidator(new RepresentativeValidator());
             RuleFor(financeData => financeData.Guarantors).SetCollectionValidator(new GuarantorValidator());
+            RuleFor(financeData => financeData.PlanId).NotNull();
+            RuleFor(financeData => financeData.PaymentMethodId).NotNull();
         }
     }
     
