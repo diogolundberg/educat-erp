@@ -67,9 +67,9 @@ namespace Onboarding.Controllers
             {
                 data = new
                 {
-                    StartedAt = enrollment.StartedAt.HasValue ? enrollment.StartedAt.ToString() : null,
-                    Deadline = enrollment.Onboarding.EndAt.HasValue ? enrollment.Onboarding.EndAt.ToString() : null,
-                    SentAt = enrollment.SentAt.HasValue ? enrollment.SentAt.ToString() : null,
+                    StartedAt = enrollment.StartedAt.HasValue ? enrollment.StartedAt.Value.ToString("dd/MM/yyyy") : null,
+                    Deadline = enrollment.Onboarding.EndAt.HasValue ? enrollment.Onboarding.EndAt.Value.ToString("dd/MM/yyyy") : null,
+                    SentAt = enrollment.SentAt.HasValue ? enrollment.SentAt.Value.ToString("dd/MM/yyyy") : null,
                     enrollment.AcademicApproval,
                     enrollment.FinanceApproval,
                     enrollment.Photo,
