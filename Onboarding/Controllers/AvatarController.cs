@@ -18,7 +18,7 @@ namespace Onboarding.Controllers
         }
 
         [HttpPost("{token}", Name = "ONBOARDING/AVATAR")]
-        public dynamic Post([FromRoute]string token,[FromBody]Form form)
+        public dynamic Post([FromRoute]string token, [FromBody]Form form)
         {
             Enrollment enrollment = _context.Enrollments.Single(x => x.ExternalId == token);
 
@@ -41,7 +41,7 @@ namespace Onboarding.Controllers
             _context.Enrollments.Update(enrollment);
             _context.SaveChanges();
 
-            return new OkObjectResult(new { messages = new List<string> { "Foto atualizada com sucesso." } });
+            return new OkObjectResult(new { data = form });
         }
     }
 }
