@@ -21,3 +21,4 @@ namespace Onboarding.Models
         public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }
+                                                                        

@@ -6,8 +6,9 @@ namespace Onboarding.Validations.Onboarding
     {
         public FormValidator()
         {
-            RuleFor(x => x.Items).SetCollectionValidator(new EnrollmentFormValidator());
-            RuleFor(x => x.Deadline).NotNull();
+            RuleFor(x => x.Enrollments).SetCollectionValidator(new EnrollmentFormValidator());
+            RuleFor(x => x.StartAt).NotNull();
+            RuleFor(x => x.EndAt).NotNull();
             RuleFor(x => x.Year).NotNull();
             RuleFor(x => x.Semester).NotNull().Must(x=> x == "1" || x == "2").WithMessage("Semestre inválido.");
         }
