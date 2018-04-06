@@ -7,10 +7,12 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Net.Mail;
-using System.Globalization;
-using System;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using MimeKit;
+using System;
 
 namespace Onboarding.Controllers
 {
@@ -20,12 +22,14 @@ namespace Onboarding.Controllers
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
         private readonly IConfiguration _configuration;
+        private IHostingEnvironment _env;
 
-        public OnboardingController(DatabaseContext databaseContext, IMapper mapper, IConfiguration configuration)
+        public OnboardingController(DatabaseContext databaseContext, IMapper mapper, IConfiguration configuration, IHostingEnvironment env)
         {
             _configuration = configuration;
             _context = databaseContext;
             _mapper = mapper;
+            _env = env;
         }
 
         [HttpGet("", Name = "ONBOARDING/LIST")]
@@ -63,6 +67,7 @@ namespace Onboarding.Controllers
                 {
                     Representative = new RepresentativePerson()
                 };
+                SendEmail(enrollment);
             }
 
             _context.Onboardings.Add(onboarding);
@@ -101,21 +106,37 @@ namespace Onboarding.Controllers
                 _context.PersonalDatas.Remove(enrollment.PersonalData);
                 _context.Enrollments.Remove(enrollment);
             }
-            
+
             _context.Onboardings.Remove(existingOnboarding);
             _context.SaveChanges();
 
             return Ok();
         }
 
-        private void SendEmail(string externalId, string email)
+        private void SendEmail(Enrollment enrollment)
         {
-            SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"], _configuration["SMTP_HOST"], _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
-
-            string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + externalId);
+            string link = _configuration["MATRICULA_CMMG"] + enrollment.ExternalId;
+            string messageBody = GetEmailBody().Replace("{link}", link);
             string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
 
-            smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]), new MailAddress(email), body, subject);
+            SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"], _configuration["SMTP_HOST"], _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
+
+            smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]), new MailAddress(enrollment.PersonalData.Email), messageBody, subject);
+        }
+
+        private string GetEmailBody()
+        {
+            string webRoot = Directory.GetCurrentDirectory();
+            string pathToFile = webRoot + Path.DirectorySeparatorChar.ToString() + "Templates" + Path.DirectorySeparatorChar.ToString() + "EmailTemplate" + Path.DirectorySeparatorChar.ToString() + "enrollment_invite.html";
+
+            BodyBuilder builder = new BodyBuilder();
+        
+            using (StreamReader SourceReader = System.IO.File.OpenText(pathToFile))
+            {
+                builder.HtmlBody = SourceReader.ReadToEnd();
+            }
+
+            return builder.HtmlBody;
         }
     }
 }
