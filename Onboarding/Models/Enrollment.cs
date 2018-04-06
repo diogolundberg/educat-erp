@@ -24,7 +24,7 @@ namespace Onboarding.Models
 
         public DateTime? FinanceApproval { get; set; }
 
-        public DateTime? StartAt { get; set; }
+        public DateTime? StartedAt { get; set; }
 
         public string Photo { get; set; }
 

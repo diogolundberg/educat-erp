@@ -67,7 +67,7 @@ namespace Onboarding.Controllers
             {
                 data = new
                 {
-                    StartedAt = enrollment.StartAt.HasValue ? enrollment.StartAt.ToString() : null,
+                    StartedAt = enrollment.StartedAt.HasValue ? enrollment.StartedAt.ToString() : null,
                     Deadline = enrollment.Onboarding.EndAt.HasValue ? enrollment.Onboarding.EndAt.ToString() : null,
                     SentAt = enrollment.SentAt.HasValue ? enrollment.SentAt.ToString() : null,
                     enrollment.AcademicApproval,
@@ -125,9 +125,9 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado" } });
             }
 
-            if (!enrollment.StartAt.HasValue)
+            if (!enrollment.StartedAt.HasValue)
             {
-                enrollment.StartAt = DateTime.Now;
+                enrollment.StartedAt = DateTime.Now;
 
                 _context.Set<Enrollment>().Update(enrollment);
                 _context.SaveChanges();

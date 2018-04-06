@@ -89,7 +89,7 @@ namespace Onboarding.Controllers
                 return new NotFoundObjectResult(new { Messages = new List<string> { "Esse período de matrícula não existe." } });
             }
 
-            if (existingOnboarding.Enrollments.Any(x => x.StartAt.HasValue))
+            if (existingOnboarding.Enrollments.Any(x => x.StartedAt.HasValue))
             {
                 return new NotFoundObjectResult(new { Messages = new List<string> { "Não é possível excluir o período pois existem matriculas iniciadas." } });
             }
