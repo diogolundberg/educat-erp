@@ -24,7 +24,7 @@ export default new VueX.Store({
           assumedName: null,
           birthDate: null,
           cpf: null,
-          nationality: null,
+          nationalityId: null,
           highSchoolGraduationYear: null,
           email: null,
           zipcode: null,

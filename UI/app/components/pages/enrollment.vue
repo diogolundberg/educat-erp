@@ -92,14 +92,14 @@
                   label="Sexo" />
               </div>
               <div class="flex gutters flex-wrap">
-                <InputBox
-                  v-model="enrollment.data.personalData.nationality"
-                  :errors="enrollment.errors.personalData.Nationality"
+                <DropDown
+                  v-model="enrollment.data.personalData.nationalityId"
+                  :errors="enrollment.errors.personalData.nationalityId"
                   :size="3"
+                  :options="enrollment.options.nationalities"
                   :disabled="!!enrollment.data.sentAt"
                   required
-                  label="Nacionalidade"
-                  hint="Ex: Brasileiro" />
+                  label="Nacionalidade" />
                 <DropDown
                   v-model="enrollment.data.personalData.birthCountryId"
                   :errors="enrollment.errors.personalData.BirthCountryId"
