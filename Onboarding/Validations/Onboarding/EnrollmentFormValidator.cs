@@ -8,7 +8,7 @@ namespace Onboarding.Validations.Onboarding
         {
             RuleFor(x => x.Name).NotNull();
             RuleFor(x => x.Email).NotNull().EmailAddress();
-            RuleFor(x => x.Cpf).Must(x => Cpf.ValidCPF(x));
+            RuleFor(x => x.CPF).Must(x => Cpf.ValidCPF(x));
         }
     }
 }

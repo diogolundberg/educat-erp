@@ -32,8 +32,7 @@ namespace Onboarding.Models
 
         public override string CreateExternalId()
         {
-            string semester = DateTime.Now.Month > 6 ? "2" : "1";
-            return DateTime.Now.Year + semester + Regex.Replace(PersonalData.CPF, @"\D", string.Empty); ;
+            return Onboarding.Year + Onboarding.Semester + Regex.Replace(PersonalData.CPF, @"\D", string.Empty); ;
         }
 
         internal bool IsDeadlineValid()
@@ -42,6 +41,10 @@ namespace Onboarding.Models
         }
 
         public IEnumerable<Pendency> Pendencies { get; set; }
+
+        public int? OnboardingId { get; set; }
+
+        public virtual Onboarding Onboarding { get; set; }
     }
 }
 
