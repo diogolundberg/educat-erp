@@ -437,12 +437,13 @@
                   :size="4"
                   :disabled="!!enrollment.data.sentAt"
                   label="Pessoa de Contato" />
-                <InputBox
+                <DropDown
                   v-if="enrollment.data.financeData.representative.discriminator
                     == 'RepresentativePerson'"
-                  v-model="enrollment.data.financeData.representative.relationship"
-                  :errors="enrollment.errors.financeData.representative.relationship"
+                  v-model="enrollment.data.financeData.representative.relationshipId"
+                  :errors="enrollment.errors.financeData.representative.relationshipId"
                   :size="4"
+                  :options="enrollment.options.relationships"
                   :disabled="!!enrollment.data.sentAt"
                   label="Relacionamento com o aluno" />
                 <InputBox
