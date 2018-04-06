@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Onboarding.Controllers
@@ -73,6 +75,21 @@ namespace Onboarding.Controllers
             }
 
             return errors;
+        }
+
+        protected string GetEmailBody(string emailTemplateFile)
+        {
+            string webRoot = Directory.GetCurrentDirectory();
+            string pathToFile = webRoot + Path.DirectorySeparatorChar.ToString() + "Templates" + Path.DirectorySeparatorChar.ToString() + "EmailTemplate" + Path.DirectorySeparatorChar.ToString() + emailTemplateFile;
+
+            BodyBuilder builder = new BodyBuilder();
+
+            using (StreamReader SourceReader = System.IO.File.OpenText(pathToFile))
+            {
+                builder.HtmlBody = SourceReader.ReadToEnd();
+            }
+
+            return builder.HtmlBody;
         }
     }
 }
