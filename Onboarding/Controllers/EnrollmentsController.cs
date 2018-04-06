@@ -34,6 +34,7 @@ namespace Onboarding.Controllers
         public dynamic Get(string token)
         {
             Enrollment enrollment = _context.Enrollments
+                                            .Include("Onboarding")
                                             .Include("PersonalData")
                                             .Include("PersonalData.PersonalDataDisabilities")
                                             .Include("PersonalData.PersonalDataSpecialNeeds")
@@ -66,9 +67,9 @@ namespace Onboarding.Controllers
             {
                 data = new
                 {
-                    enrollment.StartAt,
-                    enrollment.Deadline,
-                    enrollment.SentAt,
+                    StartedAt = enrollment.StartAt.HasValue ? enrollment.StartAt.ToString() : null,
+                    Deadline = enrollment.Onboarding.EndAt.HasValue ? enrollment.Onboarding.EndAt.ToString() : null,
+                    SentAt = enrollment.SentAt.HasValue ? enrollment.SentAt.ToString() : null,
                     enrollment.AcademicApproval,
                     enrollment.FinanceApproval,
                     enrollment.Photo,
@@ -101,6 +102,7 @@ namespace Onboarding.Controllers
         public dynamic Send(string token)
         {
             Enrollment enrollment = _context.Enrollments
+                                            .Include("Onboarding")
                                             .Include("PersonalData")
                                             .Include("PersonalData.PersonalDataDisabilities")
                                             .Include("PersonalData.PersonalDataSpecialNeeds")

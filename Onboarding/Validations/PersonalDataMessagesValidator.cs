@@ -85,7 +85,7 @@ namespace Onboarding.Validations
 
         private string BeGraduationYear(PersonalData personalData)
         {
-            if (!string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) && personalData.HighSchoolGraduationYear == personalData.Enrollment.Deadline.Year.ToString())
+            if (!string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) && personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString())
             {
                 return DocumentValidations.GraduationYear.ToString();
             }

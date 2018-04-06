@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Onboarding.Models;
 using Onboarding.ViewModels.Avatar;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Onboarding.Controllers
         [HttpPost("{token}", Name = "ONBOARDING/AVATAR")]
         public dynamic Post([FromRoute]string token, [FromBody]Form form)
         {
-            Enrollment enrollment = _context.Enrollments.Single(x => x.ExternalId == token);
+            Enrollment enrollment = _context.Enrollments.Include("Onboarding").Single(x => x.ExternalId == token);
 
             if (enrollment == null)
             {

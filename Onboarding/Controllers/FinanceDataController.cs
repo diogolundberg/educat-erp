@@ -31,6 +31,7 @@ namespace Onboarding.Controllers
         public IActionResult Update([FromRoute]string token, [FromBody]FinanceDataViewModel obj)
         {
             FinanceData financeData = _context.Set<FinanceData>()
+                                              .Include("Enrollment.Onboarding")
                                               .Include("Enrollment")
                                               .Include("Enrollment.PersonalData")
                                               .Include("Representative")

@@ -24,8 +24,6 @@ namespace Onboarding.Models
 
         public DateTime? FinanceApproval { get; set; }
 
-        public DateTime Deadline { get; set; }
-
         public DateTime? StartAt { get; set; }
 
         public string Photo { get; set; }
@@ -37,7 +35,7 @@ namespace Onboarding.Models
 
         internal bool IsDeadlineValid()
         {
-            return DateTime.Now <= Deadline;
+            return DateTime.Now <= Onboarding.EndAt;
         }
 
         public IEnumerable<Pendency> Pendencies { get; set; }
