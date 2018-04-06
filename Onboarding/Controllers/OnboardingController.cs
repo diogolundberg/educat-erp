@@ -28,6 +28,14 @@ namespace Onboarding.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("", Name = "ONBOARDING/LIST")]
+        public dynamic GetList()
+        {
+            List<Models.Onboarding> onboardings = _context.Onboardings.Include("Enrollments").ToList();
+            List<ViewModels.Onboarding.Records> records = _mapper.Map<List<ViewModels.Onboarding.Records>>(onboardings);
+            return new { records };
+        }
+
         [HttpPost("", Name = "ONBOARDING/CREATE")]
         public dynamic Post([FromBody]ViewModels.Onboarding.Form obj)
         {
