@@ -30,6 +30,8 @@ namespace Onboarding.Controllers
         {
             List<Enrollment> enrollments = _context.Enrollments
                                                     .Include("PersonalData")
+                                                    .Include("FinanceData")
+                                                    .Include("FinanceData.Plan")
                                                     .Where(x => x.SentAt.HasValue)
                                                     .ToList();
 
