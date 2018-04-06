@@ -10,9 +10,6 @@ using System.Net.Mail;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using MimeKit;
-using System;
 
 namespace Onboarding.Controllers
 {
@@ -67,7 +64,12 @@ namespace Onboarding.Controllers
                 {
                     Representative = new RepresentativePerson()
                 };
-                SendEmail(enrollment);
+
+                string link = _configuration["MATRICULA_CMMG"] + enrollment.ExternalId;
+                string messageBody = GetEmailBody("enrollment_invite.html").Replace("{link}", link);
+                string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
+
+                SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
             }
 
             _context.Onboardings.Add(onboarding);
@@ -111,32 +113,6 @@ namespace Onboarding.Controllers
             _context.SaveChanges();
 
             return Ok();
-        }
-
-        private void SendEmail(Enrollment enrollment)
-        {
-            string link = _configuration["MATRICULA_CMMG"] + enrollment.ExternalId;
-            string messageBody = GetEmailBody().Replace("{link}", link);
-            string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
-
-            SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"], _configuration["SMTP_HOST"], _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
-
-            smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]), new MailAddress(enrollment.PersonalData.Email), messageBody, subject);
-        }
-
-        private string GetEmailBody()
-        {
-            string webRoot = Directory.GetCurrentDirectory();
-            string pathToFile = webRoot + Path.DirectorySeparatorChar.ToString() + "Templates" + Path.DirectorySeparatorChar.ToString() + "EmailTemplate" + Path.DirectorySeparatorChar.ToString() + "enrollment_invite.html";
-
-            BodyBuilder builder = new BodyBuilder();
-        
-            using (StreamReader SourceReader = System.IO.File.OpenText(pathToFile))
-            {
-                builder.HtmlBody = SourceReader.ReadToEnd();
-            }
-
-            return builder.HtmlBody;
         }
     }
 }
