@@ -40,11 +40,11 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { Errors = FormatErrors(validationResult) });
             }
 
-            foreach (var item in obj.Items)
+            foreach (var item in obj.Enrollments)
             {
                 Enrollment enrollment = new Enrollment
                 {
-                    Deadline = DateTime.ParseExact(obj.Deadline, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                    Deadline = DateTime.ParseExact(obj.End, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                     PersonalData = new PersonalData
                     {
                         RealName = item.Name,
