@@ -14,6 +14,10 @@ namespace Onboarding.Models
 
         public DateTime? EndAt { get; set; }
 
+        public string Semester { get; set; }
+
+        public string Year { get; set; }
+
         public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }
