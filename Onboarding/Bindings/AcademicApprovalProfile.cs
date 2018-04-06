@@ -16,7 +16,8 @@ namespace Onboarding.Bindings
             .ForMember(x => x.BirthDate, config => config.MapFrom(x => x.PersonalData.BirthDate.Value.ToString("dd/MM/yyyy")))
             .ForMember(x => x.Email, config => config.MapFrom(x => x.PersonalData.Email))
             .ForMember(x => x.PhoneNumber, config => config.MapFrom(x => x.PersonalData.PhoneNumber))
-            .ForMember(x => x.UpdatedAt, config => config.MapFrom(x => x.PersonalData.UpdatedAt));
+            .ForMember(x => x.UpdatedAt, config => config.MapFrom(x => x.PersonalData.UpdatedAt))
+            .ForMember(x => x.PhoneNumber, config => config.MapFrom(x => x.PersonalData.PhoneNumber));
 
 
             CreateMap<Enrollment, Record>()
