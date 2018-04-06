@@ -15,7 +15,7 @@ namespace Onboarding.Validations
 
         public PersonalDataMessagesValidator(DatabaseContext databaseContext)
         {
-            documentTypes = databaseContext.Set<PersonalDocumentType>().Where(x => x.Validations == null).ToList();
+            documentTypes = databaseContext.Set<PersonalDocumentType>().ToList();
 
             RuleFor(personalData => personalData).Custom((personalData, context) =>
             {
@@ -30,7 +30,7 @@ namespace Onboarding.Validations
                 List<Document> documents = personalData.PersonalDataDocuments.Select(x => x.Document).ToList();
                 List<string> documentTypeValidations = GetPersonalDataDocumentValidations(documents);
                 List<string> requiredDocumentValidations = validations.Where(x => !documentTypeValidations.Contains(x)).ToList();
-                List<string> requiredDocumentTypes = documentTypes.Where(x => !documents.Any(o => o.DocumentTypeId == x.Id)).Select(x => x.Name).ToList();
+                List<string> requiredDocumentTypes = documentTypes.Where(x => x.Validations == null && !documents.Any(o => o.DocumentTypeId == x.Id)).Select(x => x.Name).ToList();
 
                 foreach (string requiredDocument in requiredDocumentValidations)
                 {
@@ -111,7 +111,9 @@ namespace Onboarding.Validations
 
             foreach (Document document in documents)
             {
-                if (!string.IsNullOrEmpty(document.DocumentType.Validations))
+                DocumentType documentType = documentTypes.Single(x => x.Id == document.DocumentTypeId);
+
+                if (!string.IsNullOrEmpty(documentType.Validations))
                 {
                     List<string> documentValidations = JsonConvert.DeserializeObject<List<string>>(document.DocumentType.Validations);
                     documentTypeValidations.AddRange(documentValidations.Where(x => !documentTypeValidations.Contains(x)));
