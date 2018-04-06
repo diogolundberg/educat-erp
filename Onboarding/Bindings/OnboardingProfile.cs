@@ -17,6 +17,9 @@ namespace Onboarding.Bindings
                     Email = o.Email
                 }
             })));
+
+            CreateMap<Models.Onboarding, ViewModels.Onboarding.Records>()
+                .ForMember(x => x.EnrollmentCount, config => config.MapFrom(x => x.Enrollments.Count));
         }
     }
 }
