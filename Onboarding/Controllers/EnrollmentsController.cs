@@ -17,7 +17,7 @@ namespace Onboarding.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public class EnrollmentsController : Controller
+    public class EnrollmentsController : BaseController
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
@@ -151,6 +151,15 @@ namespace Onboarding.Controllers
                 _context.Set<Enrollment>().Update(enrollment);
                 _context.SaveChanges();
                 messages.Add("A matrícula foi enviada para aprovação");
+
+                string body = GetEmailBody("enrollment_sent.html");
+                string subject = "Sua matricula foi enviada para análise";
+                string messageBody = GetEmailBody("enrollment_sent.html")
+                                     .Replace("{student_name}", enrollment.PersonalData.RealName)
+                                     .Replace("{send_at}", enrollment.SentAt.Value.ToString("dd/MM/yyyy"))
+                                     .Replace("{send_at_hour}", enrollment.SentAt.Value.ToString("HH:mm"));
+
+                SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
 
                 return new OkObjectResult(new { messages });
             }
