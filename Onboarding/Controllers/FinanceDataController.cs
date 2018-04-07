@@ -1,16 +1,13 @@
 using System.Linq;
 using AutoMapper;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
-using Onboarding.Data.Entity;
 using Onboarding.Models;
 using Onboarding.ViewModels;
-using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections;
 using Onboarding.Validations;
+using Onboarding.Validations.FinanceData;
 
 namespace Onboarding.Controllers
 {

@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
-using Onboarding.Models;
 
-namespace Onboarding.Validations
+namespace Onboarding.Validations.FinanceData
 {
-    public class FinanceDataValidator : AbstractValidator<FinanceData>
+    public class FinanceDataValidator : AbstractValidator<Models.FinanceData>
     {
         public FinanceDataValidator()
         {

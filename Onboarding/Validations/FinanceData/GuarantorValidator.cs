@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Onboarding.Models;
+using Onboarding.Validations.FinanceData;
 
 namespace Onboarding.Validations
 {
@@ -21,6 +22,7 @@ namespace Onboarding.Validations
             RuleFor(guarantor => guarantor.RelationshipId).NotEmpty();
             RuleFor(guarantor => guarantor.AddressKindId).NotEmpty();
             RuleFor(guarantor => guarantor.Zipcode).NotEmpty();
+            RuleFor(guarantor => guarantor.GuarantorDocuments).SetCollectionValidator(new GuarantorDocumentsValidator());
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Onboarding.Controllers
 
                     ((Hashtable)errors[split[0]]).Add(split[1].UnCapitalize(), error.Value);
                 }
-                else
+                else if (split.Length == 3)
                 {
                     if (!errors.ContainsKey(split[0]))
                     {
@@ -72,6 +72,21 @@ namespace Onboarding.Controllers
                     }
 
                     ((Hashtable)((Hashtable)errors[split[0]])[split[1]]).Add(split[2].UnCapitalize(), error.Value);
+                }
+                else
+                {
+                    if (!errors.ContainsKey(split[0]))
+                    {
+                        errors.Add(split[0], new Hashtable());
+                    }
+
+                    if (!((Hashtable)errors[split[0]]).ContainsKey(split[1]))
+                    {
+                        ((Hashtable)errors[split[0]]).Add(split[1], new Hashtable());
+                        ((Hashtable)((Hashtable)errors[split[0]])[split[1]]).Add(split[2], new Hashtable());
+                    }
+
+                    ((Hashtable)((Hashtable)((Hashtable)errors[split[0]])[split[1]])[split[2]]).Add(split[3].UnCapitalize(), error.Value);
                 }
             }
 

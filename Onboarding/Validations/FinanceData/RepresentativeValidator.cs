@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Onboarding.Models;
 
-namespace Onboarding.Validations
+namespace Onboarding.Validations.FinanceData
 {
     public class RepresentativeValidator : AbstractValidator<Representative>
     {

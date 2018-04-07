@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Onboarding.Validations
 {
-    public class FinanceDataMessagesValidator : AbstractValidator<FinanceData>
+    public class FinanceDataMessagesValidator : AbstractValidator<Models.FinanceData>
     {
         private List<GuarantorDocumentType> documentTypes { get; set; }
 
@@ -47,7 +47,7 @@ namespace Onboarding.Validations
         {
             List<string> documentTypeValidations = new List<string>();
 
-            foreach (Document document in documents)
+            foreach (Document document in documents.Where(x=>x.DocumentTypeId.HasValue))
             {
                 if (!string.IsNullOrEmpty(document.DocumentType.Validations))
                 {
@@ -59,7 +59,7 @@ namespace Onboarding.Validations
             return documentTypeValidations;
         }
 
-        private void CheckPlan(FinanceData financeData, CustomContext context)
+        private void CheckPlan(Models.FinanceData financeData, CustomContext context)
         {
             if (financeData.Plan != null && financeData.Plan.Guarantors > 0)
             {
@@ -91,7 +91,7 @@ namespace Onboarding.Validations
             }
         }
 
-        private void CheckRepresentative(FinanceData financeData, CustomContext context)
+        private void CheckRepresentative(Models.FinanceData financeData, CustomContext context)
         {
             Models.PersonalData personalData = financeData.Enrollment.PersonalData;
             Representative representative = financeData.Representative;
