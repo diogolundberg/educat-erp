@@ -3,13 +3,13 @@
     <InputBox
       v-model="filter"
       label="Filtro" />
-    <div class="block sm-table bg-white shadow2 m2 col-12">
+    <div class="block sm-table bg-white shadow2 m2 col-12 fit">
       <div class="hidden sm-table-row divider-bottom">
         <div
           v-for="column in columns"
           :key="column.name"
           :class="{ bold: sortColumn === column.name }"
-          class="block sm-table-cell px4 py2 no-select pointer"
+          class="block sm-table-cell px2 py2 no-select pointer truncate"
           @click="sortBy(column)">
           {{ column.title }}
           <span v-if="sortColumn === column.name && reverse">↑</span>
@@ -24,8 +24,8 @@
         {{ $option }}
         <div
           v-for="column in columns"
-          :key="column.name"
-          class="block sm-table-cell px2 sm-px4 py1 sm-py2">
+          :key="`${index}_${column.name}`"
+          class="block sm-table-cell px2 sm-px2 py1 sm-py2 truncate">
           <strong class="sm-hide md-hide lg-hide">
             {{ column.title }}:
           </strong>
@@ -41,7 +41,7 @@
       </div>
       <div
         v-if="!rows.length"
-        class="block px2 sm-px4 py1 sm-py2">
+        class="block px2 sm-px2 py1 sm-py2">
         {{ noneMessage }}
       </div>
     </div>
