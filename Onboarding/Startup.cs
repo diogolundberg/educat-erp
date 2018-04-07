@@ -143,6 +143,8 @@ namespace Onboarding
                 }
             );
 
+            app.UseStaticFiles();
+
             app.UseMvc();
         }
     }

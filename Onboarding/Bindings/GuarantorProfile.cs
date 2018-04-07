@@ -12,6 +12,7 @@ namespace Onboarding.Bindings
             CreateMap<GuarantorViewModel, Guarantor>()
             .ForMember(x => x.City, config => config.Ignore())
             .ForMember(x => x.State, config => config.Ignore())
+            .ForMember(x => x.Relationship, config => config.Ignore())
             .ForMember(x => x.GuarantorDocuments, config => config.MapFrom(cm => cm.Documents.Select(x => new GuarantorDocument
             {
                 Document = new Document

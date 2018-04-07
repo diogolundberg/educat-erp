@@ -17,7 +17,7 @@ namespace Onboarding.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public class EnrollmentsController : Controller
+    public class EnrollmentsController : BaseController
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
@@ -34,6 +34,7 @@ namespace Onboarding.Controllers
         public dynamic Get(string token)
         {
             Enrollment enrollment = _context.Enrollments
+                                            .Include("Onboarding")
                                             .Include("PersonalData")
                                             .Include("PersonalData.PersonalDataDisabilities")
                                             .Include("PersonalData.PersonalDataSpecialNeeds")
@@ -66,10 +67,12 @@ namespace Onboarding.Controllers
             {
                 data = new
                 {
-                    enrollment.Deadline,
-                    enrollment.SentAt,
+                    StartedAt = enrollment.StartedAt.HasValue ? enrollment.StartedAt.Value.ToString("dd/MM/yyyy") : null,
+                    Deadline = enrollment.Onboarding.EndAt.HasValue ? enrollment.Onboarding.EndAt.Value.ToString("dd/MM/yyyy") : null,
+                    SentAt = enrollment.SentAt.HasValue ? enrollment.SentAt.Value.ToString("dd/MM/yyyy") : null,
                     enrollment.AcademicApproval,
                     enrollment.FinanceApproval,
+                    enrollment.Photo,
                     personalData,
                     financeData,
                 },
@@ -99,6 +102,7 @@ namespace Onboarding.Controllers
         public dynamic Send(string token)
         {
             Enrollment enrollment = _context.Enrollments
+                                            .Include("Onboarding")
                                             .Include("PersonalData")
                                             .Include("PersonalData.PersonalDataDisabilities")
                                             .Include("PersonalData.PersonalDataSpecialNeeds")
@@ -121,20 +125,41 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado" } });
             }
 
+            if (!enrollment.StartedAt.HasValue)
+            {
+                enrollment.StartedAt = DateTime.Now;
+
+                _context.Set<Enrollment>().Update(enrollment);
+                _context.SaveChanges();
+
+                return Ok();
+            }
+
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
             personalData.State = PersonalDataState(enrollment.PersonalData);
 
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
             financeData.State = FinanceDataState(enrollment.FinanceData);
 
-            var messages = new List<string>();
+            EnrollmentMessagesValidator enrollmentValidator = new EnrollmentMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
+            List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).Distinct().ToList();
 
-            if (personalData.State == "valid" && financeData.State == "valid")
+            if (personalData.State == "valid" && financeData.State == "valid" && enrollmentValidatorResult.IsValid)
             {
                 enrollment.SentAt = DateTime.Now;
                 _context.Set<Enrollment>().Update(enrollment);
                 _context.SaveChanges();
                 messages.Add("A matrícula foi enviada para aprovação");
+
+                string body = GetEmailBody("enrollment_sent.html");
+                string subject = "Sua matricula foi enviada para análise";
+                string messageBody = GetEmailBody("enrollment_sent.html")
+                                     .Replace("{student_name}", enrollment.PersonalData.RealName)
+                                     .Replace("{send_at}", enrollment.SentAt.Value.ToString("dd/MM/yyyy"))
+                                     .Replace("{send_at_hour}", enrollment.SentAt.Value.ToString("HH:mm"));
+
+                SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
 
                 return new OkObjectResult(new { messages });
             }
@@ -153,71 +178,19 @@ namespace Onboarding.Controllers
             }
         }
 
-        [HttpPost("GenerateToken", Name = "ONBOARDING/ENROLLMENTS/GENERATETOKEN")]
-        public IActionResult GenerateToken([FromBody]GenerateToken obj)
-        {
-            if (!ModelState.IsValid || obj.List.Count == 0)
-            {
-                return BadRequest();
-            }
-
-            List<string> responseObj = new List<string>();
-
-            foreach (GenerateTokenEnrollment enrollmentParameterObj in obj.List)
-            {
-                Enrollment enrollment = new Enrollment
-                {
-                    Deadline = obj.End,
-                    PersonalData = new PersonalData
-                    {
-                        RealName = enrollmentParameterObj.Name,
-                        Email = enrollmentParameterObj.Email,
-                        CPF = enrollmentParameterObj.CPF,
-                    },
-                    FinanceData = new FinanceData
-                    {
-                        Representative = new RepresentativePerson()
-                    }
-                };
-
-                string externalId = enrollment.CreateExternalId();
-
-                Enrollment existingEnrollment = _context.Enrollments.SingleOrDefault(x => x.ExternalId == externalId);
-
-                if (existingEnrollment == null)
-                {
-                    _context.Enrollments.Add(enrollment);
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    enrollment = existingEnrollment;
-                }
-
-                SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"], _configuration["SMTP_HOST"], _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
-
-                string body = string.Format("Clique <a href='{0}'>aqui</a> para se matricular", _configuration["ENROLLMENT_HOST"] + enrollment.ExternalId);
-                string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
-
-                smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_ONBOARDING"]), new MailAddress(enrollmentParameterObj.Email), body, subject);
-
-                responseObj.Add(string.Format("{0} - {1}", enrollmentParameterObj.Email, enrollment.ExternalId));
-            }
-
-            return new OkObjectResult(responseObj);
-        }
-
         private string PersonalDataState(PersonalData personalData)
         {
             PersonalDataValidator validator = new PersonalDataValidator();
             FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
+            PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(personalData);
 
             if (!personalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
 
-            if (results.IsValid)
+            if (results.IsValid && resultsMessages.IsValid)
             {
                 return "valid";
             }
@@ -231,13 +204,14 @@ namespace Onboarding.Controllers
         {
             FinanceDataValidator validator = new FinanceDataValidator();
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
+            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(financeData);
 
             if (!financeData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
-
-            if (results.IsValid)
+            if (results.IsValid && resultsMessages.IsValid)
             {
                 return "valid";
             }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Onboarding.Models;
+using Onboarding.Validations;
 using Onboarding.ViewModels.AcademicApprovals;
 
 namespace Onboarding.Controllers
@@ -28,8 +29,22 @@ namespace Onboarding.Controllers
         [HttpGet("", Name = "ONBOARDING/ACADEMICAPPROVAL/LIST")]
         public dynamic GetList()
         {
-            List<Enrollment> enrollments = _context.Enrollments.Include("PersonalData").Where(x => x.SentAt.HasValue).ToList();
+            List<Enrollment> enrollments = _context.Enrollments
+                                                   .Include("Onboarding")
+                                                   .Include("PersonalData")
+                                                   .Include("PersonalData.PersonalDataDocuments")
+                                                   .Include("PersonalData.PersonalDataSpecialNeeds")
+                                                   .Include("PersonalData.PersonalDataDocuments.Document")
+                                                   .Where(x => x.SentAt.HasValue).ToList();
+
             List<Records> records = _mapper.Map<List<Records>>(enrollments);
+
+            foreach (Records record in records)
+            {
+                PersonalData personalData = enrollments.Single(x => x.ExternalId == record.EnrollmentNumber).PersonalData;
+                record.State = PersonalDataState(personalData);
+            }
+
             return new { records };
         }
 
@@ -130,5 +145,27 @@ namespace Onboarding.Controllers
 
             return new OkObjectResult(new { errors, data = _mapper.Map<Record>(enrollment) });
         }
+
+        private string PersonalDataState(PersonalData personalData)
+        {
+            PersonalDataValidator validator = new PersonalDataValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
+            PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(personalData);
+
+            if (!personalData.UpdatedAt.HasValue)
+            {
+                return "empty";
+            }
+            if (results.IsValid && resultsMessages.IsValid)
+            {
+                return "valid";
+            }
+            else
+            {
+                return "invalid";
+            }
+        }
+
     }
 }

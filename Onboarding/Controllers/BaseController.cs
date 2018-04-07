@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
 
 namespace Onboarding.Controllers
 {
@@ -51,7 +54,7 @@ namespace Onboarding.Controllers
                 {
                     errors.Add(error.Key, error.Value);
                 }
-                else if(split.Length == 2)
+                else if (split.Length == 2)
                 {
                     if (!errors.ContainsKey(split[0]))
                     {
@@ -73,6 +76,31 @@ namespace Onboarding.Controllers
             }
 
             return errors;
+        }
+
+        protected string GetEmailBody(string emailTemplateFile)
+        {
+            string webRoot = Directory.GetCurrentDirectory();
+            string pathToFile = webRoot + Path.DirectorySeparatorChar.ToString() + "Templates" + Path.DirectorySeparatorChar.ToString() + "EmailTemplate" + Path.DirectorySeparatorChar.ToString() + emailTemplateFile;
+
+            BodyBuilder builder = new BodyBuilder();
+
+            using (StreamReader SourceReader = System.IO.File.OpenText(pathToFile))
+            {
+                builder.HtmlBody = SourceReader.ReadToEnd();
+            }
+
+            return builder.HtmlBody;
+        }
+
+        protected void SendEmail(string messageBody, string subject, string from, string to, string userName, string password)
+        {
+            string smtpHost = "smtp.sendgrid.net";
+            string smtpPort = "587";
+
+            SmtpClientHelper smtpClientHelper = new SmtpClientHelper(smtpPort, smtpHost, userName, password);
+
+            smtpClientHelper.Send(new MailAddress(from), new MailAddress(to), messageBody, subject);
         }
     }
 }

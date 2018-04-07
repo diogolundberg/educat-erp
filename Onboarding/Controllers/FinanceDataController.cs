@@ -31,10 +31,12 @@ namespace Onboarding.Controllers
         public IActionResult Update([FromRoute]string token, [FromBody]FinanceDataViewModel obj)
         {
             FinanceData financeData = _context.Set<FinanceData>()
+                                              .Include("Enrollment.Onboarding")
                                               .Include("Enrollment")
                                               .Include("Enrollment.PersonalData")
                                               .Include("Representative")
                                               .Include("Guarantors")
+                                              .Include("Guarantors.Relationship")
                                               .Include("Guarantors.GuarantorDocuments")
                                               .Include("Guarantors.GuarantorDocuments.Document")
                                               .SingleOrDefault(x => x.Enrollment.ExternalId == token);
@@ -129,7 +131,7 @@ namespace Onboarding.Controllers
                     {
                         if (!guarantorViewModel
                             .Documents
-                            .Any(c => c.Id == guarantorDocument.DocumentId || c.DocumentTypeId == guarantorDocument.Document.DocumentTypeId))
+                            .Any(c => c.Id == guarantorDocument.DocumentId))
                         {
                             _context.Set<GuarantorDocument>().Remove(guarantorDocument);
                             _context.Set<Document>().Remove(_context.Set<Document>().Find(guarantorDocument.DocumentId));
@@ -138,7 +140,7 @@ namespace Onboarding.Controllers
                     foreach (DocumentViewModel guarantorDocumentViewModel in guarantorViewModel.Documents)
                     {
                         GuarantorDocument existingGuarantorDocument = existingGuarantor.GuarantorDocuments
-                            .Where(c => c.DocumentId == guarantorDocumentViewModel.Id || c.Document.DocumentTypeId == guarantorDocumentViewModel.DocumentTypeId)
+                            .Where(c => c.DocumentId == guarantorDocumentViewModel.Id)
                             .SingleOrDefault();
 
                         if (existingGuarantorDocument != null)
@@ -185,8 +187,11 @@ namespace Onboarding.Controllers
             financeData.PlanId = obj.PlanId;
             financeData.PaymentMethodId = obj.PaymentMethodId;
 
+            _context.FinanceDatas.Update(financeData);
+
             _context.SaveChanges();
             _context.Entry(financeData).Reload();
+            _context.Entry(financeData).Collection(x => x.Guarantors).Load();
 
             FinanceDataViewModel viewModel = _mapper.Map<FinanceDataViewModel>(financeData);
             viewModel.State = FinanceDataState(financeData);
@@ -195,8 +200,12 @@ namespace Onboarding.Controllers
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
             Hashtable errors = FormatErrors(results);
 
+            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
+            List<string> messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).Distinct().ToList();
+
             return new OkObjectResult(new
             {
+                messages,
                 errors,
                 data = viewModel
             });
@@ -206,13 +215,14 @@ namespace Onboarding.Controllers
         {
             FinanceDataValidator validator = new FinanceDataValidator();
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
+            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(financeData);
 
             if (!financeData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
-
-            if (results.IsValid)
+            if (results.IsValid && resultsMessages.IsValid)
             {
                 return "valid";
             }

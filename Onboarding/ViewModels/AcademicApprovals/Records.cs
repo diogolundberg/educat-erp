@@ -6,6 +6,16 @@ namespace Onboarding.ViewModels.AcademicApprovals
 
         public string CPF { get; set; }
 
+        public string BirthDate { get; set; }
+
+        public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
+
         public string EnrollmentNumber { get; set; }
+
+        public string State { get; set; }
+
+        public string UpdatedAt { get; set; }
     }
 }

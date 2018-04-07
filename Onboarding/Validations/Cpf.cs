@@ -31,7 +31,7 @@ namespace Onboarding.Validations
         private static string RemoveAndFormat(string text)
         {
             System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(@"[^0-9]");
-            string ret = reg.Replace(text, string.Empty);
+            string ret = reg.Replace(text != null ? text : string.Empty, string.Empty);
             return ret;
         }
 

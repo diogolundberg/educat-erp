@@ -29,6 +29,7 @@ namespace Onboarding.Controllers
         public IActionResult Update([FromRoute]string token, [FromBody]PersonalDataViewModel obj)
         {
             PersonalData personalData = _context.Set<PersonalData>()
+                                                .Include("Enrollment.Onboarding")
                                                 .Include("Enrollment")
                                                 .Include("Enrollment.FinanceData")
                                                 .Include("Enrollment.FinanceData.Guarantors")
@@ -61,7 +62,7 @@ namespace Onboarding.Controllers
             {
                 if (!personalDataMapped
                     .PersonalDataDocuments
-                    .Any(c => c.Document.Id == personalDataDocument.DocumentId || c.Document.DocumentTypeId == personalDataDocument.Document.DocumentTypeId))
+                    .Any(c => c.Document.Id == personalDataDocument.DocumentId))
                 {
                     _context.Set<PersonalDataDocument>().Remove(personalDataDocument);
                     _context.Set<Document>().Remove(_context.Set<Document>().Find(personalDataDocument.DocumentId));
@@ -70,7 +71,7 @@ namespace Onboarding.Controllers
             foreach (PersonalDataDocument personalDataDocument in personalDataMapped.PersonalDataDocuments)
             {
                 PersonalDataDocument existingPersonalDataDocument = personalData.PersonalDataDocuments
-                    .Where(c => c.DocumentId == personalDataDocument.Document.Id || c.Document.DocumentTypeId == personalDataDocument.Document.DocumentTypeId)
+                    .Where(c => c.DocumentId == personalDataDocument.Document.Id)
                     .SingleOrDefault();
 
                 if (existingPersonalDataDocument != null)
@@ -134,16 +135,22 @@ namespace Onboarding.Controllers
 
             _context.SaveChanges();
             _context.Entry(personalData).Reload();
+            _context.Entry(personalData).Reference(x => x.Nationality).Load();
+            _context.Entry(personalData).Reference(x => x.Gender).Load();
+            _context.Entry(personalData).Reference(x => x.HighSchoolGraduationCountry).Load();
 
             PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
             viewModel.State = PersonalDataState(personalData);
 
             PersonalDataValidator validator = new PersonalDataValidator();
-            FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
-            Hashtable errors = FormatErrors(results);
+            Hashtable errors = FormatErrors(validator.Validate(personalData));
+
+            PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator(_context);
+            List<string> messages = messagesValidator.Validate(personalData).Errors.Select(x => x.ErrorMessage).ToList();
 
             return new OkObjectResult(new
             {
+                messages,
                 errors,
                 data = viewModel
             });
@@ -153,13 +160,14 @@ namespace Onboarding.Controllers
         {
             PersonalDataValidator validator = new PersonalDataValidator();
             FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
+            PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(personalData);
 
             if (!personalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
-
-            if (results.IsValid)
+            if (results.IsValid && resultsMessages.IsValid)
             {
                 return "valid";
             }

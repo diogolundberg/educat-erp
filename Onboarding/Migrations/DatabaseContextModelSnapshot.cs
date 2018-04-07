@@ -140,6 +140,8 @@ namespace Onboarding.Migrations
 
                     b.Property<DateTime?>("UpdatedAt");
 
+                    b.Property<string>("Validations");
+
                     b.HasKey("Id");
 
                     b.ToTable("DocumentTypes");
@@ -156,19 +158,25 @@ namespace Onboarding.Migrations
 
                     b.Property<DateTime?>("CreatedAt");
 
-                    b.Property<DateTime>("Deadline");
-
                     b.Property<string>("ExternalId");
 
                     b.Property<DateTime?>("FinanceApproval");
+
+                    b.Property<int?>("OnboardingId");
+
+                    b.Property<string>("Photo");
 
                     b.Property<DateTime?>("ReviewedAt");
 
                     b.Property<DateTime?>("SentAt");
 
+                    b.Property<DateTime?>("StartedAt");
+
                     b.Property<DateTime?>("UpdatedAt");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OnboardingId");
 
                     b.ToTable("Enrollments");
                 });
@@ -207,6 +215,8 @@ namespace Onboarding.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("CheckMilitaryDraft");
 
                     b.Property<DateTime?>("CreatedAt");
 
@@ -249,6 +259,8 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("PhoneNumber");
 
+                    b.Property<int?>("RelationshipId");
+
                     b.Property<int?>("StateId");
 
                     b.Property<string>("StreetAddress");
@@ -260,6 +272,8 @@ namespace Onboarding.Migrations
                     b.HasIndex("CityId");
 
                     b.HasIndex("FinanceDataId");
+
+                    b.HasIndex("RelationshipId");
 
                     b.HasIndex("StateId");
 
@@ -326,6 +340,8 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("ExternalId");
 
+                    b.Property<bool>("IsForeign");
+
                     b.Property<string>("Name");
 
                     b.Property<DateTime?>("UpdatedAt");
@@ -333,6 +349,30 @@ namespace Onboarding.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Nationalities");
+                });
+
+            modelBuilder.Entity("Onboarding.Models.Onboarding", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreatedAt");
+
+                    b.Property<DateTime?>("EndAt");
+
+                    b.Property<string>("ExternalId");
+
+                    b.Property<string>("Semester");
+
+                    b.Property<DateTime?>("StartAt");
+
+                    b.Property<DateTime?>("UpdatedAt");
+
+                    b.Property<string>("Year");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Onboardings");
                 });
 
             modelBuilder.Entity("Onboarding.Models.PaymentMethod", b =>
@@ -578,6 +618,8 @@ namespace Onboarding.Migrations
 
                     b.Property<string>("ExternalId");
 
+                    b.Property<bool>("IsSpouse");
+
                     b.Property<string>("Name");
 
                     b.Property<DateTime?>("UpdatedAt");
@@ -791,6 +833,13 @@ namespace Onboarding.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Onboarding.Models.Enrollment", b =>
+                {
+                    b.HasOne("Onboarding.Models.Onboarding", "Onboarding")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("OnboardingId");
+                });
+
             modelBuilder.Entity("Onboarding.Models.FinanceData", b =>
                 {
                     b.HasOne("Onboarding.Models.Enrollment", "Enrollment")
@@ -815,6 +864,10 @@ namespace Onboarding.Migrations
                     b.HasOne("Onboarding.Models.FinanceData", "FinanceData")
                         .WithMany("Guarantors")
                         .HasForeignKey("FinanceDataId");
+
+                    b.HasOne("Onboarding.Models.Relationship", "Relationship")
+                        .WithMany()
+                        .HasForeignKey("RelationshipId");
 
                     b.HasOne("Onboarding.Models.State", "State")
                         .WithMany()

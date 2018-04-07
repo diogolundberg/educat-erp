@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Onboarding.Models;
+using Onboarding.Validations;
 using Onboarding.ViewModels.FinanceApprovals;
 
 namespace Onboarding.Controllers
@@ -29,11 +30,26 @@ namespace Onboarding.Controllers
         public dynamic GetList()
         {
             List<Enrollment> enrollments = _context.Enrollments
+                                                    .Include("Onboarding")
                                                     .Include("PersonalData")
+                                                    .Include("FinanceData")
+                                                    .Include("FinanceData.Plan")
+                                                    .Include("FinanceData.Representative")
+                                                    .Include("FinanceData.Guarantors")
+                                                    .Include("FinanceData.Guarantors.Relationship")
+                                                    .Include("FinanceData.Guarantors.GuarantorDocuments")
+                                                    .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
                                                     .Where(x => x.SentAt.HasValue)
                                                     .ToList();
 
             List<Records> records = _mapper.Map<List<Records>>(enrollments);
+
+            foreach (Records record in records)
+            {
+                FinanceData financeData = enrollments.Single(x => x.ExternalId == record.EnrollmentNumber).FinanceData;
+                record.State = FinanceDataState(financeData);
+            }
+
             return new { records };
         }
 
@@ -135,6 +151,27 @@ namespace Onboarding.Controllers
             }
 
             return new OkObjectResult(new { errors, data = _mapper.Map<Record>(enrollment) });
+        }
+
+        private string FinanceDataState(FinanceData financeData)
+        {
+            FinanceDataValidator validator = new FinanceDataValidator();
+            FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
+            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(financeData);
+
+            if (!financeData.UpdatedAt.HasValue)
+            {
+                return "empty";
+            }
+            if (results.IsValid && resultsMessages.IsValid)
+            {
+                return "valid";
+            }
+            else
+            {
+                return "invalid";
+            }
         }
     }
 }
