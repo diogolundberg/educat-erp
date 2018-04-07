@@ -152,42 +152,11 @@
                   label="País de conclusão do ensino médio" />
               </div>
             </Fieldset>
-            <Fieldset title="Dados de Contato">
-              <div class="flex gutters flex-wrap">
-                <InputBox
-                  v-model="enrollment.data.personalData.email"
-                  :errors="enrollment.errors.personalData.email"
-                  :size="4"
-                  :min-size="6"
-                  :max-size="50"
-                  email
-                  required
-                  disabled
-                  label="E-mail" />
-                <InputBox
-                  v-model="enrollment.data.personalData.phoneNumber"
-                  :errors="enrollment.errors.personalData.phoneNumber"
-                  :size="4"
-                  :min-size="13"
-                  :max-size="14"
-                  :disabled="!!enrollment.data.sentAt"
-                  required
-                  label="Telefone"
-                  mask="(##) #########?"
-                  hint="Ex: (31) 999999999" />
-                <InputBox
-                  v-model="enrollment.data.personalData.landline"
-                  :errors="enrollment.errors.personalData.landline"
-                  :size="4"
-                  :min-size="13"
-                  :max-size="14"
-                  :disabled="!!enrollment.data.sentAt"
-                  required
-                  label="Telefone Fixo"
-                  mask="(##) #########?"
-                  hint="Ex: (31) 322222222" />
-              </div>
-            </Fieldset>
+            <ContactBlock
+              v-model="enrollment.data.personalData"
+              :errors="enrollment.errors.personalData"
+              :disabled="!!enrollment.data.sentAt"
+              disable-email />
             <AddressBlock
               v-model="enrollment.data.personalData"
               :errors="enrollment.errors.personalData"
@@ -385,31 +354,10 @@
                   label="Relacionamento com o aluno" />
               </div>
             </Fieldset>
-            <Fieldset title="Contato">
-              <div class="flex gutters flex-wrap">
-                <InputBox
-                  v-model="enrollment.data.financeData.representative.email"
-                  :errors="enrollment.errors.financeData.representative.email"
-                  :size="4"
-                  :disabled="!!enrollment.data.sentAt"
-                  label="E-mail" />
-                <InputBox
-                  v-model="enrollment.data.financeData.representative.landline"
-                  :errors="enrollment.errors.financeData.representative.landline"
-                  :size="4"
-                  :disabled="!!enrollment.data.sentAt"
-                  label="Telefone"
-                  mask="(##) ####-####" />
-                <InputBox
-                  v-model="enrollment.data.financeData.representative.phoneNumber"
-                  :errors="enrollment.errors.financeData.representative.phoneNumber"
-                  :size="4"
-                  :disabled="!!enrollment.data.sentAt"
-                  label="Celular"
-                  mask="(##) #####-####" />
-              </div>
-            </Fieldset>
-            {{ enrollment.data.financeData.representative }}
+            <ContactBlock
+              v-model="enrollment.data.financeData.representative"
+              :errors="enrollment.errors.financeData.representative"
+              :disabled="!!enrollment.data.sentAt" />
             <AddressBlock
               v-model="enrollment.data.financeData.representative"
               :errors="enrollment.errors.financeData.representative"
@@ -455,28 +403,10 @@
                     :errors="error"
                     :disabled="!!enrollment.data.sentAt"
                     :options="enrollment.options" />
-                  <div class="flex gutters flex-wrap">
-                    <InputBox
-                      v-model="item.landline"
-                      :errors="error.landline"
-                      :size="4"
-                      :disabled="!!enrollment.data.sentAt"
-                      label="Telefone"
-                      mask="(##) ####-####" />
-                    <InputBox
-                      v-model="item.phoneNumber"
-                      :errors="error.phoneNumber"
-                      :size="4"
-                      :disabled="!!enrollment.data.sentAt"
-                      label="Celular"
-                      mask="(##) #####-####" />
-                    <InputBox
-                      v-model="item.email"
-                      :errors="error.email"
-                      :size="4"
-                      :disabled="!!enrollment.data.sentAt"
-                      label="E-mail" />
-                  </div>
+                  <ContactBlock
+                    v-model="enrollment.data.financeData.representative"
+                    :errors="enrollment.errors.financeData.representative"
+                    :disabled="!!enrollment.data.sentAt" />
                   <Documents
                     v-model="item.documents"
                     :errors="error.documents"
