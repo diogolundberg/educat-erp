@@ -34,6 +34,9 @@
               :name="`column-${column.name}`"
               :row="row" />
           </template>
+          <template v-else-if="column.format == 'date'">
+            {{ row[column.name] | date }}
+          </template>
           <template v-else>
             {{ row[column.name] }}
           </template>

@@ -6,6 +6,7 @@ import * as Components from "./components/**/*.vue";
 
 Object.values(Components).map(a => a.name && Vue.component(a.name, a));
 
+Vue.filter("date", (v) => new Date(v).toLocaleDateString());
 Vue.directive("el-focus", { inserted: (el) => el.focus() });
 Vue.prototype.sleep = time => new Promise(r => setTimeout(r, time));
 Vue.prototype.notify = msg => Snackbar.create(msg, { timeout: 1000 });
