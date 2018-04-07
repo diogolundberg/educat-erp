@@ -20,7 +20,9 @@
       class="bg-silver thin rounded p2 center">
       {{ emptyLabel }}
     </div>
-    <div class="my2">
+    <div
+      v-if="value.length < maxAmount"
+      class="my2">
       <Btn
         :label="addLabel"
         :disabled="disabled"
@@ -50,6 +52,10 @@
       default: {
         type: Object,
         default: () => ({}),
+      },
+      maxAmount: {
+        type: Number,
+        default: null,
       },
       removeLabel: {
         type: String,
