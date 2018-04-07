@@ -85,7 +85,7 @@
     methods: {
       async approve() {
         await this.$store.dispatch(`${this.type}Approve`, this.enrollment.data);
-        this.enrollment.messages.forEach(this.notify);
+        this.notify("Enviado com sucesso!");
         this.modal = false;
       },
     },

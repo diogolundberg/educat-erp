@@ -112,7 +112,6 @@ export default new VueX.Store({
         sections: [],
       },
       errors: {},
-      messages: [],
     },
   },
   getters: {
@@ -183,10 +182,9 @@ export default new VueX.Store({
     SET_FINANCE_APPROVALS(state, { records }) {
       state.financeApprovals = records;
     },
-    SET_ENROLLMENT_INFO(state, { data, options, messages }) {
+    SET_ENROLLMENT_INFO(state, { data, options }) {
       Object.assign(state.enrollmentInfo.data, data);
       Object.assign(state.enrollmentInfo.options, options);
-      state.enrollmentInfo.messages = messages;
     },
   },
   actions: {
