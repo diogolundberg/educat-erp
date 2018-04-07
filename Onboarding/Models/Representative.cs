@@ -25,6 +25,14 @@ namespace Onboarding.Models
 
         public string Email { get; set; }
 
+        public string Zipcode { get; set; }
+
+        [ForeignKey("AddressKind")]
+        public int? AddressKindId { get; set; }
+
+        [JsonIgnore]
+        public virtual AddressKind AddressKind { get; set; }
+
         [ForeignKey("City")]
         public int? CityId { get; set; }
 

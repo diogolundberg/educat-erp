@@ -16,6 +16,8 @@ namespace Onboarding.Validations
             RuleFor(representative => representative.Email).NotEmpty().EmailAddress();
             RuleFor(representative => representative.CityId).NotEmpty();
             RuleFor(representative => representative.StateId).NotEmpty();
+            RuleFor(representative => representative.AddressKindId).NotEmpty();
+            RuleFor(representative => representative.Zipcode).NotEmpty();
             RuleFor(representative => representative).Custom((representative, context) =>
             {
                 if (representative is RepresentativePerson)
