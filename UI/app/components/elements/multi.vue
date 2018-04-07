@@ -21,7 +21,7 @@
       {{ emptyLabel }}
     </div>
     <div
-      v-if="value.length < maxAmount"
+      v-if="value.length < maxAmount || maxAmount === null"
       class="my2">
       <Btn
         :label="addLabel"
