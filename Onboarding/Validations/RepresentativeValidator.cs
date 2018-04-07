@@ -24,18 +24,11 @@ namespace Onboarding.Validations
                 {
                     if (((RepresentativePerson)representative).RelationshipId != null)
                     {
-                        context.AddFailure("relationship", "'Relacionamento' deve ser informado.");
+                        context.AddFailure("representative.relationship", "'Relacionamento' deve ser informado.");
                     }
-                    if (string.IsNullOrEmpty(((RepresentativePerson)representative).Cpf))
+                    if (!Cpf.ValidCPF(((RepresentativePerson)representative).Cpf))
                     {
-                        context.AddFailure("cpf", "'Cpf' deve ser informado.");
-                    }
-                    else
-                    {
-                        if (!Cpf.ValidCPF(((RepresentativePerson)representative).Cpf))
-                        {
-                            context.AddFailure("cpf", "'Cpf' não é válido.");
-                        }
+                        context.AddFailure("representative.cpf", "'Cpf' não é válido.");
                     }
                 }
                 else

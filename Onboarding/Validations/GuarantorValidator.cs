@@ -7,7 +7,7 @@ namespace Onboarding.Validations
     {
         public GuarantorValidator()
         {
-            RuleFor(guarantor => guarantor.Cpf).NotEmpty().Must(x => Cpf.ValidCPF(x));
+            RuleFor(guarantor => guarantor.Cpf).Must(x => Cpf.ValidCPF(x));
             RuleFor(guarantor => guarantor.Name).NotEmpty();
             RuleFor(guarantor => guarantor.StreetAddress).NotEmpty();
             RuleFor(guarantor => guarantor.ComplementAddress).NotEmpty();
