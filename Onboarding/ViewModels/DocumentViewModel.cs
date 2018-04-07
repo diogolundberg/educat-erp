@@ -6,6 +6,6 @@
 
         public string Url { get; set; }
 
-        public int DocumentTypeId { get; set; }
+        public int? DocumentTypeId { get; set; }
     }
 }

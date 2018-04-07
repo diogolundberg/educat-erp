@@ -8,7 +8,7 @@ namespace Onboarding.Models
         public string Url { get; set; }
 
         [ForeignKey("DocumentType")]
-        public int DocumentTypeId { get; set; }
+        public int? DocumentTypeId { get; set; }
 
         public virtual DocumentType DocumentType { get; set; }
     }

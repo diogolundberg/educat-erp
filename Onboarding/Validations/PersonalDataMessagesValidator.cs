@@ -108,7 +108,7 @@ namespace Onboarding.Validations
         {
             List<string> documentTypeValidations = new List<string>();
 
-            foreach (Document document in documents)
+            foreach (Document document in documents.Where(x=>x.DocumentTypeId.HasValue))
             {
                 DocumentType documentType = documentTypes.Single(x => x.Id == document.DocumentTypeId);
 
