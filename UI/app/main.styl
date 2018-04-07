@@ -132,6 +132,9 @@ input:invalid
   width 6em
 .width-1
   width 16rem
+.sm-width-1
+  @media (min-width: 40em)
+    width: 16rem
 .width-2
   width 32rem
 .height-1
@@ -164,6 +167,9 @@ input:invalid
   transform translateX(100%)
 .left0
   transform translateX(-100%)
+.sm-left0
+  @media (max-width: 40em)
+    transform translateX(-100%)
 .blur
   filter blur(4px)
 .pointer

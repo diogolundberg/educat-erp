@@ -1,8 +1,7 @@
 <template>
-  <transition
-    enter-class="left0"
-    leave-to-class="left0">
+  <div class="sm-width-1">
     <aside
+      :class="{ 'sm-left0': !visible }"
       class="fixed top-0 bottom-0 left-0 z2 mt4 bg-white shadow2 ease width-1">
       <div class="relative bg-green-grad">
         <div>
@@ -23,7 +22,7 @@
         </router-link>
       </div>
     </aside>
-  </transition>
+  </div>
 </template>
 
 <script>
@@ -33,6 +32,10 @@
       links: {
         type: Array,
         default: () => [],
+      },
+      visible: {
+        type: Boolean,
+        default: true,
       },
     },
     computed: {
