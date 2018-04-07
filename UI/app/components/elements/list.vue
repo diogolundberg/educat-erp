@@ -7,6 +7,7 @@
       <div class="hidden sm-table-row divider-bottom">
         <div
           v-for="column in columns"
+          v-if="column.show !== false"
           :key="column.name"
           :class="{ bold: sortColumn === column.name }"
           class="block sm-table-cell px2 py2 no-select pointer truncate"
@@ -24,6 +25,7 @@
         {{ $option }}
         <div
           v-for="column in columns"
+          v-if="column.show !== false"
           :key="`${index}_${column.name}`"
           class="block sm-table-cell px2 sm-px2 py1 sm-py2 truncate">
           <strong class="sm-hide md-hide lg-hide">
