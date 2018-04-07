@@ -9,6 +9,7 @@
         {name: 'birthDate', title: 'Nascimento'},
         {name: 'email', title: 'E-mail'},
         {name: 'phoneNumber', title: 'Celular'},
+        {name: 'plan', title: 'Plano', show: type === 'finance'},
         {name: 'updatedAt', title: 'Modificado em', format: 'date'},
       ]"
       @click="show($event)" />
