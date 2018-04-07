@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Models;
 using Onboarding.Validations;
+using Onboarding.Validations.PersonalData;
 using Onboarding.ViewModels;
 
 namespace Onboarding.Controllers

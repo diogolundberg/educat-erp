@@ -2,9 +2,9 @@
 using Onboarding.Models;
 using System;
 
-namespace Onboarding.Validations
+namespace Onboarding.Validations.PersonalData
 {
-    public class PersonalDataValidator : AbstractValidator<PersonalData>
+    public class PersonalDataValidator : AbstractValidator<Models.PersonalData>
     {
         public PersonalDataValidator()
         {

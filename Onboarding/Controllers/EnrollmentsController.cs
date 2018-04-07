@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Onboarding.Data.Entity;
 using Onboarding.Models;
 using Onboarding.Validations;
+using Onboarding.Validations.PersonalData;
 using Onboarding.ViewModels;
 using System;
 using System.Collections;

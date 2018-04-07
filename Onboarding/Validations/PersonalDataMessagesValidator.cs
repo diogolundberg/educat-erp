@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using FluentValidation.Validators;
 using Newtonsoft.Json;
 using Onboarding.Enums;
 using Onboarding.Models;
@@ -9,7 +8,7 @@ using System.Linq;
 
 namespace Onboarding.Validations
 {
-    public class PersonalDataMessagesValidator : AbstractValidator<PersonalData>
+    public class PersonalDataMessagesValidator : AbstractValidator<Models.PersonalData>
     {
         private List<PersonalDocumentType> documentTypes { get; set; }
 
@@ -44,7 +43,7 @@ namespace Onboarding.Validations
 
         }
 
-        private string BeForeign(PersonalData personalData)
+        private string BeForeign(Models.PersonalData personalData)
         {
             if (personalData.Nationality != null && personalData.Nationality.CheckForeign)
             {
@@ -56,7 +55,7 @@ namespace Onboarding.Validations
             }
         }
 
-        private string BeMilitaryDraft(PersonalData personalData)
+        private string BeMilitaryDraft(Models.PersonalData personalData)
         {
             if (personalData.Gender != null && personalData.Gender.CheckMilitaryDraft)
             {
@@ -65,7 +64,7 @@ namespace Onboarding.Validations
             return string.Empty;
         }
 
-        private string BeForeignGraduation(PersonalData personalData)
+        private string BeForeignGraduation(Models.PersonalData personalData)
         {
             if (personalData.HighSchoolGraduationCountry != null && personalData.HighSchoolGraduationCountry.CheckForeignGraduation)
             {
@@ -74,7 +73,7 @@ namespace Onboarding.Validations
             return string.Empty;
         }
 
-        private string BeMinorAge(PersonalData personalData)
+        private string BeMinorAge(Models.PersonalData personalData)
         {
             if (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18)
             {
@@ -83,7 +82,7 @@ namespace Onboarding.Validations
             return string.Empty;
         }
 
-        private string BeGraduationYear(PersonalData personalData)
+        private string BeGraduationYear(Models.PersonalData personalData)
         {
             if (!string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) && personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString())
             {

@@ -93,7 +93,7 @@ namespace Onboarding.Validations
 
         private void CheckRepresentative(FinanceData financeData, CustomContext context)
         {
-            PersonalData personalData = financeData.Enrollment.PersonalData;
+            Models.PersonalData personalData = financeData.Enrollment.PersonalData;
             Representative representative = financeData.Representative;
 
             if (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18)
