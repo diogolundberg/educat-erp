@@ -19,6 +19,8 @@ namespace Onboarding.Validations
             RuleFor(guarantor => guarantor.StateId).NotEmpty();
             RuleFor(guarantor => guarantor.FinanceDataId).NotEmpty();
             RuleFor(guarantor => guarantor.RelationshipId).NotEmpty();
+            RuleFor(guarantor => guarantor.AddressKindId).NotEmpty();
+            RuleFor(guarantor => guarantor.Zipcode).NotEmpty();
         }
     }
 }

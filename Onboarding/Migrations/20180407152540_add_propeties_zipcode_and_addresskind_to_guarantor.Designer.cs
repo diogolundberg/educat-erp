@@ -12,9 +12,10 @@ using System;
 namespace Onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180407152540_add_propeties_zipcode_and_addresskind_to_guarantor")]
+    partial class add_propeties_zipcode_and_addresskind_to_guarantor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,8 +68,6 @@ namespace Onboarding.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("CheckForeignGraduation");
 
                     b.Property<DateTime?>("CreatedAt");
 
@@ -344,11 +343,11 @@ namespace Onboarding.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("CheckForeign");
-
                     b.Property<DateTime?>("CreatedAt");
 
                     b.Property<string>("ExternalId");
+
+                    b.Property<bool>("IsForeign");
 
                     b.Property<string>("Name");
 
@@ -622,11 +621,11 @@ namespace Onboarding.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("CheckSpouse");
-
                     b.Property<DateTime?>("CreatedAt");
 
                     b.Property<string>("ExternalId");
+
+                    b.Property<bool>("IsSpouse");
 
                     b.Property<string>("Name");
 

@@ -12,9 +12,10 @@ using System;
 namespace Onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180407151920_add_propeties_zipcode_and_addresskind_to_representative")]
+    partial class add_propeties_zipcode_and_addresskind_to_representative
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,8 +68,6 @@ namespace Onboarding.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("CheckForeignGraduation");
 
                     b.Property<DateTime?>("CreatedAt");
 
@@ -239,8 +238,6 @@ namespace Onboarding.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AddressKindId");
-
                     b.Property<int?>("CityId");
 
                     b.Property<string>("ComplementAddress");
@@ -271,11 +268,7 @@ namespace Onboarding.Migrations
 
                     b.Property<DateTime?>("UpdatedAt");
 
-                    b.Property<string>("Zipcode");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressKindId");
 
                     b.HasIndex("CityId");
 
@@ -344,11 +337,11 @@ namespace Onboarding.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("CheckForeign");
-
                     b.Property<DateTime?>("CreatedAt");
 
                     b.Property<string>("ExternalId");
+
+                    b.Property<bool>("IsForeign");
 
                     b.Property<string>("Name");
 
@@ -622,11 +615,11 @@ namespace Onboarding.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("CheckSpouse");
-
                     b.Property<DateTime?>("CreatedAt");
 
                     b.Property<string>("ExternalId");
+
+                    b.Property<bool>("IsSpouse");
 
                     b.Property<string>("Name");
 
@@ -871,10 +864,6 @@ namespace Onboarding.Migrations
 
             modelBuilder.Entity("Onboarding.Models.Guarantor", b =>
                 {
-                    b.HasOne("Onboarding.Models.AddressKind", "AddressKind")
-                        .WithMany()
-                        .HasForeignKey("AddressKindId");
-
                     b.HasOne("Onboarding.Models.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId");

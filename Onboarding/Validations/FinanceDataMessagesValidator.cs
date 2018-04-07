@@ -36,7 +36,7 @@ namespace Onboarding.Validations
 
         private string BeSpouse(Guarantor guarantor)
         {
-            if (guarantor.Relationship != null && guarantor.Relationship.IsSpouse)
+            if (guarantor.Relationship != null && guarantor.Relationship.CheckSpouse)
             {
                 return DocumentValidations.Spouse.ToString();
             }

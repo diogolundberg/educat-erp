@@ -27,7 +27,7 @@ namespace Onboarding.Bindings
             .ForMember(x => x.City, config => config.Ignore())
             .ForMember(x => x.FinanceData, config => config.Ignore())
             .ForMember(x => x.State, config => config.Ignore())
-
+            .ForMember(x => x.AddressKind, config => config.Ignore())
             .Include<RepresentativeCompanyViewModel, RepresentativeCompany>()
             .Include<RepresentativePersonViewModel, RepresentativePerson>();
         }

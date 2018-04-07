@@ -30,6 +30,12 @@ namespace Onboarding.ViewModels
         public string Email { get; set; }
 
         [Required]
+        public string Zipcode { get; set; }
+
+        [Required]
+        public int? AddressKindId { get; set; }
+
+        [Required]
         public int? CityId { get; set; }
 
         [Required]

@@ -46,7 +46,7 @@ namespace Onboarding.Validations
 
         private string BeForeign(PersonalData personalData)
         {
-            if (personalData.Nationality != null && personalData.Nationality.IsForeign)
+            if (personalData.Nationality != null && personalData.Nationality.CheckForeign)
             {
                 return DocumentValidations.Foreigner.ToString();
             }
@@ -67,7 +67,7 @@ namespace Onboarding.Validations
 
         private string BeForeignGraduation(PersonalData personalData)
         {
-            if (personalData.HighSchoolGraduationCountry != null && personalData.HighSchoolGraduationCountry.Name.ToLower() != "brasil")
+            if (personalData.HighSchoolGraduationCountry != null && personalData.HighSchoolGraduationCountry.CheckForeignGraduation)
             {
                 return DocumentValidations.ForeignGraduation.ToString();
             }
