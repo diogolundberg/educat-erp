@@ -57,6 +57,13 @@ namespace Onboarding.Controllers
 
             Models.Onboarding onboarding = _mapper.Map<Models.Onboarding>(obj);
 
+            IEnumerable<IGrouping<string, Enrollment>> group = onboarding.Enrollments.GroupBy(x => x.PersonalData.CPF);
+
+            if (group.Where(x => x.ToList().Count() > 1).Count() > 0)
+            {
+                return new BadRequestObjectResult(new { Messages = new List<string> { "Existem cpfs duplicados neste período de matrícula." } });
+            }
+
             foreach (Enrollment enrollment in onboarding.Enrollments)
             {
                 enrollment.ExternalId = onboarding.Year + onboarding.Semester + Regex.Replace(enrollment.PersonalData.CPF, @"\D", string.Empty);
@@ -110,6 +117,13 @@ namespace Onboarding.Controllers
             }
 
             Models.Onboarding onboarding = _mapper.Map<Models.Onboarding>(obj);
+
+            IEnumerable<IGrouping<string, Enrollment>> group = onboarding.Enrollments.GroupBy(x => x.PersonalData.CPF);
+
+            if (group.Where(x => x.ToList().Count() > 1).Count() > 0)
+            {
+                return new BadRequestObjectResult(new { Messages = new List<string> { "Existem cpfs duplicados neste período de matrícula." } });
+            }
 
             foreach (Enrollment enrollment in existingOnboarding.Enrollments.ToList())
             {
