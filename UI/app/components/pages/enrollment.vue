@@ -42,7 +42,7 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="enrollment.data.personalData.realName"
-                  :errors="enrollment.errors.personalData.RealName"
+                  :errors="enrollment.errors.personalData.realName"
                   :size="6"
                   required
                   disabled
@@ -50,13 +50,13 @@
                   hint="Seu nome completo" />
                 <InputBox
                   v-model="enrollment.data.personalData.assumedName"
-                  :errors="enrollment.errors.personalData.AssumedName"
+                  :errors="enrollment.errors.personalData.assumedName"
                   :size="6"
                   label="Nome Social"
                   hint="Seu nome social" />
                 <InputBox
                   v-model="enrollment.data.personalData.cpf"
-                  :errors="enrollment.errors.personalData.Cpf"
+                  :errors="enrollment.errors.personalData.cpf"
                   :size="3"
                   :min-size="14"
                   required
@@ -66,7 +66,7 @@
                   hint="Ex: 000.000.000-00" />
                 <InputBox
                   v-model="enrollment.data.personalData.birthDate"
-                  :errors="enrollment.errors.personalData.BirthDate"
+                  :errors="enrollment.errors.personalData.birthDate"
                   :size="3"
                   :min-size="10"
                   :disabled="!!enrollment.data.sentAt"
@@ -76,7 +76,7 @@
                   hint="Ex: 18/12/2001" />
                 <DropDown
                   v-model="enrollment.data.personalData.maritalStatusId"
-                  :errors="enrollment.errors.personalData.MaritalStatusId"
+                  :errors="enrollment.errors.personalData.maritalStatusId"
                   :size="3"
                   :options="enrollment.options.maritalStatuses"
                   :disabled="!!enrollment.data.sentAt"
@@ -84,7 +84,7 @@
                   label="Estado Civil" />
                 <DropDown
                   v-model="enrollment.data.personalData.genderId"
-                  :errors="enrollment.errors.personalData.GenderId"
+                  :errors="enrollment.errors.personalData.genderId"
                   :size="3"
                   :options="enrollment.options.genders"
                   :disabled="!!enrollment.data.sentAt"
@@ -102,7 +102,7 @@
                   label="Nacionalidade" />
                 <DropDown
                   v-model="enrollment.data.personalData.birthCountryId"
-                  :errors="enrollment.errors.personalData.BirthCountryId"
+                  :errors="enrollment.errors.personalData.birthCountryId"
                   :size="3"
                   :options="enrollment.options.countries"
                   :disabled="!!enrollment.data.sentAt"
@@ -111,7 +111,7 @@
                   hint="Ex: Brasil" />
                 <DropDown
                   v-model="enrollment.data.personalData.birthStateId"
-                  :errors="enrollment.errors.personalData.BirthStateId"
+                  :errors="enrollment.errors.personalData.birthStateId"
                   :size="3"
                   :options="enrollment.options.states"
                   :disabled="!!enrollment.data.sentAt"
@@ -119,7 +119,7 @@
                   label="UF de Nascimento" />
                 <DropDown
                   v-model="enrollment.data.personalData.birthCityId"
-                  :errors="enrollment.errors.personalData.BirthCityId"
+                  :errors="enrollment.errors.personalData.birthCityId"
                   :size="3"
                   :options="enrollment.options.cities"
                   :filter="enrollment.data.personalData.birthStateId"
@@ -133,7 +133,7 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="enrollment.data.personalData.highSchoolGraduationYear"
-                  :errors="enrollment.errors.personalData.HighSchoolGraduationYear"
+                  :errors="enrollment.errors.personalData.highSchoolGraduationYear"
                   :size="6"
                   :min-size="4"
                   :max-size="4"
@@ -144,7 +144,7 @@
                   hint="Ex: 2017" />
                 <DropDown
                   v-model="enrollment.data.personalData.highSchoolGraduationCountryId"
-                  :errors="enrollment.errors.personalData.HighSchoolGraduationCountryId"
+                  :errors="enrollment.errors.personalData.highSchoolGraduationCountryId"
                   :size="6"
                   :options="enrollment.options.countries"
                   :disabled="!!enrollment.data.sentAt"
@@ -156,7 +156,7 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="enrollment.data.personalData.email"
-                  :errors="enrollment.errors.personalData.Email"
+                  :errors="enrollment.errors.personalData.email"
                   :size="4"
                   :min-size="6"
                   :max-size="50"
@@ -166,7 +166,7 @@
                   label="E-mail" />
                 <InputBox
                   v-model="enrollment.data.personalData.phoneNumber"
-                  :errors="enrollment.errors.personalData.PhoneNumber"
+                  :errors="enrollment.errors.personalData.phoneNumber"
                   :size="4"
                   :min-size="13"
                   :max-size="14"
@@ -192,7 +192,7 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="enrollment.data.personalData.zipcode"
-                  :errors="enrollment.errors.personalData.Zipcode"
+                  :errors="enrollment.errors.personalData.zipcode"
                   :size="3"
                   :min-size="9"
                   :disabled="!!enrollment.data.sentAt"
@@ -202,7 +202,7 @@
                   hint="Ex: 30100-000" />
                 <DropDown
                   v-model="enrollment.data.personalData.addressKindId"
-                  :errors="enrollment.errors.personalData.AddressKindId"
+                  :errors="enrollment.errors.personalData.addressKindId"
                   :size="3"
                   :options="enrollment.options.addressKinds"
                   :disabled="!!enrollment.data.sentAt"
@@ -210,7 +210,7 @@
                   label="Tipo de Endereço" />
                 <InputBox
                   v-model="enrollment.data.personalData.streetAddress"
-                  :errors="enrollment.errors.personalData.StreetAddress"
+                  :errors="enrollment.errors.personalData.streetAddress"
                   :size="6"
                   :disabled="!!enrollment.data.sentAt"
                   required
@@ -220,21 +220,21 @@
               <div class="flex gutters flex-wrap">
                 <InputBox
                   v-model="enrollment.data.personalData.complementAddress"
-                  :errors="enrollment.errors.personalData.ComplementAddress"
+                  :errors="enrollment.errors.personalData.complementAddress"
                   :size="3"
                   :disabled="!!enrollment.data.sentAt"
                   required
                   label="Complemento" />
                 <InputBox
                   v-model="enrollment.data.personalData.neighborhood"
-                  :errors="enrollment.errors.personalData.Neighborhood"
+                  :errors="enrollment.errors.personalData.neighborhood"
                   :size="3"
                   :disabled="!!enrollment.data.sentAt"
                   required
                   label="Bairro" />
                 <DropDown
                   v-model="enrollment.data.personalData.stateId"
-                  :errors="enrollment.errors.personalData.StateId"
+                  :errors="enrollment.errors.personalData.stateId"
                   :size="3"
                   :options="enrollment.options.states"
                   :disabled="!!enrollment.data.sentAt"
@@ -258,7 +258,7 @@
               <div class="flex gutters flex-wrap">
                 <DropDown
                   v-model="enrollment.data.personalData.raceId"
-                  :errors="enrollment.errors.personalData.RaceId"
+                  :errors="enrollment.errors.personalData.raceId"
                   :size="3"
                   :options="enrollment.options.races"
                   :disabled="!!enrollment.data.sentAt"
@@ -266,7 +266,7 @@
                   label="Raça" />
                 <DropDown
                   v-model="enrollment.data.personalData.highSchoolKindId"
-                  :errors="enrollment.errors.personalData.HighSchoolKindId"
+                  :errors="enrollment.errors.personalData.highSchoolKindId"
                   :size="3"
                   :options="enrollment.options.highSchoolKinds"
                   :disabled="!!enrollment.data.sentAt"
@@ -274,7 +274,7 @@
                   label="Escola" />
                 <InputBox
                   v-model="enrollment.data.personalData.mothersName"
-                  :errors="enrollment.errors.personalData.MothersName"
+                  :errors="enrollment.errors.personalData.mothersName"
                   :size="6"
                   :disabled="!!enrollment.data.sentAt"
                   required
@@ -285,7 +285,7 @@
               <div>
                 <RadioGroup
                   v-model="enrollment.data.personalData.handicap"
-                  :errors="enrollment.errors.personalData.Handicap"
+                  :errors="enrollment.errors.personalData.handicap"
                   :options="handicap"
                   :disabled="!!enrollment.data.sentAt"
                   required
@@ -301,7 +301,7 @@
                 <h4>Selecione:</h4>
                 <CheckGroup
                   v-model="enrollment.data.personalData.disabilities"
-                  :errors="enrollment.errors.personalData.Disabilities"
+                  :errors="enrollment.errors.personalData.disabilities"
                   :options="enrollment.options.disabilities"
                   :disabled="!!enrollment.data.sentAt" />
               </div>
@@ -313,7 +313,7 @@
                 <h4>Selecione:</h4>
                 <CheckGroup
                   v-model="enrollment.data.personalData.specialNeeds"
-                  :errors="enrollment.errors.personalData.SpecialNeeds"
+                  :errors="enrollment.errors.personalData.specialNeeds"
                   :options="enrollment.options.specialNeeds"
                   :disabled="!!enrollment.data.sentAt"
                   :filter="enrollment.data.personalData.disabilities"
