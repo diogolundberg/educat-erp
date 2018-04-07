@@ -77,7 +77,85 @@ namespace Onboarding.Controllers
 
             return new OkObjectResult(new
             {
-                data = obj
+                data = _mapper.Map<ViewModels.Onboarding.Form>(onboarding)
+            });
+        }
+
+        [HttpPut("", Name = "ONBOARDING/EDIT")]
+        public dynamic Put([FromBody]ViewModels.Onboarding.Form obj)
+        {
+            FormValidator formValidator = new FormValidator();
+            ValidationResult validationResult = formValidator.Validate(obj);
+
+            if (!validationResult.IsValid)
+            {
+                return new BadRequestObjectResult(new { Errors = FormatErrors(validationResult) });
+            }
+
+            Models.Onboarding existingOnboarding = _context.Onboardings
+                                                           .Include("Enrollments")
+                                                           .Include("Enrollments.PersonalData")
+                                                           .Include("Enrollments.FinanceData")
+                                                           .Include("Enrollments.FinanceData.Representative")
+                                                           .SingleOrDefault(x => x.Semester == obj.Semester && x.Year == obj.Year);
+
+            if (existingOnboarding == null)
+            {
+                return new NotFoundObjectResult(new { Messages = new List<string> { "Esse período de matrícula não existe." } });
+            }
+
+            if (existingOnboarding.Enrollments.Any(x => x.StartedAt.HasValue))
+            {
+                return new NotFoundObjectResult(new { Messages = new List<string> { "Não é possível alterar o período pois existem matriculas iniciadas." } });
+            }
+
+            Models.Onboarding onboarding = _mapper.Map<Models.Onboarding>(obj);
+
+            foreach (Enrollment enrollment in existingOnboarding.Enrollments.ToList())
+            {
+                if (!onboarding.Enrollments.Any(c => c.Id == enrollment.Id))
+                {
+                    _context.Set<Representative>().Remove(enrollment.FinanceData.Representative);
+                    _context.Set<FinanceData>().Remove(enrollment.FinanceData);
+                    _context.Set<PersonalData>().Remove(enrollment.PersonalData);
+                    _context.Set<Enrollment>().Remove(enrollment);
+                }
+            }
+            foreach (Enrollment enrollment in onboarding.Enrollments)
+            {
+                Enrollment searchedEnrolment = existingOnboarding.Enrollments.SingleOrDefault(x => x.Id == enrollment.Id);
+
+                if (searchedEnrolment != null)
+                {
+                    enrollment.PersonalData.Id = searchedEnrolment.PersonalData.Id;
+                    enrollment.PersonalData.EnrollmentId = searchedEnrolment.Id;
+
+                    _context.Entry(searchedEnrolment.PersonalData).CurrentValues.SetValues(enrollment.PersonalData);
+                }
+                else
+                {
+                    enrollment.ExternalId = onboarding.Year + onboarding.Semester + Regex.Replace(enrollment.PersonalData.CPF, @"\D", string.Empty);
+                    enrollment.FinanceData = new FinanceData
+                    {
+                        Representative = new RepresentativePerson()
+                    };
+
+                    string link = _configuration["MATRICULA_CMMG"] + enrollment.ExternalId;
+                    string messageBody = GetEmailBody("enrollment_invite.html").Replace("{link}", link);
+                    string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
+
+                    SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
+                }
+            }
+
+            onboarding.Id = existingOnboarding.Id;
+            _context.Entry(existingOnboarding).CurrentValues.SetValues(onboarding);
+            _context.SaveChanges();
+            _context.Entry(existingOnboarding).Reload();
+
+            return new OkObjectResult(new
+            {
+                data = _mapper.Map<ViewModels.Onboarding.Form>(existingOnboarding)
             });
         }
 
