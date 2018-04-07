@@ -82,6 +82,7 @@ export default new VueX.Store({
         relationships: [],
         phoneType: [],
         races: [],
+        plans: [],
         highSchoolKinds: [],
         disabilities: [],
         specialNeeds: [],

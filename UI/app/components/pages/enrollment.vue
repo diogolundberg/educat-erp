@@ -510,12 +510,14 @@
              </div>
             </Fieldset>
             <Fieldset
+              v-if="guarantorsAmount > 0"
               title="Fiadores">
               <Multi
                 v-model="enrollment.data.financeData.guarantors"
                 :errors="enrollment.errors.financeData"
                 :default="emptyGuarantor"
                 :disabled="!!enrollment.data.sentAt"
+                :max-amount="guarantorsAmount"
                 error-key="guarantors">
                 <template slot-scope="{ item, error }">
                   <div class="flex gutters flex-wrap">
@@ -760,6 +762,11 @@
         const day = 1000 * 60 * 60 * 24;
         const remaining = new Date(this.enrollment.data.deadline) - new Date();
         return Math.floor(remaining / day);
+      },
+      guarantorsAmount() {
+        const { planId } = this.enrollment.data.financeData;
+        const plan = this.enrollment.options.plans.find(a => a.id === planId);
+        return plan && plan.guarantors;
       },
     },
     watch: {
