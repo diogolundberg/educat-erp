@@ -75,16 +75,22 @@ namespace Onboarding.Controllers
                     .Where(c => c.DocumentId == personalDataDocument.Document.Id)
                     .SingleOrDefault();
 
-                if (existingPersonalDataDocument != null)
+                DocumentValidator documentValidator = new DocumentValidator();
+                var resultDocumentValidator = documentValidator.Validate(personalDataDocument.Document);
+
+                if (resultDocumentValidator.IsValid)
                 {
-                    personalDataDocument.Document.Id = existingPersonalDataDocument.Document.Id;
-                    _context.Entry(existingPersonalDataDocument.Document).CurrentValues.SetValues(personalDataDocument.Document);
-                }
-                else
-                {
-                    personalDataDocument.PersonalDataId = personalData.Id;
-                    personalDataDocument.Document.Id = 0;
-                    _context.Set<PersonalDataDocument>().Add(personalDataDocument);
+                    if (existingPersonalDataDocument != null)
+                    {
+                        personalDataDocument.Document.Id = existingPersonalDataDocument.Document.Id;
+                        _context.Entry(existingPersonalDataDocument.Document).CurrentValues.SetValues(personalDataDocument.Document);
+                    }
+                    else
+                    {
+                        personalDataDocument.PersonalDataId = personalData.Id;
+                        personalDataDocument.Document.Id = 0;
+                        _context.Set<PersonalDataDocument>().Add(personalDataDocument);
+                    }
                 }
             }
 

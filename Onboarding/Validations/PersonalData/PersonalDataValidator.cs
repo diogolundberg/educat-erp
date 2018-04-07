@@ -34,6 +34,7 @@ namespace Onboarding.Validations.PersonalData
             RuleFor(personalData => personalData.AddressKindId).NotEmpty();
             RuleFor(personalData => personalData.RaceId).NotEmpty();
             RuleFor(personalData => personalData.HighSchoolKindId).NotEmpty();
+            RuleFor(personalData => personalData.PersonalDataDocuments).SetCollectionValidator(x => new PersonalDataDocumentValidator());
         }
     }
 }
