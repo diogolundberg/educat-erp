@@ -272,7 +272,7 @@
                   :size="6"
                   :options="enrollment.options.plans"
                   :disabled="!!enrollment.data.sentAt"
-                  label="Meio de Pagamento" />
+                  label="Plano" />
               </div>
             </Fieldset>
             <Fieldset title="Responsável Financeiro">
