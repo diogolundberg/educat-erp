@@ -188,72 +188,11 @@
                   hint="Ex: (31) 322222222" />
               </div>
             </Fieldset>
-            <Fieldset title="Endereço">
-              <div class="flex gutters flex-wrap">
-                <InputBox
-                  v-model="enrollment.data.personalData.zipcode"
-                  :errors="enrollment.errors.personalData.zipcode"
-                  :size="3"
-                  :min-size="9"
-                  :disabled="!!enrollment.data.sentAt"
-                  required
-                  label="CEP"
-                  mask="#####-###"
-                  hint="Ex: 30100-000" />
-                <DropDown
-                  v-model="enrollment.data.personalData.addressKindId"
-                  :errors="enrollment.errors.personalData.addressKindId"
-                  :size="3"
-                  :options="enrollment.options.addressKinds"
-                  :disabled="!!enrollment.data.sentAt"
-                  required
-                  label="Tipo de Endereço" />
-                <InputBox
-                  v-model="enrollment.data.personalData.streetAddress"
-                  :errors="enrollment.errors.personalData.streetAddress"
-                  :size="6"
-                  :disabled="!!enrollment.data.sentAt"
-                  required
-                  label="Logradouro"
-                  hint="Sua rua, avenida, etc." />
-              </div>
-              <div class="flex gutters flex-wrap">
-                <InputBox
-                  v-model="enrollment.data.personalData.complementAddress"
-                  :errors="enrollment.errors.personalData.complementAddress"
-                  :size="3"
-                  :disabled="!!enrollment.data.sentAt"
-                  required
-                  label="Complemento" />
-                <InputBox
-                  v-model="enrollment.data.personalData.neighborhood"
-                  :errors="enrollment.errors.personalData.neighborhood"
-                  :size="3"
-                  :disabled="!!enrollment.data.sentAt"
-                  required
-                  label="Bairro" />
-                <DropDown
-                  v-model="enrollment.data.personalData.stateId"
-                  :errors="enrollment.errors.personalData.stateId"
-                  :size="3"
-                  :options="enrollment.options.states"
-                  :disabled="!!enrollment.data.sentAt"
-                  required
-                  label="Estado" />
-                <DropDown
-                  v-model="enrollment.data.personalData.cityId"
-                  :errors="enrollment.errors.personalData.cityId"
-                  :size="3"
-                  :options="enrollment.options.cities"
-                  :filter="enrollment.data.personalData.stateId"
-                  :disabled="!!enrollment.data.sentAt"
-                  filter-key="stateId"
-                  key-id="name"
-                  required
-                  label="Cidade"
-                  hint="Cidade onde Mora" />
-              </div>
-            </Fieldset>
+            <AddressBlock
+              v-model="enrollment.data.personalData"
+              :errors="enrollment.errors.personalData"
+              :disabled="!!enrollment.data.sentAt"
+              :options="enrollment.options" />
             <Fieldset title="Dados para o Censo">
               <div class="flex gutters flex-wrap">
                 <DropDown
@@ -368,13 +307,13 @@
                 <DropDown
                   v-model="enrollment.data.financeData.representative.discriminator"
                   :errors="enrollment.errors.financeData.representative.discriminator"
-                  :size="4"
+                  :size="2"
                   :options="discriminators"
                   :disabled="!!enrollment.data.sentAt"
                   label="CPF ou CNPJ" />
                 <InputBox
                   v-if="enrollment.data.financeData.representative.discriminator == null"
-                  :size="4"
+                  :size="3"
                   disabled
                   label="Documento" />
                 <InputBox
@@ -382,7 +321,7 @@
                   :errors="enrollment.errors.financeData.representative.cpf"
                   v-if="enrollment.data.financeData.representative.discriminator
                     == 'RepresentativePerson'"
-                  :size="4"
+                  :size="3"
                   :min-size="14"
                   :disabled="!!enrollment.data.sentAt"
                   cpf
@@ -394,7 +333,7 @@
                   :errors="enrollment.errors.financeData.representative.cnpj"
                   v-if="enrollment.data.financeData.representative.discriminator
                     == 'RepresentativeCompany'"
-                  :size="4"
+                  :size="3"
                   :min-size="18"
                   :disabled="!!enrollment.data.sentAt"
                   cnpj
@@ -422,11 +361,9 @@
                   :size="4"
                   :disabled="!!enrollment.data.sentAt"
                   label="Razão Social" />
-              </div>
-              <div class="flex gutters flex-wrap">
                 <InputBox
                   v-if="enrollment.data.financeData.representative.discriminator == null"
-                  :size="4"
+                  :size="3"
                   disabled
                   label="Contato" />
                 <InputBox
@@ -434,7 +371,7 @@
                     == 'RepresentativeCompany'"
                   v-model="enrollment.data.financeData.representative.contact"
                   :errors="enrollment.errors.financeData.representative.contact"
-                  :size="4"
+                  :size="3"
                   :disabled="!!enrollment.data.sentAt"
                   label="Pessoa de Contato" />
                 <DropDown
@@ -442,51 +379,20 @@
                     == 'RepresentativePerson'"
                   v-model="enrollment.data.financeData.representative.relationshipId"
                   :errors="enrollment.errors.financeData.representative.relationshipId"
-                  :size="4"
+                  :size="3"
                   :options="enrollment.options.relationships"
                   :disabled="!!enrollment.data.sentAt"
                   label="Relacionamento com o aluno" />
-                <InputBox
-                  v-model="enrollment.data.financeData.representative.streetAddress"
-                  :errors="enrollment.errors.financeData.representative.streetAddress"
-                  :size="4"
-                  :disabled="!!enrollment.data.sentAt"
-                  label="Logradouro" />
-                <InputBox
-                  v-model="enrollment.data.financeData.representative.complementAddress"
-                  :errors="enrollment.errors.financeData.representative.complementAddress"
-                  :size="4"
-                  :disabled="!!enrollment.data.sentAt"
-                  label="Complemento" />
               </div>
+            </Fieldset>
+            <Fieldset title="Contato">
               <div class="flex gutters flex-wrap">
                 <InputBox
-                  v-model="enrollment.data.financeData.representative.neighborhood"
-                  :errors="enrollment.errors.financeData.representative.neighborhood"
+                  v-model="enrollment.data.financeData.representative.email"
+                  :errors="enrollment.errors.financeData.representative.email"
                   :size="4"
                   :disabled="!!enrollment.data.sentAt"
-                  label="Bairro" />
-                <DropDown
-                  v-model="enrollment.data.financeData.representative.stateId"
-                  :errors="enrollment.errors.financeData.representative.stateId"
-                  :size="4"
-                  :options="enrollment.options.states"
-                  :disabled="!!enrollment.data.sentAt"
-                  required
-                  label="Estado" />
-                <DropDown
-                  v-model="enrollment.data.financeData.representative.cityId"
-                  :errors="enrollment.errors.financeData.representative.cityId"
-                  :size="4"
-                  :options="enrollment.options.cities"
-                  :filter="enrollment.data.financeData.representative.stateId"
-                  :disabled="!!enrollment.data.sentAt"
-                  filter-key="stateId"
-                  key-id="name"
-                  required
-                  label="Cidade" />
-              </div>
-              <div class="flex gutters flex-wrap">
+                  label="E-mail" />
                 <InputBox
                   v-model="enrollment.data.financeData.representative.landline"
                   :errors="enrollment.errors.financeData.representative.landline"
@@ -501,14 +407,14 @@
                   :disabled="!!enrollment.data.sentAt"
                   label="Celular"
                   mask="(##) #####-####" />
-                <InputBox
-                  v-model="enrollment.data.financeData.representative.email"
-                  :errors="enrollment.errors.financeData.representative.email"
-                  :size="4"
-                  :disabled="!!enrollment.data.sentAt"
-                  label="E-mail" />
-             </div>
+              </div>
             </Fieldset>
+            {{ enrollment.data.financeData.representative }}
+            <AddressBlock
+              v-model="enrollment.data.financeData.representative"
+              :errors="enrollment.errors.financeData.representative"
+              :options="enrollment.options"
+              :disabled="!!enrollment.data.sentAt" />
             <Fieldset
               v-if="guarantorsAmount > 0"
               title="Fiadores">
@@ -534,58 +440,21 @@
                     <InputBox
                       v-model="item.name"
                       :errors="error.name"
-                      :size="8"
+                      :size="5"
                       :disabled="!!enrollment.data.sentAt"
                       label="Nome" />
-                  </div>
-                  <div class="flex gutters flex-wrap">
                     <InputBox
-                      v-model="item.relationship"
-                      :errors="error.relationship"
-                      :size="4"
+                      v-model="item.relationshipId"
+                      :errors="error.relationshipId"
+                      :size="3"
                       :disabled="!!enrollment.data.sentAt"
                       label="Relacionamento" />
-                    <InputBox
-                      v-model="item.streetAddress"
-                      :errors="error.streetAddress"
-                      :size="4"
-                      :disabled="!!enrollment.data.sentAt"
-                      label="Endereço Completo" />
-                    <InputBox
-                      v-model="item.complementAddress"
-                      :errors="error.complementAddress"
-                      :size="4"
-                      :disabled="!!enrollment.data.sentAt"
-                      label="Complemento" />
                   </div>
-                  <div class="flex gutters flex-wrap">
-                    <InputBox
-                      v-model="item.neighborhood"
-                      :errors="error.neighborhood"
-                      :size="4"
-                      :disabled="!!enrollment.data.sentAt"
-                      label="Bairro" />
-                    <DropDown
-                      v-model="item.stateId"
-                      :errors="error.stateId"
-                      :size="4"
-                      :options="enrollment.options.states"
-                      :disabled="!!enrollment.data.sentAt"
-                      required
-                      label="Estado" />
-                    <DropDown
-                      v-model="item.cityId"
-                      :errors="error.cityId"
-                      :size="4"
-                      :options="enrollment.options.cities"
-                      :filter="item.stateId"
-                      :disabled="!!enrollment.data.sentAt"
-                      filter-key="stateId"
-                      key-id="name"
-                      required
-                      label="Cidade"
-                      hint="Cidade onde Mora" />
-                  </div>
+                  <AddressBlock
+                    v-model="item"
+                    :errors="error"
+                    :disabled="!!enrollment.data.sentAt"
+                    :options="enrollment.options" />
                   <div class="flex gutters flex-wrap">
                     <InputBox
                       v-model="item.landline"
