@@ -1,27 +1,27 @@
 <template>
   <span>
     <template v-if="name == 'success'">
-      <div class="f-modal-icon f-modal-success animate">
-        <span class="f-modal-line f-modal-tip" />
-        <span class="f-modal-line f-modal-long" />
-        <div class="f-modal-placeholder" />
-        <div class="f-modal-fix" />
+      <div class="anim-icon anim-success animate">
+        <span class="anim-line anim-tip" />
+        <span class="anim-line anim-long" />
+        <div class="anim-placeholder" />
+        <div class="anim-fix" />
       </div>
     </template>
     <template v-if="name == 'error'">
-      <div class="f-modal-icon f-modal-error animate">
-        <span class="f-modal-x-mark">
-          <span class="f-modal-line f-modal-left animateXLeft" />
-          <span class="f-modal-line f-modal-right animateXRight" />
+      <div class="anim-icon anim-error animate">
+        <span class="anim-x-mark">
+          <span class="anim-line anim-left animateXLeft" />
+          <span class="anim-line anim-right animateXRight" />
         </span>
-        <div class="f-modal-placeholder" />
-        <div class="f-modal-fix" />
+        <div class="anim-placeholder" />
+        <div class="anim-fix" />
       </div>
     </template>
     <template v-if="name == 'warning'">
-      <div class="f-modal-icon f-modal-warning">
-        <span class="f-modal-body pulseWarningIns" />
-        <span class="f-modal-dot pulseWarningIns" />
+      <div class="anim-icon anim-warning">
+        <span class="anim-body pulseWarningIns" />
+        <span class="anim-dot pulseWarningIns" />
       </div>
     </template>
   </span>
