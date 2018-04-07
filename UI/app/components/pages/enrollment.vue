@@ -31,6 +31,8 @@
             :complete="enrollment.data.personalData.state === 'valid'"
             :error="enrollment.data.personalData.state === 'invalid'"
             @close="step = 0">
+            <BaseErrors
+              v-model="enrollment.messages.personalData" />
             <div
               slot="title"
               class="center mb4n mt2">
@@ -253,6 +255,8 @@
             :complete="enrollment.data.financeData.state === 'valid'"
             :error="enrollment.data.financeData.state === 'invalid'"
             title="Dados Financeiros">
+            <BaseErrors
+              v-model="enrollment.messages.financeData" />
             <Fieldset title="Dados Financeiros">
               <div class="flex gutters flex-wrap">
                 <DropDown
@@ -433,7 +437,8 @@
           <Card
             closeable
             title="Enviar para Análise">
-            <BaseErrors v-model="enrollment.messages" />
+            <BaseErrors
+              v-model="enrollment.messages.sendToApproval" />
             <p>Envie seus dados para a secetaria e para o
               departamento financeiro para aprovação.</p>
             <div class="center">
@@ -458,7 +463,7 @@
           <Card title="Dados enviados">
             <BaseErrors
               success
-              v-model="enrollment.messages" />
+              v-model="enrollment.messages.sendToApproval" />
             <p>Seus dados foram enviados. Agora a secretaria e o departamento
               financeiro estão analisando seus documentos.</p>
             <div class="center">
