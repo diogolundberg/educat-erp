@@ -253,13 +253,13 @@ export default new VueX.Store({
       const response = await axios.get(url, { headers });
       commit("SET_FINANCE_APPROVALS", response.data);
     },
-    async getAcademicApprovalInfo({ commit, state }, { enrollmentNumber }) {
+    async getAcademicApprovalInfo({ commit, state }, enrollmentNumber) {
       const url = `${url2}/api/AcademicApproval/${enrollmentNumber}`;
       const headers = { Authorization: `Bearer ${state.token}` };
       const response = await axios.get(url, { headers });
       commit("SET_ENROLLMENT_INFO", response.data);
     },
-    async getFinanceApprovalInfo({ commit, state }, { enrollmentNumber }) {
+    async getFinanceApprovalInfo({ commit, state }, enrollmentNumber) {
       const url = `${url2}/api/FinanceApproval/${enrollmentNumber}`;
       const headers = { Authorization: `Bearer ${state.token}` };
       const response = await axios.get(url, { headers });
