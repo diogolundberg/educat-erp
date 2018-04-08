@@ -181,9 +181,9 @@ export default new VueX.Store({
     COPY_RESPONSIBLE_DATA(state) {
       const { personalData } = state.enrollment.data;
       const { representative } = state.enrollment.data.financeData;
-      personalData.underage = yearsAgo(parseDate(personalData.birthDate)) < 18;
+      state.enrollment.underage = yearsAgo(parseDate(personalData.birthDate)) < 18;
 
-      if (!personalData.underage) {
+      if (!state.enrollment.underage) {
         representative.name = personalData.realName;
         representative.cpf = personalData.cpf;
         representative.streetAddress = personalData.streetAddress;
