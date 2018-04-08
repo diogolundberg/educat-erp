@@ -234,6 +234,7 @@
               <Documents
                 v-model="enrollment.data.personalData.documents"
                 :types="enrollment.options.personalDocuments"
+                :errors="enrollment.errors.personalData.documents"
                 :prefix="`onboarding/enrollment/${ id }/personalData/`"
                 :disabled="!!enrollment.data.sentAt" />
             </Fieldset>

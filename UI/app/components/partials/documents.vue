@@ -6,6 +6,8 @@
       class="col-12 sm-col-6 p1">
       <Card
         :title="type.name">
+        <BaseErrors
+          :value="errorsFor(type.id)" />
         <UploadButton
           :prefix="`${ prefix }${ type.id }/`"
           :value="get(type.id)"
@@ -25,6 +27,10 @@
         default: () => [],
       },
       types: {
+        type: Array,
+        default: () => [],
+      },
+      errors: {
         type: Array,
         default: () => [],
       },
@@ -52,6 +58,10 @@
         } else {
           this.$emit("input", [...value, { url, documentTypeId }]);
         }
+      },
+      errorsFor(index) {
+        const errors = this.errors && this.errors[index];
+        return errors || [];
       },
     },
   };
