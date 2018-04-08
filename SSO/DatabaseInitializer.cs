@@ -22,8 +22,7 @@ namespace SSO
 
                 if (!context.Users.Any())
                 {
-                    userRepository.Add(new User { Email = "lucasviniciusbatistacosta@gmail.com", Password = "123456" });
-                    userRepository.Add(new User { Email = "amandarflavia@gmail.com", Password = "123456" });
+                    userRepository.Add(new User { Email = "admin@example.com", Password = "123" });
                 }
 
                 if (!context.Features.Any())
