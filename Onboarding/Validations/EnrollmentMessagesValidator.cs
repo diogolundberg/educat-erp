@@ -9,7 +9,6 @@ namespace Onboarding.Validations
         public EnrollmentMessagesValidator(DatabaseContext databaseContext)
         {
             RuleFor(enrollment => enrollment.FinanceData).SetValidator(new FinanceDataMessagesValidator(databaseContext));
-            RuleFor(enrollment => enrollment.PersonalData).SetValidator(new PersonalDataMessagesValidator(databaseContext));
         }
     }
 }

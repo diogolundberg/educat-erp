@@ -45,6 +45,14 @@ namespace Onboarding.Validations.FinanceData
             List<string> errors = new List<string>();
             List<string> validations = documentType.Validations != null ? JsonConvert.DeserializeObject<List<string>>(documentType.Validations) : new List<string>();
 
+            if (documentType.Validations == null)
+            {
+                if (!guarantor.GuarantorDocuments.Any(x => x.Document.DocumentTypeId == documentType.Id))
+                {
+                    errors.Add(string.Format("Documento {0} é obrigatório.", documentType.Name));
+                }
+            }
+
             foreach (string validation in validations)
             {
                 if (validation == DocumentValidations.Spouse.ToString())

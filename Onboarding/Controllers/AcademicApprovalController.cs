@@ -149,16 +149,14 @@ namespace Onboarding.Controllers
 
         private string PersonalDataState(PersonalData personalData)
         {
-            PersonalDataValidator validator = new PersonalDataValidator();
+            PersonalDataValidator validator = new PersonalDataValidator(_context);
             FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
-            PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator(_context);
-            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(personalData);
 
             if (!personalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
-            if (results.IsValid && resultsMessages.IsValid)
+            if (results.IsValid)
             {
                 return "valid";
             }

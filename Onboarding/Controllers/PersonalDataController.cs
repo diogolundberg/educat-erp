@@ -143,11 +143,8 @@ namespace Onboarding.Controllers
             PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
             viewModel.State = PersonalDataState(personalData);
 
-            PersonalDataValidator validator = new PersonalDataValidator();
+            PersonalDataValidator validator = new PersonalDataValidator(_context);
             Hashtable errors = FormatErrors(validator.Validate(personalData));
-
-            PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator(_context);
-            errors.Add("documents", FormatErrors(messagesValidator.Validate(personalData)));
 
             return new OkObjectResult(new
             {
@@ -158,16 +155,14 @@ namespace Onboarding.Controllers
 
         private string PersonalDataState(PersonalData personalData)
         {
-            PersonalDataValidator validator = new PersonalDataValidator();
+            PersonalDataValidator validator = new PersonalDataValidator(_context);
             FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
-            PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator(_context);
-            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(personalData);
 
             if (!personalData.UpdatedAt.HasValue)
             {
                 return "empty";
             }
-            if (results.IsValid && resultsMessages.IsValid)
+            if (results.IsValid)
             {
                 return "valid";
             }
