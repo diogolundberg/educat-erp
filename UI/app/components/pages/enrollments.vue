@@ -3,11 +3,16 @@
     <h2>{{ title }}</h2>
     <List
       v-model="enrollments"
-      :columns="[{name: 'name', title: 'Nome'},{name: 'cpf', title: 'CPF'}]"
+      :columns="[
+        {name: 'name', title: 'Nome'},
+        {name: 'cpf', title: 'CPF'},
+        {name: 'birthDate', title: 'Nascimento'},
+        {name: 'email', title: 'E-mail'},
+        {name: 'phoneNumber', title: 'Celular'},
+        {name: 'plan', title: 'Plano', show: type === 'finance'},
+        {name: 'updatedAt', title: 'Modificado em', format: 'date'},
+      ]"
       @click="show($event)" />
-    <EnrollmentInfo
-      :type="type"
-      ref="modal" />
   </div>
 </template>
 
@@ -42,8 +47,8 @@
         const type = this.type === "academic" ? "Academic" : "Finance";
         this.$store.dispatch(`get${type}Approvals`);
       },
-      show(enrollment) {
-        this.$refs.modal.show(enrollment);
+      show({ enrollmentNumber }) {
+        this.$router.push(`/enrollments/${this.type}/${enrollmentNumber}`);
       },
     },
   };

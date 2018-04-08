@@ -4,11 +4,15 @@
       v-if="$route.meta.header"
       menu
       @sidebar="sidebar = !sidebar" />
-    <Sidebar
-      v-if="sidebar"
-      @exit="sidebar = false"
-      :links="links" />
-    <router-view />
+    <div class="flex">
+      <Sidebar
+        v-if="$route.meta.header"
+        @exit="sidebar = false"
+        :visible="sidebar"
+        :links="links" />
+      <router-view
+        class="flex-auto px2" />
+    </div>
   </div>
 </template>
 

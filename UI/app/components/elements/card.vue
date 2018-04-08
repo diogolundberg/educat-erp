@@ -22,7 +22,7 @@
           @click="$emit('close')">𐄂</div>
       </div>
     </template>
-    <div class="p3">
+    <div :class="{ p3: !noPadding }">
       <slot />
     </div>
   </div>
@@ -44,6 +44,11 @@
       complete: {
         type: Boolean,
         default: false,
+      },
+      noPadding: {
+        type: Boolean,
+        default: false,
+        required: false,
       },
       error: {
         type: Boolean,

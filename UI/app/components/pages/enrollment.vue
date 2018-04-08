@@ -31,12 +31,23 @@
             :complete="enrollment.data.personalData.state === 'valid'"
             :error="enrollment.data.personalData.state === 'invalid'"
             @close="step = 0">
+            <BaseErrors
+              v-model="enrollment.messages.personalData" />
             <div
               slot="title"
               class="center mb4n mt2">
-              <img
-                src="../../assets/img/people.svg"
-                class="rounded border4 border shadow2 x6 y6 bg-white">
+              <UploadZone
+                v-model="enrollment.data.personalData.avatar"
+                prefix="picture">
+                <img
+                  v-if="enrollment.data.personalData.avatar"
+                  :src="enrollment.data.personalData.avatar"
+                  class="rounded border4 border shadow2 x6 y6 bg-white">
+                <img
+                  v-if="!enrollment.data.personalData.avatar"
+                  src="../../assets/img/people.svg"
+                  class="rounded border4 border shadow2 x6 y6 bg-white">
+              </UploadZone>
             </div>
             <Fieldset>
               <div class="flex gutters flex-wrap">
@@ -232,6 +243,7 @@
               <Documents
                 v-model="enrollment.data.personalData.documents"
                 :types="enrollment.options.personalDocuments"
+                :errors="enrollment.errors.personalData.documents"
                 :prefix="`onboarding/enrollment/${ id }/personalData/`"
                 :disabled="!!enrollment.data.sentAt" />
             </Fieldset>
@@ -253,6 +265,8 @@
             :complete="enrollment.data.financeData.state === 'valid'"
             :error="enrollment.data.financeData.state === 'invalid'"
             title="Dados Financeiros">
+            <BaseErrors
+              v-model="enrollment.messages.financeData" />
             <Fieldset title="Dados Financeiros">
               <div class="flex gutters flex-wrap">
                 <DropDown
@@ -262,14 +276,27 @@
                   :options="enrollment.options.paymentMethod"
                   :disabled="!!enrollment.data.sentAt"
                   label="Meio de Pagamento" />
-                <DropDown
-                  v-model="enrollment.data.financeData.planId"
-                  :errors="enrollment.errors.financeData.planId"
-                  :size="6"
-                  :options="enrollment.options.plans"
-                  :disabled="!!enrollment.data.sentAt"
-                  label="Meio de Pagamento" />
               </div>
+              <List
+                v-model="enrollment.options.plans"
+                :columns="[
+                  {name: 'name', title: 'Plano'},
+                  {name: 'value', title: 'Total'},
+                  {name: 'installments', title: 'Parcelas'},
+                  {name: 'dueData', title: 'Vencimento'},
+                  {name: 'guarantors', title: 'Fiadores'},
+                ]"
+                :show-filter="false"
+                @click="enrollment.data.financeData.planId = $event.id">
+                <template
+                  slot="column-name"
+                  scope="{ row }">
+                  <Radio
+                    :value="enrollment.data.financeData.planId === row.id"
+                    class="mr2" />
+                  {{ row.name }}
+                </template>
+              </List>
             </Fieldset>
             <Fieldset title="Responsável Financeiro">
               <div class="flex gutters flex-wrap">
@@ -433,7 +460,8 @@
           <Card
             closeable
             title="Enviar para Análise">
-            <BaseErrors v-model="enrollment.messages" />
+            <BaseErrors
+              v-model="enrollment.messages.sendToApproval" />
             <p>Envie seus dados para a secetaria e para o
               departamento financeiro para aprovação.</p>
             <div class="center">
@@ -458,7 +486,7 @@
           <Card title="Dados enviados">
             <BaseErrors
               success
-              v-model="enrollment.messages" />
+              v-model="enrollment.messages.sendToApproval" />
             <p>Seus dados foram enviados. Agora a secretaria e o departamento
               financeiro estão analisando seus documentos.</p>
             <div class="center">

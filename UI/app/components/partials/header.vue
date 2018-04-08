@@ -1,26 +1,27 @@
 <template>
   <div>
-    <header class="fixed top-0 z3 w100 bg-green-grad white">
-      <div
-        v-if="menu"
-        class="absolute top-0 left-0 m1 pointer"
-        @click="$emit('sidebar')">
-        <Icon
-          name="menu" />
-      </div>
+    <header class="fixed top-0 left-0 z3 w100 bg-green-grad white">
       <div class="max-width-4 m-auto flex items-center justify-between p1">
-        <div class="flex-auto flex items-center">
+        <div
+          v-if="menu"
+          class="m1 pointer sm-hide md-hide lg-hide"
+          @click="$emit('sidebar')">
+          <Icon
+            :width="32"
+            name="menu" />
+        </div>
+        <div class="flex-auto flex items-center xs-hide">
           <div>
             <img
               src="../../assets/img/logo.svg"
               :style="{ height: '3rem' }">
           </div>
-          <h2 class="my0 mx2 px2 thin border-white-50 h4 md-h2">
+          <h2 class="my0 mx2 px2 thin border-white-50">
             Matrícula Online
           </h2>
         </div>
 
-        <div class="xs-hide sm-hide">
+        <div class="sm-hide">
           <slot />
         </div>
 

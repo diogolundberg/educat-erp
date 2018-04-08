@@ -1,21 +1,41 @@
 <template>
-  <div class="p2 shadow0 rounded">
-    <template v-for="(type, idx) in types">
-      <div
-        :id="`doc_${type.id}`"
-        :key="type.id"
-        class="flex justify-between items-center">
-          <div>{{ type.name }}</div>
+  <div class="flex flex-wrap">
+    <div
+      v-for="(type, index) in types"
+      :key="index"
+      class="col-12 sm-col-6 p1">
+      <Card
+        :title="type.name"
+        no-padding>
+        <div
+          slot="title"
+          class="mb3n right-align">
           <UploadButton
             :prefix="`${ prefix }${ type.id }/`"
-            :value="get(type.id)"
             :disabled="disabled"
-            @input="set(type.id, $event)" />
-      </div>
-      <hr
-        v-if="idx < types.length - 1"
-        :key="`hr${type.id}`">
-    </template>
+            @input="push(type.id, $event)" />
+        </div>
+        <BaseErrors
+          :value="errorsFor(type.id)" />
+        <div
+          v-for="(doc, index2) in docsFor(type)"
+          :key="`${index}_${index2}`"
+          class="py1 px2 divider-bottom h-bg-silver flex pointer"
+          @click="view(doc)">
+          <div class="flex-auto">
+            {{ type.name }}
+          </div>
+          <Icon
+            black
+            name="download" />
+        </div>
+        <div
+          v-if="docsFor(type).length == 0"
+          class="py1 px2 divider-bottom">
+            {{ emptyMessage }}
+          </div>
+      </Card>
+    </div>
   </div>
 </template>
 
@@ -31,6 +51,10 @@
         type: Array,
         default: () => [],
       },
+      errors: {
+        type: Object,
+        default: () => ({}),
+      },
       prefix: {
         type: String,
         default: "",
@@ -39,22 +63,25 @@
         type: Boolean,
         default: false,
       },
+      emptyMessage: {
+        type: String,
+        default: "Sem documentos. Clique no botão acima para fazer upload.",
+      },
     },
     methods: {
-      get(id) {
-        const document = this.value.find(a => a.documentTypeId === id);
-        return document && document.url;
-      },
-      set(documentTypeId, url) {
+      push(documentTypeId, url) {
         const value = [...this.value];
-        const document = value.find(a => a.documentTypeId === documentTypeId);
-        if (document) {
-          document.id = 0;
-          document.url = url;
-          this.$emit("input", value);
-        } else {
-          this.$emit("input", [...value, { url, documentTypeId }]);
-        }
+        this.$emit("input", [...value, { url, documentTypeId }]);
+      },
+      view({ url }) {
+        window.open(url, "_blank");
+      },
+      docsFor({ id }) {
+        return this.value.filter(a => a.documentTypeId === id);
+      },
+      errorsFor(index) {
+        const errors = this.errors && this.errors[index];
+        return errors || [];
       },
     },
   };

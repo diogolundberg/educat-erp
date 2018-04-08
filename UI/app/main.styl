@@ -30,6 +30,8 @@ input:invalid
 
 .hidden
   display none
+.table, .sm-table
+  table-layout fixed
 .table-row
   display table-row
 .sm-table-row
@@ -120,6 +122,8 @@ input:invalid
   height 1em
 .y2
   height 2em
+.y4
+  height 4em
 .y6
   height 6em
 .x1
@@ -132,6 +136,9 @@ input:invalid
   width 6em
 .width-1
   width 16rem
+.sm-width-1
+  @media (min-width: 40em)
+    width: 16rem
 .width-2
   width 32rem
 .height-1
@@ -142,6 +149,8 @@ input:invalid
   padding 4px
 .p6x
   padding 6px
+.mb3n
+  margin-bottom -2.8rem
 .mb4n
   margin-bottom -4rem
 .m-auto
@@ -164,6 +173,9 @@ input:invalid
   transform translateX(100%)
 .left0
   transform translateX(-100%)
+.sm-left0
+  @media (max-width: 40em)
+    transform translateX(-100%)
 .blur
   filter blur(4px)
 .pointer

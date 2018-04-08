@@ -58,7 +58,7 @@ export default new VueX.Store({
             cnpj: "",
             name: "",
             contact: "",
-            relationshipId: "",
+            relationship: "",
             streetAddress: "",
             complementAddress: "",
             neighborhood: "",
@@ -89,13 +89,17 @@ export default new VueX.Store({
         personalDocuments: [],
         guarantorDocuments: [],
       },
+      messages: {
+        personalData: [],
+        financeData: [],
+        sendToApproval: [],
+      },
       errors: {
         personalData: {},
         financeData: {
           representative: {},
         },
       },
-      messages: [],
     },
     uploadUrl: null,
     academicApprovals: [],
@@ -108,7 +112,6 @@ export default new VueX.Store({
         sections: [],
       },
       errors: {},
-      messages: [],
     },
   },
   getters: {
@@ -140,13 +143,17 @@ export default new VueX.Store({
     SET_ENROLLMENT(state, data) {
       Object.assign(state.enrollment, data);
     },
-    SET_PERSONAL_DATA(state, { data, errors }) {
+    SET_PERSONAL_DATA(state, { data, errors, messages }) {
       Object.assign(state.enrollment.data.personalData, data);
+      state.enrollment.messages.personalData =
+        Object.assign({}, state.enrollment.messages.personalData, messages);
       state.enrollment.errors.personalData =
         Object.assign({}, state.enrollment.errors.personalData, errors);
     },
-    SET_FINANCE_DATA(state, { data, errors }) {
+    SET_FINANCE_DATA(state, { data, errors, messages }) {
       Object.assign(state.enrollment.data.financeData, data);
+      state.enrollment.messages.financeData =
+        Object.assign({}, state.enrollment.messages.financeData, messages);
       state.enrollment.errors.financeData =
         Object.assign({}, state.enrollment.errors.financeData, errors);
     },
@@ -154,7 +161,8 @@ export default new VueX.Store({
       state.enrollment.data.sentAt = new Date();
     },
     SET_ENROLLMENT_MESSAGES(state, { messages }) {
-      state.enrollment.messages = messages;
+      state.enrollment.messages.sendToApproval =
+        Object.assign({}, state.enrollment.messages.sendToApproval, messages);
     },
     SET_ENROLLMENT_ADDRESS(state, response) {
       const { options } = state.enrollment;
@@ -174,10 +182,9 @@ export default new VueX.Store({
     SET_FINANCE_APPROVALS(state, { records }) {
       state.financeApprovals = records;
     },
-    SET_ENROLLMENT_INFO(state, { data, options, messages }) {
+    SET_ENROLLMENT_INFO(state, { data, options }) {
       Object.assign(state.enrollmentInfo.data, data);
       Object.assign(state.enrollmentInfo.options, options);
-      state.enrollmentInfo.messages = messages;
     },
   },
   actions: {
@@ -244,13 +251,13 @@ export default new VueX.Store({
       const response = await axios.get(url, { headers });
       commit("SET_FINANCE_APPROVALS", response.data);
     },
-    async getAcademicApprovalInfo({ commit, state }, { enrollmentNumber }) {
+    async getAcademicApprovalInfo({ commit, state }, enrollmentNumber) {
       const url = `${url2}/api/AcademicApproval/${enrollmentNumber}`;
       const headers = { Authorization: `Bearer ${state.token}` };
       const response = await axios.get(url, { headers });
       commit("SET_ENROLLMENT_INFO", response.data);
     },
-    async getFinanceApprovalInfo({ commit, state }, { enrollmentNumber }) {
+    async getFinanceApprovalInfo({ commit, state }, enrollmentNumber) {
       const url = `${url2}/api/FinanceApproval/${enrollmentNumber}`;
       const headers = { Authorization: `Bearer ${state.token}` };
       const response = await axios.get(url, { headers });

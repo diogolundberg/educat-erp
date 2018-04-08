@@ -12,14 +12,8 @@
       class="pointer my2"
       role="radiogroup"
       @click="!disabled && $emit('input', option[idField])">
-      <span
-        :aria-checked="option[idField] == value"
-        class="inline-block align-middle x1 y1 p4x circle bg-white shadow0"
-        role="radio">
-        <template v-if="option[idField] == value">
-          <div class="block w100 h100 circle bg-blue ease" />
-        </template>
-      </span>
+      <Radio
+        :value="option[idField] == value" />
       <label class="mx1 pointer">
         {{ option[labelField] }}
       </label>
