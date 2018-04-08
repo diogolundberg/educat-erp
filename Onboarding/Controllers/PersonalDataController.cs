@@ -147,11 +147,10 @@ namespace Onboarding.Controllers
             Hashtable errors = FormatErrors(validator.Validate(personalData));
 
             PersonalDataMessagesValidator messagesValidator = new PersonalDataMessagesValidator(_context);
-            List<string> messages = messagesValidator.Validate(personalData).Errors.Select(x => x.ErrorMessage).ToList();
+            errors.Add("documents", FormatErrors(messagesValidator.Validate(personalData)));
 
             return new OkObjectResult(new
             {
-                messages,
                 errors,
                 data = viewModel
             });

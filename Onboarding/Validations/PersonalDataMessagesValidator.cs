@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Validators;
 using Newtonsoft.Json;
 using Onboarding.Enums;
 using Onboarding.Models;
@@ -10,85 +11,116 @@ namespace Onboarding.Validations
 {
     public class PersonalDataMessagesValidator : AbstractValidator<Models.PersonalData>
     {
-        private List<PersonalDocumentType> documentTypes { get; set; }
+        private List<PersonalDocumentType> _documentTypes { get; set; }
 
         public PersonalDataMessagesValidator(DatabaseContext databaseContext)
         {
-            documentTypes = databaseContext.Set<PersonalDocumentType>().ToList();
+            _documentTypes = databaseContext.Set<PersonalDocumentType>().ToList();
 
             RuleFor(personalData => personalData).Custom((personalData, context) =>
             {
-                List<string> validations = new List<string>();
-                validations.Add(BeForeign(personalData));
-                validations.Add(BeMilitaryDraft(personalData));
-                validations.Add(BeForeignGraduation(personalData));
-                validations.Add(BeMinorAge(personalData));
-                validations.Add(BeGraduationYear(personalData));
-                validations = validations.Where(x => !string.IsNullOrEmpty(x)).ToList();
-
-                List<Document> documents = personalData.PersonalDataDocuments.Select(x => x.Document).ToList();
-                List<string> documentTypeValidations = GetPersonalDataDocumentValidations(documents);
-                List<string> requiredDocumentValidations = validations.Where(x => !documentTypeValidations.Contains(x)).ToList();
-                List<string> requiredDocumentTypes = documentTypes.Where(x => x.Validations == null && !documents.Any(o => o.DocumentTypeId == x.Id)).Select(x => x.Name).ToList();
-
-                foreach (string requiredDocument in requiredDocumentValidations)
+                foreach (PersonalDocumentType documentType in _documentTypes)
                 {
-                    context.AddFailure(GetMessageError(requiredDocument));
-                }
-                foreach (string documentType in requiredDocumentTypes)
-                {
-                    context.AddFailure(string.Format("Documento {0} é obrigatório.", documentType));
+                    List<string> errors = Validate(personalData, documentType);
+
+                    foreach (string error in errors)
+                    {
+                        context.AddFailure(string.Format("{0}", documentType.Id), string.Format("Documento {0} é obrigatório.", documentType.Name));
+                    }
                 }
             });
 
         }
 
-        private string BeForeign(Models.PersonalData personalData)
+        public List<string> Validate(Models.PersonalData personalData, DocumentType documentType)
         {
-            if (personalData.Nationality != null && personalData.Nationality.CheckForeign)
+            List<string> errors = new List<string>();
+            List<string> validations = documentType.Validations != null ? JsonConvert.DeserializeObject<List<string>>(documentType.Validations) : new List<string>();
+
+            foreach (string validation in validations)
             {
-                return DocumentValidations.Foreigner.ToString();
+                if (validation == DocumentValidations.Foreigner.ToString())
+                {
+                    if (!CheckForeign(personalData))
+                    {
+                        errors.Add(GetMessageError(validation));
+                    }
+                }
+                else if (validation == DocumentValidations.Native.ToString())
+                {
+                    if (!CheckNative(personalData))
+                    {
+                        errors.Add(GetMessageError(validation));
+                    }
+                }
+                else if (validation == DocumentValidations.MilitaryDraft.ToString())
+                {
+                    if (!CheckMilitaryDraft(personalData))
+                    {
+                        errors.Add(GetMessageError(validation));
+                    }
+                }
+                else if (validation == DocumentValidations.ForeignGraduation.ToString())
+                {
+                    if (!CheckForeignGraduation(personalData))
+                    {
+                        errors.Add(GetMessageError(validation));
+                    }
+                }
+                else if (validation == DocumentValidations.MinorAge.ToString())
+                {
+                    if (!CheckMinorAge(personalData))
+                    {
+                        errors.Add(GetMessageError(validation));
+                    }
+                }
+                else if (validation == DocumentValidations.GraduationYear.ToString())
+                {
+                    if (CheckGraduationYear(personalData))
+                    {
+                        errors.Add(GetMessageError(validation));
+                    }
+                }
             }
-            else
-            {
-                return DocumentValidations.Native.ToString();
-            }
+
+            return errors;
         }
 
-        private string BeMilitaryDraft(Models.PersonalData personalData)
+        private bool CheckForeign(Models.PersonalData personalData)
         {
-            if (personalData.Gender != null && personalData.Gender.CheckMilitaryDraft)
-            {
-                return DocumentValidations.MilitaryDraft.ToString();
-            }
-            return string.Empty;
+            return (personalData.Nationality != null && personalData.Nationality.CheckForeign
+                && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.Foreigner.ToString())))
+                || personalData.Nationality == null || !personalData.Nationality.CheckForeign;
         }
 
-        private string BeForeignGraduation(Models.PersonalData personalData)
+        private bool CheckNative(Models.PersonalData personalData)
         {
-            if (personalData.HighSchoolGraduationCountry != null && personalData.HighSchoolGraduationCountry.CheckForeignGraduation)
-            {
-                return DocumentValidations.ForeignGraduation.ToString();
-            }
-            return string.Empty;
+            return (personalData.Nationality != null && personalData.Nationality.CheckNative
+                && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.Native.ToString())))
+                || personalData.Nationality == null || !personalData.Nationality.CheckNative;
         }
 
-        private string BeMinorAge(Models.PersonalData personalData)
+        private bool CheckMilitaryDraft(Models.PersonalData personalData)
         {
-            if (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18)
-            {
-                return DocumentValidations.MinorAge.ToString();
-            }
-            return string.Empty;
+            return (personalData.Gender != null && personalData.Gender.CheckMilitaryDraft && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.MilitaryDraft.ToString())))
+            || personalData.Gender == null || !personalData.Gender.CheckMilitaryDraft;
         }
 
-        private string BeGraduationYear(Models.PersonalData personalData)
+        private bool CheckForeignGraduation(Models.PersonalData personalData)
         {
-            if (!string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) && personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString())
-            {
-                return DocumentValidations.GraduationYear.ToString();
-            }
-            return string.Empty;
+            return (personalData.HighSchoolGraduationCountry != null && personalData.HighSchoolGraduationCountry.CheckForeignGraduation && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.ForeignGraduation.ToString())))
+                || personalData.HighSchoolGraduationCountry == null || !personalData.HighSchoolGraduationCountry.CheckForeignGraduation;
+        }
+
+        private bool CheckMinorAge(Models.PersonalData personalData)
+        {
+            return (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18 && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.MinorAge.ToString())))
+                || personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18;
+        }
+
+        private bool CheckGraduationYear(Models.PersonalData personalData)
+        {
+            return (!string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) && personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString() && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.GraduationYear.ToString()))) || string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) || personalData.HighSchoolGraduationYear != personalData.Enrollment.Onboarding.Year.ToString();
         }
 
         private int GetAge(DateTime birthDate)
@@ -108,9 +140,9 @@ namespace Onboarding.Validations
         {
             List<string> documentTypeValidations = new List<string>();
 
-            foreach (Document document in documents.Where(x=>x.DocumentTypeId.HasValue))
+            foreach (Document document in documents.Where(x => x.DocumentTypeId.HasValue))
             {
-                DocumentType documentType = documentTypes.Single(x => x.Id == document.DocumentTypeId);
+                DocumentType documentType = _documentTypes.Single(x => x.Id == document.DocumentTypeId);
 
                 if (!string.IsNullOrEmpty(documentType.Validations))
                 {
