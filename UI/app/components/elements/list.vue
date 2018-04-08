@@ -31,7 +31,7 @@
           <strong class="sm-hide md-hide lg-hide">
             {{ column.title }}:
           </strong>
-          <template v-if="$scopedSlots[column.name]">
+          <template v-if="$scopedSlots[`column-${column.name}`]">
             <slot
               :name="`column-${column.name}`"
               :row="row" />
