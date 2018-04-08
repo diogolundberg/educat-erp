@@ -88,8 +88,8 @@ namespace Onboarding.Controllers
             });
         }
 
-        [HttpPut("", Name = "ONBOARDING/EDIT")]
-        public dynamic Put([FromBody]ViewModels.Onboarding.Form obj)
+        [HttpPut("{id}", Name = "ONBOARDING/EDIT")]
+        public dynamic Put(int id, [FromBody]ViewModels.Onboarding.Form obj)
         {
             FormValidator formValidator = new FormValidator();
             ValidationResult validationResult = formValidator.Validate(obj);
@@ -104,7 +104,7 @@ namespace Onboarding.Controllers
                                                            .Include("Enrollments.PersonalData")
                                                            .Include("Enrollments.FinanceData")
                                                            .Include("Enrollments.FinanceData.Representative")
-                                                           .SingleOrDefault(x => x.Semester == obj.Semester && x.Year == obj.Year);
+                                                           .SingleOrDefault(x => x.Id == id);
 
             if (existingOnboarding == null)
             {
