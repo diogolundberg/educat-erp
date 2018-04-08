@@ -266,14 +266,26 @@
                   :options="enrollment.options.paymentMethod"
                   :disabled="!!enrollment.data.sentAt"
                   label="Meio de Pagamento" />
-                <DropDown
-                  v-model="enrollment.data.financeData.planId"
-                  :errors="enrollment.errors.financeData.planId"
-                  :size="6"
-                  :options="enrollment.options.plans"
-                  :disabled="!!enrollment.data.sentAt"
-                  label="Plano" />
               </div>
+              <List
+                v-model="enrollment.options.plans"
+                :columns="[
+                  {name: 'name', title: 'Plano'},
+                  {name: 'value', title: 'Total'},
+                  {name: 'installments', title: 'Parcelas'},
+                  {name: 'dueData', title: 'Vencimento'},
+                  {name: 'guarantors', title: 'Fiadores'},
+                ]"
+                @click="enrollment.data.financeData.planId = $event.id">
+                <template
+                  slot="column-name"
+                  scope="{ row }">
+                  <Radio
+                    :value="enrollment.data.financeData.planId === row.id"
+                    class="mr2" />
+                  {{ row.name }}
+                </template>
+              </List>
             </Fieldset>
             <Fieldset title="Responsável Financeiro">
               <div class="flex gutters flex-wrap">
