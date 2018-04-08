@@ -29,6 +29,10 @@
         required: false,
         default: null,
       },
+      acceptedTypes: {
+        type: Array,
+        default: () => ["application/pdf", "image/jpeg", "image/png"],
+      },
       disabled: {
         type: Boolean,
         default: false,
@@ -37,6 +41,11 @@
     methods: {
       async pick() {
         const file = this.$refs.file.files[0];
+        if (!this.acceptedTypes.includes(file.type)) {
+          this.notify("Tipo de arquivo não aceito.");
+          return;
+        }
+
         await this.$store.dispatch("presign", `${this.prefix}${file.name}`);
         const url = this.$store.getters.uploadUrl;
 
