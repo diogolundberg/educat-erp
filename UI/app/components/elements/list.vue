@@ -2,6 +2,7 @@
   <div class="m2 flex flex-column items-center">
     <InputBox
       v-model="filter"
+      v-if="showFilter"
       label="Filtro" />
     <div class="block sm-table bg-white shadow2 m2 col-12 fit">
       <div class="hidden sm-table-row divider-bottom">
@@ -79,6 +80,10 @@
       noneMessage: {
         type: String,
         default: "Nenhum item encontrado",
+      },
+      showFilter: {
+        type: Boolean,
+        default: true,
       },
     },
     data() {
