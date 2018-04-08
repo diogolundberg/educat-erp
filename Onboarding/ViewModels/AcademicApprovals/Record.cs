@@ -8,7 +8,7 @@ namespace Onboarding.ViewModels.AcademicApprovals
         public string EnrollmentNumber { get; set; }
         public IEnumerable<AcademicPendency> Pendencies { get; set; }
 
-        public string RealName { get; set; }
+        public string Name { get; set; }
         public string AssumedName { get; set; }
         public string BirthDate { get; set; }
         public string CPF { get; set; }

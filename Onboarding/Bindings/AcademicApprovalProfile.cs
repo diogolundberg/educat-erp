@@ -20,6 +20,7 @@ namespace Onboarding.Bindings
             .ForMember(x => x.PhoneNumber, config => config.MapFrom(x => x.PersonalData.PhoneNumber));
 
             CreateMap<PersonalData, Record>()
+            .ForMember(x => x.Name, config => config.MapFrom(x => x.RealName))
             .ForMember(x => x.EnrollmentNumber, config => config.MapFrom(x => x.Enrollment.ExternalId))
             .ForMember(x => x.Gender, config => config.MapFrom(x => x.Gender.Name))
             .ForMember(x => x.MaritalStatus, config => config.MapFrom(x => x.MaritalStatus.Name))
