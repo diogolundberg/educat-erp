@@ -21,12 +21,14 @@ namespace Onboarding.Bindings
             })));
 
             CreateMap<Models.Onboarding, ViewModels.Onboarding.Form>()
+            .ForMember(x => x.StartAt, config => config.MapFrom(x => x.StartAt != null ? x.StartAt.Value.ToString("dd/MM/yyyy") : null))
+            .ForMember(x => x.EndAt, config => config.MapFrom(x => x.StartAt != null ? x.EndAt.Value.ToString("dd/MM/yyyy") : null))
             .ForMember(x => x.Enrollments, config => config.MapFrom(x => x.Enrollments.Select(o => new EnrollmentForm
             {
                 Id = o.Id,
                 Name = o.PersonalData.RealName,
                 CPF = o.PersonalData.CPF,
-                Email = o.PersonalData.Email
+                Email = o.PersonalData.Email,
             })));
 
             CreateMap<Models.Onboarding, ViewModels.Onboarding.Records>()
