@@ -72,7 +72,7 @@ namespace Onboarding.Controllers
                     Representative = new RepresentativePerson()
                 };
 
-                string link = _configuration["MATRICULA_CMMG"] + enrollment.ExternalId;
+                string link = string.Format("http://cmmg-ui.netlify.com/enroll/{0}", enrollment.ExternalId);
                 string messageBody = GetEmailBody("enrollment_invite.html").Replace("{link}", link);
                 string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
 
@@ -154,7 +154,7 @@ namespace Onboarding.Controllers
                         Representative = new RepresentativePerson()
                     };
 
-                    string link = _configuration["MATRICULA_CMMG"] + enrollment.ExternalId;
+                    string link = string.Format("http://cmmg-ui.netlify.com/enroll/{0}", enrollment.ExternalId);
                     string messageBody = GetEmailBody("enrollment_invite.html").Replace("{link}", link);
                     string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
 
