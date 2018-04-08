@@ -37,14 +37,15 @@
               slot="title"
               class="center mb4n mt2">
               <UploadZone
-                v-model="enrollment.data.personalData.photo"
-                prefix="picture">
+                v-model="enrollment.data.photo"
+                prefix="picture"
+                @input="savePhoto">
                 <img
-                  v-if="enrollment.data.personalData.photo"
-                  :src="enrollment.data.personalData.photo"
+                  v-if="enrollment.data.photo"
+                  :src="enrollment.data.photo"
                   class="rounded border4 border shadow2 x6 y6 bg-white">
                 <img
-                  v-if="!enrollment.data.personalData.photo"
+                  v-if="!enrollment.data.photo"
                   src="../../assets/img/people.svg"
                   class="rounded border4 border shadow2 x6 y6 bg-white">
               </UploadZone>
@@ -629,6 +630,11 @@
         if (this.enrollment.data.sentAt) {
           this.step = 3;
         }
+      },
+      async savePhoto() {
+        const token = this.id;
+        const { photo } = this.enrollment.data;
+        await this.$store.dispatch("setEnrollmentAvatar", { token, photo });
       },
       async savePersonalData() {
         const token = this.id;
