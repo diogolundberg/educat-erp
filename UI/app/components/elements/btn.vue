@@ -5,6 +5,7 @@
       'btn-primary bg-red': danger,
       'btn-primary bg-yellow': warning,
       'btn-primary bg-green': success,
+      'circle x4 y4': fab,
     }"
     :type="submit ? 'submit' : 'button'"
     class="btn upcase shadow0 rounded ease center"
@@ -36,6 +37,10 @@
         default: false,
       },
       success: {
+        type: Boolean,
+        default: false,
+      },
+      fab: {
         type: Boolean,
         default: false,
       },
