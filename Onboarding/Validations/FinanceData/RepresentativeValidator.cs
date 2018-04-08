@@ -22,9 +22,9 @@ namespace Onboarding.Validations.FinanceData
             {
                 if (representative is RepresentativePerson)
                 {
-                    if (((RepresentativePerson)representative).RelationshipId != null)
+                    if (((RepresentativePerson)representative).RelationshipId == null)
                     {
-                        context.AddFailure("representative.relationship", "'Relacionamento' deve ser informado.");
+                        context.AddFailure("representative.relationshipId", "'RelationshipId' deve ser informado.");
                     }
                     if (!Cpf.ValidCPF(((RepresentativePerson)representative).Cpf))
                     {
