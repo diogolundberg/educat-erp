@@ -9,7 +9,9 @@
     <div
       :class="innerClass"
       class="py2">
-      <slot />
+      <div class="flex gutters flex-wrap">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
