@@ -6,6 +6,14 @@
       class="col-12 sm-col-6 p1">
       <Card
         :title="type.name">
+        <div
+          slot="title"
+          class="right">
+          <UploadButton
+            :prefix="`${ prefix }${ type.id }/`"
+            :disabled="disabled"
+            @input="push(type.id, $event)" />
+        </div>
         <BaseErrors
           :value="errorsFor(type.id)" />
         <div
@@ -18,10 +26,6 @@
             black
             name="download" />
         </div>
-        <UploadButton
-          :prefix="`${ prefix }${ type.id }/`"
-          :disabled="disabled"
-          @input="push(type.id, $event)" />
       </Card>
     </div>
   </div>

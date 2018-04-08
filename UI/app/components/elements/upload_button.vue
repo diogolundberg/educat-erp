@@ -4,13 +4,15 @@
       :id="`uploadBtn${_uid}`"
       :disabled="loading || disabled"
       primary
+      fab
       class="relative"
       @click="!disabled && $refs.file.click()">
       <span
         v-show="loading"
         :style="{ width: `${Math.floor(loaded)}%` }"
         class="absolute fill bg-white op30" />
-      {{ loading ? "..." : (value ? sentLabel : sendLabel) }}
+      <Icon
+        name="upload" />
     </Btn>
     <input
       ref="file"
