@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Onboarding.Models
 {
@@ -7,7 +10,18 @@ namespace Onboarding.Models
         [Required]
         public string Name { get; set; }
 
+        [JsonIgnore]
         public string Validations { get; set; }
+
+        [NotMapped]
+        [JsonProperty("Validations")]
+        public List<string> ValidationList
+        {
+            get
+            {
+                return Validations != null ? JsonConvert.DeserializeObject<List<string>>(Validations) : new List<string>();
+            }
+        }
     }
 
     public class PersonalDocumentType : DocumentType
