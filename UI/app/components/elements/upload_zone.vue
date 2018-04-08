@@ -36,21 +36,13 @@
     },
     methods: {
       async pick() {
-        this.loading = true;
-        this.loaded = 0;
-
         const file = this.$refs.file.files[0];
         await this.$store.dispatch("presign", `${this.prefix}${file.name}`);
         const url = this.$store.getters.uploadUrl;
 
         const headers = { "x-ms-blob-type": "BlockBlob" };
-        await axios.put(url, file, { headers, onUploadProgress: this.setProg });
+        await axios.put(url, file, { headers });
         this.$emit("input", url.split("?")[0]);
-        this.loading = false;
-      },
-      setProg(e) {
-        const ratio = e.loaded / e.total;
-        this.loaded = Math.floor(ratio * 100.0);
       },
     },
   };
