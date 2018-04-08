@@ -246,7 +246,8 @@
                 :types="enrollment.options.personalDocuments"
                 :errors="enrollment.errors.personalData.documents"
                 :prefix="`onboarding/enrollment/${ id }/personalData/`"
-                :disabled="!!enrollment.data.sentAt" />
+                :disabled="!!enrollment.data.sentAt"
+                :validations="validations" />
             </Fieldset>
             <div class="flex justify-end">
               <Btn
@@ -440,7 +441,8 @@
                     :errors="error.documents"
                     :types="enrollment.options.guarantorDocuments"
                     :prefix="`onboarding/enrollment/${ id }/financeData/`"
-                    :disabled="!!enrollment.data.sentAt" />
+                    :disabled="!!enrollment.data.sentAt"
+                    :validations="validations" />
                 </template>
               </Multi>
             </Fieldset>
@@ -598,6 +600,48 @@
         const { planId } = this.enrollment.data.financeData;
         const plan = this.enrollment.options.plans.find(a => a.id === planId);
         return plan && plan.guarantors;
+      },
+      validations() {
+        const matches = (opt, key, val) =>
+          this.enrollment.options[opt].filter(a => a[key]).map(a => a.id).includes(val);
+
+        const isNative = matches(
+          "nationalities",
+          "checkNative",
+          this.enrollment.data.personalData.nationalityId,
+        );
+        const isForeigner = matches(
+          "nationalities",
+          "checkForeign",
+          this.enrollment.data.personalData.nationalityId,
+        );
+        const hasDraft = matches(
+          "genders",
+          "checkMilitaryDraft",
+          this.enrollment.data.personalData.genderId,
+        );
+        const isSpouse = matches(
+          "relationships",
+          "checkSpouse",
+          this.enrollment.data.financeData.representative.relationshipId,
+        );
+        const foreignGraduation = matches(
+          "countries",
+          "checkForeignGraduation",
+          this.enrollment.data.personalData.highSchoolGraduationCountryId,
+        );
+        const gradutionCurrentYear = new Date().getFullYear().toString() ===
+          this.enrollment.data.personalData.highSchoolGraduationYear;
+
+        return [
+          this.underage && "MinorAge",
+          isNative && "Native",
+          isForeigner && "Foreigner",
+          hasDraft && "MilitaryDraft",
+          isSpouse && "Spouse",
+          foreignGraduation && "ForeignGraduation",
+          gradutionCurrentYear && "GraduationYear",
+        ].filter(a => a);
       },
     },
     watch: {
