@@ -68,7 +68,10 @@
         await this.$store.dispatch("presign", `${this.prefix}${file.name}`);
         const url = this.$store.getters.uploadUrl;
 
-        const headers = { "x-ms-blob-type": "BlockBlob" };
+        const headers = {
+          "x-ms-blob-type": "BlockBlob",
+          "x-ms-blob-content-type": file.type,
+        };
         await axios.put(url, file, { headers, onUploadProgress: this.setProg });
         this.$emit("input", url.split("?")[0]);
         this.loading = false;
