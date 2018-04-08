@@ -1,21 +1,18 @@
 <template>
-  <div class="p2 shadow0 rounded">
-    <template v-for="(type, idx) in types">
-      <div
-        :id="`doc_${type.id}`"
-        :key="type.id"
-        class="flex justify-between items-center">
-          <div>{{ type.name }}</div>
-          <UploadButton
-            :prefix="`${ prefix }${ type.id }/`"
-            :value="get(type.id)"
-            :disabled="disabled"
-            @input="set(type.id, $event)" />
-      </div>
-      <hr
-        v-if="idx < types.length - 1"
-        :key="`hr${type.id}`">
-    </template>
+  <div class="flex flex-wrap">
+    <div
+      v-for="(type, index) in types"
+      :key="index"
+      class="col-12 sm-col-6 p1">
+      <Card
+        :title="type.name">
+        <UploadButton
+          :prefix="`${ prefix }${ type.id }/`"
+          :value="get(type.id)"
+          :disabled="disabled"
+          @input="set(type.id, $event)" />
+      </Card>
+    </div>
   </div>
 </template>
 
