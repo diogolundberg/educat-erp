@@ -21,9 +21,9 @@
           v-for="(doc, index2) in docsFor(type)"
           :key="`${index}_${index2}`"
           class="py1 px2 divider-bottom h-bg-silver flex pointer"
-          @click="view(doc)">
+          @click="modalUrl = doc.url">
           <div class="flex-auto">
-            {{ type.name }}
+            {{ type.name }} - {{ index2 + 1 }}
           </div>
           <Icon
             black
@@ -36,6 +36,20 @@
           </div>
       </Card>
     </div>
+    <Modal
+      v-if="!!modalUrl"
+      class="fit-height"
+      @hide="modalUrl = null">
+      <img
+        v-if="!!modalUrl.match('(jpe?g|png)$')"
+        :src="modalUrl"
+        class="col-12 fit">
+      <iframe
+        v-else
+        :src="modalUrl"
+        height="600"
+        class="col-12 fit border-none" />
+    </Modal>
   </div>
 </template>
 
@@ -67,6 +81,11 @@
         type: String,
         default: "Sem documentos. Clique no botão acima para fazer upload.",
       },
+    },
+    data() {
+      return {
+        modalUrl: null,
+      };
     },
     methods: {
       push(documentTypeId, url) {

@@ -48,6 +48,10 @@
         required: false,
         default: "OK",
       },
+      acceptedTypes: {
+        type: Array,
+        default: () => ["application/pdf", "image/jpeg", "image/png"],
+      },
       disabled: {
         type: Boolean,
         default: false,
@@ -61,14 +65,21 @@
     },
     methods: {
       async pick() {
+        const file = this.$refs.file.files[0];
+        if (!this.acceptedTypes.includes(file.type)) {
+          this.notify("Tipo de arquivo não aceito.");
+          return;
+        }
+
         this.loading = true;
         this.loaded = 0;
-
-        const file = this.$refs.file.files[0];
         await this.$store.dispatch("presign", `${this.prefix}${file.name}`);
         const url = this.$store.getters.uploadUrl;
 
-        const headers = { "x-ms-blob-type": "BlockBlob" };
+        const headers = {
+          "x-ms-blob-type": "BlockBlob",
+          "x-ms-blob-content-type": file.type,
+        };
         await axios.put(url, file, { headers, onUploadProgress: this.setProg });
         this.$emit("input", url.split("?")[0]);
         this.loading = false;
