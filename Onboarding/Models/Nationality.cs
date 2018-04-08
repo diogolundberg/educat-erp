@@ -5,5 +5,7 @@
         public string Name { get; set; }
 
         public bool CheckForeign { get; set; }
+
+        public bool CheckNative { get; set; }
     }
 }
