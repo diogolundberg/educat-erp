@@ -53,8 +53,23 @@ namespace Onboarding.Controllers
         public IActionResult GetById([FromRoute]string enrollmentNumber)
         {
             Enrollment enrollment = _context.Enrollments
-                                            .Include("PersonalData")
                                             .Include("Pendencies")
+                                            .Include("PersonalData.Gender")
+                                            .Include("PersonalData.MaritalStatus")
+                                            .Include("PersonalData.BirthCity")
+                                            .Include("PersonalData.BirthState")
+                                            .Include("PersonalData.BirthCountry")
+                                            .Include("PersonalData.HighSchoolGraduationCountry")
+                                            .Include("PersonalData.City")
+                                            .Include("PersonalData.State")
+                                            .Include("PersonalData.AddressKind")
+                                            .Include("PersonalData.Race")
+                                            .Include("PersonalData.HighSchollKind")
+                                            .Include("PersonalData.Nationality")
+                                            .Include("PersonalData.PersonalDataDisabilities.Disability")
+                                            .Include("PersonalData.PersonalDataSpecialNeeds.SpecialNeed")
+                                            .Include("PersonalData.PersonalDataDocuments.Document")
+                                            .Include("PersonalData.PersonalDataDocuments.Document.DocumentType")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
@@ -62,7 +77,7 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
             }
 
-            Record data = _mapper.Map<Record>(enrollment); // TODO: Adicionar todos os dados para a visualização
+            Record data = _mapper.Map<Record>(enrollment.PersonalData);
 
             return new OkObjectResult(new
             {
