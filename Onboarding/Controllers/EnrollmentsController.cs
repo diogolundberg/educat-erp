@@ -204,7 +204,7 @@ namespace Onboarding.Controllers
 
         private string FinanceDataState(FinanceData financeData)
         {
-            FinanceDataValidator validator = new FinanceDataValidator();
+            FinanceDataValidator validator = new FinanceDataValidator(_context);
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
             FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
             FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(financeData);

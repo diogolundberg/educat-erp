@@ -90,7 +90,7 @@ namespace Onboarding.Validations
         {
             return (personalData.Nationality != null && personalData.Nationality.CheckForeign
                 && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.Foreigner.ToString())))
-                || personalData.Nationality == null || !personalData.Nationality.CheckForeign;
+                || personalData.Nationality == null || !personalData.Nationality.CheckForeign;  
         }
 
         private bool CheckNative(Models.PersonalData personalData)
@@ -134,24 +134,6 @@ namespace Onboarding.Validations
             }
 
             return age;
-        }
-
-        private List<String> GetPersonalDataDocumentValidations(List<Document> documents)
-        {
-            List<string> documentTypeValidations = new List<string>();
-
-            foreach (Document document in documents.Where(x => x.DocumentTypeId.HasValue))
-            {
-                DocumentType documentType = _documentTypes.Single(x => x.Id == document.DocumentTypeId);
-
-                if (!string.IsNullOrEmpty(documentType.Validations))
-                {
-                    List<string> documentValidations = JsonConvert.DeserializeObject<List<string>>(document.DocumentType.Validations);
-                    documentTypeValidations.AddRange(documentValidations.Where(x => !documentTypeValidations.Contains(x)));
-                }
-            }
-
-            return documentTypeValidations;
         }
 
         private string GetMessageError(string validation)
