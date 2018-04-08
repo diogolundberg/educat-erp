@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueX from "vuex";
 import axios from "axios";
 
+import { parseDate, yearsAgo } from "./helpers";
+
 Vue.use(VueX);
 
 const url1 = process.env.SSO_HOST || "http://sso.sandbox.eti.br";
@@ -100,6 +102,7 @@ export default new VueX.Store({
           representative: {},
         },
       },
+      underage: false,
     },
     uploadUrl: null,
     academicApprovals: [],
@@ -171,6 +174,28 @@ export default new VueX.Store({
       state.enrollment.stateId = stateb && stateb.id;
       state.enrollment.city = city && city.id;
     },
+    COPY_RESPONSIBLE_DATA(state) {
+      const { personalData } = state.enrollment.data;
+      const { representative } = state.enrollment.data.financeData;
+      personalData.underage = yearsAgo(parseDate(personalData.birthDate)) < 18;
+
+      if (!personalData.underage) {
+        representative.name = personalData.realName;
+        representative.cpf = personalData.cpf;
+        representative.streetAddress = personalData.streetAddress;
+        representative.complementAddress = personalData.complementAddress;
+        representative.neighborhood = personalData.neighborhood;
+        representative.phoneNumber = personalData.phoneNumber;
+        representative.landline = personalData.landline;
+        representative.email = personalData.email;
+        representative.zipcode = personalData.zipcode;
+        representative.addressKindId = personalData.addressKindId;
+        representative.cityId = personalData.cityId;
+        representative.stateId = personalData.stateId;
+        representative.discriminator = "RepresentativePerson";
+        representative.relationshipId = 4;
+      }
+    },
 
     // Backoffice enrollment approval
     SET_ACADEMIC_APPROVALS(state, { records }) {
@@ -233,6 +258,9 @@ export default new VueX.Store({
       const url = `${url4}/${zipcode}`;
       const response = await axios.get(url);
       commit("SET_ENROLLMENT_ADDRESS", response);
+    },
+    copyResponsibleData({ commit }) {
+      commit("COPY_RESPONSIBLE_DATA");
     },
 
     // Backoffice enrollment approval

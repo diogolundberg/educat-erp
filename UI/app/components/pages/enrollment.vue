@@ -600,6 +600,12 @@
       "enrollment.data.personalData.zipcode": debounce(function findZipcode() {
         this.$store.dispatch("findZipcode");
       }, 500),
+      "enrollment.data.personalData": {
+        deep: true,
+        handler() {
+          this.$store.dispatch("copyResponsibleData");
+        },
+      },
     },
     async mounted() {
       try {
