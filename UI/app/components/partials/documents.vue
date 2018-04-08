@@ -2,6 +2,7 @@
   <div class="flex flex-wrap">
     <div
       v-for="(type, index) in types"
+      v-if="isActive(type)"
       :key="index"
       class="col-12 sm-col-6 p1">
       <Card
@@ -73,6 +74,10 @@
         type: String,
         default: "",
       },
+      validations: {
+        type: Array,
+        default: () => [],
+      },
       disabled: {
         type: Boolean,
         default: false,
@@ -94,6 +99,10 @@
       },
       view({ url }) {
         window.open(url, "_blank");
+      },
+      isActive(type) {
+        const validations = type.Validations || [];
+        return validations.every(a => this.validations.includes(a));
       },
       docsFor({ id }) {
         return this.value.filter(a => a.documentTypeId === id);
