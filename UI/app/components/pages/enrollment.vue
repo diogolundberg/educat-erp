@@ -36,9 +36,18 @@
             <div
               slot="title"
               class="center mb4n mt2">
-              <img
-                src="../../assets/img/people.svg"
-                class="rounded border4 border shadow2 x6 y6 bg-white">
+              <UploadZone
+                v-model="enrollment.data.personalData.avatar"
+                prefix="picture">
+                <img
+                  v-if="enrollment.data.personalData.avatar"
+                  :src="enrollment.data.personalData.avatar"
+                  class="rounded border4 border shadow2 x6 y6 bg-white">
+                <img
+                  v-if="!enrollment.data.personalData.avatar"
+                  src="../../assets/img/people.svg"
+                  class="rounded border4 border shadow2 x6 y6 bg-white">
+              </UploadZone>
             </div>
             <Fieldset>
               <div class="flex gutters flex-wrap">
