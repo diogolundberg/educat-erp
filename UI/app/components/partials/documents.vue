@@ -8,11 +8,20 @@
         :title="type.name">
         <BaseErrors
           :value="errorsFor(type.id)" />
+        <div
+          v-for="(doc, index2) in docsFor(type)"
+          :key="`${index}_${index2}`"
+          class="mb1 pointer"
+          @click="view(doc)">
+          {{ type.name }}
+          <Icon
+            black
+            name="download" />
+        </div>
         <UploadButton
           :prefix="`${ prefix }${ type.id }/`"
-          :value="get(type.id)"
           :disabled="disabled"
-          @input="set(type.id, $event)" />
+          @input="push(type.id, $event)" />
       </Card>
     </div>
   </div>
@@ -31,8 +40,8 @@
         default: () => [],
       },
       errors: {
-        type: Array,
-        default: () => [],
+        type: Object,
+        default: () => ({}),
       },
       prefix: {
         type: String,
@@ -44,20 +53,15 @@
       },
     },
     methods: {
-      get(id) {
-        const document = this.value.find(a => a.documentTypeId === id);
-        return document && document.url;
-      },
-      set(documentTypeId, url) {
+      push(documentTypeId, url) {
         const value = [...this.value];
-        const document = value.find(a => a.documentTypeId === documentTypeId);
-        if (document) {
-          document.id = 0;
-          document.url = url;
-          this.$emit("input", value);
-        } else {
-          this.$emit("input", [...value, { url, documentTypeId }]);
-        }
+        this.$emit("input", [...value, { url, documentTypeId }]);
+      },
+      view({ url }) {
+        window.open(url, "_blank");
+      },
+      docsFor({ id }) {
+        return this.value.filter(a => a.documentTypeId === id);
       },
       errorsFor(index) {
         const errors = this.errors && this.errors[index];
