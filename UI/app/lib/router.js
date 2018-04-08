@@ -34,6 +34,12 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: "/onboarding",
+      component: lazy("Onboarding"),
+      meta: { header: true },
+      props: true,
+    },
+    {
       path: "/logout",
       beforeEnter(to, from, next) {
         delete localStorage.token;
