@@ -305,7 +305,7 @@
                   :errors="enrollment.errors.financeData.representative.discriminator"
                   :size="2"
                   :options="discriminators"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   label="CPF ou CNPJ" />
                 <InputBox
                   v-if="enrollment.data.financeData.representative.discriminator == null"
@@ -319,7 +319,7 @@
                     == 'RepresentativePerson'"
                   :size="3"
                   :min-size="14"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   cpf
                   label="CPF"
                   mask="###.###.###-##"
@@ -331,7 +331,7 @@
                     == 'RepresentativeCompany'"
                   :size="3"
                   :min-size="18"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   cnpj
                   label="CNPJ"
                   mask="##.###.###/####-##"
@@ -347,7 +347,7 @@
                   v-if="enrollment.data.financeData.representative.discriminator
                     == 'RepresentativePerson'"
                   :size="4"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   label="Nome completo" />
                 <InputBox
                   v-model="enrollment.data.financeData.representative.name"
@@ -355,7 +355,7 @@
                   v-if="enrollment.data.financeData.representative.discriminator
                     == 'RepresentativeCompany'"
                   :size="4"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   label="Razão Social" />
                 <InputBox
                   v-if="enrollment.data.financeData.representative.discriminator == null"
@@ -368,7 +368,7 @@
                   v-model="enrollment.data.financeData.representative.contact"
                   :errors="enrollment.errors.financeData.representative.contact"
                   :size="3"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   label="Pessoa de Contato" />
                 <DropDown
                   v-if="enrollment.data.financeData.representative.discriminator
@@ -377,19 +377,19 @@
                   :errors="enrollment.errors.financeData.representative.relationshipId"
                   :size="3"
                   :options="enrollment.options.relationships"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   label="Relacionamento com o aluno" />
               </div>
             </Fieldset>
             <ContactBlock
               v-model="enrollment.data.financeData.representative"
               :errors="enrollment.errors.financeData.representative"
-              :disabled="!!enrollment.data.sentAt" />
+              :disabled="!!enrollment.data.sentAt || !underage" />
             <AddressBlock
               v-model="enrollment.data.financeData.representative"
               :errors="enrollment.errors.financeData.representative"
               :options="enrollment.options"
-              :disabled="!!enrollment.data.sentAt" />
+              :disabled="!!enrollment.data.sentAt || !underage" />
             <Fieldset
               v-if="guarantorsAmount > 0"
               title="Fiadores">
@@ -584,6 +584,9 @@
     computed: {
       enrollment() {
         return this.$store.state.enrollment;
+      },
+      underage() {
+        return this.enrollment.underage;
       },
       daysRemaining() {
         const day = 1000 * 60 * 60 * 24;
