@@ -5,10 +5,11 @@
       :key="index"
       class="col-12 sm-col-6 p1">
       <Card
-        :title="type.name">
+        :title="type.name"
+        no-padding>
         <div
           slot="title"
-          class="right">
+          class="mb3n right-align">
           <UploadButton
             :prefix="`${ prefix }${ type.id }/`"
             :disabled="disabled"
@@ -19,13 +20,20 @@
         <div
           v-for="(doc, index2) in docsFor(type)"
           :key="`${index}_${index2}`"
-          class="mb1 pointer"
+          class="py1 px2 divider-bottom h-bg-silver flex pointer"
           @click="view(doc)">
-          {{ type.name }}
+          <div class="flex-auto">
+            {{ type.name }}
+          </div>
           <Icon
             black
             name="download" />
         </div>
+        <div
+          v-if="docsFor(type).length == 0"
+          class="py1 px2 divider-bottom">
+            {{ emptyMessage }}
+          </div>
       </Card>
     </div>
   </div>
@@ -54,6 +62,10 @@
       disabled: {
         type: Boolean,
         default: false,
+      },
+      emptyMessage: {
+        type: String,
+        default: "Sem documentos. Clique no botão acima para fazer upload.",
       },
     },
     methods: {
