@@ -276,6 +276,7 @@
                   {name: 'dueData', title: 'Vencimento'},
                   {name: 'guarantors', title: 'Fiadores'},
                 ]"
+                :show-filter="false"
                 @click="enrollment.data.financeData.planId = $event.id">
                 <template
                   slot="column-name"
