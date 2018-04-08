@@ -145,15 +145,13 @@ export default new VueX.Store({
     },
     SET_PERSONAL_DATA(state, { data, errors, messages }) {
       Object.assign(state.enrollment.data.personalData, data);
-      state.enrollment.messages.personalData =
-        Object.assign({}, state.enrollment.messages.personalData, messages);
+      state.enrollment.messages.personalData = messages;
       state.enrollment.errors.personalData =
         Object.assign({}, state.enrollment.errors.personalData, errors);
     },
     SET_FINANCE_DATA(state, { data, errors, messages }) {
       Object.assign(state.enrollment.data.financeData, data);
-      state.enrollment.messages.financeData =
-        Object.assign({}, state.enrollment.messages.financeData, messages);
+      state.enrollment.messages.financeData = messages;
       state.enrollment.errors.financeData =
         Object.assign({}, state.enrollment.errors.financeData, errors);
     },
@@ -161,8 +159,7 @@ export default new VueX.Store({
       state.enrollment.data.sentAt = new Date();
     },
     SET_ENROLLMENT_MESSAGES(state, { messages }) {
-      state.enrollment.messages.sendToApproval =
-        Object.assign({}, state.enrollment.messages.sendToApproval, messages);
+      state.enrollment.messages.sendToApproval = messages;
     },
     SET_ENROLLMENT_ADDRESS(state, response) {
       const { options } = state.enrollment;
