@@ -37,14 +37,14 @@
               slot="title"
               class="center mb4n mt2">
               <UploadZone
-                v-model="enrollment.data.personalData.avatar"
+                v-model="enrollment.data.personalData.photo"
                 prefix="picture">
                 <img
-                  v-if="enrollment.data.personalData.avatar"
-                  :src="enrollment.data.personalData.avatar"
+                  v-if="enrollment.data.personalData.photo"
+                  :src="enrollment.data.personalData.photo"
                   class="rounded border4 border shadow2 x6 y6 bg-white">
                 <img
-                  v-if="!enrollment.data.personalData.avatar"
+                  v-if="!enrollment.data.personalData.photo"
                   src="../../assets/img/people.svg"
                   class="rounded border4 border shadow2 x6 y6 bg-white">
               </UploadZone>
