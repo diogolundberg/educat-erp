@@ -37,14 +37,15 @@
               slot="title"
               class="center mb4n mt2">
               <UploadZone
-                v-model="enrollment.data.personalData.avatar"
-                prefix="picture">
+                v-model="enrollment.data.photo"
+                prefix="picture"
+                @input="savePhoto">
                 <img
-                  v-if="enrollment.data.personalData.avatar"
-                  :src="enrollment.data.personalData.avatar"
+                  v-if="enrollment.data.photo"
+                  :src="enrollment.data.photo"
                   class="rounded border4 border shadow2 x6 y6 bg-white">
                 <img
-                  v-if="!enrollment.data.personalData.avatar"
+                  v-if="!enrollment.data.photo"
                   src="../../assets/img/people.svg"
                   class="rounded border4 border shadow2 x6 y6 bg-white">
               </UploadZone>
@@ -305,7 +306,7 @@
                   :errors="enrollment.errors.financeData.representative.discriminator"
                   :size="2"
                   :options="discriminators"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   label="CPF ou CNPJ" />
                 <InputBox
                   v-if="enrollment.data.financeData.representative.discriminator == null"
@@ -319,7 +320,7 @@
                     == 'RepresentativePerson'"
                   :size="3"
                   :min-size="14"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   cpf
                   label="CPF"
                   mask="###.###.###-##"
@@ -331,7 +332,7 @@
                     == 'RepresentativeCompany'"
                   :size="3"
                   :min-size="18"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   cnpj
                   label="CNPJ"
                   mask="##.###.###/####-##"
@@ -347,7 +348,7 @@
                   v-if="enrollment.data.financeData.representative.discriminator
                     == 'RepresentativePerson'"
                   :size="4"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   label="Nome completo" />
                 <InputBox
                   v-model="enrollment.data.financeData.representative.name"
@@ -355,7 +356,7 @@
                   v-if="enrollment.data.financeData.representative.discriminator
                     == 'RepresentativeCompany'"
                   :size="4"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   label="Razão Social" />
                 <InputBox
                   v-if="enrollment.data.financeData.representative.discriminator == null"
@@ -368,7 +369,7 @@
                   v-model="enrollment.data.financeData.representative.contact"
                   :errors="enrollment.errors.financeData.representative.contact"
                   :size="3"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   label="Pessoa de Contato" />
                 <DropDown
                   v-if="enrollment.data.financeData.representative.discriminator
@@ -377,19 +378,19 @@
                   :errors="enrollment.errors.financeData.representative.relationshipId"
                   :size="3"
                   :options="enrollment.options.relationships"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!!enrollment.data.sentAt || !underage"
                   label="Relacionamento com o aluno" />
               </div>
             </Fieldset>
             <ContactBlock
               v-model="enrollment.data.financeData.representative"
               :errors="enrollment.errors.financeData.representative"
-              :disabled="!!enrollment.data.sentAt" />
+              :disabled="!!enrollment.data.sentAt || !underage" />
             <AddressBlock
               v-model="enrollment.data.financeData.representative"
               :errors="enrollment.errors.financeData.representative"
               :options="enrollment.options"
-              :disabled="!!enrollment.data.sentAt" />
+              :disabled="!!enrollment.data.sentAt || !underage" />
             <Fieldset
               v-if="guarantorsAmount > 0"
               title="Fiadores">
@@ -585,6 +586,9 @@
       enrollment() {
         return this.$store.state.enrollment;
       },
+      underage() {
+        return this.enrollment.underage;
+      },
       daysRemaining() {
         const day = 1000 * 60 * 60 * 24;
         const remaining = new Date(this.enrollment.data.deadline) - new Date();
@@ -600,6 +604,12 @@
       "enrollment.data.personalData.zipcode": debounce(function findZipcode() {
         this.$store.dispatch("findZipcode");
       }, 500),
+      "enrollment.data.personalData": {
+        deep: true,
+        handler() {
+          this.$store.dispatch("copyResponsibleData");
+        },
+      },
     },
     async mounted() {
       try {
@@ -620,6 +630,11 @@
         if (this.enrollment.data.sentAt) {
           this.step = 3;
         }
+      },
+      async savePhoto() {
+        const token = this.id;
+        const { photo } = this.enrollment.data;
+        await this.$store.dispatch("setEnrollmentAvatar", { token, photo });
       },
       async savePersonalData() {
         const token = this.id;

@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueX from "vuex";
 import axios from "axios";
 
+import { parseDate, yearsAgo } from "./helpers";
+
 Vue.use(VueX);
 
 const url1 = process.env.SSO_HOST || "http://sso.sandbox.eti.br";
@@ -18,6 +20,7 @@ export default new VueX.Store({
         sentAt: null,
         academicApproval: false,
         financeApproval: false,
+        photo: null,
         personalData: {
           state: "empty",
           realName: null,
@@ -100,6 +103,7 @@ export default new VueX.Store({
           representative: {},
         },
       },
+      underage: false,
     },
     uploadUrl: null,
     academicApprovals: [],
@@ -143,17 +147,18 @@ export default new VueX.Store({
     SET_ENROLLMENT(state, data) {
       Object.assign(state.enrollment, data);
     },
+    SET_PHOTO(state, photo) {
+      state.enrollment.data.photo = photo;
+    },
     SET_PERSONAL_DATA(state, { data, errors, messages }) {
       Object.assign(state.enrollment.data.personalData, data);
-      state.enrollment.messages.personalData =
-        Object.assign({}, state.enrollment.messages.personalData, messages);
+      state.enrollment.messages.personalData = messages;
       state.enrollment.errors.personalData =
         Object.assign({}, state.enrollment.errors.personalData, errors);
     },
     SET_FINANCE_DATA(state, { data, errors, messages }) {
       Object.assign(state.enrollment.data.financeData, data);
-      state.enrollment.messages.financeData =
-        Object.assign({}, state.enrollment.messages.financeData, messages);
+      state.enrollment.messages.financeData = messages;
       state.enrollment.errors.financeData =
         Object.assign({}, state.enrollment.errors.financeData, errors);
     },
@@ -161,8 +166,7 @@ export default new VueX.Store({
       state.enrollment.data.sentAt = new Date();
     },
     SET_ENROLLMENT_MESSAGES(state, { messages }) {
-      state.enrollment.messages.sendToApproval =
-        Object.assign({}, state.enrollment.messages.sendToApproval, messages);
+      state.enrollment.messages.sendToApproval = messages;
     },
     SET_ENROLLMENT_ADDRESS(state, response) {
       const { options } = state.enrollment;
@@ -173,6 +177,28 @@ export default new VueX.Store({
       state.enrollment.streetAddress = response.logradouro;
       state.enrollment.stateId = stateb && stateb.id;
       state.enrollment.city = city && city.id;
+    },
+    COPY_RESPONSIBLE_DATA(state) {
+      const { personalData } = state.enrollment.data;
+      const { representative } = state.enrollment.data.financeData;
+      personalData.underage = yearsAgo(parseDate(personalData.birthDate)) < 18;
+
+      if (!personalData.underage) {
+        representative.name = personalData.realName;
+        representative.cpf = personalData.cpf;
+        representative.streetAddress = personalData.streetAddress;
+        representative.complementAddress = personalData.complementAddress;
+        representative.neighborhood = personalData.neighborhood;
+        representative.phoneNumber = personalData.phoneNumber;
+        representative.landline = personalData.landline;
+        representative.email = personalData.email;
+        representative.zipcode = personalData.zipcode;
+        representative.addressKindId = personalData.addressKindId;
+        representative.cityId = personalData.cityId;
+        representative.stateId = personalData.stateId;
+        representative.discriminator = "RepresentativePerson";
+        representative.relationshipId = 4;
+      }
     },
 
     // Backoffice enrollment approval
@@ -211,6 +237,11 @@ export default new VueX.Store({
       const response = await axios.get(url);
       commit("SET_ENROLLMENT", response.data);
     },
+    async setEnrollmentAvatar({ commit }, { token, photo }) {
+      const url = `${url2}/api/Avatar/${token}`;
+      await axios.post(url, { photo });
+      commit("SET_PHOTO", photo);
+    },
     async setPersonalData({ commit }, { token, data }) {
       const url = `${url2}/api/PersonalData/${token}`;
       const response = await axios.post(url, data);
@@ -236,6 +267,9 @@ export default new VueX.Store({
       const url = `${url4}/${zipcode}`;
       const response = await axios.get(url);
       commit("SET_ENROLLMENT_ADDRESS", response);
+    },
+    copyResponsibleData({ commit }) {
+      commit("COPY_RESPONSIBLE_DATA");
     },
 
     // Backoffice enrollment approval
