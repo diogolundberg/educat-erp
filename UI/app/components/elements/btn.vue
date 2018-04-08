@@ -8,7 +8,7 @@
       'circle x4 y4': fab,
     }"
     :type="submit ? 'submit' : 'button'"
-    class="btn upcase shadow0 rounded ease center"
+    class="btn upcase shadow0 rounded ease center no-select"
     @click.prevent="$emit('click')">
     {{ label }}
     <slot />
