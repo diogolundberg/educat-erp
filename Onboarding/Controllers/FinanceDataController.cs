@@ -202,6 +202,7 @@ namespace Onboarding.Controllers
 
             return new OkObjectResult(new
             {
+                messages,
                 errors,
                 data = viewModel
             });
