@@ -69,7 +69,7 @@ namespace Onboarding.Validations.FinanceData
 
         private bool CheckSpouse(Guarantor guarantor)
         {
-            return (guarantor.Relationship != null && guarantor.Relationship.CheckSpouse && guarantor.GuarantorDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.Spouse.ToString()))) || guarantor.Relationship == null || !guarantor.Relationship.CheckSpouse;
+            return (guarantor.Relationship != null && guarantor.Relationship.CheckSpouse && guarantor.GuarantorDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).ValidationList.Contains(DocumentValidations.Spouse.ToString()))) || guarantor.Relationship == null || !guarantor.Relationship.CheckSpouse;
         }
 
         private string GetMessageError(string validation)
