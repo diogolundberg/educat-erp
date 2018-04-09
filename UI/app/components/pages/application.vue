@@ -9,6 +9,7 @@
         v-if="$route.meta.header"
         :visible="sidebar"
         :links="links"
+        class="shrink0"
         @exit="sidebar = false" />
       <router-view
         class="flex-auto px2" />
