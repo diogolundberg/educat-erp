@@ -37,6 +37,8 @@ namespace Onboarding.Controllers
         {
             Enrollment enrollment = _context.Enrollments
                                             .Include("Onboarding")
+                                            .Include("Pendencies")
+                                            .Include("Pendencies.Section")
                                             .Include("PersonalData")
                                             .Include("PersonalData.PersonalDataDisabilities")
                                             .Include("PersonalData.PersonalDataSpecialNeeds")
@@ -83,6 +85,7 @@ namespace Onboarding.Controllers
                     enrollment.Photo,
                     personalData,
                     financeData,
+                    pendencies = enrollment.Pendencies.Select(x => new { x.Description, x.SectionId, x.Section.Name })
                 },
                 options = new
                 {
@@ -111,6 +114,7 @@ namespace Onboarding.Controllers
         {
             Enrollment enrollment = _context.Enrollments
                                             .Include("Onboarding")
+                                            .Include("Pendencies")
                                             .Include("PersonalData")
                                             .Include("PersonalData.PersonalDataDisabilities")
                                             .Include("PersonalData.PersonalDataSpecialNeeds")
@@ -156,6 +160,13 @@ namespace Onboarding.Controllers
             if (personalData.State == "valid" && financeData.State == "valid" && enrollmentValidatorResult.IsValid)
             {
                 enrollment.SentAt = DateTime.Now;
+                enrollment.ReviewedAt = null;
+
+                foreach (Models.Pendency pendency in enrollment.Pendencies)
+                {
+                    _context.Set<Models.Pendency>().Remove(pendency);
+                }
+
                 _context.Set<Enrollment>().Update(enrollment);
                 _context.SaveChanges();
 
