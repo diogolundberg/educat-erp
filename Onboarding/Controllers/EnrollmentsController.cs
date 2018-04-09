@@ -65,8 +65,13 @@ namespace Onboarding.Controllers
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
             financeData.State = FinanceDataState(enrollment.FinanceData);
 
+            EnrollmentMessagesValidator enrollmentValidator = new EnrollmentMessagesValidator(_context);
+            FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
+            List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).Distinct().ToList();
+
             return new
             {
+                messages,
                 data = new
                 {
                     StartedAt = enrollment.StartedAt.HasValue ? enrollment.StartedAt.Value.ToString("dd/MM/yyyy") : null,
