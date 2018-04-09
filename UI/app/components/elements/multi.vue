@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="col-12">
     <template v-for="(item, index) in value">
       <div
         :key="index"
