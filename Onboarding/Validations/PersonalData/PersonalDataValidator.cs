@@ -121,39 +121,79 @@ namespace Onboarding.Validations.PersonalData
 
         private bool CheckForeign(Models.PersonalData personalData)
         {
-            return (personalData.Nationality != null && personalData.Nationality.CheckForeign
-                && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.Foreigner.ToString())))
-                || personalData.Nationality == null || !personalData.Nationality.CheckForeign;
+            if (personalData.Nationality == null || !personalData.Nationality.CheckForeign)
+            {
+                return true;
+            }
+            else
+            {
+                return (personalData.Nationality != null && personalData.Nationality.CheckForeign && HasValidation(personalData, DocumentValidations.Foreigner.ToString()));
+            }
         }
 
         private bool CheckNative(Models.PersonalData personalData)
         {
-            return (personalData.Nationality != null && personalData.Nationality.CheckNative
-                && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.Native.ToString())))
-                || personalData.Nationality == null || !personalData.Nationality.CheckNative;
+            if (personalData.Nationality == null || !personalData.Nationality.CheckNative)
+            {
+                return true;
+            }
+            else
+            {
+                return (personalData.Nationality != null && personalData.Nationality.CheckNative && HasValidation(personalData, DocumentValidations.Native.ToString()));
+            }
         }
 
         private bool CheckMilitaryDraft(Models.PersonalData personalData)
         {
-            return (personalData.Gender != null && personalData.Gender.CheckMilitaryDraft && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.MilitaryDraft.ToString())))
-            || personalData.Gender == null || !personalData.Gender.CheckMilitaryDraft;
+            if (personalData.Gender == null || !personalData.Gender.CheckMilitaryDraft)
+            {
+                return true;
+            }
+            else
+            {
+                return (personalData.Gender != null && personalData.Gender.CheckMilitaryDraft && HasValidation(personalData, DocumentValidations.MilitaryDraft.ToString()));
+            }
         }
 
         private bool CheckForeignGraduation(Models.PersonalData personalData)
         {
-            return (personalData.HighSchoolGraduationCountry != null && personalData.HighSchoolGraduationCountry.CheckForeignGraduation && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.ForeignGraduation.ToString())))
-                || personalData.HighSchoolGraduationCountry == null || !personalData.HighSchoolGraduationCountry.CheckForeignGraduation;
+            if (personalData.HighSchoolGraduationCountry == null || !personalData.HighSchoolGraduationCountry.CheckForeignGraduation)
+            {
+                return true;
+            }
+            else
+            {
+                return (personalData.HighSchoolGraduationCountry != null && personalData.HighSchoolGraduationCountry.CheckForeignGraduation && HasValidation(personalData, DocumentValidations.ForeignGraduation.ToString()));
+            }
         }
 
         private bool CheckMinorAge(Models.PersonalData personalData)
         {
-            return (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18 && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.MinorAge.ToString())))
-                || personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18;
+            if (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18)
+            {
+                return true;
+            }
+            else
+            {
+                return (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18 && HasValidation(personalData, DocumentValidations.MinorAge.ToString()));
+            }
         }
 
         private bool CheckGraduationYear(Models.PersonalData personalData)
         {
-            return (!string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) && personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString() && personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).Validations.Contains(DocumentValidations.GraduationYear.ToString()))) || string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) || personalData.HighSchoolGraduationYear != personalData.Enrollment.Onboarding.Year.ToString();
+            if (string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) || personalData.HighSchoolGraduationYear != personalData.Enrollment.Onboarding.Year.ToString())
+            {
+                return true;
+            }
+            else
+            {
+                return (!string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) && personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString() && HasValidation(personalData, DocumentValidations.GraduationYear.ToString()));
+            }
+        }
+
+        private bool HasValidation(Models.PersonalData personalData, string validation)
+        {
+            return personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).ValidationList.Contains(validation));
         }
 
         private int GetAge(DateTime birthDate)
