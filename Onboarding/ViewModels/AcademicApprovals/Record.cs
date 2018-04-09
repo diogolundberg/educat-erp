@@ -10,16 +10,17 @@ namespace Onboarding.ViewModels.AcademicApprovals
 
         public string Name { get; set; }
         public string AssumedName { get; set; }
-        public string BirthDate { get; set; }
-        public string CPF { get; set; }
-        public string HighSchoolGraduationYear { get; set; }
+        public string Cpf { get; set; }
         public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Landline { get; set; }
+
+        public string BirthDate { get; set; }
+        public string HighSchoolGraduationYear { get; set; }
         public string Zipcode { get; set; }
         public string StreetAddress { get; set; }
         public string ComplementAddress { get; set; }
         public string Neighborhood { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Landline { get; set; }
         public string MothersName { get; set; }
         public string Handicap { get; set; }
 

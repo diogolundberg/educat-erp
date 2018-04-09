@@ -60,6 +60,20 @@ namespace Onboarding.Controllers
             Enrollment enrollment = _context.Enrollments
                                             .Include("PersonalData")
                                             .Include("Pendencies")
+                                            .Include("FinanceData")
+                                            .Include("FinanceData.Plan")
+                                            .Include("FinanceData.PaymentMethod")
+                                            .Include("FinanceData.Representative")
+                                            .Include("FinanceData.Representative.City")
+                                            .Include("FinanceData.Representative.State")
+                                            .Include("FinanceData.Representative.AddressKind")
+                                            .Include("FinanceData.Guarantors")
+                                            .Include("FinanceData.Guarantors.City")
+                                            .Include("FinanceData.Guarantors.State")
+                                            .Include("FinanceData.Guarantors.AddressKind")
+                                            .Include("FinanceData.Guarantors.Relationship")
+                                            .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
+                                            .Include("FinanceData.Guarantors.GuarantorDocuments.Document.DocumentType")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
