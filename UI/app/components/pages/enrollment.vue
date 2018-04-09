@@ -480,11 +480,12 @@
         </Step>
         <Step
           :complete="!!enrollment.data.academicApproval"
+          :warning="!enrollment.data.academicApproval && !!enrollment.data.reviewedAt"
           title="Aprovação da Secretaria"
           description="A secretaria irá analisar seus documentos para aprovar
             sua matrícula.">
           <Card
-            v-if="!enrollment.data.academicApproval"
+            v-if="!enrollment.data.academicApproval && !enrollment.data.reviewedAt"
             title="Aprovação da Secretaria">
             Sua aprovação ainda está pendente.
           </Card>
@@ -493,21 +494,44 @@
             title="Matrícula Aprovada pela Secretaria">
             A secretaria já aprovou sua matrícula.
           </Card>
+          <Card
+            v-if="!enrollment.data.academicApproval && !!enrollment.data.reviewedAt"
+            title="Matrícula Reprovada pela Secretaria">
+            A secretaria solicitou ajustes para completar sua matrícula.
+            <div class="flex justify-end">
+              <Btn
+                primary
+                label="Re-enviar"
+                @click="step = 3" />
+            </div>
+          </Card>
         </Step>
         <Step
           :complete="!!enrollment.data.financeApproval"
+          :warning="!enrollment.data.financeApproval && !!enrollment.data.reviewedAt"
           title="Aprovação do Financeiro"
           description="O financeiro irá analisar sua matrícula para aprovar
             sua matrícula.">
           <Card
-            v-if="!enrollment.data.academicApproval"
+            v-if="!enrollment.data.financeApproval && !enrollment.data.reviewedAt"
             title="Aprovação do Financeiro">
             Sua aprovação ainda está pendente.
           </Card>
           <Card
-            v-if="enrollment.data.academicApproval"
+            v-if="!!enrollment.data.financeApproval"
             title="Matrícula Aprovada pelo Financeiro">
             Nosso departamento financeiro já aprovou sua matrícula.
+          </Card>
+          <Card
+            v-if="!enrollment.data.financeApproval && !!enrollment.data.reviewedAt"
+            title="Matrícula Reprovada pelo Financeiro">
+            Nosso departamento financeiro solicitou ajustes para completar sua matrícula.
+            <div class="flex justify-end">
+              <Btn
+                primary
+                label="Re-enviar"
+                @click="step = 3" />
+            </div>
           </Card>
         </Step>
         <Step
