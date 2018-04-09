@@ -62,6 +62,7 @@
               <InputBox
                 v-model="enrollment.data.personalData.assumedName"
                 :errors="enrollment.errors.personalData.assumedName"
+                :disabled="!!enrollment.data.sentAt"
                 :size="6"
                 label="Nome Social"
                 hint="Seu nome social" />
