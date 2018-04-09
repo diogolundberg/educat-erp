@@ -15,6 +15,7 @@
     </Header>
     <Notifications
       v-if="notifications"
+      :items="enrollment.data.pendencies"
       @click="notifications = false" />
 
     <Spinner :active="!enrollment.data.deadline">

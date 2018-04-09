@@ -17,8 +17,9 @@
           <Icon
             name="bell"
             black />
-          <div class="px1">{{ item.title }}</div>
+          <div class="px1">{{ item.description }}</div>
           <a
+            v-if="false"
             href="#doc_01"
             class="btn btn-primary"
             @click="$emit('click')">
