@@ -157,7 +157,6 @@ namespace Onboarding.Controllers
                 enrollment.SentAt = DateTime.Now;
                 _context.Set<Enrollment>().Update(enrollment);
                 _context.SaveChanges();
-                messages.Add("A matrícula foi enviada para aprovação");
 
                 string body = GetEmailBody("enrollment_sent.html");
                 string subject = "Sua matricula foi enviada para análise";
@@ -168,7 +167,7 @@ namespace Onboarding.Controllers
 
                 SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
 
-                return new OkObjectResult(new { messages });
+                return Ok();
             }
             else
             {
