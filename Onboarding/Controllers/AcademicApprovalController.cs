@@ -92,7 +92,22 @@ namespace Onboarding.Controllers
             Hashtable errors = new Hashtable();
             Enrollment enrollment = _context.Enrollments
                                             .Include("Pendencies")
-                                            .Include("PersonalData")
+                                            .Include("PersonalData.Gender")
+                                            .Include("PersonalData.MaritalStatus")
+                                            .Include("PersonalData.BirthCity")
+                                            .Include("PersonalData.BirthState")
+                                            .Include("PersonalData.BirthCountry")
+                                            .Include("PersonalData.HighSchoolGraduationCountry")
+                                            .Include("PersonalData.City")
+                                            .Include("PersonalData.State")
+                                            .Include("PersonalData.AddressKind")
+                                            .Include("PersonalData.Race")
+                                            .Include("PersonalData.HighSchollKind")
+                                            .Include("PersonalData.Nationality")
+                                            .Include("PersonalData.PersonalDataDisabilities.Disability")
+                                            .Include("PersonalData.PersonalDataSpecialNeeds.SpecialNeed")
+                                            .Include("PersonalData.PersonalDataDocuments.Document")
+                                            .Include("PersonalData.PersonalDataDocuments.Document.DocumentType")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
@@ -153,13 +168,15 @@ namespace Onboarding.Controllers
                 _context.Set<Enrollment>().Update(enrollment);
 
                 _context.SaveChanges();
+
+                _context.Entry(enrollment).Reload();
             }
             else
             {
                 errors = GetErrors();
             }
 
-            return new OkObjectResult(new { errors, data = _mapper.Map<Record>(enrollment) });
+            return new OkObjectResult(new { errors, data = _mapper.Map<Record>(enrollment.PersonalData) });
         }
 
         private string PersonalDataState(PersonalData personalData)
