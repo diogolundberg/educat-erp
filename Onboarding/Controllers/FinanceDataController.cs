@@ -197,6 +197,9 @@ namespace Onboarding.Controllers
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
             Hashtable errors = FormatErrors(results);
 
+            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
+            List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).Distinct().ToList();
+
             return new OkObjectResult(new
             {
                 errors,
