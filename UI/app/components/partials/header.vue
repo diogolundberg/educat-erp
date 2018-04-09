@@ -27,6 +27,7 @@
 
         <div>
           <a
+            v-if="notifications"
             class="pl2 pointer"
             href="javscript:void(0)"
             @click.prevent="$emit('notifications')">
@@ -50,6 +51,10 @@
     name: "Header",
     props: {
       menu: {
+        type: Boolean,
+        default: false,
+      },
+      notifications: {
         type: Boolean,
         default: false,
       },

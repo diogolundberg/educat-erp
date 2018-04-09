@@ -1,6 +1,8 @@
 <template>
   <div>
-    <Header @notifications="notifications = !notifications">
+    <Header
+      notifications
+      @notifications="notifications = !notifications">
       <div class="flex items-center">
         <Icon name="clock" />
         <div class="mx2 px2 border-white-50 border-left inline-block h6">
