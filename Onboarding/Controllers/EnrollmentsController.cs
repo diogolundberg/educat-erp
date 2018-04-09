@@ -74,6 +74,7 @@ namespace Onboarding.Controllers
                 messages,
                 data = new
                 {
+                    ReviewedAt = enrollment.ReviewedAt.HasValue ? enrollment.ReviewedAt.Value.ToString("dd/MM/yyyy") : null,
                     StartedAt = enrollment.StartedAt.HasValue ? enrollment.StartedAt.Value.ToString("dd/MM/yyyy") : null,
                     Deadline = enrollment.Onboarding.EndAt.HasValue ? enrollment.Onboarding.EndAt.Value.ToString("dd/MM/yyyy") : null,
                     SentAt = enrollment.SentAt.HasValue ? enrollment.SentAt.Value.ToString("dd/MM/yyyy") : null,
