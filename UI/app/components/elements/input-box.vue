@@ -132,6 +132,9 @@
         return this.value && this.value.length;
       },
       localErrors() {
+        if (!this.errors || !this.errors.length) {
+          return [];
+        }
         return this.validations.concat([
           () => this.required && !this.length && "Campo obrigatório",
           () => this.required && this.length < this.minSize && "Valor inválido",
