@@ -17,3 +17,12 @@ exports.yearsAgo = function yearsAgo(value) {
   const year = 1000 * 60 * 60 * 24 * 365;
   return Math.floor(diff / year);
 };
+
+exports.daysAgo = function daysAgo(value) {
+  if (!value) {
+    return 0;
+  }
+  const diff = new Date() - value;
+  const year = 1000 * 60 * 60 * 24;
+  return Math.floor(diff / year);
+};
