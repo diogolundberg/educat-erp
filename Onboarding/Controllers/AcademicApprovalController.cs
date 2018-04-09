@@ -36,7 +36,8 @@ namespace Onboarding.Controllers
                                                    .Include("PersonalData.PersonalDataDocuments")
                                                    .Include("PersonalData.PersonalDataSpecialNeeds")
                                                    .Include("PersonalData.PersonalDataDocuments.Document")
-                                                   .Where(x => x.SentAt.HasValue).ToList();
+                                                   .Where(x => x.SentAt.HasValue && x.ReviewedAt == null)
+                                                   .ToList();
 
             List<Records> records = _mapper.Map<List<Records>>(enrollments);
 
