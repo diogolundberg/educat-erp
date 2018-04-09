@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Onboarding.ViewModels.Onboarding;
+using System;
+using System.Globalization;
 using System.Linq;
 
 namespace Onboarding.Bindings
@@ -9,6 +11,8 @@ namespace Onboarding.Bindings
         public OnboardingProfile()
         {
             CreateMap<ViewModels.Onboarding.Form, Models.Onboarding>()
+            .ForMember(x => x.StartAt, config => config.MapFrom(x => string.IsNullOrEmpty(x.StartAt) ? null : (DateTime?)DateTime.ParseExact(x.StartAt, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
+            .ForMember(x => x.EndAt, config => config.MapFrom(x => string.IsNullOrEmpty(x.EndAt) ? null : (DateTime?)DateTime.ParseExact(x.EndAt, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
             .ForMember(x => x.Enrollments, config => config.MapFrom(x => x.Enrollments.Select(o => new Models.Enrollment
             {
                 Id = o.Id,
