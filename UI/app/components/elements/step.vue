@@ -22,6 +22,11 @@
         class="bg-red shadow1 p6x">
         <Icon name="error" />
       </Ball>
+      <Ball
+        v-if="warning"
+        class="bg-yellow shadow1 p6x">
+        <Icon name="error" />
+      </Ball>
     </div>
     <div
       v-if="visible && !disabled"
@@ -52,6 +57,10 @@
         default: false,
       },
       error: {
+        type: Boolean,
+        default: false,
+      },
+      warning: {
         type: Boolean,
         default: false,
       },
