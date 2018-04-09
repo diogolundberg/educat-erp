@@ -28,7 +28,7 @@
     "parcel-bundler": "^1.6.1",
     "parcel-plugin-vue": "^1.5.0",
     "stylus": "^0.54.5",
-    "vue-template-compiler": "^2.5.15"
+    "vue-template-compiler": "^2.5.16"
   },
   "optionalDependencies": {
     "babel-core": "^6.26.0",
