@@ -163,6 +163,7 @@ export default new VueX.Store({
     },
     SET_ENROLLMENT_SENTAT(state) {
       state.enrollment.data.sentAt = new Date();
+      state.enrollment.data.reviewedAt = null;
     },
     SET_ENROLLMENT_MESSAGES(state, { messages }) {
       state.enrollment.messages.sendToApproval = messages;
