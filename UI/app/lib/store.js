@@ -153,14 +153,13 @@ export default new VueX.Store({
     SET_PERSONAL_DATA(state, { data, errors, messages }) {
       Object.assign(state.enrollment.data.personalData, data);
       state.enrollment.messages.personalData = messages;
-      state.enrollment.errors.personalData =
-        Object.assign({}, state.enrollment.errors.personalData, errors);
+      state.enrollment.errors.personalData = errors;
     },
     SET_FINANCE_DATA(state, { data, errors, messages }) {
       Object.assign(state.enrollment.data.financeData, data);
       state.enrollment.messages.financeData = messages;
-      state.enrollment.errors.financeData =
-        Object.assign({}, state.enrollment.errors.financeData, errors);
+      state.enrollment.errors.financeData = errors;
+      Object.assign(state.enrollment.errors.financeData, { representative: {} });
     },
     SET_ENROLLMENT_SENTAT(state) {
       state.enrollment.data.sentAt = new Date();
