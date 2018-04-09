@@ -100,7 +100,7 @@ namespace Onboarding.Controllers
             };
         }
 
-        [HttpPost("{token}", Name = "ONBOARDING/ENROLLMENTS/SEND")]
+        [HttpPost("{token}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
         public dynamic Send(string token)
         {
             Enrollment enrollment = _context.Enrollments
