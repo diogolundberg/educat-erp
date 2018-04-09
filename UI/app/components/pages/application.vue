@@ -7,9 +7,9 @@
     <div class="flex">
       <Sidebar
         v-if="$route.meta.header"
-        @exit="sidebar = false"
         :visible="sidebar"
-        :links="links" />
+        :links="links"
+        @exit="sidebar = false" />
       <router-view
         class="flex-auto px2" />
     </div>

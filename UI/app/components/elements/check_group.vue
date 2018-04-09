@@ -54,7 +54,7 @@
     computed: {
       filteredOptions() {
         return this.options.filter(a => !this.filterKey || a[this.filterKey] ===
-        this.filter || this.filter.includes(a[this.filterKey]));
+          this.filter || this.filter.includes(a[this.filterKey]));
       },
     },
     watch: {

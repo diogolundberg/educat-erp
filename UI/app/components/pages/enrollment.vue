@@ -26,10 +26,10 @@
           title="Seus Dados"
           description="Preencha seus dados pessoais">
           <Card
-            title="Seus Dados"
-            closeable
             :complete="enrollment.data.personalData.state === 'valid'"
             :error="enrollment.data.personalData.state === 'invalid'"
+            title="Seus Dados"
+            closeable
             @close="step = 0">
             <BaseErrors
               v-model="enrollment.messages.personalData" />
@@ -295,10 +295,10 @@
                 disabled
                 label="Documento" />
               <InputBox
-                v-model="enrollment.data.financeData.representative.cpf"
-                :errors="enrollment.errors.financeData.representative.cpf"
                 v-if="enrollment.data.financeData.representative.discriminator
                   == 'RepresentativePerson'"
+                v-model="enrollment.data.financeData.representative.cpf"
+                :errors="enrollment.errors.financeData.representative.cpf"
                 :size="3"
                 :min-size="14"
                 :disabled="!!enrollment.data.sentAt || !underage"
@@ -307,10 +307,10 @@
                 mask="###.###.###-##"
                 hint="Ex: 000.000.000-00" />
               <InputBox
-                v-model="enrollment.data.financeData.representative.cnpj"
-                :errors="enrollment.errors.financeData.representative.cnpj"
                 v-if="enrollment.data.financeData.representative.discriminator
                   == 'RepresentativeCompany'"
+                v-model="enrollment.data.financeData.representative.cnpj"
+                :errors="enrollment.errors.financeData.representative.cnpj"
                 :size="3"
                 :min-size="18"
                 :disabled="!!enrollment.data.sentAt || !underage"
@@ -324,18 +324,18 @@
                 disabled
                 label="Nome" />
               <InputBox
-                v-model="enrollment.data.financeData.representative.name"
-                :errors="enrollment.errors.financeData.representative.name"
                 v-if="enrollment.data.financeData.representative.discriminator
                   == 'RepresentativePerson'"
+                v-model="enrollment.data.financeData.representative.name"
+                :errors="enrollment.errors.financeData.representative.name"
                 :size="4"
                 :disabled="!!enrollment.data.sentAt || !underage"
                 label="Nome completo" />
               <InputBox
-                v-model="enrollment.data.financeData.representative.name"
-                :errors="enrollment.errors.financeData.representative.name"
                 v-if="enrollment.data.financeData.representative.discriminator
                   == 'RepresentativeCompany'"
+                v-model="enrollment.data.financeData.representative.name"
+                :errors="enrollment.errors.financeData.representative.name"
                 :size="4"
                 :disabled="!!enrollment.data.sentAt || !underage"
                 label="Razão Social" />
@@ -425,9 +425,9 @@
             </Fieldset>
             <div class="flex justify-end">
               <Btn
+                :disabled="!!enrollment.data.sentAt"
                 primary
                 label="Próximo"
-                :disabled="!!enrollment.data.sentAt"
                 @click="saveFinanceData" />
             </div>
           </Card>
@@ -465,8 +465,8 @@
             seus documentos">
           <Card title="Dados enviados">
             <BaseErrors
-              success
-              v-model="enrollment.messages.sendToApproval" />
+              v-model="enrollment.messages.sendToApproval"
+              success />
             <p>Seus dados foram enviados. Agora a secretaria e o departamento
               financeiro estão analisando seus documentos.</p>
             <div class="center">

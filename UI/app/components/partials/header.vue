@@ -13,8 +13,8 @@
         <div class="flex-auto flex items-center xs-hide">
           <div>
             <img
-              src="../../assets/img/logo.svg"
-              :style="{ height: '3rem' }">
+              :style="{ height: '3rem' }"
+              src="../../assets/img/logo.svg">
           </div>
           <h2 class="my0 mx2 px2 thin border-white-50">
             Matrícula Online

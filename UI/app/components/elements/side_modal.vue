@@ -11,8 +11,8 @@
           flex flex-column">
         <div
           v-if="title"
-          v-text="title"
-          class="px3 py2 h2 bg-silver" />
+          class="px3 py2 h2 bg-silver"
+          v-text="title" />
         <div class="flex-auto overflow-auto">
           <slot />
         </div>
