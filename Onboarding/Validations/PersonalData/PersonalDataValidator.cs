@@ -109,7 +109,7 @@ namespace Onboarding.Validations.PersonalData
                 }
                 else if (validation == DocumentValidations.GraduationYear.ToString())
                 {
-                    if (CheckGraduationYear(personalData))
+                    if (!CheckGraduationYear(personalData))
                     {
                         errors.Add(GetMessageError(validation));
                     }
@@ -169,13 +169,13 @@ namespace Onboarding.Validations.PersonalData
 
         private bool CheckMinorAge(Models.PersonalData personalData)
         {
-            if (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18)
+            if (!personalData.BirthDate.HasValue || GetAge(personalData.BirthDate.Value) < 18)
             {
                 return true;
             }
             else
             {
-                return (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18 && HasValidation(personalData, DocumentValidations.MinorAge.ToString()));
+                return (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) >= 18 && HasValidation(personalData, DocumentValidations.MinorAge.ToString()));
             }
         }
 
