@@ -1,8 +1,8 @@
 <template>
   <Btn
+    :disabled="loading"
     primary
     submit
-    :disabled="loading"
     @click="click">
     {{ loading ? "..." : label }}
     <slot />

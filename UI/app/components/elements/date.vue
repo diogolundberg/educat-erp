@@ -1,14 +1,14 @@
 <template>
   <InputBox
     v-model="formatted"
-    mask="##/##/####"
     :label="label"
     :hint="hint"
     :disabled="disabled"
     :min-size="10"
     :required="required"
     :size="size"
-    :errors="errors" />
+    :errors="errors"
+    mask="##/##/####" />
 </template>
 
 <script>

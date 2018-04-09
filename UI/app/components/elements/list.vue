@@ -1,8 +1,8 @@
 <template>
   <div class="m2 flex flex-column items-center">
     <InputBox
-      v-model="filter"
       v-if="showFilter"
+      v-model="filter"
       label="Filtro" />
     <div class="block sm-table bg-white shadow2 m2 col-12 fit">
       <div class="hidden sm-table-row divider-bottom">
@@ -103,7 +103,7 @@
       },
       filtered() {
         const filterRow = row => Object.values(row).some(a =>
-        a && a.toString().includes(this.filter));
+          a && a.toString().includes(this.filter));
         return this.value.filter(filterRow);
       },
     },

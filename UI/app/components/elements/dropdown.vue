@@ -38,8 +38,8 @@
           flex-column"
         @click="focus = false">
         <input
-          v-model="search"
           v-el-focus
+          v-model="search"
           type="text"
           class="m0 p2 border-none h5 fit bg-transparent"
           placeholder="Busca..."
