@@ -524,6 +524,7 @@
 
 <script>
   import { debounce } from "lodash";
+  import { parseDate, daysAgo } from "../../lib/helpers";
 
   export default {
     name: "Enrollment",
@@ -572,9 +573,7 @@
         return this.enrollment.underage;
       },
       daysRemaining() {
-        const day = 1000 * 60 * 60 * 24;
-        const remaining = new Date(this.enrollment.data.deadline) - new Date();
-        return Math.floor(remaining / day);
+        return -daysAgo(parseDate(this.enrollment.data.deadline));
       },
       guarantorsAmount() {
         const { planId } = this.enrollment.data.financeData;
