@@ -3,7 +3,7 @@ exports.parseDate = function parseDate(value) {
     return null;
   }
   const [day, month, year] = value.split(/\D+/);
-  if (!(day && month && year && year > 1900)) {
+  if (!(day && month && year && year > 0)) {
     return null;
   }
   return new Date(year, month - 1, day);
