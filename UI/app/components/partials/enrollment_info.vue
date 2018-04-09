@@ -177,6 +177,7 @@
         await this.$store.dispatch(`${this.type}Approve`, this.enrollment.data);
         this.notify("Enviado com sucesso!");
         this.modal = false;
+        this.$router.push(`/enrollments/${this.type}`);
       },
     },
   };
