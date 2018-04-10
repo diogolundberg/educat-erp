@@ -36,7 +36,7 @@ namespace Onboarding.Controllers
                                                    .Include("PersonalData.PersonalDataDocuments")
                                                    .Include("PersonalData.PersonalDataSpecialNeeds")
                                                    .Include("PersonalData.PersonalDataDocuments.Document")
-                                                   .Where(x => x.SentAt.HasValue && x.ReviewedAt == null)
+                                                   .Where(x => !string.IsNullOrEmpty(x.SentAt) && x.ReviewedAt == null)
                                                    .ToList();
 
             List<Records> records = _mapper.Map<List<Records>>(enrollments);
@@ -152,16 +152,16 @@ namespace Onboarding.Controllers
 
                 if (form.Pendencies.Count() == 0)
                 {
-                    enrollment.AcademicApproval = DateTime.Now;
+                    enrollment.AcademicApproval = DateTime.Now.ToString("dd/MM/yyyy");
                 }
 
-                if ((enrollment.AcademicApproval.HasValue || form.Pendencies.Count() > 0)
-                    && (enrollment.FinanceApproval.HasValue || enrollment.Pendencies.OfType<Models.FinancePendency>().Count() > 0))
+                if ((!string.IsNullOrEmpty(enrollment.AcademicApproval) || form.Pendencies.Count() > 0)
+                    && (!string.IsNullOrEmpty(enrollment.FinanceApproval) || enrollment.Pendencies.OfType<Models.FinancePendency>().Count() > 0))
                 {
-                    enrollment.ReviewedAt = DateTime.Now;
+                    enrollment.ReviewedAt = DateTime.Now.ToString("dd/MM/yyyy");
                 }
 
-                if (enrollment.ReviewedAt.HasValue && (form.Pendencies.Count() > 0 || enrollment.Pendencies.OfType<Models.FinancePendency>().Count() > 0))
+                if (!string.IsNullOrEmpty(enrollment.ReviewedAt) && (form.Pendencies.Count() > 0 || enrollment.Pendencies.OfType<Models.FinancePendency>().Count() > 0))
                 {
                     enrollment.SentAt = null;
                 }
