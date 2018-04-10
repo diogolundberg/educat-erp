@@ -10,9 +10,9 @@ namespace Onboarding.Models
             Enrollments = new HashSet<Enrollment>();
         }
 
-        public DateTime? StartAt { get; set; }
+        public string StartAt { get; set; }
 
-        public DateTime? EndAt { get; set; }
+        public string EndAt { get; set; }
 
         public string Semester { get; set; }
 

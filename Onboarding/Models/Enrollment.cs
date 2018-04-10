@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,15 +17,15 @@ namespace Onboarding.Models
 
         public virtual FinanceData FinanceData { get; set; }
 
-        public DateTime? SentAt { get; set; }
+        public string SentAt { get; set; }
 
-        public DateTime? ReviewedAt { get; set; }
+        public string ReviewedAt { get; set; }
 
-        public DateTime? AcademicApproval { get; set; }
+        public string AcademicApproval { get; set; }
 
-        public DateTime? FinanceApproval { get; set; }
+        public string FinanceApproval { get; set; }
 
-        public DateTime? StartedAt { get; set; }
+        public string StartedAt { get; set; }
 
         public string Photo { get; set; }
 
