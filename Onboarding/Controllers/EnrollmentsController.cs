@@ -76,10 +76,10 @@ namespace Onboarding.Controllers
                 messages,
                 data = new
                 {
-                    ReviewedAt = enrollment.ReviewedAt.HasValue ? enrollment.ReviewedAt.Value.ToString("dd/MM/yyyy") : null,
-                    StartedAt = enrollment.StartedAt.HasValue ? enrollment.StartedAt.Value.ToString("dd/MM/yyyy") : null,
-                    Deadline = enrollment.Onboarding.EndAt.HasValue ? enrollment.Onboarding.EndAt.Value.ToString("dd/MM/yyyy") : null,
-                    SentAt = enrollment.SentAt.HasValue ? enrollment.SentAt.Value.ToString("dd/MM/yyyy") : null,
+                    ReviewedAt = enrollment.ReviewedAt,
+                    StartedAt = enrollment.StartedAt,
+                    Deadline = enrollment.Onboarding,
+                    SentAt = enrollment.SentAt,
                     enrollment.AcademicApproval,
                     enrollment.FinanceApproval,
                     enrollment.Photo,
@@ -137,9 +137,9 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado" } });
             }
 
-            if (!enrollment.StartedAt.HasValue)
+            if (string.IsNullOrEmpty(enrollment.StartedAt))
             {
-                enrollment.StartedAt = DateTime.Now;
+                enrollment.StartedAt = DateTime.Now.ToString("dd/MM/yyyy");
 
                 _context.Set<Enrollment>().Update(enrollment);
                 _context.SaveChanges();
@@ -159,7 +159,7 @@ namespace Onboarding.Controllers
 
             if (personalData.State == "valid" && financeData.State == "valid" && enrollmentValidatorResult.IsValid)
             {
-                enrollment.SentAt = DateTime.Now;
+                enrollment.SentAt = DateTime.Now.ToString("dd/MM/yyyy");
                 enrollment.ReviewedAt = null;
 
                 foreach (Models.Pendency pendency in enrollment.Pendencies)
@@ -174,8 +174,8 @@ namespace Onboarding.Controllers
                 string subject = "Sua matricula foi enviada para análise";
                 string messageBody = GetEmailBody("enrollment_sent.html")
                                      .Replace("{student_name}", enrollment.PersonalData.RealName)
-                                     .Replace("{send_at}", enrollment.SentAt.Value.ToString("dd/MM/yyyy"))
-                                     .Replace("{send_at_hour}", enrollment.SentAt.Value.ToString("HH:mm"));
+                                     .Replace("{send_at}", enrollment.SentAt)
+                                     .Replace("{send_at_hour}", DateTime.Now.ToString("HH:mm"));
 
                 SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
 
