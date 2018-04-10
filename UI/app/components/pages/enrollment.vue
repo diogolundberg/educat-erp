@@ -300,7 +300,7 @@
                 label="Documento" />
               <InputBox
                 v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativePerson'"
+                == 'RepresentativePerson'"
                 v-model="enrollment.data.financeData.representative.cpf"
                 :errors="enrollment.errors.financeData.representative.cpf"
                 :size="3"
@@ -312,7 +312,7 @@
                 hint="Ex: 000.000.000-00" />
               <InputBox
                 v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativeCompany'"
+                == 'RepresentativeCompany'"
                 v-model="enrollment.data.financeData.representative.cnpj"
                 :errors="enrollment.errors.financeData.representative.cnpj"
                 :size="3"
@@ -329,7 +329,7 @@
                 label="Nome" />
               <InputBox
                 v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativePerson'"
+                == 'RepresentativePerson'"
                 v-model="enrollment.data.financeData.representative.name"
                 :errors="enrollment.errors.financeData.representative.name"
                 :size="4"
@@ -337,7 +337,7 @@
                 label="Nome completo" />
               <InputBox
                 v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativeCompany'"
+                == 'RepresentativeCompany'"
                 v-model="enrollment.data.financeData.representative.name"
                 :errors="enrollment.errors.financeData.representative.name"
                 :size="4"
@@ -350,7 +350,7 @@
                 label="Contato" />
               <InputBox
                 v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativeCompany'"
+                == 'RepresentativeCompany'"
                 v-model="enrollment.data.financeData.representative.contact"
                 :errors="enrollment.errors.financeData.representative.contact"
                 :size="3"
@@ -358,7 +358,7 @@
                 label="Pessoa de Contato" />
               <DropDown
                 v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativePerson'"
+                == 'RepresentativePerson'"
                 v-model="enrollment.data.financeData.representative.relationshipId"
                 :errors="enrollment.errors.financeData.representative.relationshipId"
                 :size="3"
@@ -446,8 +446,8 @@
             title="Enviar para Análise">
             <BaseErrors
               v-model="enrollment.messages.sendToApproval" />
-            <p>Envie seus dados para a secetaria e para o
-              departamento financeiro para aprovação.</p>
+            <p>Envie seus dados para a secetaria e para o departamento financeiro para
+            aprovação.</p>
             <div class="center">
               <img
                 :style="{ 'max-width': '8rem' }"
@@ -472,7 +472,7 @@
               v-model="enrollment.messages.sendToApproval"
               success />
             <p>Seus dados foram enviados. Agora a secretaria e o departamento
-              financeiro estão analisando seus documentos.</p>
+            financeiro estão analisando seus documentos.</p>
             <div class="center">
               <Animation
                 name="success" />

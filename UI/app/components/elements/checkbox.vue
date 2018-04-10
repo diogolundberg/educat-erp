@@ -1,8 +1,8 @@
 <template>
   <span
-      :is="container"
-      class="flex items-center"
-      @click="$emit('input', !value)">
+    :is="container"
+    class="flex items-center"
+    @click="$emit('input', !value)">
     <span
       :aria-checked="value"
       class="inline-block align-middle x1 y1 p2x bg-white shadow0 pointer"

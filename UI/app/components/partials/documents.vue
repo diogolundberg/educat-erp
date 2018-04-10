@@ -33,8 +33,8 @@
         <div
           v-if="docsFor(type).length == 0"
           class="py1 px2 divider-bottom">
-            {{ emptyMessage }}
-          </div>
+          {{ emptyMessage }}
+        </div>
       </Card>
     </div>
     <Modal

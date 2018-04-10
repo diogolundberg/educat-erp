@@ -86,7 +86,10 @@
           "code": 90
         }
       ],
-      "vue/html-indent": "off",
+      "vue/html-indent": [
+        "error",
+        2
+      ],
       "vue/script-indent": [
         "error",
         2,

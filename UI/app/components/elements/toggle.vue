@@ -1,7 +1,7 @@
 <template>
   <span
-      class="inline-block"
-      @click="$emit('input', !value)">
+    class="inline-block"
+    @click="$emit('input', !value)">
     <span
       :class="{ 'bg-blue': value }"
       :aria-checked="value"
