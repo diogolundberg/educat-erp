@@ -51,7 +51,7 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado." } });
             }
 
-            if (personalData.Enrollment.SentAt.HasValue)
+            if (!string.IsNullOrEmpty(personalData.Enrollment.SentAt))
             {
                 return new BadRequestObjectResult(new { messages = new List<string> { "Estes dados já foram enviados para a análises e não pode ser editados no momento." } });
             }
