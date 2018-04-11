@@ -34,9 +34,10 @@ namespace Onboarding.Models
             return Onboarding.Year + Onboarding.Semester + Regex.Replace(PersonalData.CPF, @"\D", string.Empty); 
         }
 
-        internal bool IsDeadlineValid()
+        public bool IsDeadlineValid()
         {
-            return DateTime.Now <= Onboarding.EndAt;
+            DateTime.TryParse(Onboarding.EndAt, out DateTime endAt);
+            return DateTime.Now <= endAt;
         }
 
         public IEnumerable<Pendency> Pendencies { get; set; }
