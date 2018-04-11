@@ -47,17 +47,6 @@ namespace Onboarding.Bindings
 
             CreateMap<Models.Plan, Plan>();
 
-            CreateMap<Models.Guarantor, Guarantor>()
-            .ForMember(x => x.AddressKind, config => config.MapFrom(x => x.AddressKind.Name))
-            .ForMember(x => x.City, config => config.MapFrom(x => x.City.Name))
-            .ForMember(x => x.State, config => config.MapFrom(x => x.State.Name))
-            .ForMember(x => x.Relationship, config => config.MapFrom(x => x.Relationship.Name))
-            .ForMember(x => x.Documents, config => config.MapFrom(x => x.GuarantorDocuments.Select(o => new
-            {
-                Name = o.Document.DocumentType.Name,
-                Url = o.Document.Url
-            })));
-
             CreateMap<Models.Enrollment, Record>()
             .ForMember(x => x.EnrollmentNumber, config => config.MapFrom(x => x.ExternalId))
             .ForMember(x => x.Pendencies, config => config.MapFrom(x => x.Pendencies.OfType<Models.FinancePendency>().Select(o => new ViewModels.FinanceApprovals.FinancePendency
@@ -73,6 +62,8 @@ namespace Onboarding.Bindings
             .ForMember(x => x.PhoneNumber, config => config.MapFrom(x => x.PersonalData.PhoneNumber))
             .ForMember(x => x.Landline, config => config.MapFrom(x => x.PersonalData.Landline))
             .ForMember(x => x.Plan, config => config.MapFrom(x => x.FinanceData.Plan))
+            .ForMember(x => x.Representative, config => config.MapFrom(x => x.FinanceData.Representative))
+            .ForMember(x => x.Guarantors, config => config.MapFrom(x => x.FinanceData.Guarantors))
             .ForMember(x => x.PaymentMethod, config => config.MapFrom(x => x.FinanceData.PaymentMethod.Name));
         }
     }
