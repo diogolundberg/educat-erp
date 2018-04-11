@@ -32,7 +32,6 @@
             :complete="enrollment.data.personalData.state === 'valid'"
             :error="enrollment.data.personalData.state === 'invalid'"
             title="Seus Dados"
-            closeable
             @close="step = 0">
             <BaseErrors
               v-model="enrollment.messages.personalData" />
@@ -444,7 +443,6 @@
           description="Enviar para aprovação da secretaria e departamento
             financeiro">
           <Card
-            closeable
             title="Enviar para Análise">
             <BaseErrors
               v-model="enrollment.messages.sendToApproval" />
