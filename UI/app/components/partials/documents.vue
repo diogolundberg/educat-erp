@@ -18,6 +18,9 @@
         </div>
         <BaseErrors
           :value="errorsFor(type.id)" />
+        <div class="py1 px2 divider-bottom">
+          Tipos de arquivo aceitos: PDF e imagens (JPG e PNG).
+        </div>
         <div
           v-for="(doc, index2) in docsFor(type)"
           :key="`${index}_${index2}`"
