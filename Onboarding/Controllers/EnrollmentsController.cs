@@ -99,7 +99,7 @@ namespace Onboarding.Controllers
                     _context.HighSchoolKinds,
                     _context.Disabilities,
                     _context.SpecialNeeds,
-                    _context.Plans,
+                    Plans = _context.Plans.Select(x => new { x.Id, x.Name, x.Guarantors, Value = x.Value.ToString("c") }),
                     _context.PaymentMethod,
                     PersonalDocuments = _context.Set<PersonalDocumentType>(),
                     GuarantorDocuments = _context.Set<GuarantorDocumentType>(),
