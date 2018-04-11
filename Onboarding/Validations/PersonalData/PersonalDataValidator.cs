@@ -114,6 +114,13 @@ namespace Onboarding.Validations.PersonalData
                         errors.Add(GetMessageError(validation));
                     }
                 }
+                else if (validation == DocumentValidations.NotGraduationYear.ToString())
+                {
+                    if (!CheckNotGraduationYear(personalData))
+                    {
+                        errors.Add(GetMessageError(validation));
+                    }
+                }
             }
 
             return errors;
@@ -191,6 +198,18 @@ namespace Onboarding.Validations.PersonalData
             }
         }
 
+        private bool CheckNotGraduationYear(Models.PersonalData personalData)
+        {
+            if (string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) || personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString())
+            {
+                return true;
+            }
+            else
+            {
+                return (!string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) && personalData.HighSchoolGraduationYear != personalData.Enrollment.Onboarding.Year.ToString() && HasValidation(personalData, DocumentValidations.NotGraduationYear.ToString()));
+            }
+        }
+
         private bool HasValidation(Models.PersonalData personalData, string validation)
         {
             return personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).ValidationList.Contains(validation));
@@ -237,6 +256,10 @@ namespace Onboarding.Validations.PersonalData
             else if (validation == DocumentValidations.Native.ToString())
             {
                 return "CPF é obrigatório.";
+            }
+            else if (validation == DocumentValidations.NotGraduationYear.ToString())
+            {
+                return "Histórico escolar é obrigatório.";
             }
 
             return string.Empty;
