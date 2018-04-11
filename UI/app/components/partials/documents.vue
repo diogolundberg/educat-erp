@@ -28,6 +28,10 @@
           @click="modalUrl = doc.url">
           <div class="flex-auto">
             {{ type.name }} - {{ index2 + 1 }}
+            <Icon
+              class="mx1"
+              black
+              name="view" />
           </div>
           <Icon
             black
