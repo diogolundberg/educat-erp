@@ -104,7 +104,7 @@ namespace Onboarding.Controllers
                     PersonalDocuments = _context.Set<PersonalDocumentType>(),
                     GuarantorDocuments = _context.Set<GuarantorDocumentType>(),
                     _context.Nationalities,
-                    _context.Relationships
+                    Relationships = _context.Relationships.Select(x => new { x.Id, x.Name, x.CheckStudentIsRepresentative })
                 }
             };
         }
