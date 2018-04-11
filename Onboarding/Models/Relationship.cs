@@ -5,5 +5,7 @@
         public string Name { get; set; }
 
         public bool CheckSpouse { get; set; }
+
+        public bool CheckStudentIsRepresentative { get; set; }
     }
 }
