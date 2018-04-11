@@ -144,7 +144,7 @@
           .filter(a => a.name.toLowerCase().includes(this.search.toLowerCase()));
       },
       choice() {
-        return this.options.find(a => a[this.idField] === this.value);
+        return this.options.find(a => a[this.idField] === this.value) || {};
       },
       displayValue() {
         return this.choice && this.choice[this.labelField];
