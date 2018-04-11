@@ -25,7 +25,7 @@ namespace Onboarding.Validations.PersonalData
             RuleFor(personalData => personalData.Email).NotEmpty().EmailAddress();
             RuleFor(personalData => personalData.Zipcode).NotEmpty();
             RuleFor(personalData => personalData.StreetAddress).NotEmpty();
-            RuleFor(personalData => personalData.ComplementAddress).NotEmpty();
+            RuleFor(personalData => personalData.AddressNumber).NotEmpty();
             RuleFor(personalData => personalData.Neighborhood).NotEmpty();
             RuleFor(personalData => personalData.PhoneNumber).NotEmpty();
             RuleFor(personalData => personalData.Landline).NotEmpty();

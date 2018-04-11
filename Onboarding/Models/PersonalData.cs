@@ -30,6 +30,8 @@ namespace Onboarding.Models
 
         public string StreetAddress { get; set; }
 
+        public string AddressNumber { get; set; }
+
         public string ComplementAddress { get; set; }
 
         public string Neighborhood { get; set; }
