@@ -10,7 +10,6 @@ namespace Onboarding.Validations.FinanceData
             RuleFor(representative => representative.Name).NotEmpty();
             RuleFor(representative => representative.StreetAddress).NotEmpty();
             RuleFor(representative => representative.AddressNumber).NotEmpty();
-            RuleFor(representative => representative.ComplementAddress).NotEmpty();
             RuleFor(representative => representative.Neighborhood).NotEmpty();
             RuleFor(representative => representative.PhoneNumber).NotEmpty();
             RuleFor(representative => representative.Landline).NotEmpty();
