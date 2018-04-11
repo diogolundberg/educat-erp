@@ -18,7 +18,7 @@
           :to="link.url"
           class="block p2 bold black truncate text-decoration-none h-bg-silver"
           @click.native="$emit('exit')">
-            {{ link.name }}
+          {{ link.name }}
         </router-link>
       </div>
     </aside>

@@ -22,7 +22,7 @@
         <strong>Tipo da Escola</strong>: {{ enrollment.data.highSchollKind }}<br>
         <strong>Graduou em</strong>: {{ enrollment.data.highSchoolGraduationYear }}<br>
         <strong>País da Escola:</strong>:
-          {{ enrollment.data.highSchoolGraduationCountry }}<br>
+        {{ enrollment.data.highSchoolGraduationCountry }}<br>
       </div>
     </Fieldset>
     <Fieldset title="Contato">

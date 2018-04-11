@@ -1,8 +1,8 @@
 <template>
   <div class="flex justify-end flex-wrap m2">
     <Fieldset
-        title="Button and Selectors"
-        class="col-6 pr2">
+      title="Button and Selectors"
+      class="col-6 pr2">
       <Btn label="A Button" />
       <Btn
         label="Blue"
@@ -56,8 +56,8 @@
       <Progress :value="50" />
     </Fieldset>
     <Fieldset
-        title="Containers"
-        class="col-6 pr2">
+      title="Containers"
+      class="col-6 pr2">
       <Alert success>
         This is a message
       </Alert>
@@ -81,12 +81,12 @@
       </Spinner>
     </Fieldset>
     <Fieldset
-        title="Other"
-        class="col-6 pr2">
+      title="Other"
+      class="col-6 pr2">
       <TabGroup>
         <Tab
-        title="A tab"
-        class="flex flex-wrap">
+          title="A tab"
+          class="flex flex-wrap">
           Its content
         </Tab>
         <Tab title="Another Tab"/>
@@ -95,8 +95,8 @@
       <Accordion title="Another accordion">The content</Accordion>
     </Fieldset>
     <Fieldset
-        title="Steppers"
-        class="col-6 pr2">
+      title="Steppers"
+      class="col-6 pr2">
       <Card>
         <Stepper v-model="step">
           <Step
@@ -134,8 +134,8 @@
       </Card>
     </Fieldset>
     <Fieldset
-        title="Typography"
-        class="col-12 sm-col-6 pr2">
+      title="Typography"
+      class="col-12 sm-col-6 pr2">
       <h1>Heading Level One</h1>
       <h2>Heading Level Two</h2>
       <h3>Heading Level Three</h3>
@@ -146,8 +146,8 @@
       <Badge>Badge</Badge><Badge>2</Badge>
     </Fieldset>
     <Fieldset
-        title="Colors"
-        class="col-6 pr2">
+      title="Colors"
+      class="col-6 pr2">
       <div class="inline-block m1 p4 circle bg-blue" />
       <div class="inline-block m1 p4 circle bg-green" />
       <div class="inline-block m1 p4 circle bg-red" />

@@ -18,23 +18,35 @@
         </div>
         <BaseErrors
           :value="errorsFor(type.id)" />
+        <div class="py1 px2 divider-bottom">
+          Tipos de arquivo aceitos: PDF e imagens (JPG e PNG).
+        </div>
         <div
           v-for="(doc, index2) in docsFor(type)"
           :key="`${index}_${index2}`"
-          class="py1 px2 divider-bottom h-bg-silver flex pointer"
-          @click="modalUrl = doc.url">
-          <div class="flex-auto">
+          class="divider-bottom flex pointer">
+          <div
+            class="py1 px2 flex-auto h-bg-silver"
+            @click="modalUrl = doc.url">
             {{ type.name }} - {{ index2 + 1 }}
+            <Icon
+              class="mx1"
+              black
+              name="view" />
           </div>
-          <Icon
-            black
-            name="download" />
+          <div
+            class="py1 px2 h-bg-silver"
+            @click="pop(doc)">
+            <Icon
+              black
+              name="trash" />
+          </div>
         </div>
         <div
           v-if="docsFor(type).length == 0"
           class="py1 px2 divider-bottom">
-            {{ emptyMessage }}
-          </div>
+          {{ emptyMessage }}
+        </div>
       </Card>
     </div>
     <Modal
@@ -96,6 +108,12 @@
       push(documentTypeId, url) {
         const value = [...this.value];
         this.$emit("input", [...value, { url, documentTypeId }]);
+      },
+      pop(document) {
+        if (!this.disabled) {
+          const value = [...this.value];
+          this.$emit("input", value.filter(a => a !== document));
+        }
       },
       view({ url }) {
         window.open(url, "_blank");

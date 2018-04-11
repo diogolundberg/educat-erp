@@ -32,7 +32,6 @@
             :complete="enrollment.data.personalData.state === 'valid'"
             :error="enrollment.data.personalData.state === 'invalid'"
             title="Seus Dados"
-            closeable
             @close="step = 0">
             <BaseErrors
               v-model="enrollment.messages.personalData" />
@@ -85,6 +84,7 @@
                 :size="3"
                 :min-size="10"
                 :disabled="!!enrollment.data.sentAt"
+                date
                 required
                 label="Nascimento"
                 mask="##/##/####"
@@ -149,6 +149,7 @@
                 :min-size="4"
                 :max-size="4"
                 :disabled="!!enrollment.data.sentAt"
+                :max-value="new Date().getFullYear()"
                 mask="####"
                 required
                 label="Ano de conclusão do ensino médio"
@@ -257,13 +258,6 @@
             <BaseErrors
               v-model="enrollment.messages.financeData" />
             <Fieldset title="Dados Financeiros">
-              <DropDown
-                v-model="enrollment.data.financeData.paymentMethodId"
-                :errors="enrollment.errors.financeData.paymentMethodId"
-                :size="6"
-                :options="enrollment.options.paymentMethod"
-                :disabled="!!enrollment.data.sentAt"
-                label="Meio de Pagamento" />
               <List
                 v-model="enrollment.options.plans"
                 :columns="[
@@ -274,6 +268,7 @@
                   {name: 'guarantors', title: 'Fiadores'},
                 ]"
                 :show-filter="false"
+                :disabled="!!enrollment.data.sentAt"
                 @click="enrollment.data.financeData.planId = $event.id">
                 <template
                   slot="column-name"
@@ -284,26 +279,19 @@
                   {{ row.name }}
                 </template>
               </List>
+              <DropDown
+                v-model="enrollment.data.financeData.paymentMethodId"
+                :errors="enrollment.errors.financeData.paymentMethodId"
+                :size="6"
+                :options="enrollment.options.paymentMethod"
+                :disabled="!!enrollment.data.sentAt"
+                label="Meio de Pagamento" />
             </Fieldset>
             <Fieldset title="Responsável Financeiro">
-              <DropDown
-                v-model="enrollment.data.financeData.representative.discriminator"
-                :errors="enrollment.errors.financeData.representative.discriminator"
-                :size="2"
-                :options="discriminators"
-                :disabled="!!enrollment.data.sentAt || !underage"
-                label="CPF ou CNPJ" />
               <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator == null"
-                :size="3"
-                disabled
-                label="Documento" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativePerson'"
                 v-model="enrollment.data.financeData.representative.cpf"
                 :errors="enrollment.errors.financeData.representative.cpf"
-                :size="3"
+                :size="4"
                 :min-size="14"
                 :disabled="!!enrollment.data.sentAt || !underage"
                 cpf
@@ -311,57 +299,15 @@
                 mask="###.###.###-##"
                 hint="Ex: 000.000.000-00" />
               <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativeCompany'"
-                v-model="enrollment.data.financeData.representative.cnpj"
-                :errors="enrollment.errors.financeData.representative.cnpj"
-                :size="3"
-                :min-size="18"
-                :disabled="!!enrollment.data.sentAt || !underage"
-                cnpj
-                label="CNPJ"
-                mask="##.###.###/####-##"
-                hint="Ex: 00.000.000/0000-00" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator == null"
-                :size="4"
-                disabled
-                label="Nome" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativePerson'"
                 v-model="enrollment.data.financeData.representative.name"
                 :errors="enrollment.errors.financeData.representative.name"
                 :size="4"
                 :disabled="!!enrollment.data.sentAt || !underage"
                 label="Nome completo" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativeCompany'"
-                v-model="enrollment.data.financeData.representative.name"
-                :errors="enrollment.errors.financeData.representative.name"
-                :size="4"
-                :disabled="!!enrollment.data.sentAt || !underage"
-                label="Razão Social" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator == null"
-                :size="3"
-                disabled
-                label="Contato" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativeCompany'"
-                v-model="enrollment.data.financeData.representative.contact"
-                :errors="enrollment.errors.financeData.representative.contact"
-                :size="3"
-                :disabled="!!enrollment.data.sentAt || !underage"
-                label="Pessoa de Contato" />
               <DropDown
-                v-if="enrollment.data.financeData.representative.discriminator
-                  == 'RepresentativePerson'"
                 v-model="enrollment.data.financeData.representative.relationshipId"
                 :errors="enrollment.errors.financeData.representative.relationshipId"
-                :size="3"
+                :size="4"
                 :options="enrollment.options.relationships"
                 :disabled="!!enrollment.data.sentAt || !underage"
                 label="Relacionamento com o aluno" />
@@ -442,12 +388,11 @@
           description="Enviar para aprovação da secretaria e departamento
             financeiro">
           <Card
-            closeable
             title="Enviar para Análise">
             <BaseErrors
               v-model="enrollment.messages.sendToApproval" />
-            <p>Envie seus dados para a secetaria e para o
-              departamento financeiro para aprovação.</p>
+            <p>Envie seus dados para a secetaria e para o departamento financeiro para
+            aprovação.</p>
             <div class="center">
               <img
                 :style="{ 'max-width': '8rem' }"
@@ -472,7 +417,7 @@
               v-model="enrollment.messages.sendToApproval"
               success />
             <p>Seus dados foram enviados. Agora a secretaria e o departamento
-              financeiro estão analisando seus documentos.</p>
+            financeiro estão analisando seus documentos.</p>
             <div class="center">
               <Animation
                 name="success" />
@@ -645,6 +590,7 @@
           isSpouse && "Spouse",
           foreignGraduation && "ForeignGraduation",
           gradutionCurrentYear && "GraduationYear",
+          !gradutionCurrentYear && "NotGraduationYear",
         ].filter(a => a);
       },
     },
@@ -693,6 +639,7 @@
       async saveFinanceData() {
         const token = this.id;
         const data = this.enrollment.data.financeData;
+        data.representative.discriminator = "RepresentativePerson";
         await this.$store.dispatch("setFinanceData", { token, data });
         this.goToStep();
       },

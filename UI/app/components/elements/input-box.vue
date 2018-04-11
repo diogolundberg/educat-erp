@@ -8,7 +8,7 @@
         :class="{
           'active': focus,
           'error': allErrors.length,
-          'dots-bottom': disabled,
+          'dotted-line': disabled,
           'input-line': !disabled,
         }"
         :id="`fld${_uid}`"
@@ -46,6 +46,7 @@
 <script>
   import format from "v-mask/src/format";
   import { CPF, CNPJ } from "cpf_cnpj";
+  import moment from "moment";
 
   export default {
     name: "InputBox",
@@ -97,6 +98,11 @@
         default: 0,
         required: false,
       },
+      maxValue: {
+        type: Number,
+        required: false,
+        default: null,
+      },
       required: {
         type: Boolean,
         default: false,
@@ -110,6 +116,10 @@
         default: false,
       },
       cnpj: {
+        type: Boolean,
+        default: false,
+      },
+      date: {
         type: Boolean,
         default: false,
       },
@@ -132,15 +142,15 @@
         return this.value && this.value.length;
       },
       localErrors() {
-        if (!this.errors || !this.errors.length) {
-          return [];
-        }
         return this.validations.concat([
           () => this.required && !this.length && "Campo obrigatório",
           () => this.required && this.length < this.minSize && "Valor inválido",
           a => this.email && !(/^.+@.+\..+$/.test(a)) && "E-mail inválido",
           a => this.cpf && !CPF.isValid(a) && "CPF Inválido!",
           a => this.cnpj && !CNPJ.isValid(a) && "CNPJ Inválido!",
+          a => this.maxValue && parseInt(a, 10) > this.maxValue
+            && `Não pode ser maior que ${this.maxValue}`,
+          a => this.date && !moment(a, "DD/MM/YYYY").isValid() && "Data inválida",
         ]).map(a => a(this.value)).filter(a => a && this.validate);
       },
       focused() {
