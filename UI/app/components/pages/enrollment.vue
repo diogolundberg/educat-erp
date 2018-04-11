@@ -275,6 +275,7 @@
                   {name: 'guarantors', title: 'Fiadores'},
                 ]"
                 :show-filter="false"
+                :disabled="!!enrollment.data.sentAt"
                 @click="enrollment.data.financeData.planId = $event.id">
                 <template
                   slot="column-name"
