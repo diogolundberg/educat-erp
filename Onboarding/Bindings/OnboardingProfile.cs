@@ -26,7 +26,7 @@ namespace Onboarding.Bindings
 
             CreateMap<Models.Onboarding, ViewModels.Onboarding.Form>()
             .ForMember(x => x.StartAt, config => config.MapFrom(x => x.StartAt))
-            .ForMember(x => x.EndAt, config => config.MapFrom(x => x.StartAt))
+            .ForMember(x => x.EndAt, config => config.MapFrom(x => x.EndAt))
             .ForMember(x => x.Enrollments, config => config.MapFrom(x => x.Enrollments.Select(o => new EnrollmentForm
             {
                 Id = o.Id,
