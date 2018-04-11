@@ -258,13 +258,6 @@
             <BaseErrors
               v-model="enrollment.messages.financeData" />
             <Fieldset title="Dados Financeiros">
-              <DropDown
-                v-model="enrollment.data.financeData.paymentMethodId"
-                :errors="enrollment.errors.financeData.paymentMethodId"
-                :size="6"
-                :options="enrollment.options.paymentMethod"
-                :disabled="!!enrollment.data.sentAt"
-                label="Meio de Pagamento" />
               <List
                 v-model="enrollment.options.plans"
                 :columns="[
@@ -286,6 +279,13 @@
                   {{ row.name }}
                 </template>
               </List>
+              <DropDown
+                v-model="enrollment.data.financeData.paymentMethodId"
+                :errors="enrollment.errors.financeData.paymentMethodId"
+                :size="6"
+                :options="enrollment.options.paymentMethod"
+                :disabled="!!enrollment.data.sentAt"
+                label="Meio de Pagamento" />
             </Fieldset>
             <Fieldset title="Responsável Financeiro">
               <DropDown
