@@ -7,7 +7,7 @@
         :class="{
           'active': focus,
           'error': errors && errors.length,
-          'dots-bottom': isDisabled,
+          'dotted-line': isDisabled,
           'input-line': !isDisabled,
         }"
         :id="`fld${_uid}`"

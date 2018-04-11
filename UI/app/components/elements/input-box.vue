@@ -8,7 +8,7 @@
         :class="{
           'active': focus,
           'error': allErrors.length,
-          'dots-bottom': disabled,
+          'dotted-line': disabled,
           'input-line': !disabled,
         }"
         :id="`fld${_uid}`"
