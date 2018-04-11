@@ -169,13 +169,13 @@ namespace Onboarding.Validations.PersonalData
 
         private bool CheckMinorAge(Models.PersonalData personalData)
         {
-            if (!personalData.BirthDate.HasValue || GetAge(personalData.BirthDate.Value) < 18)
+            if (string.IsNullOrEmpty(personalData.BirthDate) || GetAge(personalData.BirthDate) < 18)
             {
                 return true;
             }
             else
             {
-                return (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) >= 18 && HasValidation(personalData, DocumentValidations.MinorAge.ToString()));
+                return (!string.IsNullOrEmpty(personalData.BirthDate) && GetAge(personalData.BirthDate) >= 18 && HasValidation(personalData, DocumentValidations.MinorAge.ToString()));
             }
         }
 
@@ -196,12 +196,14 @@ namespace Onboarding.Validations.PersonalData
             return personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).ValidationList.Contains(validation));
         }
 
-        private int GetAge(DateTime birthDate)
+        private int GetAge(string birthDate)
         {
             DateTime today = DateTime.Today;
-            int age = today.Year - birthDate.Year;
+            DateTime.TryParse(birthDate, out DateTime birthDateConverted);
 
-            if (birthDate > today.AddYears(-age))
+            int age = today.Year - birthDateConverted.Year;
+
+            if (birthDateConverted > today.AddYears(-age))
             {
                 age--;
             }
