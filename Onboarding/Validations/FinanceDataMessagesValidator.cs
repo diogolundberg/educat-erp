@@ -40,7 +40,7 @@ namespace Onboarding.Validations
             Models.PersonalData personalData = financeData.Enrollment.PersonalData;
             Representative representative = financeData.Representative;
 
-            if (personalData.BirthDate.HasValue && GetAge(personalData.BirthDate.Value) > 18)
+            if (!string.IsNullOrEmpty(personalData.BirthDate) && GetAge(personalData.BirthDate) > 18)
             {
                 bool isDiff = false;
 
@@ -64,12 +64,14 @@ namespace Onboarding.Validations
             }
         }
 
-        private int GetAge(DateTime birthDate)
+        private int GetAge(string birthDate)
         {
             DateTime today = DateTime.Today;
-            int age = today.Year - birthDate.Year;
+            DateTime.TryParse(birthDate, out DateTime birthDateConverted);
 
-            if (birthDate > today.AddYears(-age))
+            int age = today.Year - birthDateConverted.Year;
+
+            if (birthDateConverted > today.AddYears(-age))
             {
                 age--;
             }
