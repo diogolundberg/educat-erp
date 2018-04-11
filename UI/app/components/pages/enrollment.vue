@@ -647,6 +647,7 @@
           isSpouse && "Spouse",
           foreignGraduation && "ForeignGraduation",
           gradutionCurrentYear && "GraduationYear",
+          !gradutionCurrentYear && "NotGraduationYear",
         ].filter(a => a);
       },
     },
