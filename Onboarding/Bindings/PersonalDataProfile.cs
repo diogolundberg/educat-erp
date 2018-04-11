@@ -12,7 +12,7 @@ namespace Onboarding.Bindings
         public PersonalDataProfile()
         {
             CreateMap<PersonalData, PersonalDataViewModel>()
-            .ForMember(x => x.BirthDate, config => config.MapFrom(x => x.BirthDate == null ? string.Empty : ((DateTime)x.BirthDate).ToString("dd/MM/yyyy")))
+            .ForMember(x => x.BirthDate, config => config.MapFrom(x => x.BirthDate))
             .ForMember(x => x.Disabilities, config => config.MapFrom(x => x.PersonalDataDisabilities.Select(o => o.DisabilityId)))
             .ForMember(x => x.SpecialNeeds, config => config.MapFrom(x => x.PersonalDataSpecialNeeds.Select(o => o.SpecialNeedId)))
             .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => new DocumentViewModel
