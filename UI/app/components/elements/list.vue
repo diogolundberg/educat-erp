@@ -22,7 +22,7 @@
         v-for="(row, index) in rows"
         :key="index"
         class="block sm-table-row divider-bottom h-bg-silver pointer"
-        @click="$emit('click', row)">
+        @click="clicked(row)">
         {{ $option }}
         <div
           v-for="column in columns"
@@ -85,6 +85,10 @@
         type: Boolean,
         default: true,
       },
+      disabled: {
+        type: Boolean,
+        default: false,
+      },
     },
     data() {
       return {
@@ -116,6 +120,11 @@
       sortBy({ name }) {
         this.reverse = this.sortColumn === name ? !this.reverse : false;
         this.sortColumn = name;
+      },
+      clicked(row) {
+        if (!this.disabled) {
+          this.$emit("click", row);
+        }
       },
     },
   };
