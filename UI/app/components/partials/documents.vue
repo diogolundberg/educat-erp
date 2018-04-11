@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-wrap">
-    {{ value }}
     <div
       v-for="(type, index) in types"
       v-if="isActive(type)"
@@ -111,8 +110,10 @@
         this.$emit("input", [...value, { url, documentTypeId }]);
       },
       pop(document) {
-        const value = [...this.value];
-        this.$emit("input", value.filter(a => a !== document));
+        if (!this.disabled) {
+          const value = [...this.value];
+          this.$emit("input", value.filter(a => a !== document));
+        }
       },
       view({ url }) {
         window.open(url, "_blank");
