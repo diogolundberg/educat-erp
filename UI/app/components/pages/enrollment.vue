@@ -149,6 +149,7 @@
                 :min-size="4"
                 :max-size="4"
                 :disabled="!!enrollment.data.sentAt"
+                :max-value="new Date().getFullYear()"
                 mask="####"
                 required
                 label="Ano de conclusão do ensino médio"
