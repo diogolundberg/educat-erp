@@ -97,6 +97,11 @@
         default: 0,
         required: false,
       },
+      maxValue: {
+        type: Number,
+        required: false,
+        default: null,
+      },
       required: {
         type: Boolean,
         default: false,
@@ -132,15 +137,14 @@
         return this.value && this.value.length;
       },
       localErrors() {
-        if (!this.errors || !this.errors.length) {
-          return [];
-        }
         return this.validations.concat([
           () => this.required && !this.length && "Campo obrigatório",
           () => this.required && this.length < this.minSize && "Valor inválido",
           a => this.email && !(/^.+@.+\..+$/.test(a)) && "E-mail inválido",
           a => this.cpf && !CPF.isValid(a) && "CPF Inválido!",
           a => this.cnpj && !CNPJ.isValid(a) && "CNPJ Inválido!",
+          a => this.maxValue && parseInt(a, 10) > this.maxValue
+            && `Não pode ser maior que ${this.maxValue}`,
         ]).map(a => a(this.value)).filter(a => a && this.validate);
       },
       focused() {
