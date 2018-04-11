@@ -45,8 +45,7 @@ namespace Onboarding.Bindings
             .Include<Models.RepresentativeCompany, RepresentativeCompany>()
             .Include<Models.RepresentativePerson, RepresentativePerson>();
 
-            CreateMap<Models.Plan, Plan>()
-            .ForMember(x => x.DueDate, config => config.MapFrom(x => x.DueDate != null ? x.DueDate.Value.ToString("dd/MM/yyyy") : null));
+            CreateMap<Models.Plan, Plan>();
 
             CreateMap<Models.Guarantor, Guarantor>()
             .ForMember(x => x.AddressKind, config => config.MapFrom(x => x.AddressKind.Name))

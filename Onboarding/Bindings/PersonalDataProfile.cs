@@ -25,7 +25,6 @@ namespace Onboarding.Bindings
             CreateMap<PersonalDataViewModel, PersonalData>()
             .ForMember(x => x.MaritalStatus, config => config.Ignore())
             .ForMember(x => x.Gender, config => config.Ignore())
-            .ForMember(x => x.BirthDate, config => config.MapFrom(x => string.IsNullOrEmpty(x.BirthDate) ? null : (DateTime?)DateTime.ParseExact(x.BirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
             .ForMember(x => x.BirthCountry, config => config.Ignore())
             .ForMember(x => x.City, config => config.Ignore())
             .ForMember(x => x.BirthCity, config => config.Ignore())
