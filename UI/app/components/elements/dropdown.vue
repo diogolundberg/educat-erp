@@ -14,8 +14,8 @@
         type="text"
         readonly
         class="m0 py2 border-none ease h5 w100 bg-transparent"
-        @focus="$nextTick(() => focus = true)"
-        @click="$nextTick(() => focus = true)">
+        @focus="onFocus"
+        @click="onFocus">
       <label
         v-if="!focus"
         :class="{
@@ -139,10 +139,9 @@
     },
     computed: {
       filteredOptions() {
-        const query = this.search.toLowerCase();
         return this.options
           .filter(a => !this.filterKey || a[this.filterKey] === this.filter)
-          .filter(a => a.name.toLowerCase().includes(query));
+          .filter(a => a.name.toLowerCase().includes(this.search.toLowerCase()));
       },
       choice() {
         return this.options.find(a => a[this.idField] === this.value);
@@ -165,31 +164,26 @@
         return this.focus || this.value;
       },
     },
-    watch: {
-      focus() {
-        this.search = "";
-        this.focusSelected();
-      },
-    },
     methods: {
+      async onFocus() {
+        await this.tick();
+        this.focus = true;
+        this.search = "";
+        const selected = this.$el.querySelector("[data-selected]");
+        if (selected) {
+          const top = selected.offsetTop - selected.offsetHeight;
+          this.$refs.optionBox.scrollTop = top;
+        }
+      },
+      async onBlur() {
+        await this.sleep(150);
+        this.focus = false;
+        this.search = "";
+        this.validate = true;
+      },
       pick(option) {
         this.focus = false;
         this.$emit("input", option[this.idField]);
-      },
-      onBlur() {
-        this.validate = true;
-        setTimeout(() => {
-          this.focus = false;
-        }, 150);
-      },
-      focusSelected() {
-        this.$nextTick(() => {
-          const selected = this.$el.querySelector("[data-selected]");
-          if (selected) {
-            const top = selected.offsetTop - selected.offsetHeight;
-            this.$refs.optionBox.scrollTop = top;
-          }
-        });
       },
     },
   };
