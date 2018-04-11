@@ -46,6 +46,7 @@
 <script>
   import format from "v-mask/src/format";
   import { CPF, CNPJ } from "cpf_cnpj";
+  import moment from "moment";
 
   export default {
     name: "InputBox",
@@ -118,6 +119,10 @@
         type: Boolean,
         default: false,
       },
+      date: {
+        type: Boolean,
+        default: false,
+      },
       validations: {
         type: Array,
         default: () => [],
@@ -145,6 +150,7 @@
           a => this.cnpj && !CNPJ.isValid(a) && "CNPJ Inválido!",
           a => this.maxValue && parseInt(a, 10) > this.maxValue
             && `Não pode ser maior que ${this.maxValue}`,
+          a => this.date && !moment(a, "DD/MM/YYYY").isValid() && "Data inválida",
         ]).map(a => a(this.value)).filter(a => a && this.validate);
       },
       focused() {
