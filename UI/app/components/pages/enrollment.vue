@@ -85,6 +85,7 @@
                 :size="3"
                 :min-size="10"
                 :disabled="!!enrollment.data.sentAt"
+                date
                 required
                 label="Nascimento"
                 mask="##/##/####"
