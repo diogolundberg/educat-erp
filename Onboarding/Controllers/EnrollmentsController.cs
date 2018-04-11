@@ -78,7 +78,7 @@ namespace Onboarding.Controllers
                 {
                     ReviewedAt = enrollment.ReviewedAt,
                     StartedAt = enrollment.StartedAt,
-                    Deadline = enrollment.Onboarding,
+                    Deadline = enrollment.Onboarding.EndAt,
                     SentAt = enrollment.SentAt,
                     enrollment.AcademicApproval,
                     enrollment.FinanceApproval,
