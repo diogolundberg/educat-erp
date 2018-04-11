@@ -288,24 +288,10 @@
                 label="Meio de Pagamento" />
             </Fieldset>
             <Fieldset title="Responsável Financeiro">
-              <DropDown
-                v-model="enrollment.data.financeData.representative.discriminator"
-                :errors="enrollment.errors.financeData.representative.discriminator"
-                :size="2"
-                :options="discriminators"
-                :disabled="!!enrollment.data.sentAt || !underage"
-                label="CPF ou CNPJ" />
               <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator == null"
-                :size="3"
-                disabled
-                label="Documento" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator
-                == 'RepresentativePerson'"
                 v-model="enrollment.data.financeData.representative.cpf"
                 :errors="enrollment.errors.financeData.representative.cpf"
-                :size="3"
+                :size="4"
                 :min-size="14"
                 :disabled="!!enrollment.data.sentAt || !underage"
                 cpf
@@ -313,57 +299,15 @@
                 mask="###.###.###-##"
                 hint="Ex: 000.000.000-00" />
               <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator
-                == 'RepresentativeCompany'"
-                v-model="enrollment.data.financeData.representative.cnpj"
-                :errors="enrollment.errors.financeData.representative.cnpj"
-                :size="3"
-                :min-size="18"
-                :disabled="!!enrollment.data.sentAt || !underage"
-                cnpj
-                label="CNPJ"
-                mask="##.###.###/####-##"
-                hint="Ex: 00.000.000/0000-00" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator == null"
-                :size="4"
-                disabled
-                label="Nome" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator
-                == 'RepresentativePerson'"
                 v-model="enrollment.data.financeData.representative.name"
                 :errors="enrollment.errors.financeData.representative.name"
                 :size="4"
                 :disabled="!!enrollment.data.sentAt || !underage"
                 label="Nome completo" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator
-                == 'RepresentativeCompany'"
-                v-model="enrollment.data.financeData.representative.name"
-                :errors="enrollment.errors.financeData.representative.name"
-                :size="4"
-                :disabled="!!enrollment.data.sentAt || !underage"
-                label="Razão Social" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator == null"
-                :size="3"
-                disabled
-                label="Contato" />
-              <InputBox
-                v-if="enrollment.data.financeData.representative.discriminator
-                == 'RepresentativeCompany'"
-                v-model="enrollment.data.financeData.representative.contact"
-                :errors="enrollment.errors.financeData.representative.contact"
-                :size="3"
-                :disabled="!!enrollment.data.sentAt || !underage"
-                label="Pessoa de Contato" />
               <DropDown
-                v-if="enrollment.data.financeData.representative.discriminator
-                == 'RepresentativePerson'"
                 v-model="enrollment.data.financeData.representative.relationshipId"
                 :errors="enrollment.errors.financeData.representative.relationshipId"
-                :size="3"
+                :size="4"
                 :options="enrollment.options.relationships"
                 :disabled="!!enrollment.data.sentAt || !underage"
                 label="Relacionamento com o aluno" />
@@ -695,6 +639,7 @@
       async saveFinanceData() {
         const token = this.id;
         const data = this.enrollment.data.financeData;
+        data.representative.discriminator = "RepresentativePerson";
         await this.$store.dispatch("setFinanceData", { token, data });
         this.goToStep();
       },
