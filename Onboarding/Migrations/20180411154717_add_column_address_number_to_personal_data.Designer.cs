@@ -12,9 +12,10 @@ using System;
 namespace Onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180411154717_add_column_address_number_to_personal_data")]
+    partial class add_column_address_number_to_personal_data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
