@@ -11,8 +11,8 @@ namespace Onboarding.Bindings
         public OnboardingProfile()
         {
             CreateMap<ViewModels.Onboarding.Form, Models.Onboarding>()
-            .ForMember(x => x.StartAt, config => config.MapFrom(x => string.IsNullOrEmpty(x.StartAt) ? null : (DateTime?)DateTime.ParseExact(x.StartAt, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
-            .ForMember(x => x.EndAt, config => config.MapFrom(x => string.IsNullOrEmpty(x.EndAt) ? null : (DateTime?)DateTime.ParseExact(x.EndAt, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
+            .ForMember(x => x.StartAt, config => config.MapFrom(x => x.StartAt))
+            .ForMember(x => x.EndAt, config => config.MapFrom(x => x.EndAt))
             .ForMember(x => x.Enrollments, config => config.MapFrom(x => x.Enrollments.Select(o => new Models.Enrollment
             {
                 Id = o.Id,
@@ -25,8 +25,8 @@ namespace Onboarding.Bindings
             })));
 
             CreateMap<Models.Onboarding, ViewModels.Onboarding.Form>()
-            .ForMember(x => x.StartAt, config => config.MapFrom(x => x.StartAt != null ? x.StartAt.Value.ToString("dd/MM/yyyy") : null))
-            .ForMember(x => x.EndAt, config => config.MapFrom(x => x.StartAt != null ? x.EndAt.Value.ToString("dd/MM/yyyy") : null))
+            .ForMember(x => x.StartAt, config => config.MapFrom(x => x.StartAt))
+            .ForMember(x => x.EndAt, config => config.MapFrom(x => x.StartAt))
             .ForMember(x => x.Enrollments, config => config.MapFrom(x => x.Enrollments.Select(o => new EnrollmentForm
             {
                 Id = o.Id,
