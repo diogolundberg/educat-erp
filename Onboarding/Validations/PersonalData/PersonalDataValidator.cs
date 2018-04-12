@@ -76,49 +76,42 @@ namespace Onboarding.Validations.PersonalData
                 {
                     if (!CheckForeign(personalData))
                     {
-                        errors.Add(GetMessageError(validation));
+                        errors.Add(GetMessageError(validation, personalData));
                     }
                 }
                 else if (validation == DocumentValidations.Native.ToString())
                 {
                     if (!CheckNative(personalData))
                     {
-                        errors.Add(GetMessageError(validation));
+                        errors.Add(GetMessageError(validation, personalData));
                     }
                 }
                 else if (validation == DocumentValidations.MilitaryDraft.ToString())
                 {
                     if (!CheckMilitaryDraft(personalData))
                     {
-                        errors.Add(GetMessageError(validation));
+                        errors.Add(GetMessageError(validation, personalData));
                     }
                 }
                 else if (validation == DocumentValidations.ForeignGraduation.ToString())
                 {
                     if (!CheckForeignGraduation(personalData))
                     {
-                        errors.Add(GetMessageError(validation));
+                        errors.Add(GetMessageError(validation, personalData));
                     }
                 }
                 else if (validation == DocumentValidations.MinorAge.ToString())
                 {
                     if (!CheckMinorAge(personalData))
                     {
-                        errors.Add(GetMessageError(validation));
+                        errors.Add(GetMessageError(validation, personalData));
                     }
                 }
                 else if (validation == DocumentValidations.GraduationYear.ToString())
                 {
                     if (!CheckGraduationYear(personalData))
                     {
-                        errors.Add(GetMessageError(validation));
-                    }
-                }
-                else if (validation == DocumentValidations.NotGraduationYear.ToString())
-                {
-                    if (!CheckNotGraduationYear(personalData))
-                    {
-                        errors.Add(GetMessageError(validation));
+                        errors.Add(GetMessageError(validation, personalData));
                     }
                 }
             }
@@ -188,26 +181,7 @@ namespace Onboarding.Validations.PersonalData
 
         private bool CheckGraduationYear(Models.PersonalData personalData)
         {
-            if (string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) || personalData.HighSchoolGraduationYear != personalData.Enrollment.Onboarding.Year.ToString())
-            {
-                return true;
-            }
-            else
-            {
-                return (!string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) && personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString() && HasValidation(personalData, DocumentValidations.GraduationYear.ToString()));
-            }
-        }
-
-        private bool CheckNotGraduationYear(Models.PersonalData personalData)
-        {
-            if (string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) || personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString())
-            {
-                return true;
-            }
-            else
-            {
-                return (!string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) && personalData.HighSchoolGraduationYear != personalData.Enrollment.Onboarding.Year.ToString() && HasValidation(personalData, DocumentValidations.NotGraduationYear.ToString()));
-            }
+            return (HasValidation(personalData, DocumentValidations.GraduationYear.ToString()));
         }
 
         private bool HasValidation(Models.PersonalData personalData, string validation)
@@ -230,7 +204,7 @@ namespace Onboarding.Validations.PersonalData
             return age;
         }
 
-        private string GetMessageError(string validation)
+        private string GetMessageError(string validation, Models.PersonalData personalData)
         {
             if (validation == DocumentValidations.Foreigner.ToString())
             {
@@ -251,15 +225,18 @@ namespace Onboarding.Validations.PersonalData
             }
             else if (validation == DocumentValidations.GraduationYear.ToString())
             {
-                return "Declaração de conclusão do ensino médio ou histórico escolar é obrigatório.";
+                if(personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString())
+                {
+                    return "Declaração de conclusão do ensino médio ou histórico escolar é obrigatório.";
+                }
+                else
+                {
+                    return "Histórico escolar é obrigatório.";
+                }
             }
             else if (validation == DocumentValidations.Native.ToString())
             {
                 return "CPF é obrigatório.";
-            }
-            else if (validation == DocumentValidations.NotGraduationYear.ToString())
-            {
-                return "Histórico escolar é obrigatório.";
             }
 
             return string.Empty;
