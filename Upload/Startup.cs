@@ -64,7 +64,7 @@ namespace Upload
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "SSO", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "UPLOAD", Version = "v1" });
             });
 
             services.AddMvc();
@@ -83,7 +83,7 @@ namespace Upload
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SSO V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "UPLOAD V1");
             });
 
             app.UseExceptionHandler(
