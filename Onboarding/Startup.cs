@@ -25,6 +25,7 @@ using Microsoft.AspNetCore.Http;
 using SharpRaven.Core;
 using Onboarding.Bindings;
 using Onboarding.JsonFormatter;
+using System.Globalization;
 
 namespace Onboarding
 {
@@ -146,6 +147,10 @@ namespace Onboarding
             app.UseStaticFiles();
 
             app.UseMvc();
+
+            CultureInfo cultureInfo = new CultureInfo("pt-BR");
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
         }
     }
 }
