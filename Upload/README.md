@@ -24,10 +24,11 @@ dotnet --version
 ```
 Criar variaveis de ambiente
 ```bash
-setx SSO_HOST "http://localhost:5000/" -m
-setx HOST "http://localhost:5000/" -m
+setx PROJECT "Upload/Uploadcsproj" -m
+setx SSO_HOST "https://cmmg-sso.azurewebsites.net" -m
+setx UPLOAD_HOST "https://cmmg-upload.azurewebsites.net" -m
 setx SECURITY_KEY "dd%88*377f6d&f£$$£$FdddFF33fssDG^!3" -m
-setx BLOB_AZURE_ACCOUNT_NAME "cmmgdevelopment" -m 
+setx BLOB_AZURE_ACCOUNT_NAME "cmmgdevelopment" -m
 setx BLOB_AZURE_ACCESS_KEY "VhN/tJCNGWUqtmH+OBjs28qx3kWUu4ULERtSJduR7RzGpV9oyx5vnl3zWXje3eIoebfwRMvOYoHJ5w75ytw75A==" -m
 setx BLOB_AZURE_CONTAINER "documents" -m
 setx BLOB_AZURE_SHARED_ACCESS_EXPIRY_TIME "15" -m

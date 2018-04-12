@@ -70,13 +70,11 @@ dotnet run
 
 Vari'aveis de ambiente
 ```bash
-setx SSO_HOST "http://localhost:5000/" -m
-setx HOST "http://localhost:5000/" -m
+setx PROJECT "SSO/SSO.csproj" -m
+setx SSO_HOST "https://cmmg-sso.azurewebsites.net" -m
 setx SECURITY_KEY "dd%88*377f6d&f£$$£$FdddFF33fssDG^!3" -m
 setx SSO_DATABASE_CONNECTION "Server=(localdb)\mssqllocaldb;Database=sso;" -m
-setx SMTP_HOST "smtp.sendgrid.net" -m
-setx SMTP_PORT "587" -m
-setx SMTP_USERNAME "azure_cb670a222faa4e88621781f17888b964@azure.com" -m
+setx SMTP_USERNAME "azure_cb670a222faa4e88621781f17888b964@azure.com -m
 setx SMTP_PASSWORD "241213AAl" -m
 setx EMAIL_SENDER_RESET_PASSWORD "no-reply@cmmg.com.br" -m
 setx EMAIL_RESET_PASSWORD_SUBJECT "RESETAR SENHA - CMMG" -m
