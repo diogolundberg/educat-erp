@@ -19,6 +19,9 @@ namespace Onboarding.ViewModels
         [Required]
         public string StreetAddress { get; set; }
 
+        [Required]
+        public string AddressNumber { get; set; }
+
         public string ComplementAddress { get; set; }
 
         [Required]
