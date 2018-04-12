@@ -40,7 +40,7 @@ namespace SSO
 
                 JwtSecurityToken token = new JwtSecurityToken(
                         issuer: _configuration["SSO_HOST"],
-                        audience: _configuration["HOST"],
+                        audience: _configuration["SSO_HOST"],
                         claims: claims,
                         expires: DateTime.Now.AddMinutes(30),
                         signingCredentials: creds);

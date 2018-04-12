@@ -68,7 +68,7 @@ namespace SSO
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = Configuration["SSO_HOST"],
-                    ValidAudience = Configuration["HOST"],
+                    ValidAudience = Configuration["SSO_HOST"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SECURITY_KEY"]))
                 };
             });

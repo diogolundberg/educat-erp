@@ -277,3 +277,4 @@ appsettings.json
 *.code-workspace
 *.sln
 /Upload/Properties/launchSettings.json
+/SSO/Properties

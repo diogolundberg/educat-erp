@@ -46,8 +46,8 @@ namespace SSO.Controllers
             ResetToken resetToken = new ResetToken { UserId = user.Id, Expirated = DateTimeOffset.Now.AddHours(2) };
             string token = _tokenHelper.Generate<ResetToken>(resetToken);
 
-            SmtpClientHelper smtpClientHelper = new SmtpClientHelper(_configuration["SMTP_PORT"],
-                                                            _configuration["SMTP_HOST"],
+            SmtpClientHelper smtpClientHelper = new SmtpClientHelper("587",
+                                                            "smtp.sendgrid.net",
                                                             _configuration["SMTP_USERNAME"],
                                                             _configuration["SMTP_PASSWORD"]);
 
