@@ -3,7 +3,7 @@
     <InputBox
       v-model="value.zipcode"
       :errors="errors.zipcode"
-      :size="3"
+      :size="2"
       :min-size="9"
       :disabled="disabled"
       required
@@ -13,7 +13,7 @@
     <DropDown
       v-model="value.addressKindId"
       :errors="errors.addressKindId"
-      :size="3"
+      :size="2"
       :options="options.addressKinds"
       :disabled="disabled"
       required
@@ -21,11 +21,20 @@
     <InputBox
       v-model="value.streetAddress"
       :errors="errors.streetAddress"
-      :size="6"
+      :size="5"
       :disabled="disabled"
       required
       label="Logradouro"
       hint="Sua rua, avenida, etc." />
+    <InputBox
+      v-model="value.addressNumber"
+      :errors="errors.addressNumber"
+      :size="3"
+      :disabled="disabled"
+      mask="#########"
+      required
+      label="Número"
+      hint="Número da sua residência" />
     <InputBox
       v-model="value.complementAddress"
       :errors="errors.complementAddress"
