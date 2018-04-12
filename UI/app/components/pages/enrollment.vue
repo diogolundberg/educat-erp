@@ -262,9 +262,9 @@
                 v-model="enrollment.options.plans"
                 :columns="[
                   {name: 'name', title: 'Plano'},
-                  {name: 'value', title: 'Total'},
+                  {name: 'value', title: 'Total', css:'right-align'},
                   {name: 'installments', title: 'Parcelas'},
-                  {name: 'dueData', title: 'Vencimento'},
+                  {name: 'dueDate', title: 'Vencimento'},
                   {name: 'guarantors', title: 'Fiadores'},
                 ]"
                 :show-filter="false"
