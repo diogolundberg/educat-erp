@@ -385,8 +385,8 @@
                     :disabled="!!enrollment.data.sentAt"
                     :options="enrollment.options" />
                   <ContactBlock
-                    v-model="enrollment.data.financeData.representative"
-                    :errors="enrollment.errors.financeData.representative"
+                    v-model="item"
+                    :errors="error"
                     :disabled="!!enrollment.data.sentAt" />
                   <Documents
                     v-model="item.documents"
