@@ -625,6 +625,12 @@
           this.step = 3;
         }
       },
+      focusOnErrors() {
+        const firstError = this.$el.querySelector(".error");
+        if (firstError) {
+          firstError.focus();
+        }
+      },
       async savePhoto() {
         const token = this.id;
         const { photo } = this.enrollment.data;
@@ -635,6 +641,7 @@
         const data = this.enrollment.data.personalData;
         await this.$store.dispatch("setPersonalData", { token, data });
         this.goToStep();
+        this.focusOnErrors();
       },
       async saveFinanceData() {
         const token = this.id;
@@ -642,6 +649,7 @@
         data.representative.discriminator = "RepresentativePerson";
         await this.$store.dispatch("setFinanceData", { token, data });
         this.goToStep();
+        this.focusOnErrors();
       },
       async submitEnrollment() {
         const token = this.id;
