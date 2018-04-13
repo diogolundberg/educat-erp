@@ -6,9 +6,9 @@ import { parseDate, yearsAgo } from "./helpers";
 
 Vue.use(VueX);
 
-const url1 = process.env.SSO_HOST || "http://sso.sandbox.eti.br";
-const url2 = process.env.ONBOARDING_HOST || "http://onboarding.sandbox.eti.br";
-const url3 = process.env.UPLOAD_HOST || "http://upload.sandbox.eti.br";
+const url1 = process.env.SSO_HOST || "https://cmmg-sso.azurewebsites.net";
+const url2 = process.env.ONBOARDING_HOST || "https://cmmg-onboarding.azurewebsites.net";
+const url3 = process.env.UPLOAD_HOST || "https://cmmg-upload.azurewebsites.net";
 const url4 = process.env.ZIPCODE_HOST || "http://api.postmon.com.br/v1/cep";
 
 export default new VueX.Store({
