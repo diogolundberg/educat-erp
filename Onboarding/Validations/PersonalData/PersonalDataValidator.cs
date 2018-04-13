@@ -182,7 +182,14 @@ namespace Onboarding.Validations.PersonalData
 
         private bool CheckGraduationYear(Models.PersonalData personalData)
         {
-            return (HasValidation(personalData, DocumentValidations.GraduationYear.ToString()));
+            if (string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) || personalData.HighSchoolGraduationYear != personalData.Enrollment.Onboarding.Year)
+            {
+                return true;
+            }
+            else
+            {
+                return (HasValidation(personalData, DocumentValidations.GraduationYear.ToString()));
+            }
         }
 
         private bool HasValidation(Models.PersonalData personalData, string validation)
@@ -226,7 +233,7 @@ namespace Onboarding.Validations.PersonalData
             }
             else if (validation == DocumentValidations.GraduationYear.ToString())
             {
-                if(personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString())
+                if (personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString())
                 {
                     return "Declaração de conclusão do ensino médio ou histórico escolar é obrigatório.";
                 }
