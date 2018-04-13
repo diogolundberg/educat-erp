@@ -34,6 +34,8 @@
 </template>
 
 <script>
+  import { cloneDeep } from "lodash";
+
   export default {
     name: "Multi",
     props: {
@@ -76,7 +78,7 @@
     },
     methods: {
       add() {
-        const value = [...this.value, this.default];
+        const value = [...this.value, cloneDeep(this.default)];
         this.$emit("input", value);
       },
       remove(item) {

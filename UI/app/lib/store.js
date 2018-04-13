@@ -41,6 +41,8 @@ export default new VueX.Store({
           genderId: null,
           maritalStatusId: null,
           birthCity: null,
+          birthCityId: null,
+          birthState: null,
           birthStateId: null,
           birthCountryId: null,
           highSchoolGraduationCountryId: null,
@@ -170,8 +172,8 @@ export default new VueX.Store({
     },
     SET_ENROLLMENT_ADDRESS(state, response) {
       const { options } = state.enrollment;
-      const stateb = options.state.find(a => a.name === response.estado);
-      const city = options.city.find(a => a.name === response.cidade);
+      const stateb = options.state && options.state.find(a => a.name === response.estado);
+      const city = options.state && options.city.find(a => a.name === response.cidade);
 
       state.enrollment.neighborhood = response.bairro;
       state.enrollment.streetAddress = response.logradouro;
@@ -184,6 +186,10 @@ export default new VueX.Store({
       state.enrollment.underage = yearsAgo(parseDate(personalData.birthDate)) < 18;
 
       if (!state.enrollment.underage) {
+        const relationship = state.enrollment.options.relationships
+          .find(a => a.checkStudentIsRepresentative);
+        representative.relationshipId = relationship && relationship.id;
+
         representative.name = personalData.realName;
         representative.cpf = personalData.cpf;
         representative.streetAddress = personalData.streetAddress;
@@ -197,7 +203,6 @@ export default new VueX.Store({
         representative.cityId = personalData.cityId;
         representative.stateId = personalData.stateId;
         representative.discriminator = "RepresentativePerson";
-        representative.relationshipId = 4;
       }
     },
 

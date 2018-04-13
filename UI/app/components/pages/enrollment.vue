@@ -114,6 +114,7 @@
                 required
                 label="Nacionalidade" />
               <DropDown
+                ref="birthCountry"
                 v-model="enrollment.data.personalData.birthCountryId"
                 :errors="enrollment.errors.personalData.birthCountryId"
                 :size="3"
@@ -122,26 +123,46 @@
                 required
                 label="País de Origem"
                 hint="Ex: Brasil" />
-              <DropDown
-                v-model="enrollment.data.personalData.birthStateId"
-                :errors="enrollment.errors.personalData.birthStateId"
-                :size="3"
-                :options="enrollment.options.states"
-                :disabled="!!enrollment.data.sentAt"
-                required
-                label="UF de Nascimento" />
-              <DropDown
-                v-model="enrollment.data.personalData.birthCityId"
-                :errors="enrollment.errors.personalData.birthCityId"
-                :size="3"
-                :options="enrollment.options.cities"
-                :filter="enrollment.data.personalData.birthStateId"
-                :disabled="!!enrollment.data.sentAt"
-                filter-key="stateId"
-                key-id="name"
-                required
-                label="Naturalidade"
-                hint="Cidade de Nascimento" />
+              <template
+                v-if="$refs.birthCountry && $refs.birthCountry.choice.hasUF !== false">
+                <DropDown
+                  v-model="enrollment.data.personalData.birthStateId"
+                  :errors="enrollment.errors.personalData.birthStateId"
+                  :size="3"
+                  :options="enrollment.options.states"
+                  :disabled="!!enrollment.data.sentAt"
+                  required
+                  label="UF de Nascimento" />
+                <DropDown
+                  v-model="enrollment.data.personalData.birthCityId"
+                  :errors="enrollment.errors.personalData.birthCityId"
+                  :size="3"
+                  :options="enrollment.options.cities"
+                  :filter="enrollment.data.personalData.birthStateId"
+                  :disabled="!!enrollment.data.sentAt"
+                  filter-key="stateId"
+                  key-id="name"
+                  required
+                  label="Naturalidade"
+                  hint="Cidade de Nascimento" />
+              </template>
+              <template v-else>
+                <InputBox
+                  v-model="enrollment.data.personalData.birthState"
+                  :errors="enrollment.errors.personalData.birthState"
+                  :size="3"
+                  :disabled="!!enrollment.data.sentAt"
+                  required
+                  label="UF de Nascimento" />
+                <InputBox
+                  v-model="enrollment.data.personalData.birthCity"
+                  :errors="enrollment.errors.personalData.birthCity"
+                  :size="3"
+                  :disabled="!!enrollment.data.sentAt"
+                  required
+                  label="Naturalidade"
+                  hint="Cidade de Nascimento" />
+              </template>
               <InputBox
                 v-model="enrollment.data.personalData.highSchoolGraduationYear"
                 :errors="enrollment.errors.personalData.highSchoolGraduationYear"
@@ -332,36 +353,40 @@
                 :max-amount="guarantorsAmount"
                 error-key="guarantors">
                 <template slot-scope="{ item, error }">
-                  <InputBox
-                    v-model="item.cpf"
-                    :errors="error.cpf"
-                    :size="4"
-                    :min-size="14"
-                    :disabled="!!enrollment.data.sentAt"
-                    cpf
-                    label="CPF"
-                    mask="###.###.###-##"
-                    hint="Ex: 000.000.000-00" />
-                  <InputBox
-                    v-model="item.name"
-                    :errors="error.name"
-                    :size="5"
-                    :disabled="!!enrollment.data.sentAt"
-                    label="Nome" />
-                  <InputBox
-                    v-model="item.relationshipId"
-                    :errors="error.relationshipId"
-                    :size="3"
-                    :disabled="!!enrollment.data.sentAt"
-                    label="Relacionamento" />
+                  <Fieldset
+                    title="Dados Gerais">
+                    <InputBox
+                      v-model="item.cpf"
+                      :errors="error.cpf"
+                      :size="4"
+                      :min-size="14"
+                      :disabled="!!enrollment.data.sentAt"
+                      cpf
+                      label="CPF"
+                      mask="###.###.###-##"
+                      hint="Ex: 000.000.000-00" />
+                    <InputBox
+                      v-model="item.name"
+                      :errors="error.name"
+                      :size="4"
+                      :disabled="!!enrollment.data.sentAt"
+                      label="Nome" />
+                    <DropDown
+                      v-model="item.relationshipId"
+                      :errors="error.relationshipId"
+                      :size="4"
+                      :options="enrollment.options.relationships"
+                      :disabled="!!enrollment.data.sentAt"
+                      label="Relacionamento com o aluno" />
+                  </FieldSet>
                   <AddressBlock
                     v-model="item"
                     :errors="error"
                     :disabled="!!enrollment.data.sentAt"
                     :options="enrollment.options" />
                   <ContactBlock
-                    v-model="enrollment.data.financeData.representative"
-                    :errors="enrollment.errors.financeData.representative"
+                    v-model="item"
+                    :errors="error"
                     :disabled="!!enrollment.data.sentAt" />
                   <Documents
                     v-model="item.documents"
@@ -380,6 +405,60 @@
                 label="Próximo"
                 @click="saveFinanceData" />
             </div>
+          </Card>
+        </Step>
+        <Step
+          title="Informações da Matrícula"
+          description="Saiba mais sobre seu curso">
+          <Card
+            title="Informações da Matrícula">
+            <Fieldset title="Informações Gerais">
+              <InfoBox
+                label="Curso"
+                value="Medicina" />
+              <InfoBox
+                label="Turno"
+                value="Integral" />
+              <InfoBox
+                label="Forma de Ingresso"
+                value="Vestibular" />
+              <InfoBox
+                label="Data de Ingresso"
+                value="01/02/2018" />
+            </Fieldset>
+            <Fieldset title="Matriz Curricular">
+              <List
+                :show-filter="false"
+                :per-page="40"
+                :columns="[
+                  {name:'series', title: 'Série'},
+                  {name:'class', title: 'Disciplinas', css: 'col-5'},
+                  {name:'theory', title: 'Teórica'},
+                  {name:'practice', title: 'Prática'},
+                  {name:'total', title: 'Total'},
+                ]"
+                :value="[
+                  {series:'1',class:'Anatomia I',theory:80,practice:80,total:160},
+                  {series:'1',class:'Anatomia II',theory:80,practice:80,total:160},
+                  {series:'1',class:'Biofísica I',theory:40,practice:'-',total:40},
+                  {series:'1',class:'Biofísica II',theory:72,practice:'-',total:72},
+                  {series:'1',class:'Bioquímica I',theory:80,practice:'-',total:80},
+                  {series:'1',class:'Bioquímica II',theory:40,practice:40,total:80},
+                  {series:'1',class:'Citologia',theory:80,practice:80,total:160},
+                  {series:'1',class:'Embriologia Humana',theory:80,practice:80,total:160},
+                  {series:'1',class:'Genética',theory:72,practice:72,total:144},
+                  {series:'1',class:'Histologia I',theory:40,practice:40,total:80},
+                  {series:'1',class:'Histologia I',theory:40,practice:40,total:80},
+                  {series:'1',class:'História da Medicina I',theory:72,practice:72,
+                   total:144},
+                  {series:'1',class:'Medicina Preventiva I',theory:80,practice:80,
+                   total:160},
+                  {series:'1',class:'Metodologia Científica',theory:80,practice:80,
+                   total:160},
+                  {series:'1',class:'Práticas em Saúde Coletiva',theory:72,practice:72,
+                   total:144},
+              ]" />
+            </Fieldset>
           </Card>
         </Step>
         <Step
@@ -625,6 +704,12 @@
           this.step = 3;
         }
       },
+      focusOnErrors() {
+        const firstError = this.$el.querySelector(".error");
+        if (firstError) {
+          firstError.focus();
+        }
+      },
       async savePhoto() {
         const token = this.id;
         const { photo } = this.enrollment.data;
@@ -635,6 +720,7 @@
         const data = this.enrollment.data.personalData;
         await this.$store.dispatch("setPersonalData", { token, data });
         this.goToStep();
+        this.focusOnErrors();
       },
       async saveFinanceData() {
         const token = this.id;
@@ -642,6 +728,7 @@
         data.representative.discriminator = "RepresentativePerson";
         await this.$store.dispatch("setFinanceData", { token, data });
         this.goToStep();
+        this.focusOnErrors();
       },
       async submitEnrollment() {
         const token = this.id;
