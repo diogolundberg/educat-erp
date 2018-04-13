@@ -71,7 +71,7 @@ namespace Onboarding.Models
         {
             get
             {
-                return !string.IsNullOrEmpty(SentAt) && !string.IsNullOrEmpty(FinanceApproval) && FinancePendencies.Count() == 0;
+                return !string.IsNullOrEmpty(FinanceApproval) && FinancePendencies.Count() == 0;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Onboarding.Models
         {
             get
             {
-                return !string.IsNullOrEmpty(SentAt) && !string.IsNullOrEmpty(AcademicApproval) && AcademicPendencies.Count() == 0;
+                return !string.IsNullOrEmpty(AcademicApproval) && AcademicPendencies.Count() == 0;
             }
         }
     }
