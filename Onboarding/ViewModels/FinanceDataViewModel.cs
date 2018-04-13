@@ -32,5 +32,7 @@ namespace Onboarding.ViewModels
 
         [JsonIgnore]
         public string UpdatedAt { get; set; }
+
+        public bool Editable { get; set; }
     }
 }

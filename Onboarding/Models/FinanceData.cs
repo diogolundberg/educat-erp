@@ -30,5 +30,14 @@ namespace Onboarding.Models
         public int? PaymentMethodId { get; set; }
 
         public virtual PaymentMethod PaymentMethod { get; set; }
+
+        [NotMapped]
+        public bool Editable
+        {
+            get
+            {
+                return string.IsNullOrEmpty(Enrollment.SentAt) || !Enrollment.FinanceApprovalStatus;
+            }
+        }
     }
 }

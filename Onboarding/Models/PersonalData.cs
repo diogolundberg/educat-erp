@@ -136,5 +136,14 @@ namespace Onboarding.Models
         public virtual ICollection<PersonalDataDisability> PersonalDataDisabilities { get; set; }
 
         public virtual ICollection<PersonalDataDocument> PersonalDataDocuments { get; set; }
+
+        [NotMapped]
+        public bool Editable
+        {
+            get
+            {
+                return string.IsNullOrEmpty(Enrollment.SentAt) || !Enrollment.AcademicApprovalStatus;
+            }
+        }
     }
 }

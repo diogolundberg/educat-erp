@@ -30,6 +30,7 @@ namespace Onboarding.Controllers
             FinanceData financeData = _context.Set<FinanceData>()
                                               .Include("Enrollment.Onboarding")
                                               .Include("Enrollment")
+                                              .Include("Enrollment.Pendencies")
                                               .Include("Enrollment.PersonalData")
                                               .Include("Representative")
                                               .Include("Guarantors")
