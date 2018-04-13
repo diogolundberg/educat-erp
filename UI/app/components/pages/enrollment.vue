@@ -353,28 +353,32 @@
                 :max-amount="guarantorsAmount"
                 error-key="guarantors">
                 <template slot-scope="{ item, error }">
-                  <InputBox
-                    v-model="item.cpf"
-                    :errors="error.cpf"
-                    :size="4"
-                    :min-size="14"
-                    :disabled="!!enrollment.data.sentAt"
-                    cpf
-                    label="CPF"
-                    mask="###.###.###-##"
-                    hint="Ex: 000.000.000-00" />
-                  <InputBox
-                    v-model="item.name"
-                    :errors="error.name"
-                    :size="5"
-                    :disabled="!!enrollment.data.sentAt"
-                    label="Nome" />
-                  <InputBox
-                    v-model="item.relationshipId"
-                    :errors="error.relationshipId"
-                    :size="3"
-                    :disabled="!!enrollment.data.sentAt"
-                    label="Relacionamento" />
+                  <Fieldset
+                    title="Dados Gerais">
+                    <InputBox
+                      v-model="item.cpf"
+                      :errors="error.cpf"
+                      :size="4"
+                      :min-size="14"
+                      :disabled="!!enrollment.data.sentAt"
+                      cpf
+                      label="CPF"
+                      mask="###.###.###-##"
+                      hint="Ex: 000.000.000-00" />
+                    <InputBox
+                      v-model="item.name"
+                      :errors="error.name"
+                      :size="4"
+                      :disabled="!!enrollment.data.sentAt"
+                      label="Nome" />
+                    <DropDown
+                      v-model="item.relationshipId"
+                      :errors="error.relationshipId"
+                      :size="4"
+                      :options="enrollment.options.relationships"
+                      :disabled="!!enrollment.data.sentAt"
+                      label="Relacionamento com o aluno" />
+                  </FieldSet>
                   <AddressBlock
                     v-model="item"
                     :errors="error"
