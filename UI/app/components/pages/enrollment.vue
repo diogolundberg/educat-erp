@@ -114,6 +114,7 @@
                 required
                 label="Nacionalidade" />
               <DropDown
+                ref="birthCountry"
                 v-model="enrollment.data.personalData.birthCountryId"
                 :errors="enrollment.errors.personalData.birthCountryId"
                 :size="3"
@@ -122,26 +123,46 @@
                 required
                 label="País de Origem"
                 hint="Ex: Brasil" />
-              <DropDown
-                v-model="enrollment.data.personalData.birthStateId"
-                :errors="enrollment.errors.personalData.birthStateId"
-                :size="3"
-                :options="enrollment.options.states"
-                :disabled="!!enrollment.data.sentAt"
-                required
-                label="UF de Nascimento" />
-              <DropDown
-                v-model="enrollment.data.personalData.birthCityId"
-                :errors="enrollment.errors.personalData.birthCityId"
-                :size="3"
-                :options="enrollment.options.cities"
-                :filter="enrollment.data.personalData.birthStateId"
-                :disabled="!!enrollment.data.sentAt"
-                filter-key="stateId"
-                key-id="name"
-                required
-                label="Naturalidade"
-                hint="Cidade de Nascimento" />
+              <template
+                v-if="$refs.birthCountry && $refs.birthCountry.choice.hasUF !== false">
+                <DropDown
+                  v-model="enrollment.data.personalData.birthStateId"
+                  :errors="enrollment.errors.personalData.birthStateId"
+                  :size="3"
+                  :options="enrollment.options.states"
+                  :disabled="!!enrollment.data.sentAt"
+                  required
+                  label="UF de Nascimento" />
+                <DropDown
+                  v-model="enrollment.data.personalData.birthCityId"
+                  :errors="enrollment.errors.personalData.birthCityId"
+                  :size="3"
+                  :options="enrollment.options.cities"
+                  :filter="enrollment.data.personalData.birthStateId"
+                  :disabled="!!enrollment.data.sentAt"
+                  filter-key="stateId"
+                  key-id="name"
+                  required
+                  label="Naturalidade"
+                  hint="Cidade de Nascimento" />
+              </template>
+              <template v-else>
+                <InputBox
+                  v-model="enrollment.data.personalData.birthState"
+                  :errors="enrollment.errors.personalData.birthState"
+                  :size="3"
+                  :disabled="!!enrollment.data.sentAt"
+                  required
+                  label="UF de Nascimento" />
+                <InputBox
+                  v-model="enrollment.data.personalData.birthCity"
+                  :errors="enrollment.errors.personalData.birthCity"
+                  :size="3"
+                  :disabled="!!enrollment.data.sentAt"
+                  required
+                  label="Naturalidade"
+                  hint="Cidade de Nascimento" />
+              </template>
               <InputBox
                 v-model="enrollment.data.personalData.highSchoolGraduationYear"
                 :errors="enrollment.errors.personalData.highSchoolGraduationYear"
