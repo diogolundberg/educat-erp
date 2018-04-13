@@ -41,6 +41,8 @@ export default new VueX.Store({
           genderId: null,
           maritalStatusId: null,
           birthCity: null,
+          birthCityId: null,
+          birthState: null,
           birthStateId: null,
           birthCountryId: null,
           highSchoolGraduationCountryId: null,
