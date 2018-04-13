@@ -184,6 +184,10 @@ export default new VueX.Store({
       state.enrollment.underage = yearsAgo(parseDate(personalData.birthDate)) < 18;
 
       if (!state.enrollment.underage) {
+        const relationship = state.enrollment.options.relationships
+          .find(a => a.checkStudentIsRepresentative);
+        representative.relationshipId = relationship && relationship.id;
+
         representative.name = personalData.realName;
         representative.cpf = personalData.cpf;
         representative.streetAddress = personalData.streetAddress;
@@ -197,7 +201,6 @@ export default new VueX.Store({
         representative.cityId = personalData.cityId;
         representative.stateId = personalData.stateId;
         representative.discriminator = "RepresentativePerson";
-        representative.relationshipId = 4;
       }
     },
 
