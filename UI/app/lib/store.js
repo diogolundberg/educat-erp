@@ -170,8 +170,8 @@ export default new VueX.Store({
     },
     SET_ENROLLMENT_ADDRESS(state, response) {
       const { options } = state.enrollment;
-      const stateb = options.state.find(a => a.name === response.estado);
-      const city = options.city.find(a => a.name === response.cidade);
+      const stateb = options.state && options.state.find(a => a.name === response.estado);
+      const city = options.state && options.city.find(a => a.name === response.cidade);
 
       state.enrollment.neighborhood = response.bairro;
       state.enrollment.streetAddress = response.logradouro;
