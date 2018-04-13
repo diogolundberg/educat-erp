@@ -85,8 +85,11 @@ namespace Onboarding.Controllers
                     enrollment.Photo,
                     personalData,
                     financeData,
-                    financePendencies = _context.Set<FinancePendency>().Where(x => x.EnrollmentId == enrollment.Id).Select(x => new { x.Description, x.SectionId, x.Section.Name }),
-                    academicPendencies = _context.Set<AcademicPendency>().Where(x => x.EnrollmentId == enrollment.Id).Select(x => new { x.Description, x.SectionId, x.Section.Name })
+                    pendencies = new
+                    {
+                        financePendencies = enrollment.FinancePendencies.Select(x => new { x.Description, x.SectionId, x.Section.Name }),
+                        academicPendencies = enrollment.AcademicPendencies.Select(x => new { x.Description, x.SectionId, x.Section.Name })
+                    }
                 },
                 options = new
                 {

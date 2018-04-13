@@ -2,6 +2,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Onboarding.Models
@@ -31,7 +33,7 @@ namespace Onboarding.Models
 
         public override string CreateExternalId()
         {
-            return Onboarding.Year + Onboarding.Semester + Regex.Replace(PersonalData.CPF, @"\D", string.Empty); 
+            return Onboarding.Year + Onboarding.Semester + Regex.Replace(PersonalData.CPF, @"\D", string.Empty);
         }
 
         public bool IsDeadlineValid()
@@ -45,6 +47,24 @@ namespace Onboarding.Models
         public int? OnboardingId { get; set; }
 
         public virtual Onboarding Onboarding { get; set; }
+
+        [NotMapped]
+        public IEnumerable<FinancePendency> FinancePendencies
+        {
+            get
+            {
+                return Pendencies.Where(x => x is FinancePendency).Select(x => (FinancePendency)x);
+            }
+        }
+
+        [NotMapped]
+        public IEnumerable<AcademicPendency> AcademicPendencies
+        {
+            get
+            {
+                return Pendencies.Where(x => x is AcademicPendency).Select(x => (AcademicPendency)x);
+            }
+        }
     }
 }
 
