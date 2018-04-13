@@ -71,6 +71,11 @@ namespace Onboarding.Controllers
                         ((Hashtable)errors[split[0]]).Add(split[1], new Hashtable());
                     }
 
+                    if (!((Hashtable)errors[split[0]]).ContainsKey(split[1]))
+                    {
+                        ((Hashtable)errors[split[0]]).Add(split[1], new Hashtable());
+                    }
+
                     ((Hashtable)((Hashtable)errors[split[0]])[split[1]]).Add(split[2].UnCapitalize(), error.Value);
                 }
                 else

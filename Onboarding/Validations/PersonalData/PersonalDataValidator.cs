@@ -22,7 +22,8 @@ namespace Onboarding.Validations.PersonalData
             RuleFor(personalData => personalData.CPF).NotEmpty().Must(cpf => Cpf.ValidCPF(cpf));
             RuleFor(personalData => personalData.NationalityId).NotEmpty();
             RuleFor(personalData => personalData.HighSchoolGraduationYear).NotEmpty();
-            RuleFor(personalData => personalData.Email).NotEmpty().EmailAddress();
+            RuleFor(personalData => personalData.Email).NotEmpty();
+            RuleFor(personalData => personalData.Email).EmailAddress().When(x => !string.IsNullOrEmpty(x.Email));
             RuleFor(personalData => personalData.Zipcode).NotEmpty();
             RuleFor(personalData => personalData.StreetAddress).NotEmpty();
             RuleFor(personalData => personalData.AddressNumber).NotEmpty();

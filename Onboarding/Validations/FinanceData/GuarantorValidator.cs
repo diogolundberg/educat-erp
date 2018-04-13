@@ -17,7 +17,8 @@ namespace Onboarding.Validations
             RuleFor(guarantor => guarantor.Neighborhood).NotEmpty();
             RuleFor(guarantor => guarantor.PhoneNumber).NotEmpty();
             RuleFor(guarantor => guarantor.Landline).NotEmpty();
-            RuleFor(guarantor => guarantor.Email).NotEmpty().EmailAddress();
+            RuleFor(guarantor => guarantor.Email).NotEmpty();
+            RuleFor(guarantor => guarantor.Email).EmailAddress().When(x => !string.IsNullOrEmpty(x.Email));
             RuleFor(guarantor => guarantor.CityId).NotEmpty();
             RuleFor(guarantor => guarantor.StateId).NotEmpty();
             RuleFor(guarantor => guarantor.FinanceDataId).NotEmpty();
