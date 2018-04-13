@@ -141,7 +141,7 @@ namespace Onboarding.Controllers
             _context.Entry(personalData).Reference(x => x.HighSchoolGraduationCountry).Load();
 
             PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
-            viewModel.State = PersonalDataState(personalData);
+            viewModel.Status = PersonalDataState(personalData);
 
             PersonalDataValidator validator = new PersonalDataValidator(_context);
             Hashtable errors = FormatErrors(validator.Validate(personalData));

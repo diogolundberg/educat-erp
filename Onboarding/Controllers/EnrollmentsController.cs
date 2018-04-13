@@ -62,10 +62,10 @@ namespace Onboarding.Controllers
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
-            personalData.State = PersonalDataState(enrollment.PersonalData);
+            personalData.Status = PersonalDataState(enrollment.PersonalData);
 
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
-            financeData.State = FinanceDataState(enrollment.FinanceData);
+            financeData.Status = FinanceDataState(enrollment.FinanceData);
 
             EnrollmentMessagesValidator enrollmentValidator = new EnrollmentMessagesValidator(_context);
             FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
@@ -80,15 +80,18 @@ namespace Onboarding.Controllers
                     StartedAt = enrollment.StartedAt,
                     Deadline = enrollment.Onboarding.EndAt,
                     SentAt = enrollment.SentAt,
-                    enrollment.AcademicApproval,
-                    enrollment.FinanceApproval,
                     enrollment.Photo,
                     personalData,
                     financeData,
-                    pendencies = new
+                    academicApproval = new
                     {
-                        financePendencies = enrollment.FinancePendencies.Select(x => new { x.Description, x.SectionId, x.Section.Name }),
-                        academicPendencies = enrollment.AcademicPendencies.Select(x => new { x.Description, x.SectionId, x.Section.Name })
+                        status = enrollment.AcademicApprovalStatus,
+                        pendencies = enrollment.AcademicPendencies.Select(x => new { x.Description, x.SectionId, x.Section.Name })
+                    },
+                    financeApproval = new
+                    {
+                        status = enrollment.FinanceApprovalStatus,
+                        pendencies = enrollment.FinancePendencies.Select(x => new { x.Description, x.SectionId, x.Section.Name }),
                     }
                 },
                 options = new
@@ -152,16 +155,16 @@ namespace Onboarding.Controllers
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
-            personalData.State = PersonalDataState(enrollment.PersonalData);
+            personalData.Status = PersonalDataState(enrollment.PersonalData);
 
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
-            financeData.State = FinanceDataState(enrollment.FinanceData);
+            financeData.Status = FinanceDataState(enrollment.FinanceData);
 
             EnrollmentMessagesValidator enrollmentValidator = new EnrollmentMessagesValidator(_context);
             FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
             List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).Distinct().ToList();
 
-            if (personalData.State == "valid" && financeData.State == "valid" && enrollmentValidatorResult.IsValid)
+            if (personalData.Status == "valid" && financeData.Status == "valid" && enrollmentValidatorResult.IsValid)
             {
                 enrollment.SentAt = DateTime.Now.ToString("dd/MM/yyyy");
                 enrollment.ReviewedAt = null;
@@ -187,11 +190,11 @@ namespace Onboarding.Controllers
             }
             else
             {
-                if (personalData.State != "valid")
+                if (personalData.Status != "valid")
                 {
                     messages.Add("Os dados pessoais estão inválidos");
                 }
-                if (financeData.State != "valid")
+                if (financeData.Status != "valid")
                 {
                     messages.Add("Os dados financeiros estão inválidos");
                 }
