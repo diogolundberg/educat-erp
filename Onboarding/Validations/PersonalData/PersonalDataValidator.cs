@@ -77,42 +77,49 @@ namespace Onboarding.Validations.PersonalData
                 {
                     if (!CheckForeign(personalData))
                     {
-                        errors.Add(GetMessageError(validation, personalData));
+                        errors.Add(GetMessageError(validation));
                     }
                 }
                 else if (validation == DocumentValidations.Native.ToString())
                 {
                     if (!CheckNative(personalData))
                     {
-                        errors.Add(GetMessageError(validation, personalData));
+                        errors.Add(GetMessageError(validation));
                     }
                 }
                 else if (validation == DocumentValidations.MilitaryDraft.ToString())
                 {
                     if (!CheckMilitaryDraft(personalData))
                     {
-                        errors.Add(GetMessageError(validation, personalData));
+                        errors.Add(GetMessageError(validation));
                     }
                 }
                 else if (validation == DocumentValidations.ForeignGraduation.ToString())
                 {
                     if (!CheckForeignGraduation(personalData))
                     {
-                        errors.Add(GetMessageError(validation, personalData));
+                        errors.Add(GetMessageError(validation));
                     }
                 }
                 else if (validation == DocumentValidations.MinorAge.ToString())
                 {
                     if (!CheckMinorAge(personalData))
                     {
-                        errors.Add(GetMessageError(validation, personalData));
+                        errors.Add(GetMessageError(validation));
                     }
                 }
                 else if (validation == DocumentValidations.GraduationYear.ToString())
                 {
                     if (!CheckGraduationYear(personalData))
                     {
-                        errors.Add(GetMessageError(validation, personalData));
+                        errors.Add(GetMessageError(validation));
+                    }
+                }
+                else if (validation == DocumentValidations.NotGraduationYear.ToString())
+                {
+                    if (!CheckNotGraduationYear(personalData))
+                    {
+                        errors.Add(GetMessageError(validation));
                     }
                 }
             }
@@ -192,6 +199,19 @@ namespace Onboarding.Validations.PersonalData
             }
         }
 
+        private bool CheckNotGraduationYear(Models.PersonalData personalData)
+        {
+            if (string.IsNullOrEmpty(personalData.HighSchoolGraduationYear) || personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year)
+            {
+                return true;
+            }
+            else
+            {
+                return (HasValidation(personalData, DocumentValidations.NotGraduationYear.ToString()));
+            }
+        }
+
+
         private bool HasValidation(Models.PersonalData personalData, string validation)
         {
             return personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId != null && _documentTypes.SingleOrDefault(o => o.Id == x.Document.DocumentTypeId).ValidationList.Contains(validation));
@@ -212,7 +232,7 @@ namespace Onboarding.Validations.PersonalData
             return age;
         }
 
-        private string GetMessageError(string validation, Models.PersonalData personalData)
+        private string GetMessageError(string validation)
         {
             if (validation == DocumentValidations.Foreigner.ToString())
             {
@@ -233,14 +253,11 @@ namespace Onboarding.Validations.PersonalData
             }
             else if (validation == DocumentValidations.GraduationYear.ToString())
             {
-                if (personalData.HighSchoolGraduationYear == personalData.Enrollment.Onboarding.Year.ToString())
-                {
-                    return "Declaração de conclusão do ensino médio ou histórico escolar é obrigatório.";
-                }
-                else
-                {
-                    return "Histórico escolar é obrigatório.";
-                }
+                return "Declaração de conclusão do ensino médio ou histórico escolar é obrigatório.";
+            }
+            else if (validation == DocumentValidations.NotGraduationYear.ToString())
+            {
+                return "Histórico escolar é obrigatório.";
             }
             else if (validation == DocumentValidations.Native.ToString())
             {

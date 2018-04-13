@@ -9,5 +9,6 @@
         GraduationYear = 5,
         Native = 6,
         Spouse = 7,
+        NotGraduationYear = 8
     }
 }
