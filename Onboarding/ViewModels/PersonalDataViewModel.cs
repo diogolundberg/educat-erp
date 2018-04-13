@@ -67,6 +67,10 @@ namespace Onboarding.ViewModels
         [Required]
         public int? BirthCityId { get; set; }
 
+        public string BirthCityName { get; set; }
+
+        public string BirthStateName { get; set; }
+
         [Required]
         public int? BirthStateId { get; set; }
 

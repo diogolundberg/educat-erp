@@ -64,11 +64,15 @@ namespace Onboarding.Models
         [ForeignKey("BirthCity")]
         public int? BirthCityId { get; set; }
 
+        public string BirthCityName { get; set; }
+
         [JsonIgnore]
         public City BirthCity { get; set; }
 
         [ForeignKey("BirthState")]
         public int? BirthStateId { get; set; }
+
+        public string BirthStateName { get; set; }
 
         [JsonIgnore]
         public virtual State BirthState { get; set; }
