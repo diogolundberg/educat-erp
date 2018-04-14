@@ -18,7 +18,7 @@
         class="m0 py2 ease border-none h5 w100 bg-transparent"
         @input="changed"
         @focus="focus = true"
-        @blur="focus = false; validate = true">
+        @blur="focus = false; validate = true; $emit('blur')">
       <label
         :for="`fld${_uid}`"
         :class="{
