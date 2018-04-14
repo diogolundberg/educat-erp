@@ -76,6 +76,7 @@ namespace Onboarding.Controllers
                 messages,
                 data = new
                 {
+                    OnboardingYear = enrollment.Onboarding.Year,
                     ReviewedAt = enrollment.ReviewedAt,
                     StartedAt = enrollment.StartedAt,
                     Deadline = enrollment.Onboarding.EndAt,
