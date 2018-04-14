@@ -14,6 +14,7 @@ namespace Onboarding.ViewModels.AcademicApprovals
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Landline { get; set; }
+        public string Photo { get; set; }
 
         public string BirthDate { get; set; }
         public string HighSchoolGraduationYear { get; set; }

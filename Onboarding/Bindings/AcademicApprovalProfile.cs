@@ -22,6 +22,7 @@ namespace Onboarding.Bindings
 
             CreateMap<PersonalData, Record>()
             .ForMember(x => x.Name, config => config.MapFrom(x => x.RealName))
+            .ForMember(x => x.Photo, config => config.MapFrom(x => x.Enrollment.Photo))
             .ForMember(x => x.EnrollmentNumber, config => config.MapFrom(x => x.Enrollment.ExternalId))
             .ForMember(x => x.Gender, config => config.MapFrom(x => x.Gender.Name))
             .ForMember(x => x.MaritalStatus, config => config.MapFrom(x => x.MaritalStatus.Name))
