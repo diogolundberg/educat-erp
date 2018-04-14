@@ -397,7 +397,7 @@
                     :types="enrollment.options.guarantorDocuments"
                     :prefix="`onboarding/enrollment/${ id }/financeData/`"
                     :disabled="!!enrollment.data.sentAt"
-                    :validations="validations" />
+                    disable-validation />
                 </template>
               </Multi>
             </Fieldset>

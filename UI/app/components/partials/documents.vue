@@ -94,6 +94,10 @@
         type: Boolean,
         default: false,
       },
+      disableValidation: {
+        type: Boolean,
+        default: false,
+      },
       emptyMessage: {
         type: String,
         default: "Sem documentos. Clique no botão acima para fazer upload.",
@@ -119,6 +123,9 @@
         window.open(url, "_blank");
       },
       isActive(type) {
+        if (this.disableValidation) {
+          return true;
+        }
         const validations = type.Validations || [];
         return validations.every(a => this.validations.includes(a));
       },
