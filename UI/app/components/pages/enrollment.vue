@@ -572,7 +572,6 @@
 </template>
 
 <script>
-  import { debounce } from "lodash";
   import { parseDate, daysAgo } from "../../lib/helpers";
 
   export default {
@@ -674,9 +673,6 @@
       },
     },
     watch: {
-      "enrollment.data.personalData.zipcode": debounce(function findZipcode() {
-        this.$store.dispatch("findZipcode");
-      }, 500),
       "enrollment.data.personalData": {
         deep: true,
         handler() {
