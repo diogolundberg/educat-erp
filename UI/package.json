@@ -15,6 +15,7 @@
     "ace-css": "^1.1.0",
     "axios": "^0.18.0",
     "cpf_cnpj": "^0.2.0",
+    "jsonp": "^0.2.1",
     "lodash": "^4.17.5",
     "moment": "^2.22.0",
     "snackbarlightjs": "^1.1.2",
