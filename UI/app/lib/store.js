@@ -16,6 +16,7 @@ export default new VueX.Store({
     token: localStorage.getItem("token"),
     enrollment: {
       data: {
+        onboardingYear: null,
         deadline: null,
         sentAt: null,
         academicApproval: false,
