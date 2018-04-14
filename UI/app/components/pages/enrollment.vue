@@ -658,7 +658,7 @@
           "checkForeignGraduation",
           this.enrollment.data.personalData.highSchoolGraduationCountryId,
         );
-        const gradutionCurrentYear = new Date().getFullYear().toString() ===
+        const gradutionCurrentYear = this.enrollment.data.onboardingYear ===
           this.enrollment.data.personalData.highSchoolGraduationYear;
 
         return [
