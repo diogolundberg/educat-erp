@@ -8,6 +8,7 @@ namespace Onboarding.ViewModels.FinanceApprovals
         public IEnumerable<FinancePendency> Pendencies { get; set; }
 
         public string Name { get; set; }
+        public string Photo { get; set; }
         public string AssumedName { get; set; }
         public string CPF { get; set; }
         public string Email { get; set; }

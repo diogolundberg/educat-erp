@@ -56,6 +56,7 @@ namespace Onboarding.Bindings
                 SectionId = o.SectionId
             })))
             .ForMember(x => x.Name, config => config.MapFrom(x => x.PersonalData.RealName))
+            .ForMember(x => x.Photo, config => config.MapFrom(x => x.Photo))
             .ForMember(x => x.AssumedName, config => config.MapFrom(x => x.PersonalData.AssumedName))
             .ForMember(x => x.CPF, config => config.MapFrom(x => x.PersonalData.CPF))
             .ForMember(x => x.Email, config => config.MapFrom(x => x.PersonalData.Email))
