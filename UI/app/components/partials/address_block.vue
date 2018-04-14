@@ -9,7 +9,8 @@
       required
       label="CEP"
       mask="#####-###"
-      hint="Ex: 30100-000" />
+      hint="Ex: 30100-000"
+      @blur="findZip" />
     <DropDown
       v-model="value.addressKindId"
       :errors="errors.addressKindId"
@@ -73,6 +74,8 @@
 </template>
 
 <script>
+  import { findZip } from "../../lib/helpers";
+
   export default {
     name: "AddressBlock",
     props: {
@@ -91,6 +94,18 @@
       disabled: {
         type: Boolean,
         default: false,
+      },
+    },
+    methods: {
+      async findZip() {
+        const data = await findZip(this.value.zipcode);
+        this.value.neighborhood = data.bairro;
+        this.value.streetAddress = data.logradouro;
+
+        const state = this.options.states.find(a => a.name === data.estado);
+        this.value.stateId = state && state.id;
+        const city = this.options.cities.find(a => a.name === data.cidade);
+        this.value.city = city && city.id;
       },
     },
   };
