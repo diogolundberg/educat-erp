@@ -148,15 +148,15 @@
               </template>
               <template v-else>
                 <InputBox
-                  v-model="enrollment.data.personalData.birthState"
-                  :errors="enrollment.errors.personalData.birthState"
+                  v-model="enrollment.data.personalData.birthStateName"
+                  :errors="enrollment.errors.personalData.birthStateName"
                   :size="3"
                   :disabled="!!enrollment.data.sentAt"
                   required
                   label="UF de Nascimento" />
                 <InputBox
-                  v-model="enrollment.data.personalData.birthCity"
-                  :errors="enrollment.errors.personalData.birthCity"
+                  v-model="enrollment.data.personalData.birthCityName"
+                  :errors="enrollment.errors.personalData.birthCityName"
                   :size="3"
                   :disabled="!!enrollment.data.sentAt"
                   required
