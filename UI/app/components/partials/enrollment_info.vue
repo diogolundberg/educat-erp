@@ -1,5 +1,7 @@
 <template>
-  <div class="max-width-4 m-auto">
+  <div
+    v-if="loaded"
+    class="max-width-4 m-auto">
     <h2>{{ title }}</h2>
     <Fieldset title="Dados Gerais">
       <div>
@@ -155,6 +157,7 @@
     },
     data() {
       return {
+        loaded: false,
         modal: false,
         modalUrl: null,
       };
@@ -171,6 +174,7 @@
     async mounted() {
       const type = this.type === "academic" ? "Academic" : "Finance";
       await this.$store.dispatch(`get${type}ApprovalInfo`, this.id);
+      this.loaded = true;
     },
     methods: {
       async approve() {

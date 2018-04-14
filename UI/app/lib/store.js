@@ -204,8 +204,8 @@ export default new VueX.Store({
       state.financeApprovals = records;
     },
     SET_ENROLLMENT_INFO(state, { data, options }) {
-      Object.assign(state.enrollmentInfo.data, data);
-      Object.assign(state.enrollmentInfo.options, options);
+      state.enrollmentInfo.data = data;
+      state.enrollmentInfo.options = options;
     },
   },
   actions: {
