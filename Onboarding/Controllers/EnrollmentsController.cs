@@ -169,11 +169,6 @@ namespace Onboarding.Controllers
                 enrollment.SentAt = DateTime.Now.ToString("dd/MM/yyyy");
                 enrollment.ReviewedAt = null;
 
-                foreach (Models.Pendency pendency in enrollment.Pendencies)
-                {
-                    _context.Set<Models.Pendency>().Remove(pendency);
-                }
-
                 _context.Set<Enrollment>().Update(enrollment);
                 _context.SaveChanges();
 
