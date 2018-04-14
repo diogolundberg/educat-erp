@@ -2,7 +2,7 @@
   <Fieldset title="Endereço">
     <InputBox
       v-model="value.zipcode"
-      :errors="errors.zipcode"
+      :errors="errors && errors.zipcode"
       :size="2"
       :min-size="9"
       :disabled="disabled"
@@ -13,7 +13,7 @@
       @blur="findZip" />
     <DropDown
       v-model="value.addressKindId"
-      :errors="errors.addressKindId"
+      :errors="errors && errors.addressKindId"
       :size="2"
       :options="options.addressKinds"
       :disabled="disabled"
@@ -21,7 +21,7 @@
       label="Tipo de Endereço" />
     <InputBox
       v-model="value.streetAddress"
-      :errors="errors.streetAddress"
+      :errors="errors && errors.streetAddress"
       :size="5"
       :disabled="disabled"
       required
@@ -29,7 +29,7 @@
       hint="Sua rua, avenida, etc." />
     <InputBox
       v-model="value.addressNumber"
-      :errors="errors.addressNumber"
+      :errors="errors && errors.addressNumber"
       :size="3"
       :disabled="disabled"
       mask="#########"
@@ -38,21 +38,21 @@
       hint="Número da sua residência" />
     <InputBox
       v-model="value.complementAddress"
-      :errors="errors.complementAddress"
+      :errors="errors && errors.complementAddress"
       :size="3"
       :disabled="disabled"
       required
       label="Complemento" />
     <InputBox
       v-model="value.neighborhood"
-      :errors="errors.neighborhood"
+      :errors="errors && errors.neighborhood"
       :size="3"
       :disabled="disabled"
       required
       label="Bairro" />
     <DropDown
       v-model="value.stateId"
-      :errors="errors.stateId"
+      :errors="errors && errors.stateId"
       :size="3"
       :options="options.states"
       :disabled="disabled"
@@ -60,7 +60,7 @@
       label="Estado" />
     <DropDown
       v-model="value.cityId"
-      :errors="errors.cityId"
+      :errors="errors && errors.cityId"
       :size="3"
       :options="options.cities"
       :filter="value.stateId"
@@ -85,6 +85,7 @@
       },
       errors: {
         type: Object,
+        required: false,
         default: () => ({}),
       },
       options: {

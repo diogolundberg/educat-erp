@@ -2,7 +2,7 @@
   <Fieldset title="Dados de Contato">
     <InputBox
       v-model="value.email"
-      :errors="errors.email"
+      :errors="errors && errors.email"
       :size="4"
       :min-size="6"
       :max-size="50"
@@ -12,7 +12,7 @@
       label="E-mail" />
     <InputBox
       v-model="value.phoneNumber"
-      :errors="errors.phoneNumber"
+      :errors="errors && errors.phoneNumber"
       :size="4"
       :min-size="13"
       :max-size="14"
@@ -23,7 +23,7 @@
       hint="Ex: (31) 999999999" />
     <InputBox
       v-model="value.landline"
-      :errors="errors.landline"
+      :errors="errors && errors.landline"
       :size="4"
       :min-size="13"
       :max-size="14"
@@ -45,7 +45,8 @@
       },
       errors: {
         type: Object,
-        required: true,
+        required: false,
+        default: () => ({}),
       },
       disabled: {
         type: Boolean,

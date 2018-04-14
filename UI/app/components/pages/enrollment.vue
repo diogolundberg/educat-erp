@@ -311,7 +311,8 @@
             <Fieldset title="Responsável Financeiro">
               <InputBox
                 v-model="enrollment.data.financeData.representative.cpf"
-                :errors="enrollment.errors.financeData.representative.cpf"
+                :errors="enrollment.errors.financeData.representative &&
+                enrollment.errors.financeData.representative.cpf"
                 :size="4"
                 :min-size="14"
                 :disabled="!!enrollment.data.sentAt || !underage"
@@ -321,13 +322,15 @@
                 hint="Ex: 000.000.000-00" />
               <InputBox
                 v-model="enrollment.data.financeData.representative.name"
-                :errors="enrollment.errors.financeData.representative.name"
+                :errors="enrollment.errors.financeData.representative &&
+                enrollment.errors.financeData.representative.name"
                 :size="4"
                 :disabled="!!enrollment.data.sentAt || !underage"
                 label="Nome completo" />
               <DropDown
                 v-model="enrollment.data.financeData.representative.relationshipId"
-                :errors="enrollment.errors.financeData.representative.relationshipId"
+                :errors="enrollment.errors.financeData.representative &&
+                enrollment.errors.financeData.representative.relationshipId"
                 :size="4"
                 :options="enrollment.options.relationships"
                 :disabled="!!enrollment.data.sentAt || !underage"
