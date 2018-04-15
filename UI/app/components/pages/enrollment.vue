@@ -64,7 +64,7 @@
               <InputBox
                 v-model="enrollment.data.personalData.assumedName"
                 :errors="enrollment.errors.personalData.assumedName"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 :size="6"
                 label="Nome Social"
                 hint="Seu nome social" />
@@ -83,7 +83,7 @@
                 :errors="enrollment.errors.personalData.birthDate"
                 :size="3"
                 :min-size="10"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 date
                 required
                 label="Nascimento"
@@ -94,7 +94,7 @@
                 :errors="enrollment.errors.personalData.maritalStatusId"
                 :size="3"
                 :options="enrollment.options.maritalStatuses"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 required
                 label="Estado Civil" />
               <DropDown
@@ -102,7 +102,7 @@
                 :errors="enrollment.errors.personalData.genderId"
                 :size="3"
                 :options="enrollment.options.genders"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 required
                 label="Sexo" />
               <DropDown
@@ -110,7 +110,7 @@
                 :errors="enrollment.errors.personalData.nationalityId"
                 :size="3"
                 :options="enrollment.options.nationalities"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 required
                 label="Nacionalidade" />
               <DropDown
@@ -119,7 +119,7 @@
                 :errors="enrollment.errors.personalData.birthCountryId"
                 :size="3"
                 :options="enrollment.options.countries"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 required
                 label="País de Origem"
                 hint="Ex: Brasil" />
@@ -130,7 +130,7 @@
                   :errors="enrollment.errors.personalData.birthStateId"
                   :size="3"
                   :options="enrollment.options.states"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!enrollment.data.personalData.editable"
                   required
                   label="UF de Nascimento" />
                 <DropDown
@@ -139,7 +139,7 @@
                   :size="3"
                   :options="enrollment.options.cities"
                   :filter="enrollment.data.personalData.birthStateId"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!enrollment.data.personalData.editable"
                   filter-key="stateId"
                   key-id="name"
                   required
@@ -151,14 +151,14 @@
                   v-model="enrollment.data.personalData.birthStateName"
                   :errors="enrollment.errors.personalData.birthStateName"
                   :size="3"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!enrollment.data.personalData.editable"
                   required
                   label="UF de Nascimento" />
                 <InputBox
                   v-model="enrollment.data.personalData.birthCityName"
                   :errors="enrollment.errors.personalData.birthCityName"
                   :size="3"
-                  :disabled="!!enrollment.data.sentAt"
+                  :disabled="!enrollment.data.personalData.editable"
                   required
                   label="Naturalidade"
                   hint="Cidade de Nascimento" />
@@ -169,7 +169,7 @@
                 :size="6"
                 :min-size="4"
                 :max-size="4"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 :max-value="new Date().getFullYear()"
                 mask="####"
                 required
@@ -180,19 +180,19 @@
                 :errors="enrollment.errors.personalData.highSchoolGraduationCountryId"
                 :size="6"
                 :options="enrollment.options.countries"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 required
                 label="País de conclusão do ensino médio" />
             </Fieldset>
             <ContactBlock
               v-model="enrollment.data.personalData"
               :errors="enrollment.errors.personalData"
-              :disabled="!!enrollment.data.sentAt"
+              :disabled="!enrollment.data.personalData.editable"
               disable-email />
             <AddressBlock
               v-model="enrollment.data.personalData"
               :errors="enrollment.errors.personalData"
-              :disabled="!!enrollment.data.sentAt"
+              :disabled="!enrollment.data.personalData.editable"
               :options="enrollment.options" />
             <Fieldset title="Dados para o Censo">
               <DropDown
@@ -200,7 +200,7 @@
                 :errors="enrollment.errors.personalData.raceId"
                 :size="3"
                 :options="enrollment.options.races"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 required
                 label="Raça" />
               <DropDown
@@ -208,14 +208,14 @@
                 :errors="enrollment.errors.personalData.highSchoolKindId"
                 :size="3"
                 :options="enrollment.options.highSchoolKinds"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 required
                 label="Escola" />
               <InputBox
                 v-model="enrollment.data.personalData.mothersName"
                 :errors="enrollment.errors.personalData.mothersName"
                 :size="6"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 required
                 label="Nome completo da mãe" />
             </Fieldset>
@@ -224,7 +224,7 @@
                 v-model="enrollment.data.personalData.handicap"
                 :errors="enrollment.errors.personalData.handicap"
                 :options="handicap"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 required
                 label="Possui alguma Deficiência, Transtorno Global do
                   Desenvolvimento, ou Habilidades/Superdotação?" />
@@ -236,7 +236,7 @@
                 v-model="enrollment.data.personalData.disabilities"
                 :errors="enrollment.errors.personalData.disabilities"
                 :options="enrollment.options.disabilities"
-                :disabled="!!enrollment.data.sentAt" />
+                :disabled="!enrollment.data.personalData.editable" />
             </Fieldset>
             <Fieldset
               v-if="enrollment.data.personalData.handicap == 'yes'"
@@ -245,7 +245,7 @@
                 v-model="enrollment.data.personalData.specialNeeds"
                 :errors="enrollment.errors.personalData.specialNeeds"
                 :options="enrollment.options.specialNeeds"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 :filter="enrollment.data.personalData.disabilities"
                 filter-key="disabilityId" />
             </Fieldset>
@@ -255,12 +255,12 @@
                 :types="enrollment.options.personalDocuments"
                 :errors="enrollment.errors.personalData.documents"
                 :prefix="`onboarding/enrollment/${ id }/personalData/`"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 :validations="validations" />
             </Fieldset>
             <div class="flex justify-end">
               <Btn
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.personalData.editable"
                 primary
                 label="Próximo"
                 @click="savePersonalData" />
@@ -289,7 +289,7 @@
                   {name: 'guarantors', title: 'Fiadores'},
                 ]"
                 :show-filter="false"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.financeData.editable"
                 @click="enrollment.data.financeData.planId = $event.id">
                 <template
                   slot="column-name"
@@ -305,7 +305,7 @@
                 :errors="enrollment.errors.financeData.paymentMethodId"
                 :size="6"
                 :options="enrollment.options.paymentMethod"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.financeData.editable"
                 label="Meio de Pagamento" />
             </Fieldset>
             <Fieldset title="Responsável Financeiro">
@@ -315,7 +315,7 @@
                 enrollment.errors.financeData.representative.cpf"
                 :size="4"
                 :min-size="14"
-                :disabled="!!enrollment.data.sentAt || !underage"
+                :disabled="!enrollment.data.financeData.editable || !underage"
                 cpf
                 label="CPF"
                 mask="###.###.###-##"
@@ -325,7 +325,7 @@
                 :errors="enrollment.errors.financeData.representative &&
                 enrollment.errors.financeData.representative.name"
                 :size="4"
-                :disabled="!!enrollment.data.sentAt || !underage"
+                :disabled="!enrollment.data.financeData.editable || !underage"
                 label="Nome completo" />
               <DropDown
                 v-model="enrollment.data.financeData.representative.relationshipId"
@@ -333,18 +333,18 @@
                 enrollment.errors.financeData.representative.relationshipId"
                 :size="4"
                 :options="enrollment.options.relationships"
-                :disabled="!!enrollment.data.sentAt || !underage"
+                :disabled="!enrollment.data.financeData.editable || !underage"
                 label="Relacionamento com o aluno" />
             </Fieldset>
             <ContactBlock
               v-model="enrollment.data.financeData.representative"
               :errors="enrollment.errors.financeData.representative"
-              :disabled="!!enrollment.data.sentAt || !underage" />
+              :disabled="!enrollment.data.financeData.editable || !underage" />
             <AddressBlock
               v-model="enrollment.data.financeData.representative"
               :errors="enrollment.errors.financeData.representative"
               :options="enrollment.options"
-              :disabled="!!enrollment.data.sentAt || !underage" />
+              :disabled="!enrollment.data.financeData.editable || !underage" />
             <Fieldset
               v-if="guarantorsAmount > 0"
               title="Fiadores">
@@ -352,7 +352,7 @@
                 v-model="enrollment.data.financeData.guarantors"
                 :errors="enrollment.errors.financeData"
                 :default="emptyGuarantor"
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.financeData.editable"
                 :max-amount="guarantorsAmount"
                 error-key="guarantors">
                 <template slot-scope="{ item, error }">
@@ -363,7 +363,7 @@
                       :errors="error.cpf"
                       :size="4"
                       :min-size="14"
-                      :disabled="!!enrollment.data.sentAt"
+                      :disabled="!enrollment.data.financeData.editable"
                       cpf
                       label="CPF"
                       mask="###.###.###-##"
@@ -372,38 +372,38 @@
                       v-model="item.name"
                       :errors="error.name"
                       :size="4"
-                      :disabled="!!enrollment.data.sentAt"
+                      :disabled="!enrollment.data.financeData.editable"
                       label="Nome" />
                     <DropDown
                       v-model="item.relationshipId"
                       :errors="error.relationshipId"
                       :size="4"
                       :options="enrollment.options.relationships"
-                      :disabled="!!enrollment.data.sentAt"
+                      :disabled="!enrollment.data.financeData.editable"
                       label="Relacionamento com o aluno" />
                   </FieldSet>
                   <AddressBlock
                     v-model="item"
                     :errors="error"
-                    :disabled="!!enrollment.data.sentAt"
+                    :disabled="!enrollment.data.financeData.editable"
                     :options="enrollment.options" />
                   <ContactBlock
                     v-model="item"
                     :errors="error"
-                    :disabled="!!enrollment.data.sentAt" />
+                    :disabled="!enrollment.data.financeData.editable" />
                   <Documents
                     v-model="item.documents"
                     :errors="error.documents"
                     :types="enrollment.options.guarantorDocuments"
                     :prefix="`onboarding/enrollment/${ id }/financeData/`"
-                    :disabled="!!enrollment.data.sentAt"
+                    :disabled="!enrollment.data.financeData.editable"
                     disable-validation />
                 </template>
               </Multi>
             </Fieldset>
             <div class="flex justify-end">
               <Btn
-                :disabled="!!enrollment.data.sentAt"
+                :disabled="!enrollment.data.financeData.editable"
                 primary
                 label="Próximo"
                 @click="saveFinanceData" />
