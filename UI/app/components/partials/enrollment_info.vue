@@ -6,19 +6,23 @@
     <Fieldset title="Dados Gerais">
       <div>
         <strong>CPF</strong>: {{ enrollment.data.cpf }}<br>
-        <strong>Nome</strong>: {{ enrollment.data.realName }}<br>
+        <strong>Nome</strong>: {{ enrollment.data.name }}<br>
         <strong>Nome Civil</strong>: {{ enrollment.data.assumedName }}<br>
-        <strong>Nascimento</strong>: {{ enrollment.data.birthDate }}<br>
-        <strong>Nome da Mãe</strong>: {{ enrollment.data.mothersName }}<br>
-        <strong>Sexo</strong>: {{ enrollment.data.gender }}<br>
-        <strong>Estado Civil</strong>: {{ enrollment.data.maritalStatus }}<br>
-        <strong>Naturalidade</strong>: {{ enrollment.data.birthCity }}<br>
-        <strong>Estado de Nascimento</strong>: {{ enrollment.data.birthState }}<br>
-        <strong>País de Origem</strong>: {{ enrollment.data.birthCountry }}<br>
-        <strong>Nacionalidade</strong>: {{ enrollment.data.nationality }}<br>
+        <template v-if="type=='academic'">
+          <strong>Nascimento</strong>: {{ enrollment.data.birthDate }}<br>
+          <strong>Nome da Mãe</strong>: {{ enrollment.data.mothersName }}<br>
+          <strong>Sexo</strong>: {{ enrollment.data.gender }}<br>
+          <strong>Estado Civil</strong>: {{ enrollment.data.maritalStatus }}<br>
+          <strong>Naturalidade</strong>: {{ enrollment.data.birthCity }}<br>
+          <strong>Estado de Nascimento</strong>: {{ enrollment.data.birthState }}<br>
+          <strong>País de Origem</strong>: {{ enrollment.data.birthCountry }}<br>
+          <strong>Nacionalidade</strong>: {{ enrollment.data.nationality }}<br>
+        </template>
       </div>
     </Fieldset>
-    <Fieldset title="Dados para o Censo">
+    <Fieldset
+      v-if="type=='academic'"
+      title="Dados para o Censo">
       <div>
         <strong>Raça</strong>: {{ enrollment.data.race }}<br>
         <strong>Tipo da Escola</strong>: {{ enrollment.data.highSchollKind }}<br>
@@ -34,7 +38,9 @@
         <strong>Telefone Fixo</strong>: {{ enrollment.data.landline }}<br>
       </div>
     </Fieldset>
-    <Fieldset title="Endereço">
+    <Fieldset
+      v-if="type=='academic'"
+      title="Endereço">
       <div>
         <strong>CEP</strong>: {{ enrollment.data.zipcode }}<br>
         <strong>Logradouro</strong>: {{ enrollment.data.streetAddress }}<br>
@@ -46,7 +52,7 @@
       </div>
     </Fieldset>
     <Fieldset
-      v-if="enrollment.data.handicap === 'yes'"
+      v-if="enrollment.data.handicap === 'yes' && type=='academic'"
       title="Deficiências">
       <div>
         <ul>
@@ -59,7 +65,7 @@
       </div>
     </Fieldset>
     <Fieldset
-      v-if="enrollment.data.handicap === 'yes'"
+      v-if="enrollment.data.handicap === 'yes' && type=='academic'"
       title="Necessidades Especiais">
       <div>
         <ul>
@@ -69,6 +75,61 @@
             {{ specialNeed }}
           </li>
         </ul>
+      </div>
+    </Fieldset>
+    <Fieldset
+      v-if="type=='finance' && enrollment.data.plan"
+      title="Plano">
+      <div>
+        <strong>Nome</strong>: {{ enrollment.data.plan.name }}<br>
+        <strong>Prestações</strong>: {{ enrollment.data.plan.installments }}<br>
+        <strong>Vencimento</strong>: {{ enrollment.data.plan.dueDate }}<br>
+        <strong>Descrição</strong>: {{ enrollment.data.plan.description }}<br>
+        <strong>Valor</strong>: {{ enrollment.data.plan.value }}<br>
+        <strong>Fiadores</strong>: {{ enrollment.data.plan.guarantors }}<br>
+      </div>
+    </Fieldset>
+    <Fieldset title="Pagamento">
+      <div>
+        <strong>Meio de Pagamento</strong>: {{ enrollment.data.paymentMethod }}<br>
+      </div>
+    </Fieldset>
+    <Fieldset title="Responsável Financeiro">
+      <div>
+        <strong>CPF</strong>: {{ enrollment.data.representative.cpf }}<br>
+        <strong>Nome</strong>: {{ enrollment.data.representative.name }}<br>
+        <strong>E-mail</strong>: {{ enrollment.data.representative.email }}<br>
+        <strong>Telefone</strong>: {{ enrollment.data.representative.phoneNumber }}<br>
+        <strong>Telefone Fixo</strong>: {{ enrollment.data.representative.landline }}<br>
+        <strong>CEP</strong>: {{ enrollment.data.representative.zipcode }}<br>
+        <strong>Tipo</strong>: {{ enrollment.data.representative.addressKind }}<br>
+        <strong>Endereço</strong>: {{ enrollment.data.representative.streetAddress }}<br>
+        <strong>Complemento</strong>:
+        {{ enrollment.data.representative.complementAddress }}<br>
+        <strong>Bairro</strong>: {{ enrollment.data.representative.neighborhood }}<br>
+        <strong>Cidade</strong>: {{ enrollment.data.representative.city }}<br>
+        <strong>Estado</strong>: {{ enrollment.data.representative.state }}<br>
+      </div>
+    </Fieldset>
+    <Fieldset
+      v-if="enrollment.data.guarantors.length"
+      title="Fiadores">
+      <div
+        v-for="(guarantor, index) in enrollment.data.guarantors"
+        :key="index">
+        <strong>CPF</strong>: {{ guarantor.cpf }}<br>
+        <strong>Nome</strong>: {{ guarantor.name }}<br>
+        <strong>E-mail</strong>: {{ guarantor.email }}<br>
+        <strong>Telefone</strong>: {{ guarantor.phoneNumber }}<br>
+        <strong>Telefone Fixo</strong>: {{ guarantor.landline }}<br>
+        <strong>CEP</strong>: {{ guarantor.zipcode }}<br>
+        <strong>Tipo</strong>: {{ guarantor.addressKind }}<br>
+        <strong>Endereço</strong>: {{ guarantor.streetAddress }}<br>
+        <strong>Complemento</strong>: {{ guarantor.complementAddress }}<br>
+        <strong>Bairro</strong>: {{ guarantor.neighborhood }}<br>
+        <strong>Cidade</strong>: {{ guarantor.city }}<br>
+        <strong>Estado</strong>: {{ guarantor.state }}<br>
+        <hr>
       </div>
     </Fieldset>
     <Fieldset title="Documentos">
