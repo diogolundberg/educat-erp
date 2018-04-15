@@ -94,7 +94,9 @@
         <strong>Meio de Pagamento</strong>: {{ enrollment.data.paymentMethod }}<br>
       </div>
     </Fieldset>
-    <Fieldset title="Responsável Financeiro">
+    <Fieldset
+      v-if="enrollment.data.representative"
+      title="Responsável Financeiro">
       <div>
         <strong>CPF</strong>: {{ enrollment.data.representative.cpf }}<br>
         <strong>Nome</strong>: {{ enrollment.data.representative.name }}<br>
@@ -112,7 +114,7 @@
       </div>
     </Fieldset>
     <Fieldset
-      v-if="enrollment.data.guarantors.length"
+      v-if="enrollment.data.guarantors && enrollment.data.guarantors.length"
       title="Fiadores">
       <div
         v-for="(guarantor, index) in enrollment.data.guarantors"
