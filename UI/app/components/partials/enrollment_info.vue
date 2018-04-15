@@ -4,7 +4,17 @@
     class="max-width-4 m-auto">
     <h2>{{ title }}</h2>
     <Fieldset title="Dados Gerais">
-      <div>
+      <div class="col-12">
+        <div class="right">
+          <img
+            v-if="enrollment.data.photo"
+            :src="enrollment.data.photo"
+            class="rounded shadow2 x6 y6 bg-white">
+          <img
+            v-if="!enrollment.data.photo"
+            src="../../assets/img/people.svg"
+            class="rounded shadow2 x6 y6 bg-white">
+        </div>
         <strong>CPF</strong>: {{ enrollment.data.cpf }}<br>
         <strong>Nome</strong>: {{ enrollment.data.name }}<br>
         <strong>Nome Civil</strong>: {{ enrollment.data.assumedName }}<br>
