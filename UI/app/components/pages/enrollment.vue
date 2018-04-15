@@ -348,12 +348,12 @@
             <Fieldset
               v-if="guarantorsAmount > 0"
               title="Fiadores">
-              <Multi
+              <Many
                 v-model="enrollment.data.financeData.guarantors"
                 :errors="enrollment.errors.financeData"
                 :default="emptyGuarantor"
                 :disabled="!enrollment.data.financeData.editable"
-                :max-amount="guarantorsAmount"
+                :amount="guarantorsAmount"
                 error-key="guarantors">
                 <template slot-scope="{ item, error }">
                   <Fieldset
@@ -399,7 +399,7 @@
                     :disabled="!enrollment.data.financeData.editable"
                     disable-validation />
                 </template>
-              </Multi>
+              </Many>
             </Fieldset>
             <div class="flex justify-end">
               <Btn
