@@ -129,22 +129,41 @@
       <div
         v-for="(guarantor, index) in enrollment.data.guarantors"
         :key="index">
-        <strong>CPF</strong>: {{ guarantor.cpf }}<br>
-        <strong>Nome</strong>: {{ guarantor.name }}<br>
-        <strong>E-mail</strong>: {{ guarantor.email }}<br>
-        <strong>Telefone</strong>: {{ guarantor.phoneNumber }}<br>
-        <strong>Telefone Fixo</strong>: {{ guarantor.landline }}<br>
-        <strong>CEP</strong>: {{ guarantor.zipcode }}<br>
-        <strong>Tipo</strong>: {{ guarantor.addressKind }}<br>
-        <strong>Endereço</strong>: {{ guarantor.streetAddress }}<br>
-        <strong>Complemento</strong>: {{ guarantor.complementAddress }}<br>
-        <strong>Bairro</strong>: {{ guarantor.neighborhood }}<br>
-        <strong>Cidade</strong>: {{ guarantor.city }}<br>
-        <strong>Estado</strong>: {{ guarantor.state }}<br>
+        <Fieldset :title="`Fiador ${index+1}`">
+          <div>
+            <strong>CPF</strong>: {{ guarantor.cpf }}<br>
+            <strong>Nome</strong>: {{ guarantor.name }}<br>
+            <strong>E-mail</strong>: {{ guarantor.email }}<br>
+            <strong>Telefone</strong>: {{ guarantor.phoneNumber }}<br>
+            <strong>Telefone Fixo</strong>: {{ guarantor.landline }}<br>
+            <strong>CEP</strong>: {{ guarantor.zipcode }}<br>
+            <strong>Tipo</strong>: {{ guarantor.addressKind }}<br>
+            <strong>Endereço</strong>: {{ guarantor.streetAddress }}<br>
+            <strong>Complemento</strong>: {{ guarantor.complementAddress }}<br>
+            <strong>Bairro</strong>: {{ guarantor.neighborhood }}<br>
+            <strong>Cidade</strong>: {{ guarantor.city }}<br>
+            <strong>Estado</strong>: {{ guarantor.state }}<br>
+          </div>
+        </Fieldset>
+        <Fieldset title="Documentos">
+          <div>
+            <li
+              v-for="document in guarantor.documents"
+              :key="document.url">
+              <a
+                href="#"
+                @click.prevent="modalUrl = document.url">
+                {{ document.name }}
+              </a>
+            </li>
+          </div>
+        </Fieldset>
         <hr>
       </div>
     </Fieldset>
-    <Fieldset title="Documentos">
+    <Fieldset
+      v-if="enrollment.data.documents && enrollment.data.documents.length"
+      title="Documentos">
       <div>
         <li
           v-for="document in enrollment.data.documents"
