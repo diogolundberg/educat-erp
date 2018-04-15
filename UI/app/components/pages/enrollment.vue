@@ -24,13 +24,13 @@
         header
         class="max-width-4 m-auto">
         <Step
-          :complete="enrollment.data.personalData.state === 'valid'"
-          :error="enrollment.data.personalData.state === 'invalid'"
+          :complete="enrollment.data.personalData.status === 'valid'"
+          :error="enrollment.data.personalData.status === 'invalid'"
           title="Seus Dados"
           description="Preencha seus dados pessoais">
           <Card
-            :complete="enrollment.data.personalData.state === 'valid'"
-            :error="enrollment.data.personalData.state === 'invalid'"
+            :complete="enrollment.data.personalData.status === 'valid'"
+            :error="enrollment.data.personalData.status === 'invalid'"
             title="Seus Dados"
             @close="step = 0">
             <BaseErrors
@@ -268,13 +268,13 @@
           </Card>
         </Step>
         <Step
-          :complete="enrollment.data.financeData.state == 'valid'"
-          :error="enrollment.data.financeData.state == 'invalid'"
+          :complete="enrollment.data.financeData.status == 'valid'"
+          :error="enrollment.data.financeData.status == 'invalid'"
           title="Dados Financeiros"
           description="Aqui você insere seus dados de pagamento.">
           <Card
-            :complete="enrollment.data.financeData.state === 'valid'"
-            :error="enrollment.data.financeData.state === 'invalid'"
+            :complete="enrollment.data.financeData.status === 'valid'"
+            :error="enrollment.data.financeData.status === 'invalid'"
             title="Dados Financeiros">
             <BaseErrors
               v-model="enrollment.messages.financeData" />
@@ -411,6 +411,7 @@
           </Card>
         </Step>
         <Step
+          :complete="!!enrollment.data.sentAt"
           title="Informações da Matrícula"
           description="Saiba mais sobre seu curso">
           <Card
@@ -462,6 +463,13 @@
                    total:144},
               ]" />
             </Fieldset>
+            <div class="flex justify-end">
+              <Btn
+                :disabled="!!enrollment.data.sentAt"
+                primary
+                label="Próximo"
+                @click="step = 4" />
+            </div>
           </Card>
         </Step>
         <Step
@@ -507,23 +515,25 @@
           </Card>
         </Step>
         <Step
-          :complete="!!enrollment.data.academicApproval"
-          :warning="!enrollment.data.academicApproval && !!enrollment.data.reviewedAt"
+          :complete="enrollment.data.academicApproval.status"
+          :warning="!enrollment.data.academicApproval.status
+          && !!enrollment.data.reviewedAt"
           title="Aprovação da Secretaria"
           description="A secretaria irá analisar seus documentos para aprovar
             sua matrícula.">
           <Card
-            v-if="!enrollment.data.academicApproval && !enrollment.data.reviewedAt"
+            v-if="!enrollment.data.academicApproval.status && !enrollment.data.reviewedAt"
             title="Aprovação da Secretaria">
             Sua aprovação ainda está pendente.
           </Card>
           <Card
-            v-if="enrollment.data.academicApproval"
+            v-if="enrollment.data.academicApproval.status"
             title="Matrícula Aprovada pela Secretaria">
             A secretaria já aprovou sua matrícula.
           </Card>
           <Card
-            v-if="!enrollment.data.academicApproval && !!enrollment.data.reviewedAt"
+            v-if="!enrollment.data.academicApproval.status
+            && !!enrollment.data.reviewedAt"
             title="Matrícula Reprovada pela Secretaria">
             A secretaria solicitou ajustes para completar sua matrícula.
             <div class="flex justify-end">
@@ -535,23 +545,26 @@
           </Card>
         </Step>
         <Step
-          :complete="!!enrollment.data.financeApproval"
-          :warning="!enrollment.data.financeApproval && !!enrollment.data.reviewedAt"
+          :complete="enrollment.data.financeApproval.status"
+          :warning="!enrollment.data.financeApproval.status
+          && !!enrollment.data.reviewedAt"
           title="Aprovação do Financeiro"
           description="O financeiro irá analisar sua matrícula para aprovar
             sua matrícula.">
           <Card
-            v-if="!enrollment.data.financeApproval && !enrollment.data.reviewedAt"
+            v-if="!enrollment.data.financeApproval.status
+            && !enrollment.data.reviewedAt"
             title="Aprovação do Financeiro">
             Sua aprovação ainda está pendente.
           </Card>
           <Card
-            v-if="!!enrollment.data.financeApproval"
+            v-if="enrollment.data.financeApproval.status"
             title="Matrícula Aprovada pelo Financeiro">
             Nosso departamento financeiro já aprovou sua matrícula.
           </Card>
           <Card
-            v-if="!enrollment.data.financeApproval && !!enrollment.data.reviewedAt"
+            v-if="!enrollment.data.financeApproval.status
+            && !!enrollment.data.reviewedAt"
             title="Matrícula Reprovada pelo Financeiro">
             Nosso departamento financeiro solicitou ajustes para completar sua matrícula.
             <div class="flex justify-end">
@@ -693,14 +706,14 @@
     },
     methods: {
       goToStep() {
-        if (this.enrollment.data.personalData.state === "valid") {
+        if (this.enrollment.data.personalData.status === "valid") {
           this.step = 2;
         }
-        if (this.enrollment.data.financeData.state === "valid") {
+        if (this.enrollment.data.financeData.status === "valid") {
           this.step = 3;
         }
-        if (this.enrollment.data.sentAt) {
-          this.step = 3;
+        if (this.enrollment.data.sentAt != null) {
+          this.step = 4;
         }
       },
       focusOnErrors() {
