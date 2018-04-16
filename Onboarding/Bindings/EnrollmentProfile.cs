@@ -12,7 +12,7 @@ namespace Onboarding.Bindings
         {
             CreateMap<Models.Enrollment, Record>()
                 .ForMember(x => x.OnboardingYear, config => config.MapFrom(x => x.Onboarding.Year))
-                .ForMember(x => x.StartedAt, config => config.MapFrom(x => x.StartedAt))
+                .ForMember(x => x.StartedAt, config => config.MapFrom(x => x.StartedAt.Format()))
                 .ForMember(x => x.FirstTime, config => config.MapFrom(x => !x.StartedAt.HasValue))
                 .ForMember(x => x.Deadline, config => config.MapFrom(x => x.Onboarding.EndAt))
                 .ForMember(x => x.Photo, config => config.MapFrom(x => x.Photo))
