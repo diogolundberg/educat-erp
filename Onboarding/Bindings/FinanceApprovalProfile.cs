@@ -15,7 +15,7 @@ namespace Onboarding.Bindings
             .ForMember(x => x.BirthDate, config => config.MapFrom(x => x.PersonalData.BirthDate))
             .ForMember(x => x.Email, config => config.MapFrom(x => x.PersonalData.Email))
             .ForMember(x => x.PhoneNumber, config => config.MapFrom(x => x.PersonalData.PhoneNumber))
-            .ForMember(x => x.UpdatedAt, config => config.MapFrom(x => x.FinanceData.UpdatedAt))
+            .ForMember(x => x.UpdatedAt, config => config.MapFrom(x => x.FinanceData.UpdatedAt.Format()))
             .ForMember(x => x.Plan, config => config.MapFrom(x => x.FinanceData.Plan.Name))
             .ForMember(x => x.PhoneNumber, config => config.MapFrom(x => x.PersonalData.PhoneNumber));
 

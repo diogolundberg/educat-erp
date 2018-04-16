@@ -81,6 +81,7 @@ namespace Onboarding
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.Converters.Add(new PolymorphicRepresentativeViewModelConverter());
+                    options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
                 });
 
             services.Configure<MvcOptions>(options =>
