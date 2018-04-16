@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Onboarding.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace Onboarding.Controllers
         [HttpPost("{token}", Name = "ONBOARDING/ACADEMICPENDENCIES/EDIT")]
         public dynamic Edit(string token)
         {
-            Enrollment enrollment = _context.Enrollments.Include("Pendencies").Single(x => x.ExternalId == token);
+            Enrollment enrollment = _context.Enrollments.Include("Onboarding").Include("Pendencies").Single(x => x.ExternalId == token);
 
             if (enrollment == null)
             {

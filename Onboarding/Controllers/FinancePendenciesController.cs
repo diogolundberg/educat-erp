@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Onboarding.Models;
 using System.Collections.Generic;
 using System.Linq;
