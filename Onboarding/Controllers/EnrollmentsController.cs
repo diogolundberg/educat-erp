@@ -10,6 +10,7 @@ using Onboarding.Validations;
 using Onboarding.Validations.FinanceData;
 using Onboarding.Validations.PersonalData;
 using Onboarding.ViewModels;
+using Onboarding.ViewModels.Enrollments;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -76,26 +77,7 @@ namespace Onboarding.Controllers
             return new
             {
                 messages,
-                data = new
-                {
-                    OnboardingYear = enrollment.Onboarding.Year,
-                    StartedAt = enrollment.StartedAt,
-                    Deadline = enrollment.Onboarding.EndAt,
-                    SentAt = enrollment.SentAt,
-                    enrollment.Photo,
-                    personalData,
-                    financeData,
-                    academicApproval = new
-                    {
-                        status = (new AcademicApprovalStatus(enrollmentValidator, enrollment)).GetStatus(),
-                        pendencies = enrollment.AcademicPendencies.Select(x => new { x.Description, x.SectionId, x.Section.Name })
-                    },
-                    financeApproval = new
-                    {
-                        status = (new FinanceApprovalStatus(enrollmentValidator, enrollment)).GetStatus(),
-                        pendencies = enrollment.FinancePendencies.Select(x => new { x.Description, x.SectionId, x.Section.Name }),
-                    }
-                },
+                data = _mapper.Map<Record>(enrollment),
                 options = new
                 {
                     _context.Genders,

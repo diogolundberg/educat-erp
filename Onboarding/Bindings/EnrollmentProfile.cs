@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using Onboarding.Models;
-using Onboarding.ViewModels;
+using Onboarding.Statuses;
+using Onboarding.ViewModels.Enrollments;
+using System.Linq;
 
 namespace Onboarding.Bindings
 {
@@ -8,7 +9,23 @@ namespace Onboarding.Bindings
     {
         public EnrollmentProfile()
         {
-            CreateMap<Enrollment, EnrollmentViewModel>().ReverseMap();
+            CreateMap<Models.Enrollment, Record>()
+                .ForMember(x => x.OnboardingYear, config => config.MapFrom(x => x.Onboarding.Year))
+                .ForMember(x => x.StartedAt, config => config.MapFrom(x => x.StartedAt))
+                .ForMember(x => x.Deadline, config => config.MapFrom(x => x.Onboarding.EndAt))
+                .ForMember(x => x.Photo, config => config.MapFrom(x => x.Photo))
+                .ForMember(x => x.PersonalData, config => config.MapFrom(x => x.PersonalData))
+                .ForMember(x => x.FinanceData, config => config.MapFrom(x => x.FinanceData))
+                .ForMember(x => x.AcademicApproval, config => config.MapFrom(x => new
+                {
+                    status = (new AcademicApprovalStatus(null, x)).GetStatus(),
+                    pendencies = x.AcademicPendencies.Select(ap => new { ap.Description, ap.SectionId, ap.Section.Name })
+                }))
+                .ForMember(x => x.FinanceApproval, config => config.MapFrom(x => new
+                {
+                    status = (new FinanceApprovalStatus(null, x)).GetStatus(),
+                    pendencies = x.FinancePendencies.Select(fp => new { fp.Description, fp.SectionId, fp.Section.Name }),
+                }));
         }
     }
 }
