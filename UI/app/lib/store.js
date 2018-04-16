@@ -188,6 +188,7 @@ export default new VueX.Store({
         representative.phoneNumber = personalData.phoneNumber;
         representative.landline = personalData.landline;
         representative.email = personalData.email;
+        representative.addressNumber = personalData.addressNumber;
         representative.zipcode = personalData.zipcode;
         representative.addressKindId = personalData.addressKindId;
         representative.cityId = personalData.cityId;
