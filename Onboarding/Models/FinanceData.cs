@@ -37,7 +37,7 @@ namespace Onboarding.Models
         {
             get
             {
-                return !Enrollment.SentAt.HasValue || Enrollment.FinancePendencies.Count() == 0;
+                return !Enrollment.SentAt.HasValue || Enrollment.FinancePendencies.Count() > 0;
             }
         }
     }
