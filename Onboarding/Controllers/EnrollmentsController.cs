@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Data.Entity;
 using Onboarding.Models;
+using Onboarding.Statuses;
 using Onboarding.Validations;
 using Onboarding.Validations.FinanceData;
 using Onboarding.Validations.PersonalData;
@@ -62,10 +63,10 @@ namespace Onboarding.Controllers
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
-            personalData.Status = PersonalDataState(enrollment.PersonalData);
+            personalData.Status = (new PersonalDataStatus(new PersonalDataValidator(_context), enrollment.PersonalData)).GetStatus();
 
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
-            financeData.Status = FinanceDataState(enrollment.FinanceData);
+            financeData.Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus();
 
             EnrollmentMessagesValidator enrollmentValidator = new EnrollmentMessagesValidator(_context);
             FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
@@ -161,10 +162,10 @@ namespace Onboarding.Controllers
             }
 
             PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
-            personalData.Status = PersonalDataState(enrollment.PersonalData);
+            personalData.Status = (new PersonalDataStatus(new PersonalDataValidator(_context), enrollment.PersonalData)).GetStatus();
 
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
-            financeData.Status = FinanceDataState(enrollment.FinanceData);
+            financeData.Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus();
 
             EnrollmentMessagesValidator enrollmentValidator = new EnrollmentMessagesValidator(_context);
             FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
@@ -201,47 +202,6 @@ namespace Onboarding.Controllers
                 }
 
                 return new BadRequestObjectResult(new { messages });
-            }
-        }
-
-        private string PersonalDataState(PersonalData personalData)
-        {
-            PersonalDataValidator validator = new PersonalDataValidator(_context);
-            FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
-
-            if (!personalData.UpdatedAt.HasValue)
-            {
-                return "empty";
-            }
-
-            if (results.IsValid)
-            {
-                return "valid";
-            }
-            else
-            {
-                return "invalid";
-            }
-        }
-
-        private string FinanceDataState(FinanceData financeData)
-        {
-            FinanceDataValidator validator = new FinanceDataValidator(_context);
-            FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
-            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
-            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(financeData);
-
-            if (!financeData.UpdatedAt.HasValue)
-            {
-                return "empty";
-            }
-            if (results.IsValid && resultsMessages.IsValid)
-            {
-                return "valid";
-            }
-            else
-            {
-                return "invalid";
             }
         }
     }

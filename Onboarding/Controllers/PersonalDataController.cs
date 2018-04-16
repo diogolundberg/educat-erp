@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Models;
+using Onboarding.Statuses;
 using Onboarding.Validations;
 using Onboarding.Validations.PersonalData;
 using Onboarding.ViewModels;
@@ -142,7 +143,7 @@ namespace Onboarding.Controllers
             _context.Entry(personalData).Reference(x => x.HighSchoolGraduationCountry).Load();
 
             PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
-            viewModel.Status = PersonalDataState(personalData);
+            viewModel.Status = (new PersonalDataStatus(new PersonalDataValidator(_context), personalData)).GetStatus();
 
             PersonalDataValidator validator = new PersonalDataValidator(_context);
             Hashtable errors = FormatErrors(validator.Validate(personalData));
@@ -152,25 +153,6 @@ namespace Onboarding.Controllers
                 errors,
                 data = viewModel
             });
-        }
-
-        private string PersonalDataState(PersonalData personalData)
-        {
-            PersonalDataValidator validator = new PersonalDataValidator(_context);
-            FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
-
-            if (!personalData.UpdatedAt.HasValue)
-            {
-                return "empty";
-            }
-            if (results.IsValid)
-            {
-                return "valid";
-            }
-            else
-            {
-                return "invalid";
-            }
         }
     }
 }

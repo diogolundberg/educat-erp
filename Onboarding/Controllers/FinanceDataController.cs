@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using Onboarding.Validations;
 using Onboarding.Validations.FinanceData;
+using Onboarding.Statuses;
 
 namespace Onboarding.Controllers
 {
@@ -192,7 +193,7 @@ namespace Onboarding.Controllers
             _context.Entry(financeData).Collection(x => x.Guarantors).Load();
 
             FinanceDataViewModel viewModel = _mapper.Map<FinanceDataViewModel>(financeData);
-            viewModel.Status = FinanceDataState(financeData);
+            viewModel.Status = (new FinanceDataStatus(new FinanceDataValidator(_context), financeData, new FinanceDataMessagesValidator(_context))).GetStatus();
 
             FinanceDataValidator validator = new FinanceDataValidator(_context);
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
@@ -207,27 +208,6 @@ namespace Onboarding.Controllers
                 errors,
                 data = viewModel
             });
-        }
-
-        private string FinanceDataState(FinanceData financeData)
-        {
-            FinanceDataValidator validator = new FinanceDataValidator(_context);
-            FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
-            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
-            FluentValidation.Results.ValidationResult resultsMessages = messagesValidator.Validate(financeData);
-
-            if (!financeData.UpdatedAt.HasValue)
-            {
-                return "empty";
-            }
-            if (results.IsValid && resultsMessages.IsValid)
-            {
-                return "valid";
-            }
-            else
-            {
-                return "invalid";
-            }
         }
     }
 }
