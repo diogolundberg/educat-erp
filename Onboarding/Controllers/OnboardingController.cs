@@ -71,16 +71,19 @@ namespace Onboarding.Controllers
                 {
                     Representative = new RepresentativePerson()
                 };
+            }
 
+            _context.Onboardings.Add(onboarding);
+            _context.SaveChanges();
+
+            foreach (Enrollment enrollment in onboarding.Enrollments)
+            {
                 string link = string.Format("http://cmmg-ui.netlify.com/enroll/{0}", enrollment.ExternalId);
                 string messageBody = GetEmailBody("enrollment_invite.html").Replace("{link}", link);
                 string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
 
                 SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
             }
-
-            _context.Onboardings.Add(onboarding);
-            _context.SaveChanges();
 
             return new OkObjectResult(new
             {
