@@ -79,7 +79,6 @@ namespace Onboarding.Controllers
                 data = new
                 {
                     OnboardingYear = enrollment.Onboarding.Year,
-                    ReviewedAt = enrollment.ReviewedAt,
                     StartedAt = enrollment.StartedAt,
                     Deadline = enrollment.Onboarding.EndAt,
                     SentAt = enrollment.SentAt,
@@ -147,14 +146,14 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado" } });
             }
 
-            if (!string.IsNullOrEmpty(enrollment.SentAt))
+            if (enrollment.SentAt.HasValue)
             {
                 return new BadRequestObjectResult(new { messages = new List<string> { "Estes dados já foram enviados para a análises e não pode ser editados no momento." } });
             }
 
-            if (string.IsNullOrEmpty(enrollment.StartedAt))
+            if (!enrollment.StartedAt.HasValue)
             {
-                enrollment.StartedAt = DateTime.Now.ToString("dd/MM/yyyy");
+                enrollment.StartedAt = DateTime.Now;
 
                 _context.Set<Enrollment>().Update(enrollment);
                 _context.SaveChanges();
@@ -174,8 +173,7 @@ namespace Onboarding.Controllers
 
             if (personalData.Status == "valid" && financeData.Status == "valid" && enrollmentValidatorResult.IsValid)
             {
-                enrollment.SentAt = DateTime.Now.ToString("dd/MM/yyyy");
-                enrollment.ReviewedAt = null;
+                enrollment.SentAt = DateTime.Now;
 
                 _context.Set<Enrollment>().Update(enrollment);
                 _context.SaveChanges();
@@ -184,8 +182,8 @@ namespace Onboarding.Controllers
                 string subject = "Sua matricula foi enviada para análise";
                 string messageBody = GetEmailBody("enrollment_sent.html")
                                      .Replace("{student_name}", enrollment.PersonalData.RealName)
-                                     .Replace("{send_at}", enrollment.SentAt)
-                                     .Replace("{send_at_hour}", DateTime.Now.ToString("HH:mm"));
+                                     .Replace("{send_at}", enrollment.SentAt.Value.ToString("dd/MM/yyyy"))
+                                     .Replace("{send_at_hour}", enrollment.SentAt.Value.ToString("HH:mm"));
 
                 SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
 

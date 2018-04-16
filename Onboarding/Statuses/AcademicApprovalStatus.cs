@@ -12,7 +12,7 @@ namespace Onboarding.Statuses
 
         public override string GetStatus()
         {
-            if (!string.IsNullOrEmpty(_entity.SentAt) && !string.IsNullOrEmpty(_entity.AcademicApproval) && _entity.AcademicPendencies.Count() == 0)
+            if (_entity.SentAt.HasValue && _entity.AcademicApproval.HasValue && _entity.AcademicPendencies.Count() == 0)
             {
                 return "approved";
             }

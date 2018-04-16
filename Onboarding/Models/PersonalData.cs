@@ -143,7 +143,7 @@ namespace Onboarding.Models
         {
             get
             {
-                return string.IsNullOrEmpty(Enrollment.SentAt) || Enrollment.AcademicPendencies.Count() > 0;
+                return !Enrollment.SentAt.HasValue || Enrollment.AcademicPendencies.Count() > 0;
             }
         }
     }
