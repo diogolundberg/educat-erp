@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace Onboarding.Models
@@ -142,7 +143,7 @@ namespace Onboarding.Models
         {
             get
             {
-                return string.IsNullOrEmpty(Enrollment.SentAt) || !Enrollment.AcademicApprovalStatus;
+                return string.IsNullOrEmpty(Enrollment.SentAt) || (!string.IsNullOrEmpty(Enrollment.AcademicApproval) && Enrollment.AcademicPendencies.Count() == 0);
             }
         }
     }

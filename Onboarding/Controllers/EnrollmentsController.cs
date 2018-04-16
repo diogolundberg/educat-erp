@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -68,7 +69,7 @@ namespace Onboarding.Controllers
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
             financeData.Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus();
 
-            EnrollmentMessagesValidator enrollmentValidator = new EnrollmentMessagesValidator(_context);
+            EnrollmentValidator enrollmentValidator = new EnrollmentValidator(_context);
             FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
             List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).Distinct().ToList();
 
@@ -87,12 +88,12 @@ namespace Onboarding.Controllers
                     financeData,
                     academicApproval = new
                     {
-                        status = enrollment.AcademicApprovalStatus,
+                        status = (new AcademicApprovalStatus(enrollmentValidator, enrollment)).GetStatus(),
                         pendencies = enrollment.AcademicPendencies.Select(x => new { x.Description, x.SectionId, x.Section.Name })
                     },
                     financeApproval = new
                     {
-                        status = enrollment.FinanceApprovalStatus,
+                        status = (new FinanceApprovalStatus(enrollmentValidator, enrollment)).GetStatus(),
                         pendencies = enrollment.FinancePendencies.Select(x => new { x.Description, x.SectionId, x.Section.Name }),
                     }
                 },
@@ -167,7 +168,7 @@ namespace Onboarding.Controllers
             FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
             financeData.Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus();
 
-            EnrollmentMessagesValidator enrollmentValidator = new EnrollmentMessagesValidator(_context);
+            EnrollmentValidator enrollmentValidator = new EnrollmentValidator(_context);
             FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
             List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).Distinct().ToList();
 

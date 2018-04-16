@@ -65,24 +65,6 @@ namespace Onboarding.Models
                 return Pendencies.Where(x => x is AcademicPendency).Select(x => (AcademicPendency)x);
             }
         }
-
-        [NotMapped]
-        public bool FinanceApprovalStatus
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(FinanceApproval) && FinancePendencies.Count() == 0;
-            }
-        }
-
-        [NotMapped]
-        public bool AcademicApprovalStatus
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(AcademicApproval) && AcademicPendencies.Count() == 0;
-            }
-        }
     }
 }
 
