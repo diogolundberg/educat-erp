@@ -62,7 +62,7 @@ namespace Onboarding.Models
             }
             set
             {
-                if (value.Count() == 11)
+                if (value != null && value.Count() == 11)
                 {
                     _Cpf = Convert.ToUInt64(value).ToString(@"000\.000\.000\-00");
                 }
