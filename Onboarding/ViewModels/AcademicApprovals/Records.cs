@@ -16,6 +16,8 @@ namespace Onboarding.ViewModels.AcademicApprovals
 
         public string State { get; set; }
 
+        public string Status { get; set; }
+
         public string UpdatedAt { get; set; }
     }
 }

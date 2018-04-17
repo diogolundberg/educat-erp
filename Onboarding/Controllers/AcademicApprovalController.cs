@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Onboarding.Models;
+using Onboarding.Statuses;
 using Onboarding.Validations;
 using Onboarding.Validations.PersonalData;
 using Onboarding.ViewModels.AcademicApprovals;
@@ -32,6 +33,7 @@ namespace Onboarding.Controllers
         {
             List<Enrollment> enrollments = _context.Enrollments
                                                    .Include("Onboarding")
+                                                   .Include("Pendencies")
                                                    .Include("PersonalData")
                                                    .Include("PersonalData.PersonalDataDocuments")
                                                    .Include("PersonalData.PersonalDataSpecialNeeds")
@@ -43,8 +45,8 @@ namespace Onboarding.Controllers
 
             foreach (Records record in records)
             {
-                PersonalData personalData = enrollments.Single(x => x.ExternalId == record.EnrollmentNumber).PersonalData;
-                record.State = PersonalDataState(personalData);
+                Enrollment enrollment = enrollments.Single(x => x.ExternalId == record.EnrollmentNumber);
+                record.Status = record.State = (new AcademicApprovalStatus(null, enrollment)).GetStatus();
             }
 
             return new { records };
