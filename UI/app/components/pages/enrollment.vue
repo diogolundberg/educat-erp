@@ -346,7 +346,7 @@
               :options="enrollment.options"
               :disabled="!enrollment.data.financeData.editable || !underage" />
             <Fieldset
-              v-if="guarantorsAmount > 0"
+              v-show="guarantorsAmount > 0"
               title="Fiadores">
               <Many
                 v-model="enrollment.data.financeData.guarantors"
