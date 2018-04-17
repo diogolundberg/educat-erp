@@ -23,7 +23,7 @@ namespace Onboarding.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("{token}", Name = "ONBOARDING/FINANCEPENDENCIES/EDIT")]
+        [HttpDelete("{token}", Name = "ONBOARDING/FINANCEPENDENCIES/DELETE")]
         public dynamic Edit(string token)
         {
             Enrollment enrollment = _context.Enrollments.Include("Pendencies").Single(x => x.ExternalId == token);
