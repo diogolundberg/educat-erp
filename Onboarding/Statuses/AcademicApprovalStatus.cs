@@ -22,7 +22,7 @@ namespace Onboarding.Statuses
             }
             else
             {
-                return "reviewed";
+                return "inReview";
             }
         }
     }
