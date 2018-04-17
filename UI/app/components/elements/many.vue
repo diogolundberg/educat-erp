@@ -43,7 +43,9 @@
     watch: {
       amount(value) {
         range(0, value).forEach((i) => {
-          this.value[i] = this.value[i] || this.default;
+          if (this.value[i] == null) {
+            this.$set(this.value, i, cloneDeep(this.default));
+          }
         });
         this.value.splice(value);
       },
