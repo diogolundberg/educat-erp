@@ -397,7 +397,7 @@
                     :types="enrollment.options.guarantorDocuments"
                     :prefix="`onboarding/enrollment/${ id }/financeData/`"
                     :disabled="!enrollment.data.financeData.editable"
-                    disable-validation />
+                    :validations="validationsFor(item)" />
                 </template>
               </Many>
             </Fieldset>
@@ -745,6 +745,20 @@
       async submitEnrollment() {
         const token = this.id;
         await this.$store.dispatch("submitEnrollment", { token });
+      },
+      validationsFor(item) {
+        const matches = (opt, key, val) =>
+          this.enrollment.options[opt].filter(a => a[key]).map(a => a.id).includes(val);
+
+        const isSpouse = matches(
+          "relationships",
+          "checkSpouse",
+          item.relationshipId,
+        );
+
+        return [
+          isSpouse && "Spouse",
+        ];
       },
     },
   };
