@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Onboarding.Models;
+using Onboarding.Statuses;
 using Onboarding.Validations;
 using Onboarding.Validations.FinanceData;
 using Onboarding.ViewModels.FinanceApprovals;
@@ -32,6 +33,7 @@ namespace Onboarding.Controllers
         {
             List<Enrollment> enrollments = _context.Enrollments
                                                     .Include("Onboarding")
+                                                    .Include("Pendencies")
                                                     .Include("PersonalData")
                                                     .Include("FinanceData")
                                                     .Include("FinanceData.Plan")
@@ -47,8 +49,8 @@ namespace Onboarding.Controllers
 
             foreach (Records record in records)
             {
-                FinanceData financeData = enrollments.Single(x => x.ExternalId == record.EnrollmentNumber).FinanceData;
-                record.State = FinanceDataState(financeData);
+                Enrollment enrollment = enrollments.Single(x => x.ExternalId == record.EnrollmentNumber);
+                record.Status = record.State = (new FinanceApprovalStatus(null, enrollment)).GetStatus();
             }
 
             return new { records };
