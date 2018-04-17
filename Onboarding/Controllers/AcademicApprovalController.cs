@@ -157,11 +157,6 @@ namespace Onboarding.Controllers
                     enrollment.AcademicApproval = DateTime.Now;
                 }
 
-                if (form.Pendencies.Count() > 0 || enrollment.FinancePendencies.Count() > 0)
-                {
-                    enrollment.SentAt = null;
-                }
-
                 _context.Set<Enrollment>().Update(enrollment);
 
                 _context.SaveChanges();

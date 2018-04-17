@@ -145,11 +145,6 @@ namespace Onboarding.Controllers
                     enrollment.FinanceApproval = DateTime.Now;
                 }
 
-                if (form.Pendencies.Count() > 0 || enrollment.Pendencies.OfType<AcademicPendency>().Count() > 0)
-                {
-                    enrollment.SentAt = null;
-                }
-
                 List<string> messages = new List<string>();
 
                 _context.Set<Enrollment>().Update(enrollment);
