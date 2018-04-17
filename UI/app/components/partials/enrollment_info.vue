@@ -177,11 +177,13 @@
       </div>
     </Fieldset>
 
-    <div class="flex justify-end">
+    <div class="flex justify-end m3">
       <Btn
+        fab
         primary
-        label="Aprovar/Reprovar"
-        @click="modal = true" />
+        @click="modal = true">
+        <icon name="warning" />
+      </Btn>
     </div>
 
     <Modal
