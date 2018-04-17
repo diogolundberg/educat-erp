@@ -1,6 +1,7 @@
 <template>
   <span :is="container">
     <ButtonGroup
+      v-if="options.length > 1"
       :options="options"
       :value="value"
       @input="$emit('input', $event)" />
@@ -39,7 +40,7 @@
         const pages = Math.ceil(this.records / this.perPage);
         const first = Math.min(Math.max(this.value - this.offset, 1), pages);
         const last = Math.min(this.value + this.offset, pages);
-        return range(first, last).map(n => ({ id: n, name: `${n}` }));
+        return range(first, last + 1).map(n => ({ id: n, name: `${n}` }));
       },
     },
   };
