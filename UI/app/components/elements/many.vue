@@ -1,6 +1,5 @@
 <template>
   <div class="col-12">
-    {{ value }}
     <template v-for="(item, index) in items">
       <slot
         :item="value[index]"
