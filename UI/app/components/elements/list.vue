@@ -76,7 +76,7 @@
       perPage: {
         type: Number,
         required: false,
-        default: 5,
+        default: 25,
       },
       noneMessage: {
         type: String,
