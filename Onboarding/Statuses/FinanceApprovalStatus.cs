@@ -12,13 +12,17 @@ namespace Onboarding.Statuses
 
         public override string GetStatus()
         {
-            if (_entity.SentAt.HasValue && _entity.FinanceApproval.HasValue && _entity.FinancePendencies.Count() == 0)
+            if (_entity.FinanceApproval.HasValue)
             {
                 return "approved";
             }
-            else
+            else if (_entity.FinancePendencies.Count() > 0)
             {
                 return "pending";
+            }
+            else
+            {
+                return "reviewed";
             }
         }
     }
