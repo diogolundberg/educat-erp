@@ -677,7 +677,7 @@
           this.enrollment.data.personalData.highSchoolGraduationYear;
 
         return [
-          !this.underage && "MinorAge",
+          "MinorAge",
           isNative && "Native",
           isForeigner && "Foreigner",
           hasDraft && "MilitaryDraft",
