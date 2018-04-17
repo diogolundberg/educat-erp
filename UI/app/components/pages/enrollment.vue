@@ -515,25 +515,23 @@
           </Card>
         </Step>
         <Step
-          :complete="enrollment.data.academicApproval.status"
-          :warning="!enrollment.data.academicApproval.status
-          && !!enrollment.data.reviewedAt"
+          :complete="enrollment.data.academicApproval.status === 'approved'"
+          :warning="enrollment.data.academicApproval.status === 'pending'"
           title="Aprovação da Secretaria"
           description="A secretaria irá analisar seus documentos para aprovar
             sua matrícula.">
           <Card
-            v-if="!enrollment.data.academicApproval.status && !enrollment.data.reviewedAt"
+            v-if="enrollment.data.academicApproval.status === 'inReview'"
             title="Aprovação da Secretaria">
             Sua aprovação ainda está pendente.
           </Card>
           <Card
-            v-if="enrollment.data.academicApproval.status"
+            v-if="enrollment.data.academicApproval.status === 'approved'"
             title="Matrícula Aprovada pela Secretaria">
             A secretaria já aprovou sua matrícula.
           </Card>
           <Card
-            v-if="!enrollment.data.academicApproval.status
-            && !!enrollment.data.reviewedAt"
+            v-if="enrollment.data.academicApproval.status === 'pending'"
             title="Matrícula Reprovada pela Secretaria">
             A secretaria solicitou ajustes para completar sua matrícula.
             <div class="flex justify-end">
@@ -545,26 +543,23 @@
           </Card>
         </Step>
         <Step
-          :complete="enrollment.data.financeApproval.status"
-          :warning="!enrollment.data.financeApproval.status
-          && !!enrollment.data.reviewedAt"
+          :complete="enrollment.data.financeApproval.status === 'approved'"
+          :warning="enrollment.data.financeApproval.status === 'pending'"
           title="Aprovação do Financeiro"
           description="O financeiro irá analisar sua matrícula para aprovar
             sua matrícula.">
           <Card
-            v-if="!enrollment.data.financeApproval.status
-            && !enrollment.data.reviewedAt"
+            v-if="enrollment.data.financeApproval.status === 'inReview'"
             title="Aprovação do Financeiro">
             Sua aprovação ainda está pendente.
           </Card>
           <Card
-            v-if="enrollment.data.financeApproval.status"
+            v-if="enrollment.data.financeApproval.status === 'approved'"
             title="Matrícula Aprovada pelo Financeiro">
             Nosso departamento financeiro já aprovou sua matrícula.
           </Card>
           <Card
-            v-if="!enrollment.data.financeApproval.status
-            && !!enrollment.data.reviewedAt"
+            v-if="enrollment.data.financeApproval.status === 'pending'"
             title="Matrícula Reprovada pelo Financeiro">
             Nosso departamento financeiro solicitou ajustes para completar sua matrícula.
             <div class="flex justify-end">
@@ -617,7 +612,7 @@
           cnpj: "",
           name: "",
           contact: "",
-          relationship: "",
+          relationshipId: null,
           streetAddress: "",
           complementAddress: "",
           neighborhood: "",
