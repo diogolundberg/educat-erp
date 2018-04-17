@@ -21,7 +21,26 @@ namespace Onboarding.Models
 
         public string BirthDate { get; set; }
 
-        public string CPF { get; set; }
+        [NotMapped]
+        private string _CPF { get; set; }
+        public string CPF
+        {
+            get
+            {
+                return _CPF;
+            }
+            set
+            {
+                if (value.Count() == 11)
+                {
+                    _CPF = Convert.ToUInt64(value).ToString(@"000\.000\.000\-00");
+                }
+                else
+                {
+                    _CPF = value;
+                }
+            }
+        }
 
         public string HighSchoolGraduationYear { get; set; }
 

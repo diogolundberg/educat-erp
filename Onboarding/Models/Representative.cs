@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Onboarding.Models
 {
@@ -50,7 +52,26 @@ namespace Onboarding.Models
 
     public class RepresentativePerson : Representative
     {
-        public string Cpf { get; set; }
+        [NotMapped]
+        private string _Cpf { get; set; }
+        public string Cpf
+        {
+            get
+            {
+                return _Cpf;
+            }
+            set
+            {
+                if (value.Count() == 11)
+                {
+                    _Cpf = Convert.ToUInt64(value).ToString(@"000\.000\.000\-00");
+                }
+                else
+                {
+                    _Cpf = value;
+                }
+            }
+        }
 
         [ForeignKey("Relationship")]
         public int? RelationshipId { get; set; }
