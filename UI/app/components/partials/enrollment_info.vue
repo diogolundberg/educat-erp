@@ -15,18 +15,40 @@
             src="../../assets/img/people.svg"
             class="rounded shadow2 x6 y6 bg-white">
         </div>
-        <strong>CPF</strong>: {{ enrollment.data.cpf }}<br>
-        <strong>Nome</strong>: {{ enrollment.data.name }}<br>
-        <strong>Nome Civil</strong>: {{ enrollment.data.assumedName }}<br>
+        <KeyValue
+          :value="enrollment.data.cpf"
+          title="CPF" />
+        <KeyValue
+          :value="enrollment.data.name"
+          title="Nome" />
+        <KeyValue
+          :value="enrollment.data.assumedName"
+          title="Nome Social" />
         <template v-if="type=='academic'">
-          <strong>Nascimento</strong>: {{ enrollment.data.birthDate }}<br>
-          <strong>Nome da Mãe</strong>: {{ enrollment.data.mothersName }}<br>
-          <strong>Sexo</strong>: {{ enrollment.data.gender }}<br>
-          <strong>Estado Civil</strong>: {{ enrollment.data.maritalStatus }}<br>
-          <strong>Naturalidade</strong>: {{ enrollment.data.birthCity }}<br>
-          <strong>Estado de Nascimento</strong>: {{ enrollment.data.birthState }}<br>
-          <strong>País de Origem</strong>: {{ enrollment.data.birthCountry }}<br>
-          <strong>Nacionalidade</strong>: {{ enrollment.data.nationality }}<br>
+          <KeyValue
+            :value="enrollment.data.birthDate"
+            title="Nascimento" />
+          <KeyValue
+            :value="enrollment.data.mothersName"
+            title="Nome da Mãe" />
+          <KeyValue
+            :value="enrollment.data.gender"
+            title="Sexo" />
+          <KeyValue
+            :value="enrollment.data.maritalStatus"
+            title="Estado Civil" />
+          <KeyValue
+            :value="enrollment.data.birthCity"
+            title="Naturalidade" />
+          <KeyValue
+            :value="enrollment.data.birthState"
+            title="Estado de Nascimento" />
+          <KeyValue
+            :value="enrollment.data.birthCountry"
+            title="País de Origem" />
+          <KeyValue
+            :value="enrollment.data.nationality"
+            title="Nacionalidade" />
         </template>
       </div>
     </Fieldset>
@@ -34,31 +56,58 @@
       v-if="type=='academic'"
       title="Dados para o Censo">
       <div>
-        <strong>Raça</strong>: {{ enrollment.data.race }}<br>
-        <strong>Tipo da Escola</strong>: {{ enrollment.data.highSchollKind }}<br>
-        <strong>Graduou em</strong>: {{ enrollment.data.highSchoolGraduationYear }}<br>
-        <strong>País da Escola:</strong>:
-        {{ enrollment.data.highSchoolGraduationCountry }}<br>
+        <KeyValue
+          :value="enrollment.data.race"
+          title="Raça" />
+        <KeyValue
+          :value="enrollment.data.highSchollKind"
+          title="Tipo da Escola" />
+        <KeyValue
+          :value="enrollment.data.highSchoolGraduationYear"
+          title="Graduou em" />
+        <KeyValue
+          :value="enrollment.data.highSchoolGraduationCountry"
+          title="País da Escola" />
       </div>
     </Fieldset>
     <Fieldset title="Contato">
       <div>
-        <strong>E-Mail</strong>: {{ enrollment.data.email }}<br>
-        <strong>Telefone</strong>: {{ enrollment.data.phoneNumber }}<br>
-        <strong>Telefone Fixo</strong>: {{ enrollment.data.landline }}<br>
+        <KeyValue
+          :value="enrollment.data.email"
+          title="E-Mail" />
+        <KeyValue
+          :value="enrollment.data.phoneNumber"
+          title="Telefone" />
+        <KeyValue
+          :value="enrollment.data.landline"
+          title="Telefone Fixo" />
       </div>
     </Fieldset>
     <Fieldset
       v-if="type=='academic'"
       title="Endereço">
       <div>
-        <strong>CEP</strong>: {{ enrollment.data.zipcode }}<br>
-        <strong>Logradouro</strong>: {{ enrollment.data.streetAddress }}<br>
-        <strong>Tipo</strong>: {{ enrollment.data.addressKind }}<br>
-        <strong>Complemento</strong>: {{ enrollment.data.complementAddress }}<br>
-        <strong>Bairro</strong>: {{ enrollment.data.neighborhood }}<br>
-        <strong>Cidade</strong>: {{ enrollment.data.city }}<br>
-        <strong>Estado</strong>: {{ enrollment.data.state }}<br>
+        <KeyValue
+          :value="enrollment.data.zipcode"
+          title="CEP" />
+        <KeyValue
+          :value="enrollment.data.streetAddress"
+          title="Logradouro" />
+        <KeyValue
+          :value="enrollment.data.addressKind"
+          title="Tipo" />
+        <KeyValue
+          :value="enrollment.data.complementAddress"
+          title="Complemento" />
+        <KeyValue
+          :value="enrollment.data.neighborhood"
+          title="Bairro" />
+        <KeyValue
+          :value="enrollment.data.city"
+          title="Cidade" />
+        <KeyValue
+          :value="enrollment.data.state"
+          title="Estado" />
       </div>
     </Fieldset>
     <Fieldset
@@ -91,36 +140,72 @@
       v-if="type=='finance' && enrollment.data.plan"
       title="Plano">
       <div>
-        <strong>Nome</strong>: {{ enrollment.data.plan.name }}<br>
-        <strong>Prestações</strong>: {{ enrollment.data.plan.installments }}<br>
-        <strong>Vencimento</strong>: {{ enrollment.data.plan.dueDate }}<br>
-        <strong>Descrição</strong>: {{ enrollment.data.plan.description }}<br>
-        <strong>Valor</strong>: {{ enrollment.data.plan.value }}<br>
-        <strong>Fiadores</strong>: {{ enrollment.data.plan.guarantors }}<br>
+        <KeyValue
+          :value="enrollment.data.plan.name"
+          title="Nome" />
+        <KeyValue
+          :value="enrollment.data.plan.installments"
+          title="Prestações" />
+        <KeyValue
+          :value="enrollment.data.plan.dueDate"
+          title="Vencimento" />
+        <KeyValue
+          :value="enrollment.data.plan.description"
+          title="Descrição" />
+        <KeyValue
+          :value="enrollment.data.plan.value"
+          title="Valor" />
+        <KeyValue
+          :value="enrollment.data.plan.guarantors"
+          title="Fiadores" />
       </div>
     </Fieldset>
     <Fieldset title="Pagamento">
       <div>
-        <strong>Meio de Pagamento</strong>: {{ enrollment.data.paymentMethod }}<br>
+        <KeyValue
+          :value="enrollment.data.paymentMethod"
+          title="Meio de Pagamento" />
       </div>
     </Fieldset>
     <Fieldset
       v-if="enrollment.data.representative"
       title="Responsável Financeiro">
       <div>
-        <strong>CPF</strong>: {{ enrollment.data.representative.cpf }}<br>
-        <strong>Nome</strong>: {{ enrollment.data.representative.name }}<br>
-        <strong>E-mail</strong>: {{ enrollment.data.representative.email }}<br>
-        <strong>Telefone</strong>: {{ enrollment.data.representative.phoneNumber }}<br>
-        <strong>Telefone Fixo</strong>: {{ enrollment.data.representative.landline }}<br>
-        <strong>CEP</strong>: {{ enrollment.data.representative.zipcode }}<br>
-        <strong>Tipo</strong>: {{ enrollment.data.representative.addressKind }}<br>
-        <strong>Endereço</strong>: {{ enrollment.data.representative.streetAddress }}<br>
+        <KeyValue
+          :value="enrollment.data.representative.cpf"
+          title="CPF" />
+        <KeyValue
+          :value="enrollment.data.representative.name"
+          title="Nome" />
+        <KeyValue
+          :value="enrollment.data.representative.email"
+          title="E-mail" />
+        <KeyValue
+          :value="enrollment.data.representative.phoneNumber"
+          title="Telefone" />
+        <KeyValue
+          :value="enrollment.data.representative.landline"
+          title="Telefone Fixo" />
+        <KeyValue
+          :value="enrollment.data.representative.zipcode"
+          title="CEP" />
+        <KeyValue
+          :value="enrollment.data.representative.addressKind"
+          title="Tipo" />
+        <KeyValue
+          :value="enrollment.data.representative.streetAddress"
+          title="Endereço" />
         <strong>Complemento</strong>:
         {{ enrollment.data.representative.complementAddress }}<br>
-        <strong>Bairro</strong>: {{ enrollment.data.representative.neighborhood }}<br>
-        <strong>Cidade</strong>: {{ enrollment.data.representative.city }}<br>
-        <strong>Estado</strong>: {{ enrollment.data.representative.state }}<br>
+        <KeyValue
+          :value="enrollment.data.representative.neighborhood"
+          title="Bairro" />
+        <KeyValue
+          :value="enrollment.data.representative.city"
+          title="Cidade" />
+        <KeyValue
+          :value="enrollment.data.representative.state"
+          title="Estado" />
       </div>
     </Fieldset>
     <Fieldset
@@ -131,18 +216,42 @@
         :key="index">
         <Fieldset :title="`Fiador ${index+1}`">
           <div>
-            <strong>CPF</strong>: {{ guarantor.cpf }}<br>
-            <strong>Nome</strong>: {{ guarantor.name }}<br>
-            <strong>E-mail</strong>: {{ guarantor.email }}<br>
-            <strong>Telefone</strong>: {{ guarantor.phoneNumber }}<br>
-            <strong>Telefone Fixo</strong>: {{ guarantor.landline }}<br>
-            <strong>CEP</strong>: {{ guarantor.zipcode }}<br>
-            <strong>Tipo</strong>: {{ guarantor.addressKind }}<br>
-            <strong>Endereço</strong>: {{ guarantor.streetAddress }}<br>
-            <strong>Complemento</strong>: {{ guarantor.complementAddress }}<br>
-            <strong>Bairro</strong>: {{ guarantor.neighborhood }}<br>
-            <strong>Cidade</strong>: {{ guarantor.city }}<br>
-            <strong>Estado</strong>: {{ guarantor.state }}<br>
+            <KeyValue
+              :value="guarantor.cpf"
+              title="CPF" />
+            <KeyValue
+              :value="guarantor.name"
+              title="Nome" />
+            <KeyValue
+              :value="guarantor.email"
+              title="E-mail" />
+            <KeyValue
+              :value="guarantor.phoneNumber"
+              title="Telefone" />
+            <KeyValue
+              :value="guarantor.landline"
+              title="Telefone Fixo" />
+            <KeyValue
+              :value="guarantor.zipcode"
+              title="CEP" />
+            <KeyValue
+              :value="guarantor.addressKind"
+              title="Tipo" />
+            <KeyValue
+              :value="guarantor.streetAddress"
+              title="Endereço" />
+            <KeyValue
+              :value="guarantor.complementAddress"
+              title="Complemento" />
+            <KeyValue
+              :value="guarantor.neighborhood"
+              title="Bairro" />
+            <KeyValue
+              :value="guarantor.city"
+              title="Cidade" />
+            <KeyValue
+              :value="guarantor.state"
+              title="Estado" />
           </div>
         </Fieldset>
         <Fieldset title="Documentos">
