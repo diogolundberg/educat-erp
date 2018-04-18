@@ -170,6 +170,9 @@ export default new VueX.Store({
     SET_ENROLLMENT_MESSAGES(state, { messages }) {
       state.enrollment.messages.sendToApproval = messages;
     },
+    DISABLE_ENROLLMENT_EDITING(state) {
+      state.enrollment.data.editable = false;
+    },
     COPY_RESPONSIBLE_DATA(state) {
       const { personalData } = state.enrollment.data;
       const { representative } = state.enrollment.data.financeData;
@@ -251,9 +254,9 @@ export default new VueX.Store({
     async submitEnrollment({ commit }, { token }) {
       try {
         const url = `${url2}/api/Enrollments/${token}`;
-        const response = await axios.post(url);
+        await axios.post(url);
         commit("SET_ENROLLMENT_SENTAT");
-        commit("SET_ENROLLMENT_MESSAGES", response.data);
+        commit("DISABLE_ENROLLMENT_EDITING");
       } catch (ex) {
         commit("SET_ENROLLMENT_MESSAGES", ex.response.data);
       }
