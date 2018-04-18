@@ -153,7 +153,7 @@ namespace Onboarding
             app.UseMvc();
 
             app.UseHangfireServer();
-            app.UseHangfireDashboard();
+            app.UseHangfireDashboard("/dashboard");
 
             CultureInfo cultureInfo = new CultureInfo("pt-BR");
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;

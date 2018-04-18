@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentValidation;
+using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -162,11 +163,11 @@ namespace Onboarding.Controllers
                 string body = GetEmailBody("enrollment_sent.html");
                 string subject = "Sua matricula foi enviada para análise";
                 string messageBody = GetEmailBody("enrollment_sent.html")
-                                     .Replace("{student_name}", enrollment.PersonalData.RealName)
+                                     .Replace("{student_name}", enrollment.PersonalData.AssumedName)
                                      .Replace("{send_at}", enrollment.SentAt.Value.ToString("dd/MM/yyyy"))
                                      .Replace("{send_at_hour}", enrollment.SentAt.Value.ToString("HH:mm"));
 
-                SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]);
+                BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]));
 
                 return Ok();
             }
