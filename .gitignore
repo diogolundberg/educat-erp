@@ -278,3 +278,4 @@ appsettings.json
 *.sln
 /Upload/Properties/launchSettings.json
 /SSO/Properties
+/.gitattributes
