@@ -16,24 +16,30 @@
             class="rounded shadow2 x6 y6 bg-white">
         </div>
         <KeyValue
-          :value="enrollment.data.cpf"
-          title="CPF" />
-        <KeyValue
           :value="enrollment.data.name"
           title="Nome" />
         <KeyValue
           :value="enrollment.data.assumedName"
           title="Nome Social" />
+        <KeyValue
+          :value="enrollment.data.cpf"
+          title="CPF" />
         <template v-if="type=='academic'">
           <KeyValue
             :value="enrollment.data.birthDate"
             title="Nascimento" />
           <KeyValue
+            :value="enrollment.data.maritalStatus"
+            title="Estado Civil" />
+          <KeyValue
             :value="enrollment.data.gender"
             title="Sexo" />
           <KeyValue
-            :value="enrollment.data.maritalStatus"
-            title="Estado Civil" />
+            :value="enrollment.data.nationality"
+            title="Nacionalidade" />
+          <KeyValue
+            :value="enrollment.data.birthCountry"
+            title="País de Origem" />
           <KeyValue
             :value="enrollment.data.birthCity"
             title="Naturalidade" />
@@ -41,33 +47,12 @@
             :value="enrollment.data.birthState"
             title="Estado de Nascimento" />
           <KeyValue
-            :value="enrollment.data.birthCountry"
-            title="País de Origem" />
-          <KeyValue
-            :value="enrollment.data.nationality"
-            title="Nacionalidade" />
-          <KeyValue
             :value="enrollment.data.highSchoolGraduationYear"
             title="Graduou em" />
           <KeyValue
             :value="enrollment.data.highSchoolGraduationCountry"
             title="País da Escola" />
         </template>
-      </div>
-    </Fieldset>
-    <Fieldset
-      v-if="type=='academic'"
-      title="Dados para o Censo">
-      <div>
-        <KeyValue
-          :value="enrollment.data.mothersName"
-          title="Nome da Mãe" />
-        <KeyValue
-          :value="enrollment.data.race"
-          title="Raça" />
-        <KeyValue
-          :value="enrollment.data.highSchollKind"
-          title="Tipo da Escola" />
       </div>
     </Fieldset>
     <Fieldset title="Contato">
@@ -91,11 +76,14 @@
           :value="enrollment.data.zipcode"
           title="CEP" />
         <KeyValue
+          :value="enrollment.data.addressKind"
+          title="Tipo de Endereço" />
+        <KeyValue
           :value="enrollment.data.streetAddress"
           title="Logradouro" />
         <KeyValue
-          :value="enrollment.data.addressKind"
-          title="Tipo" />
+          :value="enrollment.data.addressNumber"
+          title="Número" />
         <KeyValue
           :value="enrollment.data.complementAddress"
           title="Complemento" />
@@ -108,6 +96,21 @@
         <KeyValue
           :value="enrollment.data.state"
           title="Estado" />
+      </div>
+    </Fieldset>
+    <Fieldset
+      v-if="type=='academic'"
+      title="Dados para o Censo">
+      <div>
+        <KeyValue
+          :value="enrollment.data.mothersName"
+          title="Nome da Mãe" />
+        <KeyValue
+          :value="enrollment.data.race"
+          title="Raça" />
+        <KeyValue
+          :value="enrollment.data.highSchollKind"
+          title="Tipo da Escola" />
       </div>
     </Fieldset>
     <Fieldset
@@ -174,11 +177,14 @@
       title="Responsável Financeiro">
       <div>
         <KeyValue
+          :value="enrollment.data.representative.name"
+          title="Nome" />
+        <KeyValue
           :value="enrollment.data.representative.cpf"
           title="CPF" />
         <KeyValue
-          :value="enrollment.data.representative.name"
-          title="Nome" />
+          :value="enrollment.data.representative.relationship"
+          title="Relacionamento com o aluno" />
         <KeyValue
           :value="enrollment.data.representative.email"
           title="E-mail" />
@@ -197,8 +203,12 @@
         <KeyValue
           :value="enrollment.data.representative.streetAddress"
           title="Endereço" />
-        <strong>Complemento</strong>:
-        {{ enrollment.data.representative.complementAddress }}<br>
+        <KeyValue
+          :value="enrollment.data.representative.addressNumber"
+          title="Número" />
+        <KeyValue
+          :value="enrollment.data.representative.complementAddress"
+          title="Complemento" />
         <KeyValue
           :value="enrollment.data.representative.neighborhood"
           title="Bairro" />
@@ -225,6 +235,9 @@
               :value="guarantor.name"
               title="Nome" />
             <KeyValue
+              :value="guarantor.relationship"
+              title="Relacionamento com o aluno" />
+            <KeyValue
               :value="guarantor.email"
               title="E-mail" />
             <KeyValue
@@ -242,6 +255,9 @@
             <KeyValue
               :value="guarantor.streetAddress"
               title="Endereço" />
+            <KeyValue
+              :value="guarantor.addressNumber"
+              title="Número" />
             <KeyValue
               :value="guarantor.complementAddress"
               title="Complemento" />
