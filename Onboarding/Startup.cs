@@ -26,6 +26,7 @@ using SharpRaven.Core;
 using Onboarding.Bindings;
 using Onboarding.JsonFormatter;
 using System.Globalization;
+using Hangfire;
 
 namespace Onboarding
 {
@@ -95,6 +96,8 @@ namespace Onboarding
                 c.CustomSchemaIds(x => x.FullName);
             });
 
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration["ONBOARDING_DATABASE_CONNECTION"]));
+
             services.AddAutoMapper();
         }
 
@@ -148,6 +151,9 @@ namespace Onboarding
             app.UseStaticFiles();
 
             app.UseMvc();
+
+            app.UseHangfireServer();
+            app.UseHangfireDashboard();
 
             CultureInfo cultureInfo = new CultureInfo("pt-BR");
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
