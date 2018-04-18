@@ -8,7 +8,8 @@
         <div class="mx2 px2 border-white-50 border-left inline-block h6">
           Olá, <strong>{{ enrollment.data.personalData.realName }}</strong><br>
           <template v-if="enrollment.data.deadline">
-            O seu processo de matrícula se encerra em {{ daysRemaining }} dias.
+            O seu processo de matrícula se encerra em
+            {{ enrollment.data.daysRemaining }} dias.
           </template>
         </div>
       </div>
@@ -583,8 +584,6 @@
 </template>
 
 <script>
-  import { parseDate, daysAgo } from "../../lib/helpers";
-
   export default {
     name: "Enrollment",
     props: {
@@ -630,9 +629,6 @@
       },
       underage() {
         return this.enrollment.underage;
-      },
-      daysRemaining() {
-        return -daysAgo(parseDate(this.enrollment.data.deadline));
       },
       guarantorsAmount() {
         const { planId } = this.enrollment.data.financeData;
