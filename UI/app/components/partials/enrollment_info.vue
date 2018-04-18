@@ -160,7 +160,9 @@
           title="Fiadores" />
       </div>
     </Fieldset>
-    <Fieldset title="Pagamento">
+    <Fieldset
+      v-if="type === 'finance'"
+      title="Pagamento">
       <div>
         <KeyValue
           :value="enrollment.data.paymentMethod"
