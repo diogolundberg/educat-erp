@@ -29,9 +29,6 @@
             :value="enrollment.data.birthDate"
             title="Nascimento" />
           <KeyValue
-            :value="enrollment.data.mothersName"
-            title="Nome da Mãe" />
-          <KeyValue
             :value="enrollment.data.gender"
             title="Sexo" />
           <KeyValue
@@ -49,6 +46,12 @@
           <KeyValue
             :value="enrollment.data.nationality"
             title="Nacionalidade" />
+          <KeyValue
+            :value="enrollment.data.highSchoolGraduationYear"
+            title="Graduou em" />
+          <KeyValue
+            :value="enrollment.data.highSchoolGraduationCountry"
+            title="País da Escola" />
         </template>
       </div>
     </Fieldset>
@@ -57,17 +60,14 @@
       title="Dados para o Censo">
       <div>
         <KeyValue
+          :value="enrollment.data.mothersName"
+          title="Nome da Mãe" />
+        <KeyValue
           :value="enrollment.data.race"
           title="Raça" />
         <KeyValue
           :value="enrollment.data.highSchollKind"
           title="Tipo da Escola" />
-        <KeyValue
-          :value="enrollment.data.highSchoolGraduationYear"
-          title="Graduou em" />
-        <KeyValue
-          :value="enrollment.data.highSchoolGraduationCountry"
-          title="País da Escola" />
       </div>
     </Fieldset>
     <Fieldset title="Contato">
