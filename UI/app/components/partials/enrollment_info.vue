@@ -180,6 +180,7 @@
     <div class="flex justify-end m3">
       <Btn
         fab
+        fixed
         primary
         @click="modal = true">
         <icon name="warning" />
