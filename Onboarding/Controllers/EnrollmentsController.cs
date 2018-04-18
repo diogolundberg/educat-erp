@@ -64,11 +64,10 @@ namespace Onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado." } });
             }
 
-            PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
-            personalData.Status = (new PersonalDataStatus(new PersonalDataValidator(_context), enrollment.PersonalData)).GetStatus();
+            Record record = _mapper.Map<Record>(enrollment);
 
-            FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
-            financeData.Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus();
+            record.PersonalData.Status = (new PersonalDataStatus(new PersonalDataValidator(_context), enrollment.PersonalData)).GetStatus();
+            record.FinanceData.Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus();
 
             EnrollmentValidator enrollmentValidator = new EnrollmentValidator(_context);
             FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
@@ -77,7 +76,7 @@ namespace Onboarding.Controllers
             return new
             {
                 messages,
-                data = _mapper.Map<Record>(enrollment),
+                data = record,
                 options = new
                 {
                     _context.Genders,
