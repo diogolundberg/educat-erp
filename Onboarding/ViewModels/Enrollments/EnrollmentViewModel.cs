@@ -6,6 +6,7 @@ namespace Onboarding.ViewModels.Enrollments
         public string StartedAt { get; set; }
         public string SentAt { get; set; }
         public bool FirstTime { get; set; }
+        public bool EnrollmentInfo { get; set; }
         public string Deadline { get; set; }
         public string DaysRemaining { get; set; }
         public string Photo { get; set; }

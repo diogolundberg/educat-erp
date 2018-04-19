@@ -12,9 +12,10 @@ using System;
 namespace Onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180419015132_add_column_enrollment_info_into_enrollment")]
+    partial class add_column_enrollment_info_into_enrollment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,7 +163,7 @@ namespace Onboarding.Migrations
 
                     b.Property<DateTime?>("CreatedAt");
 
-                    b.Property<DateTime?>("EnrollmentInfo");
+                    b.Property<DateTime>("EnrollmentInfo");
 
                     b.Property<string>("ExternalId");
 

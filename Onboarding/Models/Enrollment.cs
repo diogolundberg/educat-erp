@@ -63,6 +63,8 @@ namespace Onboarding.Models
                 return Pendencies.Where(x => x is AcademicPendency).Select(x => (AcademicPendency)x);
             }
         }
+
+        public DateTime? EnrollmentInfo { get; set; }
     }
 }
 
