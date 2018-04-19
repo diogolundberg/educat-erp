@@ -154,7 +154,10 @@ namespace Onboarding
             app.UseMvc();
 
             app.UseHangfireServer();
-            app.UseHangfireDashboard("/dashboard", new[] { new HangfireAuthorization() });
+            app.UseHangfireDashboard("/dashboard", new DashboardOptions
+            {
+                Authorization = new[] { new HangfireAuthorization() }
+            });
 
             CultureInfo cultureInfo = new CultureInfo("pt-BR");
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
