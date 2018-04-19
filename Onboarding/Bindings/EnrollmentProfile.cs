@@ -23,12 +23,12 @@ namespace Onboarding.Bindings
                 .ForMember(x => x.AcademicApproval, config => config.MapFrom(x => new
                 {
                     status = (new AcademicApprovalStatus(null, x)).GetStatus(),
-                    pendencies = x.AcademicPendencies.Select(ap => new { ap.Description, ap.SectionId, ap.Section.Name, ap.Class })
+                    pendencies = x.AcademicPendencies.Select(ap => new { ap.Description, ap.SectionId, ap.Section.Name, ap.Section.Anchor })
                 }))
                 .ForMember(x => x.FinanceApproval, config => config.MapFrom(x => new
                 {
                     status = (new FinanceApprovalStatus(null, x)).GetStatus(),
-                    pendencies = x.FinancePendencies.Select(fp => new { fp.Description, fp.SectionId, fp.Section.Name, fp.Class }),
+                    pendencies = x.FinancePendencies.Select(fp => new { fp.Description, fp.SectionId, fp.Section.Name, fp.Section.Anchor }),
                 }));
         }
     }

@@ -34,6 +34,7 @@ namespace Onboarding.Controllers
             List<Enrollment> enrollments = _context.Enrollments
                                                    .Include("Onboarding")
                                                    .Include("Pendencies")
+                                                   .Include("Pendencies.Section")
                                                    .Include("PersonalData")
                                                    .Include("PersonalData.PersonalDataDocuments")
                                                    .Include("PersonalData.PersonalDataSpecialNeeds")
@@ -57,6 +58,7 @@ namespace Onboarding.Controllers
         {
             Enrollment enrollment = _context.Enrollments
                                             .Include("Pendencies")
+                                            .Include("Pendencies.Section")
                                             .Include("PersonalData.Gender")
                                             .Include("PersonalData.MaritalStatus")
                                             .Include("PersonalData.BirthCity")
@@ -95,6 +97,7 @@ namespace Onboarding.Controllers
             Hashtable errors = new Hashtable();
             Enrollment enrollment = _context.Enrollments
                                             .Include("Pendencies")
+                                            .Include("Pendencies.Section")
                                             .Include("PersonalData.Gender")
                                             .Include("PersonalData.MaritalStatus")
                                             .Include("PersonalData.BirthCity")

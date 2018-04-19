@@ -11,6 +11,6 @@ namespace Onboarding.ViewModels
 
         public string Description { get; set; }
 
-        public string Class { get; set; }
+        public string Anchor { get; set; }
     }
 }

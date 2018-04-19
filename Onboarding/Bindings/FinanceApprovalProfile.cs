@@ -54,7 +54,7 @@ namespace Onboarding.Bindings
                 Description = o.Description,
                 Id = o.Id,
                 SectionId = o.SectionId,
-                Class = o.Class
+                Anchor = o.Section.Anchor
             })))
             .ForMember(x => x.Name, config => config.MapFrom(x => x.PersonalData.RealName))
             .ForMember(x => x.Photo, config => config.MapFrom(x => x.Photo))

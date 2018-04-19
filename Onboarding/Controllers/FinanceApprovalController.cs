@@ -34,6 +34,7 @@ namespace Onboarding.Controllers
             List<Enrollment> enrollments = _context.Enrollments
                                                     .Include("Onboarding")
                                                     .Include("Pendencies")
+                                                    .Include("Pendencies.Section")
                                                     .Include("PersonalData")
                                                     .Include("FinanceData")
                                                     .Include("FinanceData.Plan")
@@ -62,6 +63,7 @@ namespace Onboarding.Controllers
             Enrollment enrollment = _context.Enrollments
                                             .Include("PersonalData")
                                             .Include("Pendencies")
+                                            .Include("Pendencies.Section")
                                             .Include("FinanceData")
                                             .Include("FinanceData.Plan")
                                             .Include("FinanceData.PaymentMethod")
@@ -98,6 +100,7 @@ namespace Onboarding.Controllers
             Hashtable errors = new Hashtable();
             Enrollment enrollment = _context.Enrollments
                                             .Include("Pendencies")
+                                            .Include("Pendencies.Section")
                                             .Include("PersonalData")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
