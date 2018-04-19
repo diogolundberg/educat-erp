@@ -21,10 +21,9 @@
           {{ item.description }}
         </div>
         <a
-          v-if="false"
-          href="#doc_01"
+          href="#"
           class="btn btn-primary"
-          @click="$emit('click')">
+          @click="$emit('click', item.anchor)">
           OK
         </a>
       </div>
