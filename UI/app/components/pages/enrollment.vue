@@ -16,8 +16,8 @@
     </Header>
     <Notifications
       v-if="notifications"
-      :items="enrollment.data.pendencies"
-      @click="notifications = false" />
+      :items="pendencies"
+      @click="notificationClick" />
 
     <Spinner :active="!enrollment.data.deadline">
       <Stepper
@@ -695,6 +695,10 @@
           gradutionCurrentYear && "GraduationYear",
           !gradutionCurrentYear && "NotGraduationYear",
         ].filter(a => a);
+      },
+      pendencies() {
+        return [...this.enrollment.data.academicApproval.pendencies,
+                ...this.enrollment.data.financeApproval.pendencies];
       },
     },
     watch: {
