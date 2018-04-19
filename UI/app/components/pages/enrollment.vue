@@ -762,12 +762,14 @@
       async deleteAcademicPendencies() {
         const token = this.id;
         await this.$store.dispatch("deleteAcademicPendencies", { token });
-        this.step = 1;
+        this.step = null;
+        this.notify("Sua matrícula foi enviada para aprovação.");
       },
       async deleteFinancePendencies() {
         const token = this.id;
         await this.$store.dispatch("deleteFinancePendencies", { token });
-        this.step = 2;
+        this.step = null;
+        this.notify("Sua matrícula foi enviada para aprovação.");
       },
       validationsFor(item) {
         const matches = (opt, key, val) =>
