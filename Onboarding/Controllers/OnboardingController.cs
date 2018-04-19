@@ -81,9 +81,9 @@ namespace Onboarding.Controllers
             {
                 string link = string.Format("http://cmmg-ui.netlify.com/enroll/{0}", enrollment.ExternalId);
                 string messageBody = GetEmailBody("enrollment_invite.html").Replace("{link}", link);
-                string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
+                string subject = "Link da matrícula";
 
-                BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]));
+                BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]));
             }
 
             return new OkObjectResult(new
@@ -160,9 +160,9 @@ namespace Onboarding.Controllers
 
                     string link = string.Format("http://cmmg-ui.netlify.com/enroll/{0}", enrollment.ExternalId);
                     string messageBody = GetEmailBody("enrollment_invite.html").Replace("{link}", link);
-                    string subject = _configuration["EMAIL_ENROLLMENTS_SUBJECT"];
+                    string subject = "Link da matrícula";
 
-                    BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]));
+                    BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]));
                 }
             }
 

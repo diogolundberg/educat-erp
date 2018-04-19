@@ -54,7 +54,7 @@ namespace SSO.Controllers
             string body = String.Format("?token=" + token);
             string subject = _configuration["EMAIL_RESET_PASSWORD_SUBJECT"];
 
-            smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER_RESET_PASSWORD"]),
+            smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER"]),
                                 new MailAddress(email),
                                 body,
                                 subject);

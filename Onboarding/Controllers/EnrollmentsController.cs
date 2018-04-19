@@ -167,7 +167,7 @@ namespace Onboarding.Controllers
                                      .Replace("{send_at}", enrollment.SentAt.Value.ToString("dd/MM/yyyy"))
                                      .Replace("{send_at_hour}", enrollment.SentAt.Value.ToString("HH:mm"));
 
-                BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER_ONBOARDING"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]));
+                BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]));
 
                 return Ok();
             }
