@@ -153,6 +153,8 @@ namespace Onboarding.Controllers
                 _context.Set<Enrollment>().Update(enrollment);
 
                 _context.SaveChanges();
+
+                _context.Entry(enrollment).Reload();
             }
             else
             {
