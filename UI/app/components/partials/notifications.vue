@@ -16,7 +16,10 @@
         <Icon
           name="bell"
           black />
-        <div class="px1">{{ item.description }}</div>
+        <div class="px1 flex-auto">
+          <small class="dim">{{ item.name }}</small><br>
+          {{ item.description }}
+        </div>
         <a
           v-if="false"
           href="#doc_01"
