@@ -16,8 +16,8 @@
     </Header>
     <Notifications
       v-if="notifications"
-      :items="enrollment.data.pendencies"
-      @click="notifications = false" />
+      :items="pendencies"
+      @click="notificationClick" />
 
     <Spinner :active="!enrollment.data.deadline">
       <Stepper
@@ -53,7 +53,7 @@
                   class="rounded border4 border shadow2 x6 y6 bg-white">
               </UploadZone>
             </div>
-            <Fieldset>
+            <Fieldset id="personal">
               <InputBox
                 v-model="enrollment.data.personalData.realName"
                 :errors="enrollment.errors.personalData.realName"
@@ -186,16 +186,20 @@
                 label="País de conclusão do ensino médio" />
             </Fieldset>
             <ContactBlock
+              id="contact"
               v-model="enrollment.data.personalData"
               :errors="enrollment.errors.personalData"
               :disabled="!enrollment.data.personalData.editable"
               disable-email />
             <AddressBlock
+              id="address"
               v-model="enrollment.data.personalData"
               :errors="enrollment.errors.personalData"
               :disabled="!enrollment.data.personalData.editable"
               :options="enrollment.options" />
-            <Fieldset title="Dados para o Censo">
+            <Fieldset
+              id="census"
+              title="Dados para o Censo">
               <DropDown
                 v-model="enrollment.data.personalData.raceId"
                 :errors="enrollment.errors.personalData.raceId"
@@ -220,7 +224,9 @@
                 required
                 label="Nome completo da mãe" />
             </Fieldset>
-            <Fieldset title="Outras Informações">
+            <Fieldset
+              id="other"
+              title="Outras Informações">
               <RadioGroup
                 v-model="enrollment.data.personalData.handicap"
                 :errors="enrollment.errors.personalData.handicap"
@@ -232,6 +238,7 @@
             </Fieldset>
             <Fieldset
               v-if="enrollment.data.personalData.handicap == 'yes'"
+              id="specialNeeds"
               title="Selecione">
               <CheckGroup
                 v-model="enrollment.data.personalData.disabilities"
@@ -250,7 +257,9 @@
                 :filter="enrollment.data.personalData.disabilities"
                 filter-key="disabilityId" />
             </Fieldset>
-            <Fieldset title="Documentos">
+            <Fieldset
+              id="documents"
+              title="Documentos">
               <Documents
                 v-model="enrollment.data.personalData.documents"
                 :types="enrollment.options.personalDocuments"
@@ -687,6 +696,10 @@
           !gradutionCurrentYear && "NotGraduationYear",
         ].filter(a => a);
       },
+      pendencies() {
+        return [...this.enrollment.data.academicApproval.pendencies,
+                ...this.enrollment.data.financeApproval.pendencies];
+      },
     },
     watch: {
       "enrollment.data.personalData": {
@@ -713,7 +726,7 @@
           this.step = 3;
         }
         if (this.enrollment.data.sentAt != null) {
-          this.step = 4;
+          this.step = null;
         }
       },
       focusOnErrors() {
@@ -749,12 +762,21 @@
       async deleteAcademicPendencies() {
         const token = this.id;
         await this.$store.dispatch("deleteAcademicPendencies", { token });
-        this.step = 1;
+        this.step = null;
+        this.notify("Sua matrícula foi enviada para aprovação.");
       },
       async deleteFinancePendencies() {
         const token = this.id;
         await this.$store.dispatch("deleteFinancePendencies", { token });
-        this.step = 2;
+        this.step = null;
+        this.notify("Sua matrícula foi enviada para aprovação.");
+      },
+      async notificationClick(anchor) {
+        this.step = 1;
+        await this.tick();
+        await this.sleep(100);
+        window.location.hash = anchor;
+        this.notifications = false;
       },
       validationsFor(item) {
         const matches = (opt, key, val) =>
