@@ -489,8 +489,16 @@
                 :style="{ 'max-width': '8rem' }"
                 src="../../assets/img/card.svg">
             </div>
+            <EnrollmentSummary :enrollment="enrollment" />
+            <Fieldset title="Confirmação">
+              <Checkbox
+                v-model="agreed"
+                class="mb3"
+                label="Confirmo que as informações acima estão corretas" />
+            </Fieldset>
             <div class="flex justify-end">
               <Btn
+                :disabled="!agreed"
                 primary
                 label="Enviar"
                 @click="submitEnrollment" />
@@ -595,6 +603,7 @@
     data() {
       return {
         step: 1,
+        agreed: false,
         notifications: false,
         handicap: [
           { id: "yes", name: "Sim" },
