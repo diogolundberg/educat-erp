@@ -27,6 +27,7 @@ using Onboarding.Bindings;
 using Onboarding.JsonFormatter;
 using System.Globalization;
 using Hangfire;
+using Onboarding.Filters;
 
 namespace Onboarding
 {
@@ -153,7 +154,7 @@ namespace Onboarding
             app.UseMvc();
 
             app.UseHangfireServer();
-            app.UseHangfireDashboard("/dashboard");
+            app.UseHangfireDashboard("/dashboard", new[] { new HangfireAuthorization() });
 
             CultureInfo cultureInfo = new CultureInfo("pt-BR");
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
