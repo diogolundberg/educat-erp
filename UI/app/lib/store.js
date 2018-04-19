@@ -171,7 +171,15 @@ export default new VueX.Store({
       state.enrollment.messages.sendToApproval = messages;
     },
     DISABLE_ENROLLMENT_EDITING(state) {
-      state.enrollment.data.editable = false;
+      state.enrollment.data.personalData.editable = false;
+    },
+    DELETE_ACADEMIC_PENDENCIES(state) {
+      state.enrollment.data.personalData.editable = false;
+      state.enrollment.data.academicApproval.status = "inReview";
+    },
+    DELETE_FINANCE_PENDENCIES(state) {
+      state.enrollment.data.financeData.editable = false;
+      state.enrollment.data.financeApproval.status = "inReview";
     },
     COPY_RESPONSIBLE_DATA(state) {
       const { personalData } = state.enrollment.data;
@@ -260,6 +268,16 @@ export default new VueX.Store({
       } catch (ex) {
         commit("SET_ENROLLMENT_MESSAGES", ex.response.data);
       }
+    },
+    async deleteAcademicPendencies({ commit }, { token }) {
+      const url = `${url2}/api/AcademicPendencies/${token}`;
+      await axios.delete(url);
+      commit("DELETE_ACADEMIC_PENDENCIES");
+    },
+    async deleteFinancePendencies({ commit }, { token }) {
+      const url = `${url2}/api/FinancePendencies/${token}`;
+      await axios.delete(url);
+      commit("DELETE_FINANCE_PENDENCIES");
     },
     copyResponsibleData({ commit }) {
       commit("COPY_RESPONSIBLE_DATA");

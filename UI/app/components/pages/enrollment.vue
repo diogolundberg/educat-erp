@@ -547,7 +547,7 @@
               <Btn
                 primary
                 label="Re-enviar"
-                @click="step = 3" />
+                @click="deleteAcademicPendencies" />
             </div>
           </Card>
         </Step>
@@ -575,7 +575,7 @@
               <Btn
                 primary
                 label="Re-enviar"
-                @click="step = 3" />
+                @click="deleteFinancePendencies" />
             </div>
           </Card>
         </Step>
@@ -745,6 +745,16 @@
       async submitEnrollment() {
         const token = this.id;
         await this.$store.dispatch("submitEnrollment", { token });
+      },
+      async deleteAcademicPendencies() {
+        const token = this.id;
+        await this.$store.dispatch("deleteAcademicPendencies", { token });
+        this.step = 1;
+      },
+      async deleteFinancePendencies() {
+        const token = this.id;
+        await this.$store.dispatch("deleteFinancePendencies", { token });
+        this.step = 2;
       },
       validationsFor(item) {
         const matches = (opt, key, val) =>
