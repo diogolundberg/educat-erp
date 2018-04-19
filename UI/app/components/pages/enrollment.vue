@@ -771,6 +771,13 @@
         this.step = null;
         this.notify("Sua matrícula foi enviada para aprovação.");
       },
+      async notificationClick(anchor) {
+        this.step = 1;
+        await this.tick();
+        await this.sleep(100);
+        window.location.hash = anchor;
+        this.notifications = false;
+      },
       validationsFor(item) {
         const matches = (opt, key, val) =>
           this.enrollment.options[opt].filter(a => a[key]).map(a => a.id).includes(val);
