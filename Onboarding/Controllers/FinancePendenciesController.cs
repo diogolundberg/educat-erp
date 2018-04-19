@@ -26,7 +26,7 @@ namespace Onboarding.Controllers
         [HttpDelete("{token}", Name = "ONBOARDING/FINANCEPENDENCIES/DELETE")]
         public dynamic Edit(string token)
         {
-            Enrollment enrollment = _context.Enrollments.Include("Pendencies").Single(x => x.ExternalId == token);
+            Enrollment enrollment = _context.Enrollments.Include("Onboarding").Include("Pendencies").Single(x => x.ExternalId == token);
 
             if (enrollment == null)
             {
