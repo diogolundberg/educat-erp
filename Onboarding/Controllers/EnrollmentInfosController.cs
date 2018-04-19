@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Onboarding.Models;
 using System;
@@ -26,7 +27,7 @@ namespace Onboarding.Controllers
         [HttpPost("{token}", Name = "ONBOARDING/ENROLLMENTINFOS/POST")]
         public dynamic Post(string token)
         {
-            Enrollment enrollment = _context.Enrollments.Single(x => x.ExternalId == token);
+            Enrollment enrollment = _context.Enrollments.Include("Onboarding").Single(x => x.ExternalId == token);
 
             if (enrollment == null)
             {
