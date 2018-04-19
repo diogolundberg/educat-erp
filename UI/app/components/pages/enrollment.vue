@@ -53,7 +53,7 @@
                   class="rounded border4 border shadow2 x6 y6 bg-white">
               </UploadZone>
             </div>
-            <Fieldset>
+            <Fieldset id="personal">
               <InputBox
                 v-model="enrollment.data.personalData.realName"
                 :errors="enrollment.errors.personalData.realName"
@@ -186,16 +186,20 @@
                 label="País de conclusão do ensino médio" />
             </Fieldset>
             <ContactBlock
+              id="contact"
               v-model="enrollment.data.personalData"
               :errors="enrollment.errors.personalData"
               :disabled="!enrollment.data.personalData.editable"
               disable-email />
             <AddressBlock
+              id="address"
               v-model="enrollment.data.personalData"
               :errors="enrollment.errors.personalData"
               :disabled="!enrollment.data.personalData.editable"
               :options="enrollment.options" />
-            <Fieldset title="Dados para o Censo">
+            <Fieldset
+              id="census"
+              title="Dados para o Censo">
               <DropDown
                 v-model="enrollment.data.personalData.raceId"
                 :errors="enrollment.errors.personalData.raceId"
@@ -220,7 +224,9 @@
                 required
                 label="Nome completo da mãe" />
             </Fieldset>
-            <Fieldset title="Outras Informações">
+            <Fieldset
+              id="other"
+              title="Outras Informações">
               <RadioGroup
                 v-model="enrollment.data.personalData.handicap"
                 :errors="enrollment.errors.personalData.handicap"
@@ -232,6 +238,7 @@
             </Fieldset>
             <Fieldset
               v-if="enrollment.data.personalData.handicap == 'yes'"
+              id="specialNeeds"
               title="Selecione">
               <CheckGroup
                 v-model="enrollment.data.personalData.disabilities"
@@ -250,7 +257,9 @@
                 :filter="enrollment.data.personalData.disabilities"
                 filter-key="disabilityId" />
             </Fieldset>
-            <Fieldset title="Documentos">
+            <Fieldset
+              id="documents"
+              title="Documentos">
               <Documents
                 v-model="enrollment.data.personalData.documents"
                 :types="enrollment.options.personalDocuments"
