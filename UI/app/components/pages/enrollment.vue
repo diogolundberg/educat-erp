@@ -713,7 +713,7 @@
           this.step = 3;
         }
         if (this.enrollment.data.sentAt != null) {
-          this.step = 4;
+          this.step = null;
         }
       },
       focusOnErrors() {
