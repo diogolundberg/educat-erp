@@ -20,6 +20,7 @@ namespace Onboarding.ViewModels.AcademicApprovals
         public string HighSchoolGraduationYear { get; set; }
         public string Zipcode { get; set; }
         public string StreetAddress { get; set; }
+        public string AddressNumber { get; set; }
         public string ComplementAddress { get; set; }
         public string Neighborhood { get; set; }
         public string MothersName { get; set; }

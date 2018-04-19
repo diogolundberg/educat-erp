@@ -13,6 +13,7 @@ namespace Onboarding.ViewModels.FinanceApprovals
 
         public string Zipcode { get; set; }
         public string StreetAddress { get; set; }
+        public string AddressNumber { get; set; }
         public string ComplementAddress { get; set; }
         public string Neighborhood { get; set; }
         public string AddressKind { get; set; }
