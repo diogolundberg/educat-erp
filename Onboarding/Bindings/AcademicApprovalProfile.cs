@@ -47,7 +47,8 @@ namespace Onboarding.Bindings
             {
                 Description = o.Description,
                 Id = o.Id,
-                SectionId = o.SectionId
+                SectionId = o.SectionId,
+                Class = o.Class
             })));
         }
     }

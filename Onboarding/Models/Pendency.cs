@@ -21,5 +21,7 @@ namespace Onboarding.Models
         public int EnrollmentId { get; set; }
 
         public virtual Enrollment Enrollment { get; set; }
+
+        public string Class { get; set; }
     }
 }
