@@ -274,22 +274,22 @@
       getOption(option, key) {
         const choice = this.enrollment.options[option].find(a =>
           a.id === this.enrollment.data.personalData[key]) || {};
-        return choice.name;
+        return choice && choice.name;
       },
       getOptionFinance(option, key, key2 = "name") {
         const choice = this.enrollment.options[option].find(a =>
           a.id === this.enrollment.data.financeData[key]);
-        return choice[key2];
+        return choice && choice[key2];
       },
       getOptionFinance2(option, key, key2, key3 = "name") {
         const choice = this.enrollment.options[option].find(a =>
           a.id === this.enrollment.data.financeData[key2][key]);
-        return choice[key3];
+        return choice && choice[key3];
       },
       getOptionFinance3(option, key, index, key3 = "name") {
         const choice = this.enrollment.options[option].find(a =>
           a.id === this.enrollment.data.financeData.guarantors[index][key]);
-        return choice[key3];
+        return choice && choice[key3];
       },
     },
   };
