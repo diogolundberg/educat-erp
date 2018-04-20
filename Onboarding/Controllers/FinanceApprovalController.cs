@@ -71,6 +71,7 @@ namespace Onboarding.Controllers
                                             .Include("FinanceData.Representative.City")
                                             .Include("FinanceData.Representative.State")
                                             .Include("FinanceData.Representative.AddressKind")
+                                            .Include("FinanceData.Representative.Relationship")
                                             .Include("FinanceData.Guarantors")
                                             .Include("FinanceData.Guarantors.City")
                                             .Include("FinanceData.Guarantors.State")

@@ -38,6 +38,7 @@ namespace Onboarding.Bindings
             CreateMap<Models.RepresentativePerson, RepresentativePerson>()
             .ForMember(x => x.AddressKind, config => config.MapFrom(x => x.AddressKind.Name))
             .ForMember(x => x.City, config => config.MapFrom(x => x.City.Name))
+            .ForMember(x => x.Relationship, config => config.MapFrom(x => x.Relationship.Name))
             .ForMember(x => x.State, config => config.MapFrom(x => x.State.Name));
 
             CreateMap<Models.Representative, Representative>()
