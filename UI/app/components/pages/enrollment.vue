@@ -697,8 +697,8 @@
         ].filter(a => a);
       },
       pendencies() {
-        return [...this.enrollment.data.academicApproval.pendencies,
-                ...this.enrollment.data.financeApproval.pendencies];
+        return [...this.enrollment.data.academicApproval.pendencies || [],
+                ...this.enrollment.data.financeApproval.pendencies || []];
       },
     },
     watch: {
