@@ -347,7 +347,7 @@
       <template slot="footer">
         <Btn
           primary
-          label="Aprovar"
+          label="Enviar"
           @click="approve" />
       </template>
     </SideModal>
