@@ -1,6 +1,7 @@
 <template>
   <div>
     <Header
+      :notification-count="pendencies.length"
       notifications
       @notifications="notifications = !notifications">
       <div class="flex items-center">

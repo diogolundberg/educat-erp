@@ -28,6 +28,7 @@
         <div>
           <a
             v-if="notifications"
+            :data-badge="notificationCount > 0 && notificationCount"
             class="pl2 pointer"
             href="javscript:void(0)"
             @click.prevent="$emit('notifications')">
@@ -57,6 +58,10 @@
       notifications: {
         type: Boolean,
         default: false,
+      },
+      notificationCount: {
+        type: Number,
+        default: null,
       },
     },
   };
