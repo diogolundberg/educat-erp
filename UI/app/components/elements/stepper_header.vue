@@ -4,6 +4,7 @@
       <StepperItem
         :active="value == step.id"
         :complete="step.el.complete"
+        :warning="step.el.warning"
         :error="step.el.error"
         :title="step.name"
         :key="step.id"
