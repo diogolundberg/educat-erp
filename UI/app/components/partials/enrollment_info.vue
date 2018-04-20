@@ -287,6 +287,12 @@
         </li>
       </div>
     </Fieldset>
+    <div class="center">
+      <Btn
+        primary
+        label="Aprovar"
+        @click="approve(true)" />
+    </div>
 
     <div class="flex justify-end m3">
       <Btn
@@ -383,7 +389,10 @@
       this.loaded = true;
     },
     methods: {
-      async approve() {
+      async approve(removePendencies = false) {
+        if (removePendencies) {
+          this.enrollment.data.pendencies.splice(0, 9999);
+        }
         await this.$store.dispatch(`${this.type}Approve`, this.enrollment.data);
         this.notify("Enviado com sucesso!");
         this.modal = false;
