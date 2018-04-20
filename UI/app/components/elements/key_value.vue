@@ -1,5 +1,7 @@
 <template>
-  <div class="pb1">
+  <div
+    :class="`col-${size}`"
+    class="pb1">
     <div class="h6">
       {{ title }}:
     </div>
@@ -21,6 +23,11 @@
       title: {
         type: String,
         required: true,
+      },
+      size: {
+        type: Number,
+        required: false,
+        default: 4,
       },
     },
   };
