@@ -35,7 +35,19 @@ namespace Onboarding.Validations.PersonalData
             RuleFor(personalData => personalData.GenderId).NotEmpty();
             RuleFor(personalData => personalData.MaritalStatusId).NotEmpty();
             RuleFor(personalData => personalData.BirthCityId).NotEmpty();
-            RuleFor(personalData => personalData.BirthStateId).NotEmpty();
+            RuleFor(personalData => personalData).Custom((personalData, context) =>
+            {
+                if (personalData.BirthCountry != null)
+                {
+                    databaseContext.Entry(personalData.BirthCountry).Reload();
+
+                    if (personalData.BirthCountry.HasUF && personalData.BirthStateId == null)
+                    {
+                        context.AddFailure("BirthStateId", "UF de nascimento é obrigatório.");
+
+                    }
+                }
+            });
             RuleFor(personalData => personalData.BirthCountryId).NotEmpty();
             RuleFor(personalData => personalData.HighSchoolGraduationCountryId).NotEmpty();
             RuleFor(personalData => personalData.CityId).NotEmpty();
