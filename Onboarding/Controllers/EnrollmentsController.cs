@@ -1,10 +1,8 @@
 using AutoMapper;
-using FluentValidation;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Onboarding.Data.Entity;
 using Onboarding.Models;
 using Onboarding.Statuses;
 using Onboarding.Validations;
@@ -13,11 +11,8 @@ using Onboarding.Validations.PersonalData;
 using Onboarding.ViewModels;
 using Onboarding.ViewModels.Enrollments;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Net.Mail;
 
 namespace Onboarding.Controllers
 {
