@@ -29,6 +29,9 @@ namespace Onboarding.Models
 
             builder.Entity<AcademicPendency>().HasBaseType<Pendency>();
             builder.Entity<FinancePendency>().HasBaseType<Pendency>();
+
+            builder.Entity<AcademicSection>().HasBaseType<Section>();
+            builder.Entity<FinanceSection>().HasBaseType<Section>();
         }
 
         public override int SaveChanges()
