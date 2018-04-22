@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
 using Hangfire;
+using System;
 
 namespace Onboarding.Controllers
 {
@@ -68,6 +69,7 @@ namespace Onboarding.Controllers
             foreach (Enrollment enrollment in onboarding.Enrollments)
             {
                 enrollment.ExternalId = onboarding.Year + onboarding.Semester + Regex.Replace(enrollment.PersonalData.CPF, @"\D", string.Empty);
+                enrollment.StartedAt = DateTime.Now;
                 enrollment.FinanceData = new FinanceData
                 {
                     Representative = new RepresentativePerson()
