@@ -91,7 +91,7 @@ namespace Onboarding.Controllers
             return new OkObjectResult(new
             {
                 data,
-                options = new { _context.Sections }
+                options = new { Sections = _context.Sections.Where(x => x is FinanceSection).ToList() }
             });
         }
 
