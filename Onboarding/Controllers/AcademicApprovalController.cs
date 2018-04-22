@@ -39,7 +39,7 @@ namespace Onboarding.Controllers
                                                    .Include("PersonalData.PersonalDataDocuments")
                                                    .Include("PersonalData.PersonalDataSpecialNeeds")
                                                    .Include("PersonalData.PersonalDataDocuments.Document")
-                                                   .Where(x => x.SentAt.HasValue && !x.AcademicApproval.HasValue)
+                                                   .Where(x => x.SentAt.HasValue && !x.AcademicApproval.HasValue && x.AcademicPendencies.Count() == 0)
                                                    .ToList();
 
             List<Records> records = _mapper.Map<List<Records>>(enrollments);

@@ -43,7 +43,7 @@ namespace Onboarding.Controllers
                                                     .Include("FinanceData.Guarantors.Relationship")
                                                     .Include("FinanceData.Guarantors.GuarantorDocuments")
                                                     .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
-                                                    .Where(x => x.SentAt.HasValue && !x.FinanceApproval.HasValue)
+                                                    .Where(x => x.SentAt.HasValue && !x.FinanceApproval.HasValue && x.FinancePendencies.Count() == 0)
                                                     .ToList();
 
             List<Records> records = _mapper.Map<List<Records>>(enrollments);
