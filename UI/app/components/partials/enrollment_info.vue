@@ -339,7 +339,7 @@
               <InputBox
                 v-model="item.description"
                 :errors="error.description"
-                label="Descrição" />
+                label="Descrição da Pendência" />
             </template>
           </Multi>
         </Fieldset>
@@ -347,7 +347,7 @@
       <template slot="footer">
         <Btn
           primary
-          label="Enviar"
+          label="Enviar Pendência"
           @click="approve" />
       </template>
     </SideModal>
