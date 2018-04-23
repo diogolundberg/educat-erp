@@ -65,7 +65,6 @@ namespace Onboarding.Controllers
                                             .Include("FinanceData.Representative.City")
                                             .Include("FinanceData.Representative.State")
                                             .Include("FinanceData.Representative.AddressKind")
-                                            .Include("FinanceData.Representative.Relationship")
                                             .Include("FinanceData.Guarantors")
                                             .Include("FinanceData.Guarantors.City")
                                             .Include("FinanceData.Guarantors.State")
@@ -74,6 +73,11 @@ namespace Onboarding.Controllers
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document.DocumentType")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+
+            if(enrollment.FinanceData.Representative is Models.RepresentativePerson)
+            {
+                _context.Entry((Models.RepresentativePerson)enrollment.FinanceData.Representative).Reference(x => x.Relationship).Load();
+            }
 
             if (enrollment == null)
             {
