@@ -44,12 +44,6 @@ namespace Onboarding.Controllers
 
             List<Records> records = _mapper.Map<List<Records>>(enrollments);
 
-            foreach (Records record in records)
-            {
-                Enrollment enrollment = enrollments.Single(x => x.ExternalId == record.EnrollmentNumber);
-                record.Status = record.State = (new AcademicApprovalStatus(null, enrollment)).GetStatus();
-            }
-
             return new { records };
         }
 
@@ -83,6 +77,7 @@ namespace Onboarding.Controllers
             }
 
             Record data = _mapper.Map<Record>(enrollment.PersonalData);
+            data.Status = (new AcademicApprovalStatus(null, enrollment)).GetStatusName();
 
             return new OkObjectResult(new
             {

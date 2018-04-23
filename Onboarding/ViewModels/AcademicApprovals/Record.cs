@@ -42,5 +42,7 @@ namespace Onboarding.ViewModels.AcademicApprovals
         public ICollection<string> Disabilities { get; set; }
 
         public ICollection<dynamic> Documents { get; set; }
+
+        public string Status { get; set; }
     }
 }

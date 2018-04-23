@@ -25,5 +25,20 @@ namespace Onboarding.Statuses
                 return "inReview";
             }
         }
+
+        public string GetStatusName()
+        {
+            string status = GetStatus();
+
+            switch (status)
+            {
+                case "approved":
+                    return "Aprovado";
+                case "pending":
+                    return "Pendente";
+                default:
+                    return "Em revisão";
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Onboarding.Models;
+using Onboarding.Statuses;
 using Onboarding.ViewModels.AcademicApprovals;
 using System.Linq;
 
@@ -16,7 +17,9 @@ namespace Onboarding.Bindings
             .ForMember(x => x.BirthDate, config => config.MapFrom(x => x.PersonalData.BirthDate))
             .ForMember(x => x.Email, config => config.MapFrom(x => x.PersonalData.Email))
             .ForMember(x => x.PhoneNumber, config => config.MapFrom(x => x.PersonalData.PhoneNumber))
-            .ForMember(x => x.UpdatedAt, config => config.MapFrom(x => x.PersonalData.UpdatedAt.Format()));
+            .ForMember(x => x.UpdatedAt, config => config.MapFrom(x => x.PersonalData.UpdatedAt.Format()))
+            .ForMember(x => x.Status, config => config.MapFrom(x => (new AcademicApprovalStatus(null, x)).GetStatusName()))
+            .ForMember(x => x.State, config => config.MapFrom(x => (new AcademicApprovalStatus(null, x)).GetStatusName()));
 
             CreateMap<Record, PersonalData>();
 
@@ -49,7 +52,8 @@ namespace Onboarding.Bindings
                 Id = o.Id,
                 SectionId = o.SectionId,
                 Anchor = o.Section.Anchor
-            })));
+            })))
+            .ForMember(x => x.State, config => config.MapFrom(x => (new AcademicApprovalStatus(null, x.Enrollment)).GetStatusName()));
         }
     }
 }
