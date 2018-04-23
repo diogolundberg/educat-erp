@@ -61,11 +61,29 @@ namespace onboarding.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; não é válido..
+        /// </summary>
+        public static string NotValidField {
+            get {
+                return ResourceManager.GetString("NotValidField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documento {0} é obrigatório..
         /// </summary>
         public static string RequiredDocumentMessage {
             get {
                 return ResourceManager.GetString("RequiredDocumentMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; deve ser informado..
+        /// </summary>
+        public static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
             }
         }
     }
