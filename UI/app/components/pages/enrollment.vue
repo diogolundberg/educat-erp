@@ -296,6 +296,7 @@
                   {name: 'name', title: 'Plano'},
                   {name: 'value', title: 'Total', css:'right-align'},
                   {name: 'installments', title: 'Parcelas', css:'right-align'},
+                  {name: 'installmentValue', title: 'Valor da Parcela'},
                   {name: 'dueDate', title: 'Vencimento'},
                   {name: 'guarantors', title: 'Fiadores'},
                 ]"
