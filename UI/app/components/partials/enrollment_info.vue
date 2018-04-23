@@ -321,7 +321,7 @@
 
     <SideModal
       v-model="modal"
-      :title="title">
+      :title="modalTitle">
       <div
         class="m2">
         <Fieldset title="Pendências">
@@ -381,6 +381,10 @@
       title() {
         const type = this.type === "academic" ? "Acadêmica" : "Financeira";
         return `Aprovação - ${type}`;
+      },
+      modalTitle() {
+        const type = this.type === "academic" ? "Acadêmica" : "Financeira";
+        return `Pendência ${type}`;
       },
     },
     async mounted() {
