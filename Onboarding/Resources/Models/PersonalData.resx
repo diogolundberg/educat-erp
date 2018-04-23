@@ -177,9 +177,6 @@
   <data name="RealName" xml:space="preserve">
     <value>Nome</value>
   </data>
-  <data name="RequiredDocumentMessage" xml:space="preserve">
-    <value>Documento {0} é obrigatório.</value>
-  </data>
   <data name="StateId" xml:space="preserve">
     <value>Estado</value>
   </data>

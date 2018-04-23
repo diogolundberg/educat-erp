@@ -241,15 +241,6 @@ namespace onboarding.Resources.Models {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Documento {0} é obrigatório..
-        /// </summary>
-        public static string RequiredDocumentMessage {
-            get {
-                return ResourceManager.GetString("RequiredDocumentMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Estado.
         /// </summary>
         public static string StateId {
