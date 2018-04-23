@@ -19,5 +19,6 @@ namespace Onboarding.ViewModels.FinanceApprovals
         public string PaymentMethod { get; set; }
         public Representative Representative { get; set; }
         public ICollection<Guarantor> Guarantors { get; set; }
+        public string State { get; set; }
     }
 }
