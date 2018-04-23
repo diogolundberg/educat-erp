@@ -259,8 +259,8 @@
         <Fieldset title="Documentos">
           <div>
             <li
-              v-for="document in guarantor.documents"
-              :key="document.url">
+              v-for="(document, index) in guarantor.documents"
+              :key="index">
               <a
                 href="#"
                 @click.prevent="modalUrl = document.url">
@@ -277,8 +277,8 @@
       title="Documentos">
       <div>
         <li
-          v-for="document in enrollment.data.documents"
-          :key="document.url">
+          v-for="(document, index) in enrollment.data.documents"
+          :key="index">
           <a
             href="#"
             @click.prevent="modalUrl = document.url">
