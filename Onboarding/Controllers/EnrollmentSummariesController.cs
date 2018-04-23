@@ -32,6 +32,7 @@ namespace onboarding.Controllers
                                             .Include("Onboarding")
                                             .Include("Pendencies")
                                             .Include("Pendencies.Section")
+                                            .Include("PersonalData")
                                             .Include("PersonalData.Gender")
                                             .Include("PersonalData.MaritalStatus")
                                             .Include("PersonalData.BirthCity")
@@ -53,6 +54,7 @@ namespace onboarding.Controllers
                                             .Include("FinanceData.Representative")
                                             .Include("FinanceData.Guarantors")
                                             .Include("FinanceData.Guarantors.Relationship")
+                                            .Include("FinanceData.PaymentMethod")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
