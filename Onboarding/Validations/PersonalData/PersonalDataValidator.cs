@@ -5,6 +5,7 @@ using Onboarding.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using onboarding.Resources.Models;
 
 namespace Onboarding.Validations.PersonalData
 {
@@ -16,25 +17,34 @@ namespace Onboarding.Validations.PersonalData
         {
             _documentTypes = databaseContext.Set<PersonalDocumentType>().ToList();
 
-            RuleFor(personalData => personalData.RealName).NotEmpty();
-            RuleFor(personalData => personalData.AssumedName).NotEmpty();
-            RuleFor(personalData => personalData.BirthDate).NotEmpty();
-            RuleFor(personalData => personalData.CPF).NotEmpty().Must(cpf => Cpf.ValidCPF(cpf));
-            RuleFor(personalData => personalData.NationalityId).NotEmpty();
-            RuleFor(personalData => personalData.HighSchoolGraduationYear).NotEmpty();
+            RuleFor(personalData => personalData.RealName).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.RealName);
+            RuleFor(personalData => personalData.AssumedName).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.AssumedName);
+            RuleFor(personalData => personalData.BirthDate).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.BirthDate);
+            RuleFor(personalData => personalData.NationalityId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.NationalityId);
+            RuleFor(personalData => personalData.HighSchoolGraduationYear).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.HighSchoolGraduationYear);
+            RuleFor(personalData => personalData.Zipcode).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.Zipcode);
+            RuleFor(personalData => personalData.StreetAddress).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.StreetAddress);
+            RuleFor(personalData => personalData.AddressNumber).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.AddressNumber);
+            RuleFor(personalData => personalData.Neighborhood).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.Neighborhood);
+            RuleFor(personalData => personalData.PhoneNumber).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.PhoneNumber);
+            RuleFor(personalData => personalData.Landline).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.Landline);
+            RuleFor(personalData => personalData.MothersName).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.MothersName);
+            RuleFor(personalData => personalData.Handicap).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.Handicap);
+            RuleFor(personalData => personalData.GenderId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.GenderId);
+            RuleFor(personalData => personalData.MaritalStatusId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.MaritalStatusId);
+            RuleFor(personalData => personalData.BirthCityId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.BirthCityId);
+            RuleFor(personalData => personalData.BirthCountryId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.BirthCountryId);
+            RuleFor(personalData => personalData.HighSchoolGraduationCountryId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.HighSchoolGraduationCountryId);
+            RuleFor(personalData => personalData.CityId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.CityId);
+            RuleFor(personalData => personalData.StateId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.StateId);
+            RuleFor(personalData => personalData.AddressKindId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.AddressKindId);
+            RuleFor(personalData => personalData.RaceId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.RaceId);
+            RuleFor(personalData => personalData.HighSchoolKindId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.HighSchoolKindId);
+
             RuleFor(personalData => personalData.Email).NotEmpty();
+            RuleFor(personalData => personalData.CPF).NotEmpty().Must(cpf => Cpf.ValidCPF(cpf));
             RuleFor(personalData => personalData.Email).EmailAddress().When(x => !string.IsNullOrEmpty(x.Email));
-            RuleFor(personalData => personalData.Zipcode).NotEmpty();
-            RuleFor(personalData => personalData.StreetAddress).NotEmpty();
-            RuleFor(personalData => personalData.AddressNumber).NotEmpty();
-            RuleFor(personalData => personalData.Neighborhood).NotEmpty();
-            RuleFor(personalData => personalData.PhoneNumber).NotEmpty();
-            RuleFor(personalData => personalData.Landline).NotEmpty();
-            RuleFor(personalData => personalData.MothersName).NotEmpty();
-            RuleFor(personalData => personalData.Handicap).NotEmpty();
-            RuleFor(personalData => personalData.GenderId).NotEmpty();
-            RuleFor(personalData => personalData.MaritalStatusId).NotEmpty();
-            RuleFor(personalData => personalData.BirthCityId).NotEmpty();
+
             RuleFor(personalData => personalData).Custom((personalData, context) =>
             {
                 databaseContext.Entry(personalData).Reference(x => x.BirthCountry).Load();
@@ -47,13 +57,6 @@ namespace Onboarding.Validations.PersonalData
                     }
                 }
             });
-            RuleFor(personalData => personalData.BirthCountryId).NotEmpty();
-            RuleFor(personalData => personalData.HighSchoolGraduationCountryId).NotEmpty();
-            RuleFor(personalData => personalData.CityId).NotEmpty();
-            RuleFor(personalData => personalData.StateId).NotEmpty();
-            RuleFor(personalData => personalData.AddressKindId).NotEmpty();
-            RuleFor(personalData => personalData.RaceId).NotEmpty();
-            RuleFor(personalData => personalData.HighSchoolKindId).NotEmpty();
             RuleFor(personalData => personalData.PersonalDataDocuments).SetCollectionValidator(x => new PersonalDataDocumentValidator()).OverridePropertyName("documents");
             RuleFor(personalData => personalData).Custom((personalData, context) =>
             {
@@ -78,7 +81,7 @@ namespace Onboarding.Validations.PersonalData
             {
                 if (!personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId == documentType.Id))
                 {
-                    errors.Add(string.Format("Documento {0} é obrigatório.", documentType.Name));
+                    errors.Add(string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, documentType.Name));
                 }
             }
 
@@ -247,32 +250,31 @@ namespace Onboarding.Validations.PersonalData
         {
             if (validation == DocumentValidations.Foreigner.ToString())
             {
-                return "Documento RNE é obrigatório.";
+                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.Foreigner);
             }
             else if (validation == DocumentValidations.MilitaryDraft.ToString())
             {
-                return "Documento Militar é obrigatório.";
+                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.MilitaryDraft);
             }
             else if (validation == DocumentValidations.ForeignGraduation.ToString())
             {
-                return "Parecer da secretaria de educação e publicação no diário oficial é obrigatório.";
+                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.ForeignGraduation);
             }
             else if (validation == DocumentValidations.MinorAge.ToString())
             {
-                return "Título de Eleitor e Comprovante de Votação é obrigatório.";
-
+                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.MinorAge);
             }
             else if (validation == DocumentValidations.GraduationYear.ToString())
             {
-                return "Declaração de conclusão do ensino médio ou histórico escolar é obrigatório.";
+                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.GraduationYear);
             }
             else if (validation == DocumentValidations.NotGraduationYear.ToString())
             {
-                return "Histórico escolar é obrigatório.";
+                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.NotGraduationYear);
             }
             else if (validation == DocumentValidations.Native.ToString())
             {
-                return "CPF é obrigatório.";
+                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.Native);
             }
 
             return string.Empty;
