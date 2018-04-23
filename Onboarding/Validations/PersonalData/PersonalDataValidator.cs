@@ -17,29 +17,29 @@ namespace Onboarding.Validations.PersonalData
         {
             _documentTypes = databaseContext.Set<PersonalDocumentType>().ToList();
 
-            RuleFor(personalData => personalData.RealName).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.RealName);
-            RuleFor(personalData => personalData.AssumedName).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.AssumedName);
-            RuleFor(personalData => personalData.BirthDate).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.BirthDate);
-            RuleFor(personalData => personalData.NationalityId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.NationalityId);
-            RuleFor(personalData => personalData.HighSchoolGraduationYear).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.HighSchoolGraduationYear);
-            RuleFor(personalData => personalData.Zipcode).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.Zipcode);
-            RuleFor(personalData => personalData.StreetAddress).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.StreetAddress);
-            RuleFor(personalData => personalData.AddressNumber).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.AddressNumber);
-            RuleFor(personalData => personalData.Neighborhood).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.Neighborhood);
-            RuleFor(personalData => personalData.PhoneNumber).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.PhoneNumber);
-            RuleFor(personalData => personalData.Landline).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.Landline);
-            RuleFor(personalData => personalData.MothersName).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.MothersName);
-            RuleFor(personalData => personalData.Handicap).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.Handicap);
-            RuleFor(personalData => personalData.GenderId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.GenderId);
-            RuleFor(personalData => personalData.MaritalStatusId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.MaritalStatusId);
-            RuleFor(personalData => personalData.BirthCityId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.BirthCityId);
-            RuleFor(personalData => personalData.BirthCountryId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.BirthCountryId);
-            RuleFor(personalData => personalData.HighSchoolGraduationCountryId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.HighSchoolGraduationCountryId);
-            RuleFor(personalData => personalData.CityId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.CityId);
-            RuleFor(personalData => personalData.StateId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.StateId);
-            RuleFor(personalData => personalData.AddressKindId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.AddressKindId);
-            RuleFor(personalData => personalData.RaceId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.RaceId);
-            RuleFor(personalData => personalData.HighSchoolKindId).NotEmpty().OverridePropertyName(onboarding.Resources.Models.PersonalData.HighSchoolKindId);
+            RuleFor(personalData => personalData.RealName).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.RealName);
+            RuleFor(personalData => personalData.AssumedName).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.AssumedName);
+            RuleFor(personalData => personalData.BirthDate).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.BirthDate);
+            RuleFor(personalData => personalData.NationalityId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.NationalityId);
+            RuleFor(personalData => personalData.HighSchoolGraduationYear).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.HighSchoolGraduationYear);
+            RuleFor(personalData => personalData.Zipcode).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.Zipcode);
+            RuleFor(personalData => personalData.StreetAddress).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.StreetAddress);
+            RuleFor(personalData => personalData.AddressNumber).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.AddressNumber);
+            RuleFor(personalData => personalData.Neighborhood).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.Neighborhood);
+            RuleFor(personalData => personalData.PhoneNumber).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.PhoneNumber);
+            RuleFor(personalData => personalData.Landline).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.Landline);
+            RuleFor(personalData => personalData.MothersName).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.MothersName);
+            RuleFor(personalData => personalData.Handicap).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.Handicap);
+            RuleFor(personalData => personalData.GenderId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.GenderId);
+            RuleFor(personalData => personalData.MaritalStatusId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.MaritalStatusId);
+            RuleFor(personalData => personalData.BirthCityId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.BirthCityId);
+            RuleFor(personalData => personalData.BirthCountryId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.BirthCountryId);
+            RuleFor(personalData => personalData.HighSchoolGraduationCountryId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.HighSchoolGraduationCountryId);
+            RuleFor(personalData => personalData.CityId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.CityId);
+            RuleFor(personalData => personalData.StateId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.StateId);
+            RuleFor(personalData => personalData.AddressKindId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.AddressKindId);
+            RuleFor(personalData => personalData.RaceId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.RaceId);
+            RuleFor(personalData => personalData.HighSchoolKindId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.HighSchoolKindId);
 
             RuleFor(personalData => personalData.Email).NotEmpty();
             RuleFor(personalData => personalData.CPF).NotEmpty().Must(cpf => Cpf.ValidCPF(cpf));
@@ -57,7 +57,7 @@ namespace Onboarding.Validations.PersonalData
                     }
                 }
             });
-            RuleFor(personalData => personalData.PersonalDataDocuments).SetCollectionValidator(x => new PersonalDataDocumentValidator()).OverridePropertyName("documents");
+            RuleFor(personalData => personalData.PersonalDataDocuments).SetCollectionValidator(x => new PersonalDataDocumentValidator()).WithName("documents");
             RuleFor(personalData => personalData).Custom((personalData, context) =>
             {
                 foreach (PersonalDocumentType documentType in _documentTypes)

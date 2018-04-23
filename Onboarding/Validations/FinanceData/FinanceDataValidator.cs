@@ -18,8 +18,8 @@ namespace Onboarding.Validations.FinanceData
             RuleFor(financeData => financeData.Representative).SetValidator(new RepresentativeValidator());
             RuleFor(financeData => financeData.Guarantors).SetCollectionValidator(new GuarantorValidator());
 
-            RuleFor(financeData => financeData.PlanId).NotNull().OverridePropertyName(onboarding.Resources.Models.FinanceData.PlanId);
-            RuleFor(financeData => financeData.PaymentMethodId).NotNull().OverridePropertyName(onboarding.Resources.Models.FinanceData.PaymentMethodId);
+            RuleFor(financeData => financeData.PlanId).NotNull().WithName(onboarding.Resources.Models.FinanceData.PlanId);
+            RuleFor(financeData => financeData.PaymentMethodId).NotNull().WithName(onboarding.Resources.Models.FinanceData.PaymentMethodId);
 
             RuleFor(financeData => financeData.Guarantors).Custom((guarantors, context) =>
             {
