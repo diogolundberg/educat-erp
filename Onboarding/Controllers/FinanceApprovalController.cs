@@ -48,12 +48,6 @@ namespace Onboarding.Controllers
 
             List<Records> records = _mapper.Map<List<Records>>(enrollments);
 
-            foreach (Records record in records)
-            {
-                Enrollment enrollment = enrollments.Single(x => x.ExternalId == record.EnrollmentNumber);
-                record.Status = record.State = (new FinanceApprovalStatus(null, enrollment)).GetStatus();
-            }
-
             return new { records };
         }
 

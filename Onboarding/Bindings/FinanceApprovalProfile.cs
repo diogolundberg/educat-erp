@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Onboarding.Statuses;
 using Onboarding.ViewModels.FinanceApprovals;
 using System.Linq;
 
@@ -17,7 +18,9 @@ namespace Onboarding.Bindings
             .ForMember(x => x.PhoneNumber, config => config.MapFrom(x => x.PersonalData.PhoneNumber))
             .ForMember(x => x.UpdatedAt, config => config.MapFrom(x => x.FinanceData.UpdatedAt.Format()))
             .ForMember(x => x.Plan, config => config.MapFrom(x => x.FinanceData.Plan.Name))
-            .ForMember(x => x.PhoneNumber, config => config.MapFrom(x => x.PersonalData.PhoneNumber));
+            .ForMember(x => x.PhoneNumber, config => config.MapFrom(x => x.PersonalData.PhoneNumber))
+            .ForMember(x => x.Status, config => config.MapFrom(x => (new FinanceApprovalStatus(null, x)).GetStatusName()))
+            .ForMember(x => x.State, config => config.MapFrom(x => (new FinanceApprovalStatus(null, x)).GetStatusName()));
 
             CreateMap<Models.Guarantor, Guarantor>()
             .ForMember(x => x.AddressKind, config => config.MapFrom(x => x.AddressKind.Name))
@@ -67,7 +70,8 @@ namespace Onboarding.Bindings
             .ForMember(x => x.Plan, config => config.MapFrom(x => x.FinanceData.Plan))
             .ForMember(x => x.Representative, config => config.MapFrom(x => x.FinanceData.Representative))
             .ForMember(x => x.Guarantors, config => config.MapFrom(x => x.FinanceData.Guarantors))
-            .ForMember(x => x.PaymentMethod, config => config.MapFrom(x => x.FinanceData.PaymentMethod.Name));
+            .ForMember(x => x.PaymentMethod, config => config.MapFrom(x => x.FinanceData.PaymentMethod.Name))
+            .ForMember(x => x.State, config => config.MapFrom(x => (new AcademicApprovalStatus(null, x.Enrollment)).GetStatusName()));
         }
     }
 }
