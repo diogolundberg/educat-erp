@@ -36,6 +36,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DocumentValidations.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Models\Document.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Document.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Models\Enrollment.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Enrollment.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Models\FinanceData.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -46,10 +56,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Guarantor.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Models\Onboarding.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Onboarding.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Models\PersonalData.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>PersonalData.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Models\Representative.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Representative.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\Shared.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -63,6 +83,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DocumentValidations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Document.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Document.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Enrollment.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Enrollment.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Models\FinanceData.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FinanceData.Designer.cs</LastGenOutput>
@@ -71,9 +99,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Guarantor.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Onboarding.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Onboarding.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Models\PersonalData.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PersonalData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Representative.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Representative.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Shared.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -6,10 +6,12 @@ namespace Onboarding.Validations.Onboarding
     {
         public EnrollmentFormValidator() 
         {
-            RuleFor(x => x.Name).NotNull();
+            RuleFor(x => x.Name).NotNull().WithName(onboarding.Resources.Models.Enrollment.Name);
+
+            RuleFor(x => x.CPF).Must(x => Cpf.ValidCPF(x));
+
             RuleFor(x => x.Email).NotNull();
             RuleFor(x => x.Email).EmailAddress().When(x => !string.IsNullOrEmpty(x.Email));
-            RuleFor(x => x.CPF).Must(x => Cpf.ValidCPF(x));
         }
     }
 }
