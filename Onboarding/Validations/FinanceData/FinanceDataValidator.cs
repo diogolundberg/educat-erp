@@ -17,8 +17,10 @@ namespace Onboarding.Validations.FinanceData
 
             RuleFor(financeData => financeData.Representative).SetValidator(new RepresentativeValidator());
             RuleFor(financeData => financeData.Guarantors).SetCollectionValidator(new GuarantorValidator());
-            RuleFor(financeData => financeData.PlanId).NotNull();
-            RuleFor(financeData => financeData.PaymentMethodId).NotNull();
+
+            RuleFor(financeData => financeData.PlanId).NotNull().OverridePropertyName(onboarding.Resources.Models.FinanceData.PlanId);
+            RuleFor(financeData => financeData.PaymentMethodId).NotNull().OverridePropertyName(onboarding.Resources.Models.FinanceData.PaymentMethodId);
+
             RuleFor(financeData => financeData.Guarantors).Custom((guarantors, context) =>
             {
                 for (int i = 0; i < guarantors.Count; i++)
@@ -33,7 +35,7 @@ namespace Onboarding.Validations.FinanceData
 
                         foreach (string error in errors)
                         {
-                            context.AddFailure(string.Format("guarantors[{1}].documents.{0}", documentType.Id, i), string.Format("Documento {0} é obrigatório.", documentType.Name));
+                            context.AddFailure(string.Format("guarantors[{1}].documents.{0}", documentType.Id, i), string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, documentType.Name));
                         }
                     }
                 }
@@ -49,7 +51,7 @@ namespace Onboarding.Validations.FinanceData
             {
                 if (!guarantor.GuarantorDocuments.Any(x => x.Document.DocumentTypeId == documentType.Id))
                 {
-                    errors.Add(string.Format("Documento {0} é obrigatório.", documentType.Name));
+                    errors.Add(string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, documentType.Name));
                 }
             }
 
@@ -76,7 +78,7 @@ namespace Onboarding.Validations.FinanceData
         {
             if (validation == DocumentValidations.Spouse.ToString())
             {
-                return "Certidão de casamento obrigatória.";
+                return string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.Spouse);
             }
 
             return string.Empty;

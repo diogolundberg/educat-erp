@@ -81,7 +81,7 @@ namespace Onboarding.Validations.PersonalData
             {
                 if (!personalData.PersonalDataDocuments.Any(x => x.Document.DocumentTypeId == documentType.Id))
                 {
-                    errors.Add(string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, documentType.Name));
+                    errors.Add(string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, documentType.Name));
                 }
             }
 
@@ -250,31 +250,31 @@ namespace Onboarding.Validations.PersonalData
         {
             if (validation == DocumentValidations.Foreigner.ToString())
             {
-                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.Foreigner);
+                return string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.Foreigner);
             }
             else if (validation == DocumentValidations.MilitaryDraft.ToString())
             {
-                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.MilitaryDraft);
+                return string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.MilitaryDraft);
             }
             else if (validation == DocumentValidations.ForeignGraduation.ToString())
             {
-                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.ForeignGraduation);
+                return string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.ForeignGraduation);
             }
             else if (validation == DocumentValidations.MinorAge.ToString())
             {
-                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.MinorAge);
+                return string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.MinorAge);
             }
             else if (validation == DocumentValidations.GraduationYear.ToString())
             {
-                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.GraduationYear);
+                return string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.GraduationYear);
             }
             else if (validation == DocumentValidations.NotGraduationYear.ToString())
             {
-                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.NotGraduationYear);
+                return string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.NotGraduationYear);
             }
             else if (validation == DocumentValidations.Native.ToString())
             {
-                return string.Format(onboarding.Resources.Models.PersonalData.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.Native);
+                return string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, onboarding.Resources.Enums.DocumentValidations.Native);
             }
 
             return string.Empty;
