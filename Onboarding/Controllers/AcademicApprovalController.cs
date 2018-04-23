@@ -168,25 +168,5 @@ namespace Onboarding.Controllers
 
             return new OkObjectResult(new { errors, data = _mapper.Map<Record>(enrollment.PersonalData) });
         }
-
-        private string PersonalDataState(PersonalData personalData)
-        {
-            PersonalDataValidator validator = new PersonalDataValidator(_context);
-            FluentValidation.Results.ValidationResult results = validator.Validate(personalData);
-
-            if (!personalData.UpdatedAt.HasValue)
-            {
-                return "empty";
-            }
-            if (results.IsValid)
-            {
-                return "valid";
-            }
-            else
-            {
-                return "invalid";
-            }
-        }
-
     }
 }
