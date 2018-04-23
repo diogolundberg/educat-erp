@@ -41,6 +41,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PersonalData.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Shared.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Shared.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +56,10 @@
     <EmbeddedResource Update="Resources\Models\PersonalData.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PersonalData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Shared.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Shared.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   
