@@ -36,6 +36,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DocumentValidations.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Models\FinanceData.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FinanceData.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Models\Guarantor.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Guarantor.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Models\PersonalData.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -52,6 +62,14 @@
     <EmbeddedResource Update="Resources\Enums\DocumentValidations.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DocumentValidations.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\FinanceData.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FinanceData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Guarantor.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Guarantor.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Models\PersonalData.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
