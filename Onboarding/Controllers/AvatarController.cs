@@ -25,12 +25,12 @@ namespace Onboarding.Controllers
 
             if (enrollment == null)
             {
-                return new BadRequestObjectResult(new { messages = new List<string> { "Link para matrícula inválido." } });
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
             }
 
             if (!enrollment.IsDeadlineValid())
             {
-                return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado." } });
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
             if (!ModelState.IsValid)

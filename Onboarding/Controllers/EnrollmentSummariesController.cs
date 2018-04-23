@@ -61,12 +61,12 @@ namespace onboarding.Controllers
 
             if (enrollment == null)
             {
-                return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentNumberIsNotValid } });
             }
 
             if (!enrollment.IsDeadlineValid())
             {
-                return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado." } });
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
             Record data = _mapper.Map<Record>(enrollment);

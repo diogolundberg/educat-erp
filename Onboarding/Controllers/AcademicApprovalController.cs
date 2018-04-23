@@ -73,7 +73,7 @@ namespace Onboarding.Controllers
 
             if (enrollment == null)
             {
-                return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentNumberIsNotValid } });
             }
 
             Record data = _mapper.Map<Record>(enrollment.PersonalData);
@@ -113,7 +113,7 @@ namespace Onboarding.Controllers
 
             if (enrollment == null)
             {
-                return new BadRequestObjectResult(new { messages = new List<string> { "Número de matrícula inválido." } });
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentNumberIsNotValid } });
             }
 
             if (ModelState.IsValid)

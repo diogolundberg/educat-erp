@@ -42,17 +42,17 @@ namespace Onboarding.Controllers
 
             if (financeData == null)
             {
-                return new BadRequestObjectResult(new { messages = new List<string> { "Link para matrícula inválido." } });
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
             }
 
             if (!financeData.Enrollment.IsDeadlineValid())
             {
-                return new BadRequestObjectResult(new { messages = new List<string> { "O prazo para esta matrícula foi encerrado." } });
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
             if (!financeData.Editable)
             {
-                return new BadRequestObjectResult(new { messages = new List<string> { "Estes dados já foram enviados para a análises e não pode ser editados no momento." } });
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentInReview } });
             }
 
             if (obj.Representative is RepresentativePersonViewModel)

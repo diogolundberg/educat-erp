@@ -54,21 +54,21 @@ namespace Onboarding.Controllers
 
             if (existingOnboarding != null)
             {
-                return new BadRequestObjectResult(new { Messages = new List<string> { "Já existe um período de matrícula cadastrado para este semestre e ano." } });
+                return new BadRequestObjectResult(new { Messages = new List<string> { onboarding.Resources.Messages.OnboardingExisting } });
             }
 
-            Models.Onboarding onboarding = _mapper.Map<Models.Onboarding>(obj);
+            Models.Onboarding onboardingModel = _mapper.Map<Models.Onboarding>(obj);
 
-            IEnumerable<IGrouping<string, Enrollment>> group = onboarding.Enrollments.GroupBy(x => x.PersonalData.CPF);
+            IEnumerable<IGrouping<string, Enrollment>> group = onboardingModel.Enrollments.GroupBy(x => x.PersonalData.CPF);
 
             if (group.Where(x => x.ToList().Count() > 1).Count() > 0)
             {
-                return new BadRequestObjectResult(new { Messages = new List<string> { "Existem cpfs duplicados neste período de matrícula." } });
+                return new BadRequestObjectResult(new { Messages = new List<string> { onboarding.Resources.Messages.OnboardingDuplicateCpf } });
             }
 
-            foreach (Enrollment enrollment in onboarding.Enrollments)
+            foreach (Enrollment enrollment in onboardingModel.Enrollments)
             {
-                enrollment.ExternalId = onboarding.Year + onboarding.Semester + Regex.Replace(enrollment.PersonalData.CPF, @"\D", string.Empty);
+                enrollment.ExternalId = onboardingModel.Year + onboardingModel.Semester + Regex.Replace(enrollment.PersonalData.CPF, @"\D", string.Empty);
                 enrollment.StartedAt = DateTime.Now;
                 enrollment.FinanceData = new FinanceData
                 {
@@ -76,10 +76,10 @@ namespace Onboarding.Controllers
                 };
             }
 
-            _context.Onboardings.Add(onboarding);
+            _context.Onboardings.Add(onboardingModel);
             _context.SaveChanges();
 
-            foreach (Enrollment enrollment in onboarding.Enrollments)
+            foreach (Enrollment enrollment in onboardingModel.Enrollments)
             {
                 string link = string.Format("http://cmmg-ui.netlify.com/enroll/{0}", enrollment.ExternalId);
                 string messageBody = GetEmailBody("enrollment_invite.html").Replace("{link}", link);
@@ -90,7 +90,7 @@ namespace Onboarding.Controllers
 
             return new OkObjectResult(new
             {
-                data = _mapper.Map<ViewModels.Onboarding.Form>(onboarding)
+                data = _mapper.Map<ViewModels.Onboarding.Form>(onboardingModel)
             });
         }
 
@@ -114,26 +114,26 @@ namespace Onboarding.Controllers
 
             if (existingOnboarding == null)
             {
-                return new NotFoundObjectResult(new { Messages = new List<string> { "Esse período de matrícula não existe." } });
+                return new NotFoundObjectResult(new { Messages = new List<string> { onboarding.Resources.Messages.OnboardingNotExisting } });
             }
 
             if (existingOnboarding.Enrollments.Any(x => x.StartedAt.HasValue))
             {
-                return new NotFoundObjectResult(new { Messages = new List<string> { "Não é possível alterar o período pois existem matriculas iniciadas." } });
+                return new NotFoundObjectResult(new { Messages = new List<string> { onboarding.Resources.Messages.OnboardingEditBlock } });
             }
 
-            Models.Onboarding onboarding = _mapper.Map<Models.Onboarding>(obj);
+            Models.Onboarding onboardingModel = _mapper.Map<Models.Onboarding>(obj);
 
-            IEnumerable<IGrouping<string, Enrollment>> group = onboarding.Enrollments.GroupBy(x => x.PersonalData.CPF);
+            IEnumerable<IGrouping<string, Enrollment>> group = onboardingModel.Enrollments.GroupBy(x => x.PersonalData.CPF);
 
             if (group.Where(x => x.ToList().Count() > 1).Count() > 0)
             {
-                return new BadRequestObjectResult(new { Messages = new List<string> { "Existem cpfs duplicados neste período de matrícula." } });
+                return new BadRequestObjectResult(new { Messages = new List<string> { onboarding.Resources.Messages.OnboardingDuplicateCpf } });
             }
 
             foreach (Enrollment enrollment in existingOnboarding.Enrollments.ToList())
             {
-                if (!onboarding.Enrollments.Any(c => c.Id == enrollment.Id))
+                if (!onboardingModel.Enrollments.Any(c => c.Id == enrollment.Id))
                 {
                     _context.Set<Representative>().Remove(enrollment.FinanceData.Representative);
                     _context.Set<FinanceData>().Remove(enrollment.FinanceData);
@@ -141,7 +141,7 @@ namespace Onboarding.Controllers
                     _context.Set<Enrollment>().Remove(enrollment);
                 }
             }
-            foreach (Enrollment enrollment in onboarding.Enrollments)
+            foreach (Enrollment enrollment in onboardingModel.Enrollments)
             {
                 Enrollment searchedEnrolment = existingOnboarding.Enrollments.SingleOrDefault(x => x.Id == enrollment.Id);
 
@@ -154,7 +154,7 @@ namespace Onboarding.Controllers
                 }
                 else
                 {
-                    enrollment.ExternalId = onboarding.Year + onboarding.Semester + Regex.Replace(enrollment.PersonalData.CPF, @"\D", string.Empty);
+                    enrollment.ExternalId = onboardingModel.Year + onboardingModel.Semester + Regex.Replace(enrollment.PersonalData.CPF, @"\D", string.Empty);
                     enrollment.FinanceData = new FinanceData
                     {
                         Representative = new RepresentativePerson()
@@ -168,8 +168,8 @@ namespace Onboarding.Controllers
                 }
             }
 
-            onboarding.Id = existingOnboarding.Id;
-            _context.Entry(existingOnboarding).CurrentValues.SetValues(onboarding);
+            onboardingModel.Id = existingOnboarding.Id;
+            _context.Entry(existingOnboarding).CurrentValues.SetValues(onboardingModel);
             _context.SaveChanges();
             _context.Entry(existingOnboarding).Reload();
 
@@ -191,12 +191,12 @@ namespace Onboarding.Controllers
 
             if (existingOnboarding == null)
             {
-                return new NotFoundObjectResult(new { Messages = new List<string> { "Esse período de matrícula não existe." } });
+                return new NotFoundObjectResult(new { Messages = new List<string> { onboarding.Resources.Messages.OnboardingNotExisting } });
             }
 
             if (existingOnboarding.Enrollments.Any(x => x.StartedAt.HasValue))
             {
-                return new NotFoundObjectResult(new { Messages = new List<string> { "Não é possível excluir o período pois existem matriculas iniciadas." } });
+                return new NotFoundObjectResult(new { Messages = new List<string> { onboarding.Resources.Messages.OnboardingDeleteBlock } });
             }
 
             foreach (Enrollment enrollment in existingOnboarding.Enrollments)
