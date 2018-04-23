@@ -122,5 +122,14 @@ namespace onboarding.Resources.Enums {
                 return ResourceManager.GetString("NotGraduationYear", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certidão de casamento obrigatória.
+        /// </summary>
+        public static string Spouse {
+            get {
+                return ResourceManager.GetString("Spouse", resourceCulture);
+            }
+        }
     }
 }

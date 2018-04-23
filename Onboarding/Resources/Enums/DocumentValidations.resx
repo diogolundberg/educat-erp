@@ -138,4 +138,7 @@
   <data name="NotGraduationYear" xml:space="preserve">
     <value>Histórico escolar</value>
   </data>
+  <data name="Spouse" xml:space="preserve">
+    <value>Certidão de casamento obrigatória</value>
+  </data>
 </root>
