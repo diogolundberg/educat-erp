@@ -16,6 +16,7 @@ namespace Onboarding.Bindings
                 .ForMember(x => x.SentAt, config => config.MapFrom(x => x.SentAt.Format()))
                 .ForMember(x => x.FirstTime, config => config.MapFrom(x => !x.StartedAt.HasValue))
                 .ForMember(x => x.EnrollmentInfo, config => config.MapFrom(x => !x.EnrollmentInfo.HasValue))
+                .ForMember(x => x.Finished, config => config.MapFrom(x => x.FinishedAt.HasValue))
                 .ForMember(x => x.Deadline, config => config.MapFrom(x => x.Onboarding.EndAt))
                 .ForMember(x => x.Photo, config => config.MapFrom(x => x.Photo))
                 .ForMember(x => x.PersonalData, config => config.MapFrom(x => x.PersonalData))
