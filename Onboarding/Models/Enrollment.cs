@@ -65,6 +65,8 @@ namespace Onboarding.Models
         }
 
         public DateTime? EnrollmentInfo { get; set; }
+
+        public DateTime? FinishedAt { get; set; }
     }
 }
 
