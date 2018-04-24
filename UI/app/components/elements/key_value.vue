@@ -5,7 +5,9 @@
     <div class="h6">
       {{ title }}:
     </div>
-    <div class="h4">
+    <div
+      :title="value"
+      class="h4 truncate">
       {{ value }}
     </div>
   </div>

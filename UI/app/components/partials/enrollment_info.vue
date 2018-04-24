@@ -259,8 +259,8 @@
         <Fieldset title="Documentos">
           <div>
             <li
-              v-for="document in guarantor.documents"
-              :key="document.url">
+              v-for="(document, index) in guarantor.documents"
+              :key="index">
               <a
                 href="#"
                 @click.prevent="modalUrl = document.url">
@@ -277,8 +277,8 @@
       title="Documentos">
       <div>
         <li
-          v-for="document in enrollment.data.documents"
-          :key="document.url">
+          v-for="(document, index) in enrollment.data.documents"
+          :key="index">
           <a
             href="#"
             @click.prevent="modalUrl = document.url">
@@ -321,7 +321,7 @@
 
     <SideModal
       v-model="modal"
-      :title="title">
+      :title="modalTitle">
       <div
         class="m2">
         <Fieldset title="Pendências">
@@ -339,7 +339,7 @@
               <InputBox
                 v-model="item.description"
                 :errors="error.description"
-                label="Descrição" />
+                label="Descrição da Pendência" />
             </template>
           </Multi>
         </Fieldset>
@@ -347,7 +347,7 @@
       <template slot="footer">
         <Btn
           primary
-          label="Enviar"
+          label="Enviar Pendência"
           @click="approve" />
       </template>
     </SideModal>
@@ -381,6 +381,10 @@
       title() {
         const type = this.type === "academic" ? "Acadêmica" : "Financeira";
         return `Aprovação - ${type}`;
+      },
+      modalTitle() {
+        const type = this.type === "academic" ? "Acadêmica" : "Financeira";
+        return `Pendência ${type}`;
       },
     },
     async mounted() {

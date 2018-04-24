@@ -24,7 +24,7 @@
         :value="enrollment.data.personalData.birthDate"
         title="Nascimento" />
       <KeyValue
-        :value="enrollment.data.personalData.maritalStatus"
+        :value="getOption('maritalStatuses', 'maritalStatusId')"
         title="Estado Civil" />
       <KeyValue
         :value="getOption('genders', 'genderId')"
@@ -64,7 +64,7 @@
         :value="enrollment.data.personalData.zipcode"
         title="CEP" />
       <KeyValue
-        :value="enrollment.data.personalData.addressKind"
+        :value="getOption('addressKinds', 'addressKindId')"
         title="Tipo de Endereço" />
       <KeyValue
         :value="enrollment.data.personalData.streetAddress"
