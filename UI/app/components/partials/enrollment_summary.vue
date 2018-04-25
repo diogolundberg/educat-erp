@@ -3,106 +3,106 @@
     <Fieldset title="Dados Gerais">
       <div class="col-12 center mb2">
         <img
-          v-if="enrollment.data.photo"
-          :src="enrollment.data.photo"
+          v-if="summary.photo"
+          :src="summary.photo"
           class="rounded shadow2 x6 y6 bg-white">
         <img
-          v-if="!enrollment.data.photo"
+          v-if="!summary.photo"
           src="../../assets/img/people.svg"
           class="rounded shadow2 x6 y6 bg-white">
       </div>
       <KeyValue
-        :value="enrollment.data.personalData.realName"
+        :value="summary.realName"
         title="Nome" />
       <KeyValue
-        :value="enrollment.data.personalData.assumedName"
+        :value="summary.assumedName"
         title="Nome Social" />
       <KeyValue
-        :value="enrollment.data.personalData.cpf"
+        :value="summary.cpf"
         title="CPF" />
       <KeyValue
-        :value="enrollment.data.personalData.birthDate"
+        :value="summary.birthDate"
         title="Nascimento" />
       <KeyValue
-        :value="getOption('maritalStatuses', 'maritalStatusId')"
+        :value="summary.maritalStatus"
         title="Estado Civil" />
       <KeyValue
-        :value="getOption('genders', 'genderId')"
+        :value="summary.gender"
         title="Sexo" />
       <KeyValue
-        :value="getOption('nationalities', 'nationalityId')"
+        :value="summary.nationality"
         title="Nacionalidade" />
       <KeyValue
-        :value="getOption('countries', 'birthCountryId')"
+        :value="summary.birthCountry"
         title="País de Origem" />
       <KeyValue
-        :value="getOption('cities', 'birthCityId')"
+        :value="summary.birthCity"
         title="Naturalidade" />
       <KeyValue
-        :value="getOption('states', 'birthStateId')"
+        :value="summary.birthState"
         title="Estado de Nascimento" />
       <KeyValue
-        :value="enrollment.data.personalData.highSchoolGraduationYear"
+        :value="summary.highSchoolGraduationYear"
         title="Graduou em" />
       <KeyValue
-        :value="getOption('countries', 'highSchoolGraduationCountryId')"
+        :value="summary.highSchoolGraduationCountry"
         title="País da Escola" />
     </Fieldset>
     <Fieldset title="Contato">
       <KeyValue
-        :value="enrollment.data.personalData.email"
+        :value="summary.email"
         title="E-Mail" />
       <KeyValue
-        :value="enrollment.data.personalData.phoneNumber"
+        :value="summary.phoneNumber"
         title="Telefone" />
       <KeyValue
-        :value="enrollment.data.personalData.landline"
+        :value="summary.landline"
         title="Telefone Fixo" />
     </Fieldset>
     <Fieldset title="Endereço">
       <KeyValue
-        :value="enrollment.data.personalData.zipcode"
+        :value="summary.zipcode"
         title="CEP" />
       <KeyValue
-        :value="getOption('addressKinds', 'addressKindId')"
+        :value="summary.addressKind"
         title="Tipo de Endereço" />
       <KeyValue
-        :value="enrollment.data.personalData.streetAddress"
+        :value="summary.streetAddress"
         title="Logradouro" />
       <KeyValue
-        :value="enrollment.data.personalData.addressNumber"
+        :value="summary.addressNumber"
         title="Número" />
       <KeyValue
-        :value="enrollment.data.personalData.complementAddress"
+        :value="summary.complementAddress"
         title="Complemento" />
       <KeyValue
-        :value="enrollment.data.personalData.neighborhood"
+        :value="summary.neighborhood"
         title="Bairro" />
       <KeyValue
-        :value="getOption('cities', 'cityId')"
+        :value="summary.city"
         title="Cidade" />
       <KeyValue
-        :value="getOption('states', 'stateId')"
+        :value="summary.state"
         title="Estado" />
     </Fieldset>
     <Fieldset title="Dados para o Censo">
       <KeyValue
-        :value="enrollment.data.personalData.mothersName"
+        :value="summary.mothersName"
         title="Nome da Mãe" />
       <KeyValue
-        :value="getOption('races', 'raceId')"
+        :value="summary.race"
         title="Raça" />
       <KeyValue
-        :value="getOption('highSchoolKinds', 'highSchoolKindId')"
+        :value="summary.highSchoolKind"
         title="Tipo da Escola" />
     </Fieldset>
     <Fieldset
-      v-if="enrollment.data.personalData.handicap === 'yes'"
+      v-if="summary.handicap === 'yes'"
       title="Deficiências">
       <div>
         <ul>
           <li
-            v-for="disability in enrollment.data.personalData.disabilities"
+            v-for="disability in summary.disabilities"
             :key="disability">
             {{ disability }}
           </li>
@@ -110,92 +110,95 @@
       </div>
     </Fieldset>
     <Fieldset
-      v-if="enrollment.data.personalData.handicap === 'yes'"
+      v-if="summary.handicap === 'yes'"
       title="Necessidades Especiais">
       <div>
         <ul>
           <li
-            v-for="specialNeed in enrollment.data.personalData.specialNeeds"
+            v-for="specialNeed in summary.specialNeeds"
             :key="specialNeed">
             {{ specialNeed }}
           </li>
         </ul>
       </div>
     </Fieldset>
-    <Fieldset title="Plano">
+    <Fieldset
+      v-if="summary.plan"
+      title="Plano">
       <KeyValue
-        :value="getOptionFinance('plans', 'planId', 'name')"
+        :value="summary.plan.name"
         title="Nome" />
       <KeyValue
-        :value="getOptionFinance('plans', 'planId', 'installments')"
+        :value="summary.plan.installments"
         title="Prestações" />
       <KeyValue
-        :value="getOptionFinance('plans', 'planId', 'dueDate')"
+        :value="summary.plan.dueDate"
         title="Vencimento" />
       <KeyValue
-        :value="getOptionFinance('plans', 'planId', 'value')"
+        :value="summary.plan.value"
         title="Valor" />
       <KeyValue
-        :value="getOptionFinance('plans', 'planId', 'guarantors')"
+        :value="summary.plan.guarantors"
         title="Fiadores" />
     </Fieldset>
     <Fieldset title="Pagamento">
       <KeyValue
-        :value="getOptionFinance('paymentMethod', 'paymentMethodId')"
+        :value="summary.paymentMethod"
         title="Meio de Pagamento" />
     </Fieldset>
-    <Fieldset title="Responsável Financeiro">
+    <Fieldset
+      v-if="summary.representative"
+      title="Responsável Financeiro">
       <KeyValue
-        :value="enrollment.data.financeData.representative.name"
+        :value="summary.representative.name"
         title="Nome" />
       <KeyValue
-        :value="enrollment.data.financeData.representative.cpf"
+        :value="summary.representative.cpf"
         title="CPF" />
       <KeyValue
-        :value="getOptionFinance2('relationships', 'relationshipId', 'representative')"
+        :value="summary.representative.relationship"
         title="Relacionamento com o aluno" />
       <KeyValue
-        :value="enrollment.data.financeData.representative.email"
+        :value="summary.representative.email"
         title="E-mail" />
       <KeyValue
-        :value="enrollment.data.financeData.representative.phoneNumber"
+        :value="summary.representative.phoneNumber"
         title="Telefone" />
       <KeyValue
-        :value="enrollment.data.financeData.representative.landline"
+        :value="summary.representative.landline"
         title="Telefone Fixo" />
       <KeyValue
-        :value="enrollment.data.financeData.representative.zipcode"
+        :value="summary.representative.zipcode"
         title="CEP" />
       <KeyValue
-        :value="enrollment.data.financeData.representative.addressKindId"
+        :value="summary.representative.addressKindId"
         title="Tipo" />
       <KeyValue
-        :value="enrollment.data.financeData.representative.streetAddress"
+        :value="summary.representative.streetAddress"
         title="Endereço" />
       <KeyValue
-        :value="enrollment.data.financeData.representative.addressNumber"
+        :value="summary.representative.addressNumber"
         title="Número" />
       <KeyValue
-        :value="enrollment.data.financeData.representative.complementAddress"
+        :value="summary.representative.complementAddress"
         title="Complemento" />
       <KeyValue
-        :value="enrollment.data.financeData.representative.neighborhood"
+        :value="summary.representative.neighborhood"
         title="Bairro" />
       <KeyValue
-        :value="getOptionFinance2('cities', 'cityId', 'representative')"
+        :value="summary.representative.city"
         title="Cidade" />
       <KeyValue
-        :value="getOptionFinance2('cities', 'stateId', 'representative')"
+        :value="summary.representative.state"
         title="Estado" />
     </Fieldset>
     <Fieldset
-      v-if="enrollment.data.financeData.guarantors
-      && enrollment.data.financeData.guarantors.length"
+      v-if="summary.guarantors && summary.guarantors.length"
       title="Fiadores">
       <div
-        v-for="(guarantor, index) in enrollment.data.financeData.guarantors"
+        v-for="(guarantor, index) in summary.guarantors"
         :key="index"
-        class="col-6">
+        class="col-12">
         <Fieldset :title="`Fiador ${index+1}`">
           <KeyValue
             :value="guarantor.cpf"
@@ -204,7 +207,7 @@
             :value="guarantor.name"
             title="Nome" />
           <KeyValue
-            :value="getOptionFinance3('relationships', 'relationshipId', index)"
+            :value="guarantor.relationship"
             title="Relacionamento com o aluno" />
           <KeyValue
             :value="guarantor.email"
@@ -234,10 +237,10 @@
             :value="guarantor.neighborhood"
             title="Bairro" />
           <KeyValue
-            :value="getOptionFinance3('cities', 'cityId', index)"
+            :value="guarantor.city"
             title="Cidade" />
           <KeyValue
-            :value="getOptionFinance3('states', 'stateId', index)"
+            :value="guarantor.state"
             title="Estado" />
         </Fieldset>
       </div>
@@ -249,31 +252,9 @@
   export default {
     name: "EnrollmentSummary",
     props: {
-      enrollment: {
+      summary: {
         type: Object,
         required: true,
-      },
-    },
-    methods: {
-      getOption(option, key) {
-        const choice = this.enrollment.options[option].find(a =>
-          a.id === this.enrollment.data.personalData[key]) || {};
-        return choice && choice.name;
-      },
-      getOptionFinance(option, key, key2 = "name") {
-        const choice = this.enrollment.options[option].find(a =>
-          a.id === this.enrollment.data.financeData[key]);
-        return choice && choice[key2];
-      },
-      getOptionFinance2(option, key, key2, key3 = "name") {
-        const choice = this.enrollment.options[option].find(a =>
-          a.id === this.enrollment.data.financeData[key2][key]);
-        return choice && choice[key3];
-      },
-      getOptionFinance3(option, key, index, key3 = "name") {
-        const choice = this.enrollment.options[option].find(a =>
-          a.id === this.enrollment.data.financeData.guarantors[index][key]);
-        return choice && choice[key3];
       },
     },
   };

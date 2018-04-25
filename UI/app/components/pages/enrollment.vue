@@ -498,7 +498,7 @@
                 :style="{ 'max-width': '8rem' }"
                 src="../../assets/img/card.svg">
             </div>
-            <EnrollmentSummary :enrollment="enrollment" />
+            <EnrollmentSummary :summary="summary" />
             <Fieldset title="Confirmação">
               <Checkbox
                 v-model="agreed"
@@ -645,6 +645,9 @@
       enrollment() {
         return this.$store.state.enrollment;
       },
+      summary() {
+        return this.$store.state.enrollmentSummary;
+      },
       underage() {
         return this.enrollment.underage;
       },
@@ -712,6 +715,11 @@
         handler() {
           this.$store.dispatch("copyResponsibleData");
         },
+      },
+      async step(value) {
+        if (value === 4) {
+          await this.$store.dispatch("getEnrollmentSummary", this.id);
+        }
       },
     },
     async mounted() {

@@ -107,7 +107,7 @@ export default new VueX.Store({
       },
       underage: false,
     },
-    uploadUrl: null,
+    enrollmentSummary: {},
     academicApprovals: [],
     financeApprovals: [],
     enrollmentInfo: {
@@ -151,6 +151,9 @@ export default new VueX.Store({
     },
     SET_PHOTO(state, photo) {
       state.enrollment.data.photo = photo;
+    },
+    SET_ENROLLMENT_SUMMARY(state, summary) {
+      state.enrollmentSummary = Object.assign({}, state.enrollmentSummary, summary);
     },
     SET_PERSONAL_DATA(state, { data, errors, messages }) {
       Object.assign(state.enrollment.data.personalData, data);
@@ -248,6 +251,11 @@ export default new VueX.Store({
       const url = `${url2}/api/Avatar/${token}`;
       await axios.post(url, { photo });
       commit("SET_PHOTO", photo);
+    },
+    async getEnrollmentSummary({ commit }, token) {
+      const url = `${url2}/api/EnrollmentSummaries/${token}`;
+      const response = await axios.get(url);
+      commit("SET_ENROLLMENT_SUMMARY", response.data.data);
     },
     async setPersonalData({ commit }, { token, data }) {
       const url = `${url2}/api/PersonalData/${token}`;
