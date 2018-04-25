@@ -57,6 +57,7 @@ namespace onboarding.Controllers
                                             .Include("FinanceData.PaymentMethod")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
+                                            .Include("FinanceData.Guarantors.GuarantorDocuments.Document.DocumentType")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
