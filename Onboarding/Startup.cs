@@ -149,6 +149,11 @@ namespace Onboarding
                 }
             );
 
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                serviceScope.ServiceProvider.GetService<DatabaseContext>().Database.Migrate();
+            }
+
             app.UseStaticFiles();
 
             app.UseMvc();
