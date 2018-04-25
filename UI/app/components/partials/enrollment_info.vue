@@ -105,6 +105,12 @@
         :value="enrollment.data.highSchollKind"
         title="Tipo da Escola" />
     </Fieldset>
+    <Fieldset title="Outras informações">
+      <KeyValue
+        :value="handicap"
+        title="Possui alguma Deficiência, Transtorno Global do
+          Desenvolvimento, ou Habilidades/Superdotação?" />
+    </Fieldset>
     <Fieldset
       v-if="enrollment.data.handicap === 'yes' && type=='academic'"
       title="Deficiências">
@@ -385,6 +391,16 @@
       modalTitle() {
         const type = this.type === "academic" ? "Acadêmica" : "Financeira";
         return `Pendência ${type}`;
+      },
+      handicap() {
+        if (this.enrollment.data.handicap === "no") {
+          return "Não";
+        } else if (this.enrollment.data.handicap === "yes") {
+          return "Sim";
+        } else if (this.enrollment.data.handicap === "unknown") {
+          return "Não disponho da informação";
+        }
+        return "";
       },
     },
     async mounted() {
