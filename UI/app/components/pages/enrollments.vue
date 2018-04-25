@@ -11,6 +11,7 @@
         {name: 'phoneNumber', title: 'Celular'},
         {name: 'plan', title: 'Plano', show: type === 'finance'},
         {name: 'updatedAt', title: 'Modificado em'},
+        {name: 'status', title: 'Status'},
       ]"
       @click="show($event)" />
   </div>
