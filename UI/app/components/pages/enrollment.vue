@@ -116,7 +116,6 @@
                 required
                 label="Nacionalidade" />
               <DropDown
-                ref="birthCountry"
                 v-model="enrollment.data.personalData.birthCountryId"
                 :errors="enrollment.errors.personalData.birthCountryId"
                 :size="3"
@@ -125,8 +124,7 @@
                 required
                 label="País de Origem"
                 hint="Ex: Brasil" />
-              <template
-                v-if="$refs.birthCountry && $refs.birthCountry.choice.hasUF !== false">
+              <template v-if="birthHasUF">
                 <DropDown
                   v-model="enrollment.data.personalData.birthStateId"
                   :errors="enrollment.errors.personalData.birthStateId"
@@ -701,6 +699,11 @@
       pendencies() {
         return [...this.enrollment.data.academicApproval.pendencies || [],
                 ...this.enrollment.data.financeApproval.pendencies || []];
+      },
+      birthHasUF() {
+        const birthCountry = this.enrollment.options.countries.find(a =>
+          a.id === this.enrollment.data.personalData.birthCountryId);
+        return birthCountry && birthCountry.hasUF;
       },
     },
     watch: {
