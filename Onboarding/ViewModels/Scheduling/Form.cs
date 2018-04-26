@@ -1,4 +1,6 @@
-﻿namespace onboarding.ViewModels.Scheduling
+﻿using System.Collections.Generic;
+
+namespace onboarding.ViewModels.Scheduling
 {
     public class Form
     {
