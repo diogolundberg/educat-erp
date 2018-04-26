@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using onboarding.Models;
 using onboarding.Validations.Scheduling;
 using onboarding.ViewModels.Scheduling;
@@ -28,10 +29,18 @@ namespace onboarding.Controllers
         //{
         //}
 
-        //[HttpGet("{id}", Name = "ONBOARDING/SCHEDULING/GET")]
-        //public IActionResult GetById([FromRoute]int id)
-        //{
-        //}
+        [HttpGet("{id}", Name = "ONBOARDING/SCHEDULING/GET")]
+        public dynamic GetById([FromRoute]int id)
+        {
+            Scheduling obj = _context.Schedulings.Include("Onboarding").SingleOrDefault(x => x.Id == id);
+
+            if (obj == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.SchedulingNotExisting } });
+            }
+
+            return _mapper.Map<Record>(obj);
+        }
 
         [HttpPost(Name = "ONBOARDING/SCHEDULING/NEW")]
         public dynamic Create([FromBody]Form form)
@@ -43,7 +52,7 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingNotExisting } });
             }
 
-            if(_context.Schedulings.Any(x=> x.OnboardingId == scheduling.OnboardingId))
+            if (_context.Schedulings.Any(x => x.OnboardingId == scheduling.OnboardingId))
             {
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.HaveSchedulingForOnboarding } });
             }
