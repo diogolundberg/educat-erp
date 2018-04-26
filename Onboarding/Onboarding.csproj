@@ -76,6 +76,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Representative.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Models\Scheduling.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Scheduling.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Shared.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -119,6 +124,10 @@
     <EmbeddedResource Update="Resources\Models\Representative.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Representative.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Scheduling.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Scheduling.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Shared.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
