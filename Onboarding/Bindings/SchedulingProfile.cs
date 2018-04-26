@@ -12,7 +12,8 @@ namespace onboarding.Bindings
             CreateMap<Scheduling, Record>()
                 .ForMember(x => x.StartAt, config => config.MapFrom(x => x.StartAt.Format()))
                 .ForMember(x => x.EndAt, config => config.MapFrom(x => x.EndAt.Format()))
-                .ForMember(x => x.Onboarding, config => config.MapFrom(x => x.Onboarding.Semester + "/" + x.Onboarding.Year));
+                .ForMember(x => x.Onboarding, config => config.MapFrom(x => x.Onboarding.Semester + "/" + x.Onboarding.Year))
+                .ForMember(x => x.Breaks, config => config.MapFrom(x => x.FormBreaks));
 
             CreateMap<Scheduling, Form>()
                 .ForMember(x => x.StartAt, config => config.MapFrom(x => x.StartAt.Format()))
