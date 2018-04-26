@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using onboarding.ViewModels.Scheduling;
+using System;
+using System.Collections.Generic;
 
 namespace onboarding.Models
 {
@@ -10,5 +13,12 @@ namespace onboarding.Models
         public DateTime EndAt { get; set; }
         public string Intervals { get; set; }
         public string Breaks { get; set; }
+        public List<FormBreak> FormBreaks
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(Breaks) ? JsonConvert.DeserializeObject<List<FormBreak>>(Breaks) : new List<FormBreak>();
+            }
+        }
     }
 }
