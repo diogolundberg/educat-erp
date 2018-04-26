@@ -20,7 +20,14 @@
       :items="pendencies"
       @click="notificationClick" />
 
-    <Spinner :active="!enrollment.data.deadline">
+    <EnrollmentWelcome
+      v-if="enrollment.data.firstTime"
+      :enrollment="enrollment.data"
+      @done="startEnrollment" />
+
+    <Spinner
+      v-if="!enrollment.data.firstTime"
+      :active="!enrollment.data.deadline">
       <Stepper
         v-model="step"
         header
@@ -731,6 +738,9 @@
       }
     },
     methods: {
+      startEnrollment() {
+        this.enrollment.data.firstTime = false;
+      },
       goToStep() {
         if (this.enrollment.data.personalData.status === "valid") {
           this.step = 2;
