@@ -9,8 +9,13 @@ namespace onboarding.Bindings
     {
         public SchedulingProfile()
         {
+            CreateMap<Scheduling, Record>()
+                .ForMember(x => x.StartAt, config => config.MapFrom(x => x.StartAt.Format()))
+                .ForMember(x => x.EndAt, config => config.MapFrom(x => x.EndAt.Format()))
+                .ForMember(x => x.Onboarding, config => config.MapFrom(x => x.Onboarding.Semester + "/" + x.Onboarding.Year));
+
             CreateMap<Scheduling, Form>()
-                .ForMember(x=>x.StartAt, config => config.MapFrom(x=>x.StartAt.Format()))
+                .ForMember(x => x.StartAt, config => config.MapFrom(x => x.StartAt.Format()))
                 .ForMember(x => x.EndAt, config => config.MapFrom(x => x.EndAt.Format()))
                 .ForMember(x => x.Breaks, config => config.MapFrom(x => x.FormBreaks));
 
