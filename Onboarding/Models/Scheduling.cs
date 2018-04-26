@@ -2,6 +2,7 @@
 using onboarding.ViewModels.Scheduling;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace onboarding.Models
 {
@@ -13,6 +14,8 @@ namespace onboarding.Models
         public DateTime EndAt { get; set; }
         public string Intervals { get; set; }
         public string Breaks { get; set; }
+
+        [NotMapped]
         public List<FormBreak> FormBreaks
         {
             get
