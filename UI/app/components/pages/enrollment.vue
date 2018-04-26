@@ -738,8 +738,8 @@
       }
     },
     methods: {
-      startEnrollment() {
-        this.enrollment.data.firstTime = false;
+      async startEnrollment() {
+        await this.$store.dispatch("submitWelcomePage", this.id);
       },
       goToStep() {
         if (this.enrollment.data.personalData.status === "valid") {

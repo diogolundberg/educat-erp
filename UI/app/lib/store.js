@@ -166,6 +166,9 @@ export default new VueX.Store({
       Object.assign(state.enrollment.errors.financeData, { representative: {} });
       state.enrollment.errors.financeData = errors;
     },
+    SET_ENROLLMENT_FIRST_TIME(state) {
+      state.enrollment.data.firstTime = false;
+    },
     SET_ENROLLMENT_SENTAT(state) {
       state.enrollment.data.sentAt = new Date();
       state.enrollment.data.reviewedAt = null;
@@ -266,6 +269,11 @@ export default new VueX.Store({
       const url = `${url2}/api/FinanceData/${token}`;
       const response = await axios.post(url, data);
       commit("SET_FINANCE_DATA", response.data);
+    },
+    async submitWelcomePage({ commit }, token) {
+      const url = `${url2}/api/Enrollments/${token}`;
+      await axios.post(url);
+      commit("SET_ENROLLMENT_FIRST_TIME");
     },
     async submitEnrollment({ commit }, { token }) {
       try {
