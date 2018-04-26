@@ -5,7 +5,6 @@ using onboarding.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using onboarding.Resources.Models;
 
 namespace onboarding.Validations.PersonalData
 {
@@ -53,7 +52,7 @@ namespace onboarding.Validations.PersonalData
                 {
                     if (personalData.BirthCountry.HasUF && personalData.BirthStateId == null)
                     {
-                        context.AddFailure("BirthStateId", "UF de nascimento é obrigatório.");
+                        context.AddFailure("BirthStateId", string.Format(Resources.Shared.Required,Resources.Models.PersonalData.BirthStateId));
                     }
                 }
             });
