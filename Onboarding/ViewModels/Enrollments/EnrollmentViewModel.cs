@@ -1,4 +1,4 @@
-namespace Onboarding.ViewModels.Enrollments
+namespace onboarding.ViewModels.Enrollments
 {
     public class Record
     {

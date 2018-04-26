@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Onboarding.Models;
+using onboarding.Models;
 
-namespace Onboarding.ViewModels.AcademicApprovals
+namespace onboarding.ViewModels.AcademicApprovals
 {
     public class Record
     {

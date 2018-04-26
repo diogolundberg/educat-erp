@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
-using Onboarding.Models;
+using onboarding.Models;
 using System;
 
-namespace Onboarding.Migrations
+namespace onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20180416170129_change_type_for_all_datetimes")]

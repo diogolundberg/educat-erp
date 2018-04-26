@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Onboarding
+namespace onboarding
 {
     public class ValidateModelStateAttribute : ActionFilterAttribute
     {

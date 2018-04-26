@@ -1,9 +1,9 @@
 using FluentValidation.Results;
-using Onboarding.Models;
-using Onboarding.Validations;
-using Onboarding.Validations.FinanceData;
+using onboarding.Models;
+using onboarding.Validations;
+using onboarding.Validations.FinanceData;
 
-namespace Onboarding.Statuses
+namespace onboarding.Statuses
 {
     public class FinanceDataStatus : BaseStatus<FinanceData>
     {

@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,13 +6,13 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Onboarding.Models;
-using Onboarding.Statuses;
-using Onboarding.Validations;
-using Onboarding.Validations.PersonalData;
-using Onboarding.ViewModels.AcademicApprovals;
+using onboarding.Models;
+using onboarding.Statuses;
+using onboarding.Validations;
+using onboarding.Validations.PersonalData;
+using onboarding.ViewModels.AcademicApprovals;
 
-namespace Onboarding.Controllers
+namespace onboarding.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]

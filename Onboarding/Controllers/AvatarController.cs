@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Onboarding.Models;
-using Onboarding.ViewModels.Avatar;
+using onboarding.Models;
+using onboarding.ViewModels.Avatar;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Onboarding.Controllers
+namespace onboarding.Controllers
 {
     [Produces("application/json")]
     [Route("api/Avatar")]

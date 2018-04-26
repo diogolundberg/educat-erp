@@ -1,4 +1,4 @@
-namespace Onboarding.ViewModels.AcademicApprovals
+namespace onboarding.ViewModels.AcademicApprovals
 {
     public class Records
     {

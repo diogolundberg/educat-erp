@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Onboarding.Statuses;
-using Onboarding.ViewModels.Enrollments;
+using onboarding.Statuses;
+using onboarding.ViewModels.Enrollments;
 using System;
 using System.Linq;
 
-namespace Onboarding.Bindings
+namespace onboarding.Bindings
 {
     public class EnrollmentProfile : Profile
     {

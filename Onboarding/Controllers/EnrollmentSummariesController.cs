@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using onboarding.ViewModels.EnrollmentSummaries;
-using Onboarding.Controllers;
-using Onboarding.Models;
+using onboarding.Controllers;
+using onboarding.Models;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Onboarding.Models
+namespace onboarding.Models
 {
     public class Gender : BaseModel
     {

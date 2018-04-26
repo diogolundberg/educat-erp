@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Onboarding.Migrations
+namespace onboarding.Migrations
 {
     public partial class add_column_check_student_is_representative_to_relationship : Migration
     {

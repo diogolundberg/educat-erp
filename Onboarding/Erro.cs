@@ -1,4 +1,4 @@
-namespace Onboarding
+namespace onboarding
 {
     public class Error
     {

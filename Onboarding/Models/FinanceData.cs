@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-namespace Onboarding.Models
+namespace onboarding.Models
 {
     public class FinanceData : BaseModel
     {

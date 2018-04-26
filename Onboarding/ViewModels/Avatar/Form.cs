@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Onboarding.ViewModels.Avatar
+namespace onboarding.ViewModels.Avatar
 {
     public class Form
     {

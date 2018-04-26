@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using onboarding.ViewModels.EnrollmentSummaries;
-using Onboarding.Models;
+using onboarding.Models;
 using System.Linq;
 
-namespace Onboarding.Bindings
+namespace onboarding.Bindings
 {
     public class EnrollmentSummariesProfile : Profile
     {

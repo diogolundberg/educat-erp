@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Onboarding.Models;
-using Onboarding.ViewModels;
+using onboarding.Models;
+using onboarding.ViewModels;
 
-namespace Onboarding.Bindings
+namespace onboarding.Bindings
 {
     public class FinanceDataProfile : Profile
     {

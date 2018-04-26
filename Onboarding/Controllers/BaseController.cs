@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 
-namespace Onboarding.Controllers
+namespace onboarding.Controllers
 {
     public class BaseController : Controller
     {

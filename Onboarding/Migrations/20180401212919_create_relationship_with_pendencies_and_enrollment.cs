@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Onboarding.Migrations
+namespace onboarding.Migrations
 {
     public partial class create_relationship_with_pendencies_and_enrollment : Migration
     {

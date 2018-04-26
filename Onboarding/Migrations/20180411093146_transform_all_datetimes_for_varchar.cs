@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Onboarding.Migrations
+namespace onboarding.Migrations
 {
     public partial class transform_all_datetimes_for_varchar : Migration
     {

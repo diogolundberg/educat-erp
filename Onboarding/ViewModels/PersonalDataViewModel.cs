@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Onboarding.ViewModels
+namespace onboarding.ViewModels
 {
     public class PersonalDataViewModel
     {

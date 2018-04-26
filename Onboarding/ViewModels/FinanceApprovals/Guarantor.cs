@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Onboarding.ViewModels.FinanceApprovals
+namespace onboarding.ViewModels.FinanceApprovals
 {
     public class Guarantor
     {

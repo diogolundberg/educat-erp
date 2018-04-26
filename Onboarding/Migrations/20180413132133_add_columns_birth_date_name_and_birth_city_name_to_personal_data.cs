@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Onboarding.Migrations
+namespace onboarding.Migrations
 {
     public partial class add_columns_birth_date_name_and_birth_city_name_to_personal_data : Migration
     {

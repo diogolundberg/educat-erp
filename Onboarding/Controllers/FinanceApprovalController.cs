@@ -7,13 +7,13 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Onboarding.Models;
-using Onboarding.Statuses;
-using Onboarding.Validations;
-using Onboarding.Validations.FinanceData;
-using Onboarding.ViewModels.FinanceApprovals;
+using onboarding.Models;
+using onboarding.Statuses;
+using onboarding.Validations;
+using onboarding.Validations.FinanceData;
+using onboarding.ViewModels.FinanceApprovals;
 
-namespace Onboarding.Controllers
+namespace onboarding.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]

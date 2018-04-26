@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Onboarding.Models
+namespace onboarding.Models
 {
     public class Document : BaseModel
     {

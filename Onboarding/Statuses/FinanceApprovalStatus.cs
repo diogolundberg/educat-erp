@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using Onboarding.Models;
+using onboarding.Models;
 using System.Linq;
 
-namespace Onboarding.Statuses
+namespace onboarding.Statuses
 {
     public class FinanceApprovalStatus : BaseStatus<Enrollment>
     {

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Onboarding.Validations.PersonalData
+namespace onboarding.Validations.PersonalData
 {
     public class PersonalDataDocumentValidator : AbstractValidator<Models.PersonalDataDocument>
     {

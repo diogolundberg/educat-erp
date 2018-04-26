@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Onboarding.ViewModels.Onboarding;
+using onboarding.ViewModels.Onboarding;
 using System;
 using System.Globalization;
 using System.Linq;
 
-namespace Onboarding.Bindings
+namespace onboarding.Bindings
 {
     public class OnboardingProfile : Profile
     {

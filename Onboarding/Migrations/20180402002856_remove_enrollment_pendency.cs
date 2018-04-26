@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Onboarding.Migrations
+namespace onboarding.Migrations
 {
     public partial class remove_enrollment_pendency : Migration
     {

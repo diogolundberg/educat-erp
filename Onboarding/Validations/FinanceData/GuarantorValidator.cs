@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using Newtonsoft.Json;
-using Onboarding.Models;
-using Onboarding.Validations.FinanceData;
+using onboarding.Models;
+using onboarding.Validations.FinanceData;
 
-namespace Onboarding.Validations
+namespace onboarding.Validations
 {
     public class GuarantorValidator : AbstractValidator<Guarantor>
     {

@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
-using Onboarding.Models;
+using onboarding.Models;
 using System;
 
-namespace Onboarding.Migrations
+namespace onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20180408191418_add_column_checknative_to_nationality")]

@@ -3,18 +3,18 @@ using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Onboarding.Models;
-using Onboarding.Statuses;
-using Onboarding.Validations;
-using Onboarding.Validations.FinanceData;
-using Onboarding.Validations.PersonalData;
-using Onboarding.ViewModels;
-using Onboarding.ViewModels.Enrollments;
+using onboarding.Models;
+using onboarding.Statuses;
+using onboarding.Validations;
+using onboarding.Validations.FinanceData;
+using onboarding.Validations.PersonalData;
+using onboarding.ViewModels;
+using onboarding.ViewModels.Enrollments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Onboarding.Controllers
+namespace onboarding.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]

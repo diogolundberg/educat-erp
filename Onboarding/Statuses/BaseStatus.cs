@@ -1,7 +1,7 @@
 using FluentValidation;
-using Onboarding.Models;
+using onboarding.Models;
 
-namespace Onboarding.Statuses
+namespace onboarding.Statuses
 {
     public abstract class BaseStatus<T> where T : BaseModel
     {

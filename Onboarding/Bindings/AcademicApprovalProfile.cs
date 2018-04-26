@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Onboarding.Models;
-using Onboarding.Statuses;
-using Onboarding.ViewModels.AcademicApprovals;
+using onboarding.Models;
+using onboarding.Statuses;
+using onboarding.ViewModels.AcademicApprovals;
 using System.Linq;
 
-namespace Onboarding.Bindings
+namespace onboarding.Bindings
 {
     public class AcademicApprovalProfile : Profile
     {

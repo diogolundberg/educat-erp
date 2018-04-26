@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
-using Onboarding.Models;
+using onboarding.Models;
 using System;
 
-namespace Onboarding.Migrations
+namespace onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20180411154717_add_column_address_number_to_personal_data")]

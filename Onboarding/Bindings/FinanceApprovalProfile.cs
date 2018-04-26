@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Onboarding.Statuses;
-using Onboarding.ViewModels.FinanceApprovals;
+using onboarding.Statuses;
+using onboarding.ViewModels.FinanceApprovals;
 using System.Linq;
 
-namespace Onboarding.Bindings
+namespace onboarding.Bindings
 {
     public class FinanceApprovalProfile : Profile
     {

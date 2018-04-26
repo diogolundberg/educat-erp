@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using System.Net.Mail;
 
-namespace Onboarding
+namespace onboarding
 {
     public class SmtpClientHelper
     {

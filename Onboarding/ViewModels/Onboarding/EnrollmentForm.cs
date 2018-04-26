@@ -1,4 +1,4 @@
-﻿namespace Onboarding.ViewModels.Onboarding
+﻿namespace onboarding.ViewModels.Onboarding
 {
     public class EnrollmentForm
     {

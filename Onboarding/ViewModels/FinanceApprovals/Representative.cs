@@ -1,4 +1,4 @@
-namespace Onboarding.ViewModels.FinanceApprovals
+namespace onboarding.ViewModels.FinanceApprovals
 {
     public class Representative
     {

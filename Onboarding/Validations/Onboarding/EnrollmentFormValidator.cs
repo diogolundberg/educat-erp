@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Onboarding.Validations.Onboarding
+namespace onboarding.Validations.Onboarding
 {
     public class EnrollmentFormValidator : AbstractValidator<ViewModels.Onboarding.EnrollmentForm>
     {

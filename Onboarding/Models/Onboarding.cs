@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Onboarding.Models
+namespace onboarding.Models
 {
     public class Onboarding : BaseModel
     {

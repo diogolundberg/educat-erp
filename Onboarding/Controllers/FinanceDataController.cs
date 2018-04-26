@@ -1,16 +1,16 @@
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Onboarding.Models;
-using Onboarding.ViewModels;
+using onboarding.Models;
+using onboarding.ViewModels;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
-using Onboarding.Validations;
-using Onboarding.Validations.FinanceData;
-using Onboarding.Statuses;
+using onboarding.Validations;
+using onboarding.Validations.FinanceData;
+using onboarding.Statuses;
 
-namespace Onboarding.Controllers
+namespace onboarding.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]

@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
 using Newtonsoft.Json;
-using Onboarding.Enums;
-using Onboarding.Models;
+using onboarding.Enums;
+using onboarding.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Onboarding.Validations
+namespace onboarding.Validations
 {
     public class FinanceDataMessagesValidator : AbstractValidator<Models.FinanceData>
     {

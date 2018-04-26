@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Onboarding.Models
+namespace onboarding.Models
 {
     public abstract class DocumentType : BaseModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Onboarding.ViewModels
+namespace onboarding.ViewModels
 {
     public class Pendency
     {

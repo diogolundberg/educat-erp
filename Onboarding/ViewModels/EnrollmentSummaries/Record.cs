@@ -1,5 +1,5 @@
-﻿using Onboarding.ViewModels.AcademicApprovals;
-using Onboarding.ViewModels.FinanceApprovals;
+﻿using onboarding.ViewModels.AcademicApprovals;
+using onboarding.ViewModels.FinanceApprovals;
 using System.Collections.Generic;
 
 namespace onboarding.ViewModels.EnrollmentSummaries

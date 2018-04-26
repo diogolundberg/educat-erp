@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
 
-namespace Onboarding.Models
+namespace onboarding.Models
 {
     public class DatabaseContext : DbContext
     {

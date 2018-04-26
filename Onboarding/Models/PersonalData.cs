@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace Onboarding.Models
+namespace onboarding.Models
 {
     public class PersonalData : BaseModel
     {

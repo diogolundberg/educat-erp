@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Onboarding.Migrations
+namespace onboarding.Migrations
 {
     public partial class add_propeties_zipcode_and_addresskind_to_guarantor : Migration
     {

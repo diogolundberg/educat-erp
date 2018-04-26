@@ -1,7 +1,7 @@
-﻿using Onboarding.Validations;
+﻿using onboarding.Validations;
 using System.ComponentModel.DataAnnotations;
 
-namespace Onboarding.ViewModels
+namespace onboarding.ViewModels
 {
     public class RepresentativeViewModel
     {

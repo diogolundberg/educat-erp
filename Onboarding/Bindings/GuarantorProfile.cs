@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Onboarding.Models;
-using Onboarding.ViewModels;
+using onboarding.Models;
+using onboarding.ViewModels;
 using System.Linq;
 
-namespace Onboarding.Bindings
+namespace onboarding.Bindings
 {
     public class GuarantorProfile : Profile
     {

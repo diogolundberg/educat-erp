@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Onboarding.Validations.FinanceData
+namespace onboarding.Validations.FinanceData
 {
     public class GuarantorDocumentsValidator : AbstractValidator<Models.GuarantorDocument>
     {

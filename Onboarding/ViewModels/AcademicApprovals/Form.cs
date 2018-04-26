@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Onboarding.ViewModels.AcademicApprovals
+namespace onboarding.ViewModels.AcademicApprovals
 {
     public class Form
     {

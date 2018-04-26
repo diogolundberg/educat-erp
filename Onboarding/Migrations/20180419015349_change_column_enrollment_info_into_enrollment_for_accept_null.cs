@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Onboarding.Migrations
+namespace onboarding.Migrations
 {
     public partial class change_column_enrollment_info_into_enrollment_for_accept_null : Migration
     {

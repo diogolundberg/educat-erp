@@ -1,4 +1,4 @@
-﻿namespace Onboarding.Enums
+﻿namespace onboarding.Enums
 {
     public enum DocumentValidations
     {

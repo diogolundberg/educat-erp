@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-namespace Onboarding.Models
+namespace onboarding.Models
 {
     public abstract class Representative : BaseModel
     {

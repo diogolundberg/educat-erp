@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Onboarding.Validations;
+using onboarding.Validations;
 
-namespace Onboarding.ViewModels
+namespace onboarding.ViewModels
 {
     public class GenerateToken
     {

@@ -1,7 +1,7 @@
-﻿using Onboarding.Models;
-using Onboarding.Validations.PersonalData;
+﻿using onboarding.Models;
+using onboarding.Validations.PersonalData;
 
-namespace Onboarding.Statuses
+namespace onboarding.Statuses
 {
     public class PersonalDataStatus : BaseStatus<PersonalData>
     {

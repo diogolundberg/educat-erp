@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Onboarding.Validations
+namespace onboarding.Validations
 {
     public class DocumentValidator : AbstractValidator<Models.Document>
     {

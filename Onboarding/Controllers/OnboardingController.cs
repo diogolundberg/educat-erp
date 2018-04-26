@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using Onboarding.Models;
-using Onboarding.Validations.Onboarding;
+using onboarding.Models;
+using onboarding.Validations.Onboarding;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Hangfire;
 using System;
 
-namespace Onboarding.Controllers
+namespace onboarding.Controllers
 {
     [Route("api/[controller]")]
     public class OnboardingController : BaseController

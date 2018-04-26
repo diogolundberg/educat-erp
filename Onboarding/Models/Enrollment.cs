@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Onboarding.Models
+namespace onboarding.Models
 {
     public class Enrollment : BaseModel
     {

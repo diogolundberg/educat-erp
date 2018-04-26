@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Onboarding.ViewModels;
+using onboarding.ViewModels;
 using System;
 
-namespace Onboarding.JsonFormatter
+namespace onboarding.JsonFormatter
 {
     public class PolymorphicRepresentativeViewModelConverter : JsonConverter
     {

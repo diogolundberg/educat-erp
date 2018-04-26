@@ -1,7 +1,7 @@
 ﻿using Hangfire.Annotations;
 using Hangfire.Dashboard;
 
-namespace Onboarding.Filters
+namespace onboarding.Filters
 {
     public class HangfireAuthorization : IDashboardAuthorizationFilter
     {

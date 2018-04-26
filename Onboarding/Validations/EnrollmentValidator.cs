@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
-using Onboarding.Models;
+using onboarding.Models;
 
-namespace Onboarding.Validations
+namespace onboarding.Validations
 {
     public class EnrollmentValidator : AbstractValidator<Enrollment>
     {

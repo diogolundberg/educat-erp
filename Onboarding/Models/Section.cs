@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace Onboarding.Models
+namespace onboarding.Models
 {
     public abstract class Section : BaseModel
     {

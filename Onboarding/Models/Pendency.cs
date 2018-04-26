@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace Onboarding.Models
+namespace onboarding.Models
 {
     public abstract class Pendency : BaseModel
     {

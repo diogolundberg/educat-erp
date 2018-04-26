@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
 using Newtonsoft.Json;
-using Onboarding.Enums;
-using Onboarding.Models;
+using onboarding.Enums;
+using onboarding.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using onboarding.Resources.Models;
 
-namespace Onboarding.Validations.PersonalData
+namespace onboarding.Validations.PersonalData
 {
     public class PersonalDataValidator : AbstractValidator<Models.PersonalData>
     {

@@ -3,7 +3,7 @@ using System.Net;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
-using Onboarding.Models;
+using onboarding.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -18,18 +18,18 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Onboarding;
+using onboarding;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using SharpRaven.Core;
-using Onboarding.Bindings;
-using Onboarding.JsonFormatter;
+using onboarding.Bindings;
+using onboarding.JsonFormatter;
 using System.Globalization;
 using Hangfire;
-using Onboarding.Filters;
+using onboarding.Filters;
 
-namespace Onboarding
+namespace onboarding
 {
     public class Startup
     {

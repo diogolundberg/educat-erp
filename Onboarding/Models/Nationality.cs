@@ -1,4 +1,4 @@
-﻿namespace Onboarding.Models
+﻿namespace onboarding.Models
 {
     public class Nationality : BaseModel
     {

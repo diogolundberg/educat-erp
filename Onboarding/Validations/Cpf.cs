@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Onboarding.Validations
+namespace onboarding.Validations
 {
     public class Cpf : ValidationAttribute, IClientModelValidator
     {

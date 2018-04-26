@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace Onboarding.ViewModels
+namespace onboarding.ViewModels
 {
     public class FinanceDataViewModel
     {
