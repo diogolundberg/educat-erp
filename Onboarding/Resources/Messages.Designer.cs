@@ -88,6 +88,15 @@ namespace onboarding.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Já existe um agendamento cadastrado para esse período de matrícula..
+        /// </summary>
+        public static string HaveSchedulingForOnboarding {
+            get {
+                return ResourceManager.GetString("HaveSchedulingForOnboarding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não é possível excluir o período pois existem matriculas iniciadas..
         /// </summary>
         public static string OnboardingDeleteBlock {

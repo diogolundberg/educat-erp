@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace onboarding.Resources {
+namespace onboarding.Resources.Models {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace onboarding.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Shared {
+    public class Scheduling {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Shared() {
+        internal Scheduling() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace onboarding.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("onboarding.Resources.Shared", typeof(Shared).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("onboarding.Resources.Models.Scheduling", typeof(Scheduling).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,38 +61,47 @@ namespace onboarding.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos; não é válido..
+        ///   Looks up a localized string similar to Final.
         /// </summary>
-        public static string NotValidField {
+        public static string EndAt {
             get {
-                return ResourceManager.GetString("NotValidField", resourceCulture);
+                return ResourceManager.GetString("EndAt", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos; é obrigatório..
+        ///   Looks up a localized string similar to Intervalo.
         /// </summary>
-        public static string Required {
+        public static string Intervals {
             get {
-                return ResourceManager.GetString("Required", resourceCulture);
+                return ResourceManager.GetString("Intervals", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Documento {0} é obrigatório..
+        ///   Looks up a localized string similar to Código do período da matrícula.
         /// </summary>
-        public static string RequiredDocumentMessage {
+        public static string OnboardingId {
             get {
-                return ResourceManager.GetString("RequiredDocumentMessage", resourceCulture);
+                return ResourceManager.GetString("OnboardingId", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos; deve ser informado..
+        ///   Looks up a localized string similar to Início.
         /// </summary>
-        public static string RequiredField {
+        public static string StartAt {
             get {
-                return ResourceManager.GetString("RequiredField", resourceCulture);
+                return ResourceManager.GetString("StartAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A data de início do agendamento tem que ser maior que a data final..
+        /// </summary>
+        public static string StartAtGreaterThanEndAt {
+            get {
+                return ResourceManager.GetString("StartAtGreaterThanEndAt", resourceCulture);
             }
         }
     }

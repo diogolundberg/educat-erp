@@ -126,6 +126,9 @@
   <data name="EnrollmentNumberIsNotValid" xml:space="preserve">
     <value>Número de matrícula inválido.</value>
   </data>
+  <data name="HaveSchedulingForOnboarding" xml:space="preserve">
+    <value>Já existe um agendamento cadastrado para esse período de matrícula.</value>
+  </data>
   <data name="OnboardingDeleteBlock" xml:space="preserve">
     <value>Não é possível excluir o período pois existem matriculas iniciadas.</value>
   </data>

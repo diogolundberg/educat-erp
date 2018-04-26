@@ -115,6 +115,15 @@ namespace onboarding.Resources.Models {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UF de nascimento.
+        /// </summary>
+        public static string BirthStateId {
+            get {
+                return ResourceManager.GetString("BirthStateId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cidade.
         /// </summary>
         public static string CityId {

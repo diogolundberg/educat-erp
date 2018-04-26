@@ -120,6 +120,9 @@
   <data name="NotValidField" xml:space="preserve">
     <value>'{0}' não é válido.</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>'{0}' é obrigatório.</value>
+  </data>
   <data name="RequiredDocumentMessage" xml:space="preserve">
     <value>Documento {0} é obrigatório.</value>
   </data>
