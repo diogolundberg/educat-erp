@@ -149,5 +149,14 @@ namespace onboarding.Resources {
                 return ResourceManager.GetString("OnboardingNotExisting", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agendamento não existe..
+        /// </summary>
+        public static string SchedulingNotExisting {
+            get {
+                return ResourceManager.GetString("SchedulingNotExisting", resourceCulture);
+            }
+        }
     }
 }

@@ -147,4 +147,7 @@
   <data name="OnboardingNotExisting" xml:space="preserve">
     <value>Esse período de matrícula não existe.</value>
   </data>
+  <data name="SchedulingNotExisting" xml:space="preserve">
+    <value>Agendamento não existe.</value>
+  </data>
 </root>
