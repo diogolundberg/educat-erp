@@ -3,13 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using onboarding.Models;
 using onboarding.Statuses;
-using onboarding.Validations;
-using onboarding.Validations.PersonalData;
 using onboarding.ViewModels.AcademicApprovals;
 
 namespace onboarding.Controllers
