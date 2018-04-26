@@ -24,10 +24,11 @@ namespace onboarding.Controllers
             _mapper = mapper;
         }
 
-        //[HttpGet("", Name = "ONBOARDING/SCHEDULING/LIST")]
-        //public dynamic GetList()
-        //{
-        //}
+        [HttpGet("", Name = "ONBOARDING/SCHEDULING/LIST")]
+        public dynamic GetList()
+        {
+            return _mapper.Map<List<Records>>(_context.Schedulings.Include("Onboarding"));
+        }
 
         [HttpGet("{id}", Name = "ONBOARDING/SCHEDULING/GET")]
         public dynamic GetById([FromRoute]int id)
