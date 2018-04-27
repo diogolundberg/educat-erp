@@ -126,6 +126,12 @@
   <data name="OnboardingId" xml:space="preserve">
     <value>Código do período da matrícula</value>
   </data>
+  <data name="ScheduleEndTime" xml:space="preserve">
+    <value>Horário de final do agendamento</value>
+  </data>
+  <data name="ScheduleStartTime" xml:space="preserve">
+    <value>Horário de início do agendamento</value>
+  </data>
   <data name="StartAt" xml:space="preserve">
     <value>Início</value>
   </data>

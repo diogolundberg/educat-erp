@@ -88,6 +88,24 @@ namespace onboarding.Resources.Models {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Horário de final do agendamento.
+        /// </summary>
+        public static string ScheduleEndTime {
+            get {
+                return ResourceManager.GetString("ScheduleEndTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horário de início do agendamento.
+        /// </summary>
+        public static string ScheduleStartTime {
+            get {
+                return ResourceManager.GetString("ScheduleStartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Início.
         /// </summary>
         public static string StartAt {
