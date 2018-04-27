@@ -52,7 +52,7 @@ namespace SSO.Controllers
                                                             _configuration["SMTP_PASSWORD"]);
 
             string body = String.Format("?token=" + token);
-            string subject = _configuration["EMAIL_RESET_PASSWORD_SUBJECT"];
+            string subject = "RESETAR SENHA - CMMG";
 
             smtpClientHelper.Send(new MailAddress(_configuration["EMAIL_SENDER"]),
                                 new MailAddress(email),
