@@ -11,6 +11,8 @@ namespace onboarding.Validations.Scheduling
             RuleFor(scheduling => scheduling.StartAt).NotNull().WithName(Resources.Models.Scheduling.StartAt);
             RuleFor(scheduling => scheduling.EndAt).NotNull().WithName(Resources.Models.Scheduling.EndAt);
             RuleFor(scheduling => scheduling.Intervals).NotNull().WithName(Resources.Models.Scheduling.Intervals);
+            RuleFor(scheduling => scheduling.ScheduleStartTime).NotNull().WithName(Resources.Models.Scheduling.ScheduleStartTime);
+            RuleFor(scheduling => scheduling.ScheduleEndTime).NotNull().WithName(Resources.Models.Scheduling.ScheduleEndTime);
             RuleFor(scheduling => scheduling.Intervals).Custom((intervals, context) =>
             {
                 if (!string.IsNullOrEmpty(intervals))
