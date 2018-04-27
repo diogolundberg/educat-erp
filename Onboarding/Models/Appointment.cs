@@ -1,6 +1,6 @@
 ﻿namespace onboarding.Models
 {
-    public class Appointment
+    public class Appointment : BaseModel
     {
         public int? EnrollmentId { get; set; }
         public Enrollment Enrollment { get; set; }
