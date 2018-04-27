@@ -16,6 +16,8 @@ namespace onboarding.Models
         public int OnboardingId { get; set; }
         public virtual Onboarding Onboarding { get; set; }
         public DateTime StartAt { get; set; }
+        public string ScheduleStartTime { get; set; }
+        public string ScheduleEndTime { get; set; }
         public DateTime EndAt { get; set; }
         public string Intervals { get; set; }
         public string Breaks { get; set; }
