@@ -8,6 +8,8 @@ namespace onboarding.ViewModels.Scheduling
         public int OnboardingId { get; set; }
         public string StartAt { get; set; }
         public string EndAt { get; set; }
+        public string ScheduleStartTime { get; set; }
+        public string ScheduleEndTime { get; set; }
         public string Intervals { get; set; }
         public List<FormBreak> Breaks { get; set; }
     }
