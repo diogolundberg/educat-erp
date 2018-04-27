@@ -2,9 +2,11 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Nager.Date;
 using onboarding.Models;
 using onboarding.Validations.Scheduling;
 using onboarding.ViewModels.Scheduling;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +67,26 @@ namespace onboarding.Controllers
             {
                 Hashtable errors = FormatErrors(result);
                 return new OkObjectResult(new { Errors = errors });
+            }
+
+            for (int i = 0; i < (scheduling.EndAt - scheduling.StartAt).Days; i++)
+            {
+                DateTime referenceDate = scheduling.StartAt.AddDays(i);
+
+                if (!DateSystem.IsPublicHoliday(referenceDate, CountryCode.BR) && referenceDate.DayOfWeek != DayOfWeek.Saturday && referenceDate.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    DateTime appointmentDate = referenceDate.Date;
+
+                    while (referenceDate.Date == appointmentDate.Date)
+                    {
+                        scheduling.Appointments.Add(new Appointment
+                        {
+                            Hour = appointmentDate.ToString("HH:mm"),
+                            Date = referenceDate.ToString("dd/MM/yyyy")
+                        });
+                        appointmentDate = appointmentDate.AddMinutes(int.Parse(scheduling.Intervals));
+                    }
+                }
             }
 
             _context.Schedulings.Add(scheduling);
