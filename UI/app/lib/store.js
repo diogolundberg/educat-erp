@@ -108,6 +108,8 @@ export default new VueX.Store({
       underage: false,
     },
     enrollmentSummary: {},
+
+    // Backoffice enrollment approval
     academicApprovals: [],
     financeApprovals: [],
     enrollmentInfo: {
@@ -119,6 +121,9 @@ export default new VueX.Store({
       },
       errors: {},
     },
+
+    // Onboarding
+    onboardings: [],
   },
   getters: {
     // Agnostic services
@@ -224,6 +229,11 @@ export default new VueX.Store({
     SET_ENROLLMENT_INFO(state, { data, options }) {
       state.enrollmentInfo.data = data;
       state.enrollmentInfo.options = options;
+    },
+
+    // Onboarding
+    SET_ONBOARDINGS(state, { records }) {
+      state.onboardings = records;
     },
   },
   actions: {
@@ -337,6 +347,14 @@ export default new VueX.Store({
       const data = { enrollmentNumber, pendencies };
       const response = await axios.put(url, data, { headers });
       commit("SET_ENROLLMENT_INFO", response.data);
+    },
+
+    // Oboarding
+    async getOnboardingList({ commit, state }) {
+      const url = `${url2}/api/Onboarding`;
+      const headers = { Authorization: `Bearer ${state.token}` };
+      const response = await axios.get(url, { headers });
+      commit("SET_ONBOARDINGS", response.data);
     },
   },
 });

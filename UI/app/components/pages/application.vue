@@ -30,6 +30,7 @@
         return [
           { url: "/enrollments/academic", name: "Pendências Acadêmicas" },
           { url: "/enrollments/finance", name: "Pendências Financeiras" },
+          { url: "/onboardings", name: "Onboardings" },
         ];
       },
     },
