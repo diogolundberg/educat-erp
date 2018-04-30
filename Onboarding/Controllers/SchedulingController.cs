@@ -75,15 +75,25 @@ namespace onboarding.Controllers
 
                 if (!DateSystem.IsPublicHoliday(referenceDate, CountryCode.BR) && referenceDate.DayOfWeek != DayOfWeek.Saturday && referenceDate.DayOfWeek != DayOfWeek.Sunday)
                 {
-                    DateTime appointmentDate = referenceDate.Date;
+                    DateTime appointmentDate = referenceDate.Date
+                                                            .AddHours(int.Parse(scheduling.ScheduleStartTime.Split(":")[0]))
+                                                            .AddMinutes(int.Parse(scheduling.ScheduleStartTime.Split(":")[1]));
 
                     while (referenceDate.Date == appointmentDate.Date)
                     {
-                        scheduling.Appointments.Add(new Appointment
+                        DateTime endDateTime = appointmentDate.Date
+                                                              .AddHours(int.Parse(scheduling.ScheduleEndTime.Split(":")[0]))
+                                                              .AddMinutes(int.Parse(scheduling.ScheduleEndTime.Split(":")[1]));
+
+                        if (appointmentDate < endDateTime)
                         {
-                            Hour = appointmentDate.ToString("HH:mm"),
-                            Date = referenceDate.ToString("dd/MM/yyyy")
-                        });
+                            scheduling.Appointments.Add(new Appointment
+                            {
+                                Hour = appointmentDate.ToString("HH:mm"),
+                                Date = referenceDate.ToString("dd/MM/yyyy")
+                            });
+                        }
+
                         appointmentDate = appointmentDate.AddMinutes(int.Parse(scheduling.Intervals));
                     }
                 }
