@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace onboarding.ViewModels.Scheduling
+﻿namespace onboarding.ViewModels.Scheduling
 {
     public class Records
     {
