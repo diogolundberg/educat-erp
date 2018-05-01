@@ -9,6 +9,13 @@
         {name: 'endAt', title: 'Fim'},
       ]"
       @click="show($event)" />
+    <div class="right m2">
+      <router-link
+        to="/scheduling/new"
+        class="btn btn-primary upcase shadow0">
+        Inserir Novo
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -24,7 +31,8 @@
       await this.$store.dispatch("getSchedulingList");
     },
     methods: {
-      show() {
+      show({ id }) {
+        this.$router.push(`/scheduling/${id}`);
       },
     },
   };

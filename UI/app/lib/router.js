@@ -58,6 +58,18 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: "/scheduling/new",
+      component: lazy("SchedulingItem"),
+      meta: { header: true },
+      props: true,
+    },
+    {
+      path: "/scheduling/:id",
+      component: lazy("SchedulingItem"),
+      meta: { header: true },
+      props: true,
+    },
+    {
       path: "/logout",
       beforeEnter(to, from, next) {
         delete localStorage.token;
