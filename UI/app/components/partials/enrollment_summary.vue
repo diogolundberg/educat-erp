@@ -12,7 +12,7 @@
           class="rounded shadow2 x6 y6 bg-white">
       </div>
       <KeyValue
-        :value="summary.realName"
+        :value="summary.name"
         title="Nome" />
       <KeyValue
         :value="summary.assumedName"
