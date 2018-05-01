@@ -124,6 +124,9 @@ export default new VueX.Store({
 
     // Onboarding
     onboardings: [],
+
+    // Scheduling
+    schedulingList: [],
   },
   getters: {
     enrollmentUrl: () => url2,
@@ -236,6 +239,11 @@ export default new VueX.Store({
     // Onboarding
     SET_ONBOARDINGS(state, { records }) {
       state.onboardings = records;
+    },
+
+    // Scheduling
+    SET_SCHEDULING_LIST(state, records) {
+      state.schedulingList = records;
     },
   },
   actions: {
@@ -357,6 +365,14 @@ export default new VueX.Store({
       const headers = { Authorization: `Bearer ${state.token}` };
       const response = await axios.get(url, { headers });
       commit("SET_ONBOARDINGS", response.data);
+    },
+
+    // Scheduling
+    async getSchedulingList({ commit, state }) {
+      const url = `${url2}/api/Scheduling`;
+      const headers = { Authorization: `Bearer ${state.token}` };
+      const response = await axios.get(url, { headers });
+      commit("SET_SCHEDULING_LIST", response.data);
     },
   },
 });
