@@ -4,6 +4,15 @@
       v-if="title">
       {{ title }}
     </h2>
+    <div
+      ref="alerts"
+      tabindex="-1">
+      <Alert
+        v-for="(message, index) in messages"
+        :key="index"
+        :message="message"
+        error />
+    </div>
     <slot
       :item="item"
       :errors="errors" />
@@ -41,6 +50,7 @@
       return {
         item: {},
         errors: {},
+        messages: [],
       };
     },
     async mounted() {
