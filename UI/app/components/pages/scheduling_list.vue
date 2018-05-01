@@ -4,6 +4,7 @@
     <List
       v-model="schedulingList"
       :columns="[
+        {name: 'onboarding', title: 'Onboarding'},
         {name: 'startAt', title: 'Inicio'},
         {name: 'endAt', title: 'Fim'},
       ]"
