@@ -18,9 +18,19 @@
 </template>
 
 <script>
+  import axios from "axios";
+
   export default {
     name: "DataForm",
     props: {
+      id: {
+        type: [String, Number],
+        default: null,
+      },
+      endpoint: {
+        type: String,
+        required: true,
+      },
       title: {
         type: String,
         required: false,
@@ -33,12 +43,32 @@
         errors: {},
       };
     },
-    mounted() {
-
+    async mounted() {
+      if (this.id) {
+        const response = await axios.get(`${this.endpoint}/${this.id}`);
+        this.item = response.data;
+      }
     },
     methods: {
-      submitForm() {
-
+      async submitForm() {
+        try {
+          if (this.id) {
+            const url = `${this.endpoint}/${this.id}`;
+            const response = await axios.put(url, this.item);
+            this.$emit("success", response);
+          } else {
+            const response = await axios.post(this.endpoint, this.item);
+            this.$emit("success", response);
+          }
+        } catch (error) {
+          if (error.response) {
+            this.errors = error.response.data.errors || {};
+            this.messages = error.response.data.messages || [];
+            this.$refs.alerts.focus();
+          } else {
+            this.notify("Erro de rede! Tente novamente!");
+          }
+        }
       },
     },
   };
