@@ -49,5 +49,51 @@ namespace onboarding.Controllers
 
             return _mapper.Map<List<Record>>(scheduling.Appointments);
         }
+
+        [HttpPut(Name = "ONBOARDING/AP5POINTMENTS/EDIT")]
+        public dynamic Put([FromBody]Form obj)
+        {
+            Enrollment enrollment = _context.Enrollments
+                                .Include("Onboarding")
+                                .Single(x => x.Id == obj.EnrollmentId);
+
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            Scheduling scheduling = _context.Schedulings
+                                            .Include("Appointments")
+                                            .SingleOrDefault(x => x.OnboardingId == enrollment.OnboardingId);
+
+            if (scheduling == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.SchedulingNotExisting } });
+            }
+
+            Appointment appointment = scheduling.Appointments.SingleOrDefault(x => x.Id == obj.Id);
+
+            if (scheduling == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.AppointmentNotExisting } });
+            }
+
+            if (appointment.EnrollmentId != null || appointment.EnrollmentId == 0)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.AppointmentAlreadyUsed } });
+            }
+
+            appointment.EnrollmentId = obj.EnrollmentId;
+            _context.Appointments.Update(appointment);
+
+            _context.SaveChanges();
+
+            return Ok(_mapper.Map<Form>(appointment));
+        }
     }
 }
