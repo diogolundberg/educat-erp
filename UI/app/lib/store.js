@@ -126,6 +126,8 @@ export default new VueX.Store({
     onboardings: [],
   },
   getters: {
+    enrollmentUrl: () => url2,
+
     // Agnostic services
     logged: state => !!state.token,
     uploadUrl: state => state.uploadUrl,
