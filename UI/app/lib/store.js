@@ -238,7 +238,8 @@ export default new VueX.Store({
 
     // Onboarding
     SET_ONBOARDINGS(state, { records }) {
-      state.onboardings = records;
+      state.onboardings = records.map(a =>
+        Object.assign(a, { name: `${a.semester}/${a.year}` }));
     },
 
     // Scheduling
