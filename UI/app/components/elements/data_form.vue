@@ -62,14 +62,15 @@
     methods: {
       async submitForm() {
         try {
-          if (this.id) {
-            const url = `${this.endpoint}/${this.id}`;
-            const response = await axios.put(url, this.item);
-            this.$emit("success", response);
-          } else {
-            const response = await axios.post(this.endpoint, this.item);
-            this.$emit("success", response);
+          const url = `${this.endpoint}/${this.id || ""}`;
+          const method = this.id ? "put" : "post";
+          const response = await axios[method](url, this.item);
+          if (response.data.errors && Object.values(response.data.errors).length) {
+            const error = new Error();
+            error.response = response;
+            throw error;
           }
+          this.$emit("success", response);
         } catch (error) {
           if (error.response) {
             this.errors = error.response.data.errors || {};
