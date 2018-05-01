@@ -45,7 +45,7 @@
       },
       errors: {
         type: Object,
-        default: () => [],
+        default: () => ({}),
       },
       errorKey: {
         type: String,
