@@ -10,7 +10,7 @@ namespace onboarding.Bindings
     {
         public OnboardingProfile()
         {
-            CreateMap<ViewModels.Onboarding.Form, Models.Onboarding>()
+            CreateMap<Form, Models.Onboarding>()
             .ForMember(x => x.StartAt, config => config.MapFrom(x => x.StartAt))
             .ForMember(x => x.EndAt, config => config.MapFrom(x => x.EndAt))
             .ForMember(x => x.Enrollments, config => config.MapFrom(x => x.Enrollments.Select(o => new Models.Enrollment
@@ -24,7 +24,7 @@ namespace onboarding.Bindings
                 }
             })));
 
-            CreateMap<Models.Onboarding, ViewModels.Onboarding.Form>()
+            CreateMap<Models.Onboarding, Form>()
             .ForMember(x => x.StartAt, config => config.MapFrom(x => x.StartAt))
             .ForMember(x => x.EndAt, config => config.MapFrom(x => x.EndAt))
             .ForMember(x => x.Enrollments, config => config.MapFrom(x => x.Enrollments.Select(o => new EnrollmentForm
@@ -35,8 +35,17 @@ namespace onboarding.Bindings
                 Email = o.PersonalData.Email,
             })));
 
-            CreateMap<Models.Onboarding, ViewModels.Onboarding.Records>()
+            CreateMap<Models.Onboarding, Records>()
                 .ForMember(x => x.EnrollmentCount, config => config.MapFrom(x => x.Enrollments.Count));
+
+            CreateMap<Models.Onboarding, Record>()
+            .ForMember(x => x.Enrollments, config => config.MapFrom(x => x.Enrollments.Select(o => new EnrollmentForm
+            {
+                Id = o.Id,
+                Name = o.PersonalData.RealName,
+                CPF = o.PersonalData.CPF,
+                Email = o.PersonalData.Email
+            })));
         }
     }
 }

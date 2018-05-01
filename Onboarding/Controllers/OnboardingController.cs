@@ -39,6 +39,19 @@ namespace onboarding.Controllers
             return new { records };
         }
 
+        [HttpGet("{id}", Name = "ONBOARDING")]
+        public dynamic Get(int id)
+        {
+            Onboarding onboarding = _context.Onboardings.Include("Enrollments.PersonalData").SingleOrDefault(x => x.Id == id);
+
+            if (onboarding == null)
+            {
+                return new BadRequestObjectResult(new { Messages = new List<string> { Resources.Messages.OnboardingNotExisting } });
+            }
+
+            return _mapper.Map<ViewModels.Onboarding.Record>(onboarding);
+        }
+
         [HttpPost("", Name = "ONBOARDING/CREATE")]
         public dynamic Post([FromBody]ViewModels.Onboarding.Form obj)
         {
