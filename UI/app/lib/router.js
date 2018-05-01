@@ -34,14 +34,8 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: "/onboarding",
-      component: lazy("Onboarding"),
-      meta: { header: true },
-      props: true,
-    },
-    {
       path: "/onboardings",
-      component: lazy("Onboardings"),
+      component: lazy("OnboardingList"),
       meta: { header: true },
       props: true,
     },

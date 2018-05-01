@@ -23,7 +23,7 @@
 
 <script>
   export default {
-    name: "Onboardings",
+    name: "OnboardingList",
     computed: {
       onboardings() {
         return this.$store.state.onboardings;
