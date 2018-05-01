@@ -268,7 +268,7 @@
               v-for="(document, index) in guarantor.documents"
               :key="index">
               <a
-                href="#"
+                :href="document.url"
                 @click.prevent="modalUrl = document.url">
                 {{ document.name }}
               </a>
@@ -286,7 +286,7 @@
           v-for="(document, index) in enrollment.data.documents"
           :key="index">
           <a
-            href="#"
+            :href="document.url"
             @click.prevent="modalUrl = document.url">
             {{ document.name }}
           </a>
