@@ -171,7 +171,7 @@
         :value="summary.representative.zipcode"
         title="CEP" />
       <KeyValue
-        :value="summary.representative.addressKindId"
+        :value="summary.representative.addressKind"
         title="Tipo" />
       <KeyValue
         :value="summary.representative.streetAddress"
