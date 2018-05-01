@@ -11,6 +11,13 @@
         {name: 'enrollmentCount', title: 'Matrículas'},
       ]"
       @click="show($event)" />
+    <div class="right m2">
+      <router-link
+        to="/onboardings/new"
+        class="btn btn-primary upcase shadow0">
+        Inserir Novo
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -26,7 +33,8 @@
       await this.$store.dispatch("getOnboardingList");
     },
     methods: {
-      show() {
+      show({ id }) {
+        this.$router.push(`/onboardings/${id}`);
       },
     },
   };
