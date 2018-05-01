@@ -141,7 +141,8 @@
       filteredOptions() {
         return this.options
           .filter(a => !this.filterKey || a[this.filterKey] === this.filter)
-          .filter(a => a.name.toLowerCase().includes(this.search.toLowerCase()));
+          .filter(a => a[this.labelField].toLowerCase()
+            .includes(this.search.toLowerCase()));
       },
       choice() {
         return this.options.find(a => a[this.idField] === this.value) || {};
