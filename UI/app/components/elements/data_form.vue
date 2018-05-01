@@ -7,7 +7,7 @@
     <slot
       :item="item"
       :errors="errors" />
-    <div class="right-align">
+    <div class="right-align mx2 mb2">
       <Btn
         submit
         primary
