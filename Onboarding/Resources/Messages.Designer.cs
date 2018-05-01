@@ -61,6 +61,24 @@ namespace onboarding.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Horário já agendado..
+        /// </summary>
+        public static string AppointmentAlreadyUsed {
+            get {
+                return ResourceManager.GetString("AppointmentAlreadyUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horário não existe..
+        /// </summary>
+        public static string AppointmentNotExisting {
+            get {
+                return ResourceManager.GetString("AppointmentNotExisting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estes dados já foram enviados para a análises e não pode ser editados no momento..
         /// </summary>
         public static string EnrollmentInReview {
