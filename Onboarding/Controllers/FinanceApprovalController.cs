@@ -74,14 +74,14 @@ namespace onboarding.Controllers
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document.DocumentType")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
-            if(enrollment.FinanceData.Representative is Models.RepresentativePerson)
-            {
-                _context.Entry((Models.RepresentativePerson)enrollment.FinanceData.Representative).Reference(x => x.Relationship).Load();
-            }
-
             if (enrollment == null)
             {
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentNumberIsNotValid } });
+            }
+
+            if (enrollment.FinanceData.Representative is Models.RepresentativePerson)
+            {
+                _context.Entry((Models.RepresentativePerson)enrollment.FinanceData.Representative).Reference(x => x.Relationship).Load();
             }
 
             Record data = _mapper.Map<Record>(enrollment);

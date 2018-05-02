@@ -56,6 +56,7 @@ namespace onboarding.Controllers
                                             .Include("FinanceData.Guarantors.Relationship")
                                             .Include("FinanceData.PaymentMethod")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments")
+                                            .Include("FinanceData.Guarantors.AddressKind")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document.DocumentType")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
@@ -68,6 +69,11 @@ namespace onboarding.Controllers
             if (!enrollment.IsDeadlineValid())
             {
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            if (enrollment.FinanceData.Representative is Models.RepresentativePerson)
+            {
+                _context.Entry((Models.RepresentativePerson)enrollment.FinanceData.Representative).Reference(x => x.Relationship).Load();
             }
 
             Record data = _mapper.Map<Record>(enrollment);

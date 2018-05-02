@@ -13,7 +13,6 @@ namespace onboarding.Bindings
             .ForMember(x => x.Name, config => config.MapFrom(x => x.PersonalData.RealName))
             .ForMember(x => x.AssumedName, config => config.MapFrom(x => x.PersonalData.AssumedName))
             .ForMember(x => x.Cpf, config => config.MapFrom(x => x.PersonalData.CPF))
-            .ForMember(x => x.Name, config => config.MapFrom(x => x.PersonalData.AssumedName))
             .ForMember(x => x.Email, config => config.MapFrom(x => x.PersonalData.Email))
             .ForMember(x => x.PhoneNumber, config => config.MapFrom(x => x.PersonalData.PhoneNumber))
             .ForMember(x => x.Landline, config => config.MapFrom(x => x.PersonalData.Landline))
