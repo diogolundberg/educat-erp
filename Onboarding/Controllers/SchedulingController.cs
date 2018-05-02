@@ -69,35 +69,7 @@ namespace onboarding.Controllers
                 return new OkObjectResult(new { Errors = errors });
             }
 
-            for (int i = 0; i < (scheduling.EndAt - scheduling.StartAt).Days; i++)
-            {
-                DateTime referenceDate = scheduling.StartAt.AddDays(i);
-
-                if (!DateSystem.IsPublicHoliday(referenceDate, CountryCode.BR) && referenceDate.DayOfWeek != DayOfWeek.Saturday && referenceDate.DayOfWeek != DayOfWeek.Sunday)
-                {
-                    DateTime appointmentDate = referenceDate.Date
-                                                            .AddHours(int.Parse(scheduling.ScheduleStartTime.Split(":")[0]))
-                                                            .AddMinutes(int.Parse(scheduling.ScheduleStartTime.Split(":")[1]));
-
-                    while (referenceDate.Date == appointmentDate.Date)
-                    {
-                        DateTime endDateTime = appointmentDate.Date
-                                                              .AddHours(int.Parse(scheduling.ScheduleEndTime.Split(":")[0]))
-                                                              .AddMinutes(int.Parse(scheduling.ScheduleEndTime.Split(":")[1]));
-
-                        if (appointmentDate < endDateTime)
-                        {
-                            scheduling.Appointments.Add(new Appointment
-                            {
-                                Hour = appointmentDate.ToString("HH:mm"),
-                                Date = referenceDate.ToString("dd/MM/yyyy")
-                            });
-                        }
-
-                        appointmentDate = appointmentDate.AddMinutes(int.Parse(scheduling.Intervals));
-                    }
-                }
-            }
+            scheduling.Appointments = GenerateAppointmet(scheduling);
 
             _context.Schedulings.Add(scheduling);
             _context.SaveChanges();
@@ -124,10 +96,49 @@ namespace onboarding.Controllers
                 return new OkObjectResult(new { Errors = errors });
             }
 
+            scheduling.Appointments = GenerateAppointmet(scheduling);
+
             _context.Schedulings.Update(scheduling);
             _context.SaveChanges();
 
             return new OkObjectResult(new { data = Mapper.Map<Form>(scheduling) });
+        }
+
+        private List<Appointment> GenerateAppointmet(Scheduling scheduling)
+        {
+            List<Appointment> appointments = new List<Appointment>();
+
+            for (int i = 0; i < (scheduling.EndAt - scheduling.StartAt).Days; i++)
+            {
+                DateTime referenceDate = scheduling.StartAt.AddDays(i);
+
+                if (!DateSystem.IsPublicHoliday(referenceDate, CountryCode.BR) && referenceDate.DayOfWeek != DayOfWeek.Saturday && referenceDate.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    DateTime appointmentDate = referenceDate.Date
+                                                            .AddHours(int.Parse(scheduling.ScheduleStartTime.Split(":")[0]))
+                                                            .AddMinutes(int.Parse(scheduling.ScheduleStartTime.Split(":")[1]));
+
+                    while (referenceDate.Date == appointmentDate.Date)
+                    {
+                        DateTime endDateTime = appointmentDate.Date
+                                                              .AddHours(int.Parse(scheduling.ScheduleEndTime.Split(":")[0]))
+                                                              .AddMinutes(int.Parse(scheduling.ScheduleEndTime.Split(":")[1]));
+
+                        if (appointmentDate < endDateTime)
+                        {
+                            appointments.Add(new Appointment
+                            {
+                                Hour = appointmentDate.ToString("HH:mm"),
+                                Date = referenceDate.ToString("dd/MM/yyyy")
+                            });
+                        }
+
+                        appointmentDate = appointmentDate.AddMinutes(int.Parse(scheduling.Intervals));
+                    }
+                }
+            }
+
+            return appointments;
         }
     }
 }
