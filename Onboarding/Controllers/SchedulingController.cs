@@ -124,7 +124,7 @@ namespace onboarding.Controllers
                                                               .AddHours(int.Parse(scheduling.ScheduleEndTime.Split(":")[0]))
                                                               .AddMinutes(int.Parse(scheduling.ScheduleEndTime.Split(":")[1]));
 
-                        if (appointmentDate < endDateTime)
+                        if (appointmentDate < endDateTime && !IsBlockTime(scheduling, appointmentDate))
                         {
                             appointments.Add(new Appointment
                             {
@@ -139,6 +139,26 @@ namespace onboarding.Controllers
             }
 
             return appointments;
+        }
+
+        private bool IsBlockTime(Scheduling scheduling, DateTime appointmentDate)
+        {
+            List<dynamic> breaks = new List<dynamic>();
+
+            foreach (FormBreak formBreak in scheduling.FormBreaks)
+            {
+                breaks.Add(new
+                {
+                    start = appointmentDate.Date
+                                           .AddHours(int.Parse(formBreak.Start.Split(":")[0]))
+                                           .AddMinutes(int.Parse(formBreak.Start.Split(":")[1])),
+                    end = appointmentDate.Date
+                                         .AddHours(int.Parse(formBreak.End.Split(":")[0]))
+                                         .AddMinutes(int.Parse(formBreak.End.Split(":")[1])),
+                });
+            }
+
+            return breaks.Any(x => appointmentDate >= x.start && appointmentDate < x.end);
         }
     }
 }
