@@ -61,6 +61,24 @@ namespace onboarding.Resources.Models {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data final bloqueio.
+        /// </summary>
+        public static string BreakEnd {
+            get {
+                return ResourceManager.GetString("BreakEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data início bloqueio.
+        /// </summary>
+        public static string BreakStart {
+            get {
+                return ResourceManager.GetString("BreakStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Final.
         /// </summary>
         public static string EndAt {

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BreakEnd" xml:space="preserve">
+    <value>Data final bloqueio</value>
+  </data>
+  <data name="BreakStart" xml:space="preserve">
+    <value>Data início bloqueio</value>
+  </data>
   <data name="EndAt" xml:space="preserve">
     <value>Final</value>
   </data>
