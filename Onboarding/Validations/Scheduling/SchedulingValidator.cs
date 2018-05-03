@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using onboarding.Models;
+using onboarding.ViewModels.Scheduling;
+using System;
 
 namespace onboarding.Validations.Scheduling
 {
@@ -23,6 +25,36 @@ namespace onboarding.Validations.Scheduling
                     if (convertedValue == 0)
                     {
                         context.AddFailure("Intervals", string.Format(Resources.Shared.NotValidField, Resources.Models.Scheduling.Intervals));
+                    }
+                }
+            });
+            RuleFor(scheduling => scheduling.FormBreaks).Custom((formBreaks, context) =>
+            {
+                if (formBreaks.Count > 0)
+                {
+                    for (int i = 0; i < formBreaks.Count; i++)
+                    {
+                        FormBreak formBreak = formBreaks[i];
+
+                        try
+                        {
+                            DateTime startDate = DateTime.Now.AddHours(int.Parse(formBreak.Start.Split(":")[0]))
+                                                             .AddMinutes(int.Parse(formBreak.Start.Split(":")[1]));
+                        }
+                        catch (Exception)
+                        {
+                            context.AddFailure(string.Format("Breaks[{0}].Start", i), string.Format(Resources.Shared.NotValidField, Resources.Models.Scheduling.BreakStart));
+                        }
+
+                        try
+                        {
+                            DateTime endDate = DateTime.Now.AddHours(int.Parse(formBreak.End.Split(":")[0]))
+                                                           .AddMinutes(int.Parse(formBreak.End.Split(":")[1]));
+                        }
+                        catch (Exception)
+                        {
+                            context.AddFailure(string.Format("Breaks[{0}].End", i), string.Format(Resources.Shared.NotValidField, Resources.Models.Scheduling.BreakEnd));
+                        }
                     }
                 }
             });
