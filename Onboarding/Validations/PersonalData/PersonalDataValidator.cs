@@ -31,7 +31,6 @@ namespace onboarding.Validations.PersonalData
             RuleFor(personalData => personalData.Handicap).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.Handicap);
             RuleFor(personalData => personalData.GenderId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.GenderId);
             RuleFor(personalData => personalData.MaritalStatusId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.MaritalStatusId);
-            RuleFor(personalData => personalData.BirthCityId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.BirthCityId);
             RuleFor(personalData => personalData.BirthCountryId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.BirthCountryId);
             RuleFor(personalData => personalData.HighSchoolGraduationCountryId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.HighSchoolGraduationCountryId);
             RuleFor(personalData => personalData.CityId).NotEmpty().WithName(onboarding.Resources.Models.PersonalData.CityId);
@@ -50,9 +49,17 @@ namespace onboarding.Validations.PersonalData
 
                 if (personalData.BirthCountry != null)
                 {
-                    if (personalData.BirthCountry.HasUF && personalData.BirthStateId == null)
+                    if (personalData.BirthCountry.HasUF)
                     {
-                        context.AddFailure("BirthStateId", string.Format(Resources.Shared.Required,Resources.Models.PersonalData.BirthStateId));
+                        if (personalData.BirthStateId == null)
+                        {
+                            context.AddFailure("BirthStateId", string.Format(Resources.Shared.Required, Resources.Models.PersonalData.BirthStateId));
+                        }
+
+                        if(personalData.BirthCityId == null)
+                        {
+                            context.AddFailure("BirthCityId", string.Format(Resources.Shared.Required, Resources.Models.PersonalData.BirthCityId));
+                        }
                     }
                 }
             });
