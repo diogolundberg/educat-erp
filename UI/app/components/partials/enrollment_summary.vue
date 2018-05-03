@@ -93,7 +93,7 @@
         :value="summary.race"
         title="Raça" />
       <KeyValue
-        :value="summary.highSchoolKind"
+        :value="summary.highSchollKind"
         title="Tipo da Escola" />
     </Fieldset>
     <Fieldset
