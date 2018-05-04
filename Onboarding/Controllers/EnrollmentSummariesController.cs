@@ -43,7 +43,7 @@ namespace onboarding.Controllers
                                             .Include("PersonalData.State")
                                             .Include("PersonalData.AddressKind")
                                             .Include("PersonalData.Race")
-                                            .Include("PersonalData.HighSchollKind")
+                                            .Include("PersonalData.HighSchoolKind")
                                             .Include("PersonalData.Nationality")
                                             .Include("PersonalData.PersonalDataDisabilities.Disability")
                                             .Include("PersonalData.PersonalDataSpecialNeeds.SpecialNeed")

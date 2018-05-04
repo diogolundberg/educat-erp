@@ -36,7 +36,7 @@ namespace onboarding.ViewModels.AcademicApprovals
         public string State { get; set; }
         public string AddressKind { get; set; }
         public string Race { get; set; }
-        public string HighSchollKind { get; set; }
+        public string HighSchoolKind { get; set; }
         public string Nationality { get; set; }
         public ICollection<string> SpecialNeeds { get; set; }
         public ICollection<string> Disabilities { get; set; }

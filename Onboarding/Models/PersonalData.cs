@@ -137,7 +137,7 @@ namespace onboarding.Models
         public int? HighSchoolKindId { get; set; }
 
         [JsonIgnore]
-        public virtual HighSchoolKind HighSchollKind { get; set; }
+        public virtual HighSchoolKind HighSchoolKind { get; set; }
 
         [ForeignKey("Nationality")]
         public int? NationalityId { get; set; }

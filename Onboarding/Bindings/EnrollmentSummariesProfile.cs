@@ -37,7 +37,7 @@ namespace onboarding.Bindings
             .ForMember(x => x.State, config => config.MapFrom(x => x.PersonalData.State.Name))
             .ForMember(x => x.AddressKind, config => config.MapFrom(x => x.PersonalData.AddressKind.Name))
             .ForMember(x => x.Race, config => config.MapFrom(x => x.PersonalData.Race.Name))
-            .ForMember(x => x.HighSchollKind, config => config.MapFrom(x => x.PersonalData.HighSchollKind.Name))
+            .ForMember(x => x.HighSchoolKind, config => config.MapFrom(x => x.PersonalData.HighSchoolKind.Name))
             .ForMember(x => x.Nationality, config => config.MapFrom(x => x.PersonalData.Nationality.Name))
             .ForMember(x => x.SpecialNeeds, config => config.MapFrom(x => x.PersonalData.PersonalDataSpecialNeeds.Select(o => o.SpecialNeed.Name)))
             .ForMember(x => x.Disabilities, config => config.MapFrom(x => x.PersonalData.PersonalDataDisabilities.Select(o => o.Disability.Name)))
