@@ -6,6 +6,7 @@ namespace onboarding.ViewModels.Scheduling
     {
         public int Id { get; set; }
         public string Onboarding { get; set; }
+        public string OnboardingId { get; set; }
         public string StartAt { get; set; }
         public string EndAt { get; set; }
         public string ScheduleStartTime { get; set; }
