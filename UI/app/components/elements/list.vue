@@ -1,9 +1,12 @@
 <template>
   <div class="m2 flex flex-column items-center">
-    <InputBox
-      v-if="showFilter"
-      v-model="filter"
-      label="Filtro" />
+    <div class="flex w100">
+      <InputBox
+        v-if="showFilter"
+        v-model="filter"
+        label="Filtro" />
+      <slot :filters="filters" />
+    </div>
     <div class="block sm-table bg-white shadow2 m2 col-12 fit">
       <div class="hidden sm-table-row divider-bottom">
         <div
@@ -60,7 +63,7 @@
 </template>
 
 <script>
-  import { sortBy } from "lodash";
+  import { sortBy, filter } from "lodash";
 
   export default {
     name: "List",
@@ -90,10 +93,15 @@
         type: Boolean,
         default: false,
       },
+      defaultFilters: {
+        type: Object,
+        default: () => ({}),
+      },
     },
     data() {
       return {
         filter: "",
+        filters: this.defaultFilters,
         currentPage: 1,
         sortColumn: null,
         reverse: false,
@@ -107,9 +115,10 @@
         return reversed.slice(offset, this.perPage + offset);
       },
       filtered() {
+        const value = filter(this.value, this.filters);
         const filterRow = row => Object.values(row).some(a =>
           a && a.toString().includes(this.filter));
-        return this.value.filter(filterRow);
+        return value.filter(filterRow);
       },
     },
     watch: {
