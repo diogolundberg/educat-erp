@@ -28,7 +28,7 @@ namespace onboarding.Models
         {
             get
             {
-                return !string.IsNullOrEmpty(Breaks) ? JsonConvert.DeserializeObject<List<FormBreak>>(Breaks) : new List<FormBreak>();
+                return !string.IsNullOrEmpty(Breaks) && Breaks != "null" ? JsonConvert.DeserializeObject<List<FormBreak>>(Breaks) : new List<FormBreak>();
             }
         }
     }
