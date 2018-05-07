@@ -101,12 +101,27 @@
       async findZip() {
         const data = await findZip(this.value.zipcode);
         this.value.neighborhood = data.bairro;
-        this.value.streetAddress = data.logradouro;
 
         const state = this.options.states.find(a => a.name === data.estado);
         this.value.stateId = state && state.id;
         const city = this.options.cities.find(a => a.name === data.cidade);
         this.value.cityId = city && city.id;
+
+        this.setAddress(data.logradouro);
+      },
+      setAddress(address) {
+        const spaceIndex = address.indexOf(" ");
+        const kind = address.slice(0, spaceIndex);
+        const name = address.slice(spaceIndex + 1);
+        const realName = name.charAt(0).toUpperCase() + name.slice(1);
+
+        const kindObject = this.options.addressKinds.find(a => a.name === kind);
+        if (kindObject) {
+          this.value.streetAddress = realName;
+          this.value.addressKindId = kindObject.id;
+        } else {
+          this.value.streetAddress = address;
+        }
       },
     },
   };
