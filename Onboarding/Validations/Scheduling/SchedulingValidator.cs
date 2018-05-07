@@ -28,7 +28,7 @@ namespace onboarding.Validations.Scheduling
                     }
                 }
             });
-            RuleFor(scheduling => scheduling.FormBreaks).Custom((formBreaks, context) =>
+            RuleFor(scheduling => scheduling.DeserializedBreaks).Custom((formBreaks, context) =>
             {
                 if (formBreaks.Count > 0)
                 {

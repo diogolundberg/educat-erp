@@ -145,7 +145,7 @@ namespace onboarding.Controllers
         {
             List<dynamic> breaks = new List<dynamic>();
 
-            foreach (FormBreak formBreak in scheduling.FormBreaks)
+            foreach (FormBreak formBreak in scheduling.DeserializedBreaks)
             {
                 breaks.Add(new
                 {

@@ -24,7 +24,7 @@ namespace onboarding.Models
         public ICollection<Appointment> Appointments { get; set; }
 
         [NotMapped]
-        public List<FormBreak> FormBreaks
+        public List<FormBreak> DeserializedBreaks
         {
             get
             {
