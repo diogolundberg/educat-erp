@@ -106,7 +106,7 @@
         const state = this.options.states.find(a => a.name === data.estado);
         this.value.stateId = state && state.id;
         const city = this.options.cities.find(a => a.name === data.cidade);
-        this.value.city = city && city.id;
+        this.value.cityId = city && city.id;
       },
     },
   };
