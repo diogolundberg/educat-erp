@@ -596,9 +596,36 @@
           </Card>
         </Step>
         <Step
+          title="Concluir Matrícula"
+          description="Conclua sua matrícula.">
+          <Card
+            v-if="enrollment.data.academicApproval.status === 'approved'
+            && enrollment.data.financeApproval.status === 'approved'"
+            title="Concluir Matrícula">
+            Falta pouco! Clique no botão abaixo para concluir sua matrícula.
+            <div class="flex justify-end">
+              <Btn
+                primary
+                label="Concluir"
+                @click="finishEnrollment" />
+            </div>
+          </Card>
+          <Card
+            v-else
+            title="Concluir Matrícula">
+            Sua matrícula ainda não foi aprovada! Preencha corretamente os dados
+            antes de concluir!
+          </Card>
+        </Step>
+        <Step
           title="Agende uma Visita"
           description="Após a aprovação da secretaria e do financeiro, é hora
-            de agendar um horário para comparecer na CMMG." />
+            de agendar um horário para comparecer na CMMG.">
+          <Card
+            title="Agende uma Visita">
+            Agende sua visita!
+          </Card>
+        </Step>
         <Step
           title="Matrícula Concluída!"
           description="Sua matrícula foi concluída!" />
@@ -751,6 +778,10 @@
         if (this.enrollment.data.sentAt != null) {
           this.step = null;
         }
+        if (this.enrollment.data.academicApproval.status === "approved" &&
+          this.enrollment.data.financeApproval.status === "approved") {
+            this.step = 7;
+          }
       },
       focusOnErrors() {
         const firstError = this.$el.querySelector(".error");
@@ -793,6 +824,11 @@
         await this.$store.dispatch("deleteFinancePendencies", { token });
         this.step = null;
         this.notify("Sua matrícula foi enviada para aprovação.");
+      },
+      async finishEnrollment() {
+        const token = this.id;
+        await this.$store.dispatch("finishEnrollment", { token });
+        this.step = 8;
       },
       async notificationClick(anchor) {
         this.step = 1;

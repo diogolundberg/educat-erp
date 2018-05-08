@@ -316,6 +316,10 @@ export default new VueX.Store({
       await axios.delete(url);
       commit("DELETE_FINANCE_PENDENCIES");
     },
+    async finishEnrollment(_, { token }) {
+      const url = `${url2}/api/EnrollmentFinishes/${token}`;
+      await axios.post(url);
+    },
     copyResponsibleData({ commit }) {
       commit("COPY_RESPONSIBLE_DATA");
     },
