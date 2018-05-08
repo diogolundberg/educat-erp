@@ -197,6 +197,9 @@ export default new VueX.Store({
       state.enrollment.data.financeData.editable = false;
       state.enrollment.data.financeApproval.status = "inReview";
     },
+    FINISH_ENROLLMENT(state) {
+      state.enrollment.data.finished = true;
+    },
     COPY_RESPONSIBLE_DATA(state) {
       const { personalData } = state.enrollment.data;
       const { representative } = state.enrollment.data.financeData;
@@ -316,9 +319,10 @@ export default new VueX.Store({
       await axios.delete(url);
       commit("DELETE_FINANCE_PENDENCIES");
     },
-    async finishEnrollment(_, { token }) {
+    async finishEnrollment({ commit }, { token }) {
       const url = `${url2}/api/EnrollmentFinishes/${token}`;
       await axios.post(url);
+      commit("FINISH_ENROLLMENT");
     },
     copyResponsibleData({ commit }) {
       commit("COPY_RESPONSIBLE_DATA");

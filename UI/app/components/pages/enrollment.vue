@@ -596,6 +596,7 @@
           </Card>
         </Step>
         <Step
+          :complete="enrollment.data.finished"
           title="Concluir Matrícula"
           description="Conclua sua matrícula.">
           <Card
@@ -782,6 +783,9 @@
           this.enrollment.data.financeApproval.status === "approved") {
             this.step = 7;
           }
+        if (this.enrollment.data.finished) {
+          this.step = 8;
+        }
       },
       focusOnErrors() {
         const firstError = this.$el.querySelector(".error");
