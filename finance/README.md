@@ -1,4 +1,4 @@
-# INVOICE
+# FINANCE
 
 VERSÃO .NET CORE 2.1.4
 [https://docs.microsoft.com/en-us/dotnet/core/get-started](https://docs.microsoft.com/en-us/dotnet/core/get-started)
@@ -38,16 +38,16 @@ dotnet ef database update
 
 OBS: Na versão SQLLocalDB 14, para criar o banco deve rodar o seguinte comando
 ```bash
-CREATE DATABASE invoice ON (NAME='invoice',  FILENAME='c:\databases\invoice.mdf')
+CREATE DATABASE finance ON (NAME='finance',  FILENAME='c:\databases\finance.mdf')
 ```
 
 Criar variaveis de ambiente
 ```bash
-setx PROJECT "invoice/invoice.csproj" -m
+setx PROJECT "finance/finance.csproj" -m
 setx SSO_HOST "https://cmmg-sso.azurewebsites.net" -m
-setx INVOICE_HOST "https://cmmg-invoice.azurewebsites.net" -m
+setx INVOICE_HOST "https://cmmg-finance.azurewebsites.net" -m
 setx SECURITY_KEY "dd%88*377f6d&f£$$£$FdddFF33fssDG^!3" -m
-setx INVOICE_DATABASE_CONNECTION "Server=(localdb)\mssqllocaldb;Database=invoice;" -m
+setx INVOICE_DATABASE_CONNECTION "Server=(localdb)\mssqllocaldb;Database=finance;" -m
 setx SMTP_USERNAME "azure_cb670a222faa4e88621781f17888b964@azure.com" -m
 setx SMTP_PASSWORD "241213AAl" -m
 setx SENTRY_API "https://edc6b53b54bf4d709bd9f47c24f37588:74b2bba0aa7a458faadd5441286db8de@sentry.io/814482" -m
