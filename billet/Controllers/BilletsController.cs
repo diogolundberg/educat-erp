@@ -2,19 +2,24 @@
 using BoletoNet;
 using System.Web.Http;
 using billet.ViewModels;
+using System.Web.Http.Description;
 
 namespace paymentslip.Controllers
 {
+    [RoutePrefix("api/Billets")]
     public class BilletsController : ApiController
     {
         [HttpPost]
-        public byte[] Post([FromBody]Billet obj)
+        [Route("")]
+        [AllowAnonymous]
+        [ResponseType(typeof(Billet))]
+        public byte[] Create([FromBody]Billet obj)
         {
             BoletoBancario bb = new BoletoBancario();
             bb.CodigoBanco = obj.BankCode;
 
             Cedente c = new Cedente("103.830.576-47", "Lucas Vinícius Batista Costa", "1540", "308813");
-            Boleto b = new Boleto(obj.DueDate, obj.Value, "02", "01000000001", c);
+            Boleto b = new Boleto(DateTime.Parse(obj.DueDate), obj.Value, "02", "01000000001", c);
 
             b.NumeroDocumento = "01000015235";
 

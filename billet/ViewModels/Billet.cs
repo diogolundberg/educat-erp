@@ -5,7 +5,7 @@ namespace billet.ViewModels
     public class Billet
     {
         public short BankCode { get; set; }
-        public DateTime DueDate { get; set; }
+        public string DueDate { get; set; }
         public decimal Value { get; set; }
         public string PayerName { get; set; }
         public string PayerDocument { get; set; }
