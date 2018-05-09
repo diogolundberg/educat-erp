@@ -51,12 +51,12 @@ namespace onboarding.Controllers
             return _mapper.Map<List<Record>>(scheduling.Appointments);
         }
 
-        [HttpPut(Name = "ONBOARDING/AP5POINTMENTS/EDIT")]
-        public dynamic Put([FromBody]Form obj)
+        [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/AP5POINTMENTS/EDIT")]
+        public dynamic Put([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             Enrollment enrollment = _context.Enrollments
                                 .Include("Onboarding")
-                                .Single(x => x.Id == obj.EnrollmentId);
+                                .Single(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {
@@ -89,7 +89,7 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.AppointmentAlreadyUsed } });
             }
 
-            appointment.EnrollmentId = obj.EnrollmentId;
+            appointment.EnrollmentId = enrollment.Id;
             _context.Appointments.Update(appointment);
 
             _context.SaveChanges();
