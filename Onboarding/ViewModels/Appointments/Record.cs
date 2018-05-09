@@ -6,5 +6,6 @@
         public string Date { get; set; }
         public string Hour { get; set; }
         public int SchedulingId { get; set; }
+        public bool Scheduled { get; set; }
     }
 }
