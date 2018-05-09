@@ -7,7 +7,9 @@ namespace onboarding.Bindings
     {
         public AppointmentProfile()
         {
-            CreateMap<Models.Appointment, Record>().ReverseMap();
+            CreateMap<Models.Appointment, Record>()
+            .ForMember(x => x.Scheduled, config => config.MapFrom(x => x.EnrollmentId.HasValue));
+
             CreateMap<Models.Appointment, Form>().ReverseMap();
         }
     }

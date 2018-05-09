@@ -40,6 +40,7 @@ namespace onboarding.Controllers
 
             Scheduling scheduling = _context.Schedulings
                                             .Include("Appointments")
+                                            .Include("Appointments.Enrollment")
                                             .SingleOrDefault(x => x.OnboardingId == enrollment.OnboardingId);
 
             if (scheduling == null)
@@ -47,7 +48,7 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.SchedulingNotExisting } });
             }
 
-            return _mapper.Map<List<Record>>(scheduling.Appointments.Where(x => !x.EnrollmentId.HasValue));
+            return _mapper.Map<List<Record>>(scheduling.Appointments.Where(x => !x.EnrollmentId.HasValue || x.Enrollment.ExternalId == enrollmentNumber));
         }
 
         [HttpPut(Name = "ONBOARDING/AP5POINTMENTS/EDIT")]
