@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace finance.Models
 {
@@ -9,6 +10,9 @@ namespace finance.Models
             InvoiceItens = new HashSet<InvoiceItem>();
         }
 
+        public string InvoiceNumber { get; set; }
+        public decimal Value { get; set; }
+        public DateTime DueDate { get; set; }
         public virtual ICollection<InvoiceItem> InvoiceItens { get; set; }
     }
 }
