@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Mvc;
 
-namespace paymentslip
+namespace billet
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
