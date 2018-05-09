@@ -12,9 +12,6 @@ namespace finance.Models
         public int Id { get; set; }
 
         [JsonIgnore]
-        public string ExternalId { get; set; }
-
-        [JsonIgnore]
         public DateTime? CreatedAt { get; set; }
 
         [JsonIgnore]
@@ -23,11 +20,6 @@ namespace finance.Models
         public object Clone()
         {
             return this.MemberwiseClone();
-        }
-
-        public virtual string CreateExternalId()
-        {
-            return Guid.NewGuid().ToString();
         }
     }
 }

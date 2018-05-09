@@ -18,8 +18,6 @@ namespace finance.Models
         {
             foreach (var auditableEntity in ChangeTracker.Entries<BaseModel>())
             {
-                auditableEntity.Entity.ExternalId = !string.IsNullOrEmpty(auditableEntity.Entity.ExternalId) ? auditableEntity.Entity.ExternalId : auditableEntity.Entity.CreateExternalId();
-
                 if (auditableEntity.State == EntityState.Added)
                 {
                     auditableEntity.Entity.CreatedAt = DateTime.Now;
