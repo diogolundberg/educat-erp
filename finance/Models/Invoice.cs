@@ -14,5 +14,6 @@ namespace finance.Models
         public decimal Value { get; set; }
         public string DueDate { get; set; }
         public virtual ICollection<InvoiceItem> InvoiceItems { get; set; }
+        public string Billet { get; set; }
     }
 }
