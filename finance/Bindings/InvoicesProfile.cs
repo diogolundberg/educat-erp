@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using finance.Models;
-using finance.ViewModels.invoices;
+using finance.ViewModels.Invoices;
 
 namespace finance.Bindings
 {
@@ -8,7 +8,9 @@ namespace finance.Bindings
     {
         public InvoicesProfile()
         {
-            CreateMap<Invoice, Records>().ReverseMap();
+            CreateMap<Invoice, Records>()
+                .ForMember(x => x.DueDate, config => config.MapFrom(x => x.DueDate.Format()));
+
         }
     }
 }
