@@ -70,7 +70,7 @@ namespace finance
             });
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "INVOCE", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "FINANCE", Version = "v1" });
                 c.CustomSchemaIds(x => x.FullName);
             });
             services.AddAutoMapper();
