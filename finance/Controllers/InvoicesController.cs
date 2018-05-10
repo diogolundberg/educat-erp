@@ -38,37 +38,37 @@ namespace finance.Controllers
             return _mapper.Map<Record>(obj);
         }
 
-        //[HttpPost(Name = "FINANCE/INVOICES/NEW")]
-        //public dynamic Create([FromBody]Form form)
-        //{
-        //    Scheduling scheduling = Mapper.Map<Scheduling>(form);
+        [HttpPost(Name = "FINANCE/INVOICES/NEW")]
+        public dynamic Create([FromBody]Form form)
+        {
+            Invoice invoice = Mapper.Map<Invoice>(form);
 
-        //    if (!_context.Onboardings.Any(x => x.Id == scheduling.OnboardingId))
-        //    {
-        //        return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingNotExisting } });
-        //    }
+            //if (!_context.Onboardings.Any(x => x.Id == invoice.OnboardingId))
+            //{
+            //    return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingNotExisting } });
+            //}
 
-        //    if (_context.Schedulings.Any(x => x.OnboardingId == scheduling.OnboardingId))
-        //    {
-        //        return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.HaveSchedulingForOnboarding } });
-        //    }
+            //if (_context.Schedulings.Any(x => x.OnboardingId == invoice.OnboardingId))
+            //{
+            //    return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.HaveSchedulingForOnboarding } });
+            //}
 
-        //    SchedulingValidator validator = new SchedulingValidator(_context);
-        //    ValidationResult result = validator.Validate(scheduling);
+            //SchedulingValidator validator = new SchedulingValidator(_context);
+            //ValidationResult result = validator.Validate(invoice);
 
-        //    if (!result.IsValid)
-        //    {
-        //        Hashtable errors = FormatErrors(result);
-        //        return new OkObjectResult(new { Errors = errors });
-        //    }
+            //if (!result.IsValid)
+            //{
+            //    Hashtable errors = FormatErrors(result);
+            //    return new OkObjectResult(new { Errors = errors });
+            //}
 
-        //    scheduling.Appointments = GenerateAppointmet(scheduling);
+            //invoice.Appointments = GenerateAppointmet(invoice);
 
-        //    _context.Schedulings.Add(scheduling);
-        //    _context.SaveChanges();
+            //_context.Schedulings.Add(invoice);
+            //_context.SaveChanges();
 
-        //    return new OkObjectResult(new { data = Mapper.Map<Form>(scheduling) });
-        //}
+            return new OkObjectResult(new { data = Mapper.Map<Form>(invoice) });
+        }
 
         //[HttpPut("{id}", Name = "FINANCE/INVOICES/EDIT")]
         //public dynamic Edit([FromRoute]int id, [FromBody]Form form)

@@ -15,7 +15,7 @@ namespace finance.Bindings
 
             CreateMap<Invoice, Record>()
                 .ForMember(x => x.DueDate, config => config.MapFrom(x => x.DueDate.Format()))
-                .ForMember(x => x.Items, config => config.MapFrom(x => x.InvoiceItens));
+                .ForMember(x => x.Items, config => config.MapFrom(x => x.InvoiceItems));
 
         }
     }
