@@ -61,31 +61,29 @@ namespace finance.Controllers
             return new OkObjectResult(new { data = Mapper.Map<Form>(invoice) });
         }
 
-        //[HttpPut("{id}", Name = "FINANCE/INVOICES/EDIT")]
-        //public dynamic Edit([FromRoute]int id, [FromBody]Form form)
-        //{
-        //    Scheduling scheduling = Mapper.Map<Scheduling>(form);
+        [HttpPut("{id}", Name = "FINANCE/INVOICES/EDIT")]
+        public dynamic Edit([FromRoute]int id, [FromBody]Form form)
+        {
+            Invoice invoice = Mapper.Map<Invoice>(form);
 
-        //    if (!_context.Onboardings.Any(x => x.Id == scheduling.OnboardingId))
-        //    {
-        //        return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingNotExisting } });
-        //    }
+            if (!_context.Invoices.Any(x => x.Id == invoice.Id))
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { finance.Resources.Messages.InvoiceNotExisting } });
+            }
 
-        //    SchedulingValidator validator = new SchedulingValidator(_context);
-        //    ValidationResult result = validator.Validate(scheduling);
+            InvoiceValidator validator = new InvoiceValidator(_context);
+            ValidationResult result = validator.Validate(invoice);
 
-        //    if (!result.IsValid)
-        //    {
-        //        Hashtable errors = FormatErrors(result);
-        //        return new OkObjectResult(new { Errors = errors });
-        //    }
+            if (!result.IsValid)
+            {
+                Hashtable errors = FormatErrors(result);
+                return new OkObjectResult(new { Errors = errors });
+            }
 
-        //    scheduling.Appointments = GenerateAppointmet(scheduling);
+            _context.Invoices.Update(invoice);
+            _context.SaveChanges();
 
-        //    _context.Schedulings.Update(scheduling);
-        //    _context.SaveChanges();
-
-        //    return new OkObjectResult(new { data = Mapper.Map<Form>(scheduling) });
-        //}
+            return new OkObjectResult(new { data = Mapper.Map<Form>(invoice) });
+        }
     }
 }
