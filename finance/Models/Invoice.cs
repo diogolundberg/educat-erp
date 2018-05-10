@@ -12,7 +12,7 @@ namespace finance.Models
 
         public string InvoiceNumber { get; set; }
         public decimal Value { get; set; }
-        public DateTime DueDate { get; set; }
+        public string DueDate { get; set; }
         public virtual ICollection<InvoiceItem> InvoiceItems { get; set; }
     }
 }
