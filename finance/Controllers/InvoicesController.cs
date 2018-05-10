@@ -11,6 +11,8 @@ using System.Linq;
 
 namespace finance.Controllers
 {
+    [Produces("application/json")]
+    [Route("api/[controller]")]
     public class InvoicesController : BaseController
     {
         private readonly IMapper _mapper;
@@ -25,7 +27,7 @@ namespace finance.Controllers
         [HttpGet("", Name = "FINANCE/INVOICES/LIST")]
         public dynamic GetList()
         {
-            return _mapper.Map<List<Records>>(_context.Invoices.Include("InvoiceItens"));
+            return _mapper.Map<List<Records>>(_context.Invoices.Include("InvoiceItems"));
         }
 
         [HttpGet("{id}", Name = "FINANCE/INVOICES/GET")]
