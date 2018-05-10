@@ -14,5 +14,6 @@ namespace billet.ViewModels
         public string PayerCity { get; set; }
         public string PayerCep { get; set; }
         public string PayerState { get; set; }
+        public string DocumentNumber { get; set; }
     }
 }

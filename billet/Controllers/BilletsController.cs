@@ -21,7 +21,7 @@ namespace paymentslip.Controllers
             Cedente c = new Cedente("103.830.576-47", "Lucas Vinícius Batista Costa", "1540", "308813");
             Boleto b = new Boleto(DateTime.Parse(obj.DueDate), obj.Value, "02", "01000000001", c);
 
-            b.NumeroDocumento = "01000015235";
+            b.NumeroDocumento = obj.DocumentNumber;
 
             b.Sacado = new Sacado(obj.PayerDocument, obj.PayerName);
             b.Sacado.Endereco.End = obj.PayerAddress;
