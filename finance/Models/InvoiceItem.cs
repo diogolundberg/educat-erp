@@ -8,5 +8,6 @@ namespace finance.Models
         public int InvoiceId { get; set; }
         public virtual Invoice Invoice { get; set; }
         public string EnrollmentNumber { get; set; }
+        public string Description { get; set; }
     }
 }
