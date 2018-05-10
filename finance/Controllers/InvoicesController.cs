@@ -100,7 +100,7 @@ namespace finance.Controllers
             return new OkObjectResult(new { data = Mapper.Map<Form>(invoice) });
         }
 
-        public dynamic GetBilletUrl()
+        private dynamic GetBilletUrl()
         {
             using (HttpClient client = new HttpClient())
             {
