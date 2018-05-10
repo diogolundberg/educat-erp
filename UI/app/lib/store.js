@@ -106,6 +106,7 @@ export default new VueX.Store({
         },
       },
       underage: false,
+      appointments: [],
     },
     enrollmentSummary: {},
 
@@ -199,6 +200,9 @@ export default new VueX.Store({
     },
     FINISH_ENROLLMENT(state) {
       state.enrollment.data.finished = true;
+    },
+    SET_APPOINTMENTS(state, appointments) {
+      state.enrollment.appointments = appointments;
     },
     COPY_RESPONSIBLE_DATA(state) {
       const { personalData } = state.enrollment.data;
@@ -323,6 +327,11 @@ export default new VueX.Store({
       const url = `${url2}/api/EnrollmentFinishes/${token}`;
       await axios.post(url);
       commit("FINISH_ENROLLMENT");
+    },
+    async getAppointments({ commit }, token) {
+      const url = `${url2}/api/Appointments/${token}`;
+      const response = await axios.get(url);
+      commit("SET_APPOINTMENTS", response.data);
     },
     copyResponsibleData({ commit }) {
       commit("COPY_RESPONSIBLE_DATA");
