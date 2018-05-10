@@ -1,6 +1,3 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using onboarding.ViewModels;
 using System;
 
 namespace onboarding
@@ -12,5 +9,4 @@ namespace onboarding
             return Char.ToLowerInvariant(str[0]) + str.Substring(1);
         }
     }
-
 }
