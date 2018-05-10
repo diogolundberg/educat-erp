@@ -5,9 +5,13 @@ using finance.ViewModels.Invoices;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 
 namespace finance.Controllers
 {
@@ -57,6 +61,14 @@ namespace finance.Controllers
                 return new OkObjectResult(new { Errors = errors });
             }
 
+            dynamic billetResponseObject = GetBilletUrl();
+
+            if(billetResponseObject.success != true)
+            {
+                return new OkObjectResult(new { billetResponseObject.messages });
+            }
+
+            invoice.Billet = billetResponseObject.url;
             _context.Invoices.Add(invoice);
             _context.SaveChanges();
 
@@ -86,6 +98,43 @@ namespace finance.Controllers
             _context.SaveChanges();
 
             return new OkObjectResult(new { data = Mapper.Map<Form>(invoice) });
+        }
+
+        public dynamic GetBilletUrl()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                Billet billet = new Billet
+                {
+                    BankCode = 237,
+                    WalletNumber = "02",
+                    DueDate = "09/05/2018",
+                    Value = 2000,
+                    DocumentNumber = "103.830.576-47",
+                    Assignor = new Assignor
+                    {
+                        DocumentNumber = "103.830.576-47",
+                        Name = "Lucas Costa",
+                        Agency = "2222",
+                        AccountBank = "222222"
+                    },
+                    Payer = new Payer
+                    {
+                        Name = "Lucas Costa",
+                        Document = "103.830.576-47",
+                        Address = "Avenida",
+                        District = "string",
+                        City = "string",
+                        Cep = "string",
+                        State = "string"
+                    }
+                };
+
+                StringContent stringContent = new StringContent(JsonConvert.SerializeObject(billet), Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.PostAsync("http://localhost:51762/api/billets", stringContent).Result;
+                response.EnsureSuccessStatusCode();
+                return JsonConvert.DeserializeObject<dynamic>(response.Content.ReadAsStringAsync().Result);
+            }
         }
     }
 }
