@@ -10,10 +10,4 @@ namespace finance.ViewModels.Invoices
         public string DueDate { get; set; }
         public IEnumerable<Item> Items { get; set; }
     }
-
-    public class Item
-    {
-        public string EnrollmentNumber { get; set; }
-        public int InvoiceId { get; set; }
-    }
 }
