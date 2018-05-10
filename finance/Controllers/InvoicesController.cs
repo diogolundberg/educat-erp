@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using finance.Models;
+using finance.Validations;
 using finance.ViewModels.Invoices;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -43,29 +46,17 @@ namespace finance.Controllers
         {
             Invoice invoice = Mapper.Map<Invoice>(form);
 
-            //if (!_context.Onboardings.Any(x => x.Id == invoice.OnboardingId))
-            //{
-            //    return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingNotExisting } });
-            //}
+            InvoiceValidator validator = new InvoiceValidator(_context);
+            ValidationResult result = validator.Validate(invoice);
 
-            //if (_context.Schedulings.Any(x => x.OnboardingId == invoice.OnboardingId))
-            //{
-            //    return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.HaveSchedulingForOnboarding } });
-            //}
+            if (!result.IsValid)
+            {
+                Hashtable errors = FormatErrors(result);
+                return new OkObjectResult(new { Errors = errors });
+            }
 
-            //SchedulingValidator validator = new SchedulingValidator(_context);
-            //ValidationResult result = validator.Validate(invoice);
-
-            //if (!result.IsValid)
-            //{
-            //    Hashtable errors = FormatErrors(result);
-            //    return new OkObjectResult(new { Errors = errors });
-            //}
-
-            //invoice.Appointments = GenerateAppointmet(invoice);
-
-            //_context.Schedulings.Add(invoice);
-            //_context.SaveChanges();
+            _context.Invoices.Add(invoice);
+            _context.SaveChanges();
 
             return new OkObjectResult(new { data = Mapper.Map<Form>(invoice) });
         }
