@@ -754,6 +754,8 @@
       async step(value) {
         if (value === 4) {
           await this.$store.dispatch("getEnrollmentSummary", this.id);
+        } else if (value === 8) {
+          await this.$store.dispatch("getAppointments", this.id);
         }
       },
     },
