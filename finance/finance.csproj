@@ -28,6 +28,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Invoice.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Models\InvoiceItem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>InvoiceItem.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +43,10 @@
     <EmbeddedResource Update="Resources\Models\Invoice.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Invoice.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\InvoiceItem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InvoiceItem.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
