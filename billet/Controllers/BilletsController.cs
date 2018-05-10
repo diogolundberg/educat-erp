@@ -3,6 +3,10 @@ using BoletoNet;
 using System.Web.Http;
 using billet.ViewModels;
 using System.Web.Http.Description;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using System.IO;
 
 namespace paymentslip.Controllers
 {
@@ -13,22 +17,22 @@ namespace paymentslip.Controllers
         [Route("")]
         [AllowAnonymous]
         [ResponseType(typeof(Billet))]
-        public byte[] Create([FromBody]Billet obj)
+        public dynamic Create([FromBody]Billet obj)
         {
             BoletoBancario bb = new BoletoBancario();
             bb.CodigoBanco = obj.BankCode;
 
-            Cedente c = new Cedente("103.830.576-47", "Lucas Vinícius Batista Costa", "1540", "308813");
-            Boleto b = new Boleto(DateTime.Parse(obj.DueDate), obj.Value, "02", "01000000001", c);
+            Cedente c = new Cedente(obj.Assignor.DocumentNumber, obj.Assignor.Name, obj.Assignor.Agency, obj.Assignor.AccountBank);
+            Boleto b = new Boleto(DateTime.Parse(obj.DueDate), obj.Value, obj.WalletNumber, "01000000001", c);
 
             b.NumeroDocumento = obj.DocumentNumber;
 
-            b.Sacado = new Sacado(obj.PayerDocument, obj.PayerName);
-            b.Sacado.Endereco.End = obj.PayerAddress;
-            b.Sacado.Endereco.Bairro = obj.PayerDistrict;
-            b.Sacado.Endereco.Cidade = obj.PayerCity;
-            b.Sacado.Endereco.CEP = obj.PayerCep;
-            b.Sacado.Endereco.UF = obj.PayerState;
+            b.Sacado = new Sacado(obj.Payer.Document, obj.Payer.Name);
+            b.Sacado.Endereco.End = obj.Payer.Address;
+            b.Sacado.Endereco.Bairro = obj.Payer.District;
+            b.Sacado.Endereco.Cidade = obj.Payer.City;
+            b.Sacado.Endereco.CEP = obj.Payer.Cep;
+            b.Sacado.Endereco.UF = obj.Payer.State;
 
             Instrucao instr = new Instrucao(001);
             instr.Descricao = "Não receber após o vencimento.";
@@ -37,7 +41,34 @@ namespace paymentslip.Controllers
             bb.Boleto = b;
             bb.Boleto.Valida();
 
-            return bb.MontaBytesPDF();
+            string billetName = string.Format("billet_{0}.pdf", Guid.NewGuid());
+
+            UploadBoleto(bb.MontaBytesPDF(), billetName);
+
+            return new
+            {
+                data = new
+                {
+                    url = string.Format("https://{0}.blob.core.windows.net/{1}/{2}", Environment.GetEnvironmentVariable("BLOB_AZURE_ACCOUNT_NAME"), Environment.GetEnvironmentVariable("BLOB_AZURE_CONTAINER"), billetName)
+                }
+            };
+        }
+
+        private void UploadBoleto(byte[] billetBytes, string billetName)
+        {
+            Stream stream = new MemoryStream(billetBytes);
+
+            StorageCredentials credentials = new StorageCredentials(Environment.GetEnvironmentVariable("BLOB_AZURE_ACCOUNT_NAME"), Environment.GetEnvironmentVariable("BLOB_AZURE_ACCESS_KEY"));
+            CloudStorageAccount storageAccount = new CloudStorageAccount(credentials, false);
+
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer blobContainer = blobClient.GetContainerReference(Environment.GetEnvironmentVariable("BLOB_AZURE_CONTAINER"));
+
+            blobContainer.CreateIfNotExists();
+
+            CloudBlockBlob blockBlob = blobContainer.GetBlockBlobReference(billetName);
+
+            blockBlob.UploadFromStream(stream);
         }
     }
 }
