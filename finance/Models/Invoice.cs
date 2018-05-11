@@ -15,5 +15,6 @@ namespace finance.Models
         public string DueDate { get; set; }
         public virtual ICollection<InvoiceItem> InvoiceItems { get; set; }
         public string Billet { get; set; }
+        public DateTime? CompensatedDate { get; set; }
     }
 }
