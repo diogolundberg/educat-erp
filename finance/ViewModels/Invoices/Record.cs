@@ -10,5 +10,6 @@ namespace finance.ViewModels.Invoices
         public string DueDate { get; set; }
         public string Billet { get; set; }
         public IEnumerable<Item> Items { get; set; }
+        public bool Compensated { get; set; }
     }
 }
