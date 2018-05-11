@@ -13,7 +13,8 @@ namespace finance.Bindings
             CreateMap<Invoice, Records>().ReverseMap();
 
             CreateMap<Invoice, Record>()
-                .ForMember(x => x.Items, config => config.MapFrom(x => x.InvoiceItems));
+                .ForMember(x => x.Items, config => config.MapFrom(x => x.InvoiceItems))
+                .ForMember(x => x.Compensated, config => config.MapFrom(x => x.CompensatedDate.HasValue));
 
             CreateMap<Invoice, Form>()
                 .ForMember(x => x.Items, config => config.MapFrom(x => x.InvoiceItems));
