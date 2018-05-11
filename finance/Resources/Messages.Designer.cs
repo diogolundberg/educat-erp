@@ -61,6 +61,15 @@ namespace finance.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fatura já compensada..
+        /// </summary>
+        public static string InvoiceCompensated {
+            get {
+                return ResourceManager.GetString("InvoiceCompensated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fatura não existe..
         /// </summary>
         public static string InvoiceNotExisting {
