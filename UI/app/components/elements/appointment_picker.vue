@@ -56,6 +56,12 @@
         return this.findDates(this.date);
       },
     },
+    watch: {
+      dates() {
+        const dates = this.dates.filter(a => !a.scheduled).map(a => a.date);
+        this.date = moment(dates[0], "DD/MM/YYYY").toISOString();
+      },
+    },
     methods: {
       isDisabled(date) {
         return this.findDates(date).length === 0;
