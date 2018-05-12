@@ -204,6 +204,9 @@ export default new VueX.Store({
     SET_APPOINTMENTS(state, appointments) {
       state.enrollment.appointments = appointments;
     },
+    SET_APPOINTMENT(state, id) {
+      state.enrollment.appointment = id;
+    },
     COPY_RESPONSIBLE_DATA(state) {
       const { personalData } = state.enrollment.data;
       const { representative } = state.enrollment.data.financeData;
@@ -332,6 +335,11 @@ export default new VueX.Store({
       const url = `${url2}/api/Appointments/${token}`;
       const response = await axios.get(url);
       commit("SET_APPOINTMENTS", response.data);
+    },
+    async setAppointment({ commit }, { token, id }) {
+      const url = `${url2}/api/Appointments/${token}`;
+      await axios.put(url, { id });
+      commit("SET_APPOINTMENT", id);
     },
     copyResponsibleData({ commit }) {
       commit("COPY_RESPONSIBLE_DATA");
