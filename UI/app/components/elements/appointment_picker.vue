@@ -3,6 +3,7 @@
     <VueDatepicker
       v-model="date"
       :disabled-dates="{ customPredictor: isDisabled }"
+      :language="ptBR"
       class="m2"
       inline
     />
@@ -29,6 +30,7 @@
 
 <script>
   import VueDatepicker from "vuejs-datepicker";
+  import { ptBR } from "vuejs-datepicker/dist/locale";
   import moment from "moment";
 
   export default {
@@ -49,6 +51,7 @@
     data() {
       return {
         date: null,
+        ptBR,
       };
     },
     computed: {
