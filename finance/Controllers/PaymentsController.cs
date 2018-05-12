@@ -9,6 +9,8 @@ using System.Linq;
 
 namespace finance.Controllers
 {
+    [Produces("application/json")]
+    [Route("api/[controller]")]
     public class PaymentsController : BaseController
     {
         private readonly IMapper _mapper;
