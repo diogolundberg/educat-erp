@@ -14,6 +14,7 @@ namespace finance.ViewModels.Invoices
         public decimal Value { get; set; }
         public string DueDate { get; set; }
         public string Billet { get; set; }
-        public virtual ICollection<Item> Items { get; set; }
+        public ICollection<Item> Items { get; set; }
+        public Representative Representative { get; set; }
     }
 }

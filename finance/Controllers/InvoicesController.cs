@@ -61,9 +61,9 @@ namespace finance.Controllers
                 return new OkObjectResult(new { Errors = errors });
             }
 
-            dynamic billetResponseObject = GetBilletUrl();
+            dynamic billetResponseObject = GetBilletUrl(form);
 
-            if(billetResponseObject.success != true)
+            if (billetResponseObject.success != true)
             {
                 return new OkObjectResult(new { billetResponseObject.messages });
             }
@@ -100,7 +100,7 @@ namespace finance.Controllers
             return new OkObjectResult(new { data = Mapper.Map<Form>(invoice) });
         }
 
-        private dynamic GetBilletUrl()
+        private dynamic GetBilletUrl(Form form)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -108,9 +108,9 @@ namespace finance.Controllers
                 {
                     BankCode = 237,
                     WalletNumber = "02",
-                    DueDate = "09/05/2018",
-                    Value = 2000,
-                    DocumentNumber = "103.830.576-47",
+                    DueDate = form.DueDate,
+                    Value = form.Value,
+                    DocumentNumber = "00000000000001",
                     Assignor = new Assignor
                     {
                         DocumentNumber = "103.830.576-47",
@@ -121,12 +121,12 @@ namespace finance.Controllers
                     Payer = new Payer
                     {
                         Name = "Lucas Costa",
-                        Document = "103.830.576-47",
-                        Address = "Avenida",
-                        District = "string",
-                        City = "string",
-                        Cep = "string",
-                        State = "string"
+                        Document = form.Representative is RepresentativePerson ? ((RepresentativePerson)form.Representative).Cpf : ((RepresentativeCompany)form.Representative).Cnpj,
+                        Address = string.Format("{0} {1} {2} - Complemento: {3}", form.Representative.AddressKind, form.Representative.StreetAddress, form.Representative.AddressNumber, form.Representative.ComplementAddress),
+                        District = "bairro",
+                        City = form.Representative.City,
+                        Cep = form.Representative.Zipcode,
+                        State = form.Representative.State
                     }
                 };
 

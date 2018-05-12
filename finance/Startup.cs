@@ -18,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using finance.JsonFormatter;
 
 namespace finance
 {
@@ -63,6 +64,7 @@ namespace finance
                     .AddJsonOptions(options =>
                     {
                         options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                        options.SerializerSettings.Converters.Add(new PolymorphicRepresentativeViewModelConverter());
                     });
             services.Configure<MvcOptions>(options =>
             {
