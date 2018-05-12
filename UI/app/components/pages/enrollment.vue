@@ -638,7 +638,14 @@
         </Step>
         <Step
           title="Matrícula Concluída!"
-          description="Sua matrícula foi concluída!" />
+          description="Após aprovação da secretaria e financeiro,
+          e agendamento da visita, sua matrícula estará concluída.">
+          <Card
+            title="Matrícula Concluída!">
+            Após aprovação da secretaria e financeiro,
+            e agendamento da visita, sua matrícula estará concluída.
+          </Card>
+        </Step>
       </Stepper>
     </Spinner>
   </div>
