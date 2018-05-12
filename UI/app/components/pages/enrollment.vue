@@ -628,6 +628,12 @@
             <AppointmentPicker
               v-model="appointmentDate"
               :dates="enrollment.appointments" />
+            <div class="flex justify-end">
+              <Btn
+                primary
+                label="Confirmar Data"
+                @click="setAppointment" />
+            </div>
           </Card>
         </Step>
         <Step
@@ -839,6 +845,12 @@
         const token = this.id;
         await this.$store.dispatch("finishEnrollment", { token });
         this.step = 8;
+      },
+      async setAppointment() {
+        const token = this.id;
+        const id = this.appointmentDate;
+        await this.$store.dispatch("setAppointment", { token, id });
+        this.step = 9;
       },
       async notificationClick(anchor) {
         this.step = 1;
