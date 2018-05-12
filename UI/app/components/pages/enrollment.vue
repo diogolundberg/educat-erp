@@ -625,6 +625,9 @@
           <Card
             title="Agende uma Visita">
             Agende sua visita!
+            <AppointmentPicker
+              v-model="appointmentDate"
+              :dates="enrollment.appointments" />
           </Card>
         </Step>
         <Step
@@ -649,6 +652,7 @@
         step: 1,
         agreed: false,
         notifications: false,
+        appointmentDate: null,
         handicap: [
           { id: "yes", name: "Sim" },
           { id: "no", name: "Não" },
