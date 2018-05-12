@@ -53,14 +53,16 @@
     },
     computed: {
       hours() {
-        const formattedDate = moment(this.date).format("DD/MM/YYYY");
-        return this.dates.filter(a => a.date === formattedDate);
+        return this.findDates(this.date);
       },
     },
     methods: {
       isDisabled(date) {
+        return this.findDates(date).length === 0;
+      },
+      findDates(date) {
         const formattedDate = moment(date).format("DD/MM/YYYY");
-        return !this.dates.find(a => a.date === formattedDate);
+        return this.dates.filter(a => a.date === formattedDate);
       },
     },
   };
