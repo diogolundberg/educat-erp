@@ -66,6 +66,11 @@ namespace onboarding.Controllers
             record.PersonalData.Status = (new PersonalDataStatus(new PersonalDataValidator(_context), enrollment.PersonalData)).GetStatus();
             record.FinanceData.Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus();
 
+            if (record.Invoice != null)
+            {
+                record.Invoice.Status = new InvoiceStatus(null, enrollment.Invoice).GetStatus();
+            }
+
             EnrollmentValidator enrollmentValidator = new EnrollmentValidator(_context);
             FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
             List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).Distinct().ToList();

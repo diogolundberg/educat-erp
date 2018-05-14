@@ -1,9 +1,12 @@
 
+using Newtonsoft.Json;
+using onboarding.ViewModels.Enrollments;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 
 namespace onboarding.Models
@@ -72,6 +75,29 @@ namespace onboarding.Models
         public virtual ICollection<Appointment> Appointments { get; set; }
 
         public int? InvoiceId { get; set; }
+
+        public Invoice Invoice
+        {
+            get
+            {
+                if (InvoiceId == null)
+                {
+                    return null;
+                }
+
+                using (HttpClient client = new HttpClient())
+                {
+                    HttpResponseMessage httpResponseMessage = client.GetAsync(Environment.GetEnvironmentVariable("FINANCE_HOST") + "/api/invoices/" + InvoiceId).Result;
+
+                    if (!httpResponseMessage.IsSuccessStatusCode)
+                    {
+                        return null;
+                    }
+
+                    return JsonConvert.DeserializeObject<Invoice>(httpResponseMessage.Content.ReadAsStringAsync().Result);
+                }
+            }
+        }
     }
 }
 

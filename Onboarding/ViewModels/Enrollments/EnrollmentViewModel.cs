@@ -13,10 +13,10 @@ namespace onboarding.ViewModels.Enrollments
         public string DaysRemaining { get; set; }
         public string Photo { get; set; }
         public int? InvoiceId { get; set; }
+        public Invoice Invoice { get; set; }
         public PersonalDataViewModel PersonalData { get; set; }
         public FinanceDataViewModel FinanceData { get; set; }
         public dynamic AcademicApproval { get; set; }
         public dynamic FinanceApproval { get; set; }
-        public dynamic PaymentApproval { get; set; }
     }
 }
