@@ -1,0 +1,7 @@
+[Settings]
+  ID = "2cc39115-aff6-4bd5-a32e-00e1e73c6343"
+
+[build]
+  base    = "ui/"
+  publish = "ui/dist/"
+  command = "npm run rebuild"
