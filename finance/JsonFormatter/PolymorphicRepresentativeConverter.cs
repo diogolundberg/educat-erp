@@ -18,11 +18,13 @@ namespace finance.JsonFormatter
 
             Representative representative;
 
-            if (obj["discriminator"] != null && obj["discriminator"].ToString() == "RepresentativePerson")
+            if ((obj["discriminator"] != null && obj["discriminator"].ToString() == "RepresentativePerson")
+                || (obj["Discriminator"] != null && obj["Discriminator"].ToString() == "RepresentativePerson"))
             {
                 representative = new RepresentativePerson();
             }
-            else if (obj["discriminator"] != null && obj["discriminator"].ToString() == "RepresentativeCompany")
+            else if ((obj["discriminator"] != null && obj["discriminator"].ToString() == "RepresentativeCompany")
+                || (obj["Discriminator"] != null && obj["Discriminator"].ToString() == "RepresentativeCompany"))
             {
                 representative = new RepresentativeCompany();
             }

@@ -70,6 +70,8 @@ namespace onboarding.Models
         public DateTime? FinishedAt { get; set; }
 
         public virtual ICollection<Appointment> Appointments { get; set; }
+
+        public int? InvoiceId { get; set; }
     }
 }
 

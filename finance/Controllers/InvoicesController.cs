@@ -61,14 +61,14 @@ namespace finance.Controllers
             if (!result.IsValid)
             {
                 Hashtable errors = FormatErrors(result);
-                return new OkObjectResult(new { Errors = errors });
+                return new BadRequestObjectResult(new { Errors = errors });
             }
 
             dynamic billetResponseObject = GetBilletUrl(form);
 
             if (billetResponseObject.success != true)
             {
-                return new OkObjectResult(new { billetResponseObject.messages });
+                return new BadRequestObjectResult(new { billetResponseObject.messages });
             }
 
             invoice.Billet = billetResponseObject.url;

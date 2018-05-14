@@ -11,7 +11,7 @@ namespace onboarding.ViewModels.Payments
 
         public int Id { get; set; }
         public string InvoiceNumber { get; set; }
-        public decimal Value { get; set; }
+        public string Value { get; set; }
         public string DueDate { get; set; }
         public string Billet { get; set; }
         public ICollection<Item> Items { get; set; }
