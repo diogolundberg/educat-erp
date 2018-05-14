@@ -59,6 +59,7 @@ setx SMTP_PASSWORD "241213AAl" -m
 setx EMAIL_SENDER "matricula@cmmg.com.br" -m
 setx SENTRY_API "https://edc6b53b54bf4d709bd9f47c24f37588:74b2bba0aa7a458faadd5441286db8de@sentry.io/814482" -m
 setx WEBSITE_TIME_ZONE "E. South America Standard Time" -m
+setx BILLET_HOST "http://localhost:51762/" -m
 ```
 
 Criar um novo migration

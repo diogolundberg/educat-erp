@@ -5,6 +5,7 @@ using finance.ViewModels.Invoices;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -21,11 +22,13 @@ namespace finance.Controllers
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
+        private readonly IConfiguration _configuration;
 
-        public InvoicesController(DatabaseContext databaseContext, IMapper mapper)
+        public InvoicesController(DatabaseContext databaseContext, IMapper mapper, IConfiguration configuration)
         {
             _context = databaseContext;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         [HttpGet("", Name = "FINANCE/INVOICES/LIST")]
@@ -131,7 +134,7 @@ namespace finance.Controllers
                 };
 
                 StringContent stringContent = new StringContent(JsonConvert.SerializeObject(billet), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PostAsync("http://localhost:51762/api/billets", stringContent).Result;
+                HttpResponseMessage response = client.PostAsync(_configuration["BILLET_HOST"] + "api/billets", stringContent).Result;
                 response.EnsureSuccessStatusCode();
                 return JsonConvert.DeserializeObject<dynamic>(response.Content.ReadAsStringAsync().Result);
             }
