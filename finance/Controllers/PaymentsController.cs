@@ -25,7 +25,7 @@ namespace finance.Controllers
         [HttpPut("{invoiceId}", Name = "FINANCE/PAYMENTS/EDIT")]
         public dynamic Create([FromRoute]int invoiceId)
         {
-            Invoice obj = _context.Invoices.Include("InvoiceItems").SingleOrDefault(x=> x.Id==invoiceId);
+            Invoice obj = _context.Invoices.Include("InvoiceItems").SingleOrDefault(x => x.Id == invoiceId);
 
             if (obj == null)
             {
