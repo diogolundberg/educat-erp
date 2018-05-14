@@ -8,6 +8,7 @@ namespace onboarding.ViewModels.Enrollments
         public bool FirstTime { get; set; }
         public bool EnrollmentInfo { get; set; }
         public bool Finished { get; set; }
+        public bool Scheduled { get; set; }
         public string Deadline { get; set; }
         public string DaysRemaining { get; set; }
         public string Photo { get; set; }
@@ -15,5 +16,6 @@ namespace onboarding.ViewModels.Enrollments
         public FinanceDataViewModel FinanceData { get; set; }
         public dynamic AcademicApproval { get; set; }
         public dynamic FinanceApproval { get; set; }
+        public dynamic PaymentApproval { get; set; }
     }
 }

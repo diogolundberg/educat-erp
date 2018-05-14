@@ -48,6 +48,7 @@ namespace onboarding.Controllers
                                             .Include("FinanceData.Guarantors")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
+                                            .Include("Appointments")
                                             .SingleOrDefault(x => x.ExternalId == token);
 
             if (enrollment == null)
