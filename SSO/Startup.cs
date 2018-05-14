@@ -142,7 +142,6 @@ namespace SSO
 
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                serviceScope.ServiceProvider.GetService<DatabaseContext>().Database.EnsureCreated();
                 serviceScope.ServiceProvider.GetService<DatabaseContext>().Database.Migrate();
             }
 
