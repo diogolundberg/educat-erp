@@ -5,3 +5,9 @@
   base    = "UI/"
   publish = "UI/dist/"
   command = "npm run rebuild"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
