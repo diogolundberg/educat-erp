@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v2/[controller]")]
     [Produces("application/json")]
     public class BaseController<TEntity> : Controller where TEntity : BaseModel
     {
