@@ -18,7 +18,6 @@ namespace onboarding.Bindings
                 .ForMember(x => x.EnrollmentInfo, config => config.MapFrom(x => !x.EnrollmentInfo.HasValue))
                 .ForMember(x => x.Finished, config => config.MapFrom(x => x.FinishedAt.HasValue))
                 .ForMember(x => x.Deadline, config => config.MapFrom(x => x.Onboarding.EndAt))
-                .ForMember(x => x.Scheduled, config => config.MapFrom(x => x.Appointments.Count() > 0))
                 .ForMember(x => x.Photo, config => config.MapFrom(x => x.Photo))
                 .ForMember(x => x.PersonalData, config => config.MapFrom(x => x.PersonalData))
                 .ForMember(x => x.FinanceData, config => config.MapFrom(x => x.FinanceData))

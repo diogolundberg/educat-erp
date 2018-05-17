@@ -16,7 +16,6 @@ namespace onboarding.Models
         public Enrollment()
         {
             Pendencies = new HashSet<Pendency>();
-            Appointments = new HashSet<Appointment>();
         }
 
         public virtual PersonalData PersonalData { get; set; }
@@ -71,8 +70,6 @@ namespace onboarding.Models
         public DateTime? EnrollmentInfo { get; set; }
 
         public DateTime? FinishedAt { get; set; }
-
-        public virtual ICollection<Appointment> Appointments { get; set; }
 
         public int? InvoiceId { get; set; }
 

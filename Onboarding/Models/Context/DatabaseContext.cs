@@ -77,7 +77,5 @@ namespace onboarding.Models
         public DbSet<Nationality> Nationalities { get; set; }
         public DbSet<Relationship> Relationships { get; set; }
         public DbSet<Onboarding> Onboardings { get; set; }
-        public DbSet<Scheduling> Schedulings { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
     }
 }
