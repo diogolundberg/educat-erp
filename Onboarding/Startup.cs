@@ -86,7 +86,7 @@ namespace onboarding
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "ONBOARDING", Version = "v1" });
+                c.SwaggerDoc("v2", new Info { Title = "ONBOARDING", Version = "v2" });
                 c.CustomSchemaIds(x => x.FullName);
             });
 
