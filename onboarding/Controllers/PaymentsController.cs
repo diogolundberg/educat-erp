@@ -14,7 +14,7 @@ using System.Text;
 
 namespace onboarding.Controllers
 {
-    public class PaymentsController : BaseController
+    public class PaymentsController : BaseController<Enrollment>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;

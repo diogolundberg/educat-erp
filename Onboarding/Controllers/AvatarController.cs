@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
-    public class AvatarController : BaseController
+    public class AvatarController : BaseController<Enrollment>
     {
         private readonly DatabaseContext _context;
 

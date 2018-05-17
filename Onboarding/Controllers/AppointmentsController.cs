@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
-    public class AppointmentsController : BaseController
+    public class AppointmentsController : BaseController<Appointment>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;

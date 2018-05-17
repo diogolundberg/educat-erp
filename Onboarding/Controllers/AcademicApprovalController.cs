@@ -11,7 +11,7 @@ using onboarding.ViewModels.AcademicApprovals;
 
 namespace onboarding.Controllers
 {
-    public class AcademicApprovalController : BaseController
+    public class AcademicApprovalController : BaseController<Enrollment>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;

@@ -15,7 +15,7 @@ using System;
 
 namespace onboarding.Controllers
 {
-    public class OnboardingController : BaseController
+    public class OnboardingController : BaseController<Onboarding>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;

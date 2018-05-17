@@ -12,7 +12,7 @@ using onboarding.Statuses;
 
 namespace onboarding.Controllers
 {
-    public class FinanceDataController : BaseController
+    public class FinanceDataController : BaseController<FinanceData>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;

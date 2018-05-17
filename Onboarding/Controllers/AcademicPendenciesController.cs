@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
-    public class AcademicPendenciesController : BaseController
+    public class AcademicPendenciesController : BaseController<Enrollment>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;

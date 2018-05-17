@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
-    public class EnrollmentSummariesController : BaseController
+    public class EnrollmentSummariesController : BaseController<Enrollment>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;

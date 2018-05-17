@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
-    public class EnrollmentsController : BaseController
+    public class EnrollmentsController : BaseController<Enrollment>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;

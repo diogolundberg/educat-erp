@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
-    public class SchedulingController : BaseController
+    public class SchedulingController : BaseController<Scheduling>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;

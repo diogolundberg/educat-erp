@@ -14,7 +14,7 @@ using onboarding.ViewModels;
 
 namespace onboarding.Controllers
 {
-    public class PersonalDataController : BaseController
+    public class PersonalDataController : BaseController<PersonalData>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
