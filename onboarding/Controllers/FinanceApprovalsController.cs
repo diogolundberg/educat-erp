@@ -12,12 +12,12 @@ using onboarding.ViewModels.FinanceApprovals;
 
 namespace onboarding.Controllers
 {
-    public class FinanceApprovalController : BaseController<Enrollment>
+    public class FinanceApprovalsController : BaseController<Enrollment>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
 
-        public FinanceApprovalController(DatabaseContext databaseContext, IMapper mapper)
+        public FinanceApprovalsController(DatabaseContext databaseContext, IMapper mapper)
         {
             _context = databaseContext;
             _mapper = mapper;

@@ -14,12 +14,12 @@ using onboarding.ViewModels;
 
 namespace onboarding.Controllers
 {
-    public class PersonalDataController : BaseController<PersonalData>
+    public class PersonalDatasController : BaseController<PersonalData>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
 
-        public PersonalDataController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
+        public PersonalDatasController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
         {
             _context = databaseContext;
             _mapper = mapper;

@@ -15,14 +15,14 @@ using System;
 
 namespace onboarding.Controllers
 {
-    public class OnboardingController : BaseController<Onboarding>
+    public class OnboardingsController : BaseController<Onboarding>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
         private readonly IConfiguration _configuration;
         private IHostingEnvironment _env;
 
-        public OnboardingController(DatabaseContext databaseContext, IMapper mapper, IConfiguration configuration, IHostingEnvironment env)
+        public OnboardingsController(DatabaseContext databaseContext, IMapper mapper, IConfiguration configuration, IHostingEnvironment env)
         {
             _configuration = configuration;
             _context = databaseContext;

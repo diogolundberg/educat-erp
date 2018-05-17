@@ -11,12 +11,12 @@ using onboarding.ViewModels.AcademicApprovals;
 
 namespace onboarding.Controllers
 {
-    public class AcademicApprovalController : BaseController<Enrollment>
+    public class AcademicApprovalsController : BaseController<Enrollment>
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
 
-        public AcademicApprovalController(DatabaseContext databaseContext, IMapper mapper)
+        public AcademicApprovalsController(DatabaseContext databaseContext, IMapper mapper)
         {
             _context = databaseContext;
             _mapper = mapper;
