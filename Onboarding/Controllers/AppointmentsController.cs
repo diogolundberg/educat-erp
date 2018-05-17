@@ -8,8 +8,6 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
     public class AppointmentsController : BaseController
     {
         private readonly IMapper _mapper;

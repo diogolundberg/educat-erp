@@ -13,8 +13,6 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
     public class SchedulingController : BaseController
     {
         private readonly IMapper _mapper;

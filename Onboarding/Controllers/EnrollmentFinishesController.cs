@@ -9,8 +9,6 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
     public class EnrollmentFinishesController : BaseController
     {
         private readonly IMapper _mapper;

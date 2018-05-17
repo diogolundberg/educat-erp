@@ -1,22 +1,17 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using onboarding.Models;
-using onboarding.Statuses;
 using onboarding.Validations;
 using onboarding.Validations.FinanceData;
 using onboarding.ViewModels.FinanceApprovals;
 
 namespace onboarding.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
     public class FinanceApprovalController : BaseController
     {
         private readonly IMapper _mapper;

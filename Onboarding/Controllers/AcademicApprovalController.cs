@@ -11,8 +11,6 @@ using onboarding.ViewModels.AcademicApprovals;
 
 namespace onboarding.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
     public class AcademicApprovalController : BaseController
     {
         private readonly IMapper _mapper;

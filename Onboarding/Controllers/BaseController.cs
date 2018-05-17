@@ -7,6 +7,8 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
+    [Route("api/[controller]")]
+    [Produces("application/json")]
     public class BaseController : Controller
     {
         protected Hashtable GetErrors()

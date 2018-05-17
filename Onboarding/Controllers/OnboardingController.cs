@@ -15,7 +15,6 @@ using System;
 
 namespace onboarding.Controllers
 {
-    [Route("api/[controller]")]
     public class OnboardingController : BaseController
     {
         private readonly IMapper _mapper;

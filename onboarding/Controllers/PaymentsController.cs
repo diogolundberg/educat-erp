@@ -14,8 +14,6 @@ using System.Text;
 
 namespace onboarding.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
     public class PaymentsController : BaseController
     {
         private readonly IMapper _mapper;

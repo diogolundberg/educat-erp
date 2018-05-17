@@ -14,8 +14,6 @@ using onboarding.ViewModels;
 
 namespace onboarding.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
     public class PersonalDataController : BaseController
     {
         private readonly IMapper _mapper;

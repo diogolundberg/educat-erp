@@ -12,8 +12,6 @@ using onboarding.Statuses;
 
 namespace onboarding.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
     public class FinanceDataController : BaseController
     {
         private readonly IMapper _mapper;

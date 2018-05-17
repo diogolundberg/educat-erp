@@ -7,8 +7,6 @@ using System.Linq;
 
 namespace onboarding.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/Avatar")]
     public class AvatarController : BaseController
     {
         private readonly DatabaseContext _context;
