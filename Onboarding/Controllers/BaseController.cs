@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MimeKit;
+using onboarding.Models;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ namespace onboarding.Controllers
 {
     [Route("api/[controller]")]
     [Produces("application/json")]
-    public class BaseController : Controller
+    public class BaseController<TEntity> : Controller where TEntity : BaseModel
     {
         protected Hashtable GetErrors()
         {
