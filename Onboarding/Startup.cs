@@ -110,7 +110,7 @@ namespace onboarding
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SSO V1");
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "V2");
             });
 
             app.UseExceptionHandler(
