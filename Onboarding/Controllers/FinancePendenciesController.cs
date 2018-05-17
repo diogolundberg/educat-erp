@@ -21,10 +21,10 @@ namespace onboarding.Controllers
             _mapper = mapper;
         }
 
-        [HttpDelete("{token}", Name = "ONBOARDING/FINANCEPENDENCIES/DELETE")]
-        public dynamic Edit(string token)
+        [HttpDelete("{enrollmentNumber}", Name = "ONBOARDING/FINANCEPENDENCIES/DELETE")]
+        public dynamic Edit(string enrollmentNumber)
         {
-            Enrollment enrollment = _context.Enrollments.Include("Onboarding").Include("Pendencies").Single(x => x.ExternalId == token);
+            Enrollment enrollment = _context.Enrollments.Include("Onboarding").Include("Pendencies").Single(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {

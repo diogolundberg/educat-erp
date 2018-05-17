@@ -22,10 +22,10 @@ namespace onboarding.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("{token}", Name = "ONBOARDING/ENROLLMENTINFOS/POST")]
-        public dynamic Post(string token)
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTINFOS/POST")]
+        public dynamic Post(string enrollmentNumber)
         {
-            Enrollment enrollment = _context.Enrollments.Include("Onboarding").Single(x => x.ExternalId == token);
+            Enrollment enrollment = _context.Enrollments.Include("Onboarding").Single(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {

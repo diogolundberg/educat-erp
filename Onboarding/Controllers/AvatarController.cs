@@ -16,10 +16,10 @@ namespace onboarding.Controllers
             _context = databaseContext;
         }
 
-        [HttpPost("{token}", Name = "ONBOARDING/AVATAR")]
-        public dynamic Post([FromRoute]string token, [FromBody]Form form)
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/AVATAR")]
+        public dynamic Post([FromRoute]string enrollmentNumber, [FromBody]Form form)
         {
-            Enrollment enrollment = _context.Enrollments.Include("Onboarding").Single(x => x.ExternalId == token);
+            Enrollment enrollment = _context.Enrollments.Include("Onboarding").Single(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {

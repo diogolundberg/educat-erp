@@ -29,8 +29,8 @@ namespace onboarding.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{token}", Name = "ONBOARDING/ENROLLMENTS/GET")]
-        public dynamic Get(string token)
+        [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/GET")]
+        public dynamic Get(string enrollmentNumber)
         {
             Enrollment enrollment = _context.Enrollments
                                             .Include("Onboarding")
@@ -47,7 +47,7 @@ namespace onboarding.Controllers
                                             .Include("FinanceData.Guarantors.GuarantorDocuments")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
                                             .Include("Appointments")
-                                            .SingleOrDefault(x => x.ExternalId == token);
+                                            .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {
@@ -109,8 +109,8 @@ namespace onboarding.Controllers
             }
         }
 
-        [HttpPost("{token}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
-        public dynamic Send(string token)
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
+        public dynamic Send(string enrollmentNumber)
         {
             Enrollment enrollment = _context.Enrollments
                                             .Include("Onboarding")
@@ -125,7 +125,7 @@ namespace onboarding.Controllers
                                             .Include("FinanceData.Guarantors")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
-                                            .Single(x => x.ExternalId == token);
+                                            .Single(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {

@@ -25,8 +25,8 @@ namespace onboarding.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("{token}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
-        public IActionResult Update([FromRoute]string token, [FromBody]PersonalDataViewModel obj)
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
+        public IActionResult Update([FromRoute]string enrollmentNumber, [FromBody]PersonalDataViewModel obj)
         {
             PersonalData personalData = _context.Set<PersonalData>()
                                                 .Include("Enrollment.Onboarding")
@@ -39,7 +39,7 @@ namespace onboarding.Controllers
                                                 .Include("PersonalDataSpecialNeeds")
                                                 .Include("PersonalDataDisabilities")
                                                 .Include("PersonalDataDocuments.Document")
-                                                .SingleOrDefault(x => x.Enrollment.ExternalId == token);
+                                                .SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
 
             if (personalData == null)
             {
