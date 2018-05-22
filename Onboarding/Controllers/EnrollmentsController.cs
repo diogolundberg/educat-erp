@@ -29,6 +29,55 @@ namespace onboarding.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/LIST")]
+        public dynamic List(string enrollmentNumber)
+        {
+            Enrollment enrollment = _context.Enrollments
+                                            .Include("Onboarding")
+                                            .Include("Pendencies")
+                                            .Include("Pendencies.Section")
+                                            .Include("PersonalData")
+                                            .Include("PersonalData.PersonalDataDisabilities")
+                                            .Include("PersonalData.PersonalDataSpecialNeeds")
+                                            .Include("PersonalData.PersonalDataDocuments")
+                                            .Include("PersonalData.PersonalDataDocuments.Document")
+                                            .Include("FinanceData")
+                                            .Include("FinanceData.Representative")
+                                            .Include("FinanceData.Guarantors")
+                                            .Include("FinanceData.Guarantors.GuarantorDocuments")
+                                            .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
+                                            .Include("Appointments")
+                                            .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            return new
+            {
+                data = new List<Records> {
+                    new Records
+                    {
+                        Name = "Dados pessoais",
+                        ResourceId = "PersonalDatas",
+                        Status = (new PersonalDataStatus(new PersonalDataValidator(_context), enrollment.PersonalData)).GetStatus()
+                    },
+                    new Records
+                    {
+                        Name = "Dados financeiros",
+                        ResourceId = "FinanceDatas",
+                        Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus()
+                    }
+                }
+            };
+        }
+
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/GET")]
         public dynamic Get(string enrollmentNumber)
         {
@@ -61,33 +110,15 @@ namespace onboarding.Controllers
 
             Record record = _mapper.Map<Record>(enrollment);
 
-            record.PersonalData.Status = (new PersonalDataStatus(new PersonalDataValidator(_context), enrollment.PersonalData)).GetStatus();
-            record.FinanceData.Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus();
-
-            if (record.Invoice != null)
-            {
-                record.Invoice.Status = new InvoiceStatus(null, enrollment.Invoice).GetStatus();
-            }
-
             EnrollmentValidator enrollmentValidator = new EnrollmentValidator(_context);
             FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
             List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).Distinct().ToList();
 
-            if (record.Finished)
+            return new
             {
-                return new
-                {
-                    data = record
-                };
-            }
-            else
-            {
-                return new
-                {
-                    messages,
-                    data = record,
-                };
-            }
+                messages,
+                data = record,
+            };
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
@@ -177,7 +208,7 @@ namespace onboarding.Controllers
         }
 
         [HttpOptions(Name = "ONBOARDING/ENROLLMENTS/OPTIONS")]
-        public dynamic Get()
+        public dynamic Options()
         {
             return new
             {
