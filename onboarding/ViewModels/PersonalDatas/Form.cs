@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace onboarding.ViewModels
+namespace onboarding.ViewModels.PersonalDatas
 {
-    public class PersonalDataViewModel
+    public class Form
     {
         [Required]
         public int? Id { get; set; }
