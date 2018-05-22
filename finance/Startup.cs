@@ -88,7 +88,7 @@ namespace finance
             app.UseCors("MyPolicy");
             app.UseAuthentication();
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Finance V1"); });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1"); });
             app.UseExceptionHandler(
                 builder =>
                 {

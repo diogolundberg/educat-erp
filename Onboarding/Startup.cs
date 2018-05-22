@@ -103,16 +103,9 @@ namespace onboarding
             }
 
             app.UseCors("MyPolicy");
-
             app.UseAuthentication();
-
             app.UseSwagger();
-
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v2/swagger.json", "V2");
-            });
-
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v2/swagger.json", "V2"); });
             app.UseExceptionHandler(
                 builder =>
                 {
