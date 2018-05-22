@@ -46,7 +46,6 @@ namespace onboarding.Controllers
                                             .Include("FinanceData.Guarantors")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
-                                            .Include("Appointments")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
@@ -75,49 +74,6 @@ namespace onboarding.Controllers
                         Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus()
                     }
                 }
-            };
-        }
-
-        [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/GET")]
-        public dynamic Get(string enrollmentNumber)
-        {
-            Enrollment enrollment = _context.Enrollments
-                                            .Include("Onboarding")
-                                            .Include("Pendencies")
-                                            .Include("Pendencies.Section")
-                                            .Include("PersonalData")
-                                            .Include("PersonalData.PersonalDataDisabilities")
-                                            .Include("PersonalData.PersonalDataSpecialNeeds")
-                                            .Include("PersonalData.PersonalDataDocuments")
-                                            .Include("PersonalData.PersonalDataDocuments.Document")
-                                            .Include("FinanceData")
-                                            .Include("FinanceData.Representative")
-                                            .Include("FinanceData.Guarantors")
-                                            .Include("FinanceData.Guarantors.GuarantorDocuments")
-                                            .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
-                                            .Include("Appointments")
-                                            .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
-
-            if (enrollment == null)
-            {
-                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
-            }
-
-            if (!enrollment.IsDeadlineValid())
-            {
-                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
-            }
-
-            Record record = _mapper.Map<Record>(enrollment);
-
-            EnrollmentValidator enrollmentValidator = new EnrollmentValidator(_context);
-            FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
-            List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).Distinct().ToList();
-
-            return new
-            {
-                messages,
-                data = record,
             };
         }
 
