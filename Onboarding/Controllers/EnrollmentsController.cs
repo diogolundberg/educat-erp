@@ -3,13 +3,11 @@ using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using onboarding.Extensions;
 using onboarding.Models;
 using onboarding.Statuses;
 using onboarding.Validations;
 using onboarding.Validations.FinanceData;
 using onboarding.Validations.PersonalData;
-using onboarding.ViewModels;
 using onboarding.ViewModels.Enrollments;
 using System;
 using System.Collections.Generic;
@@ -142,7 +140,7 @@ namespace onboarding.Controllers
                                      .Replace("{send_at}", enrollment.SentAt.Value.ToString("dd/MM/yyyy"))
                                      .Replace("{send_at_hour}", enrollment.SentAt.Value.ToString("HH:mm"));
 
-                BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"], Request.IsLocal()));
+                BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]));
 
                 return Ok();
             }
