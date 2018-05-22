@@ -23,8 +23,8 @@ namespace onboarding.Controllers
             _context = databaseContext;
         }
 
-        [HttpPost("{token}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
-        public IActionResult Update([FromRoute]string token, [FromBody]Form obj)
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
+        public IActionResult Update([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             FinanceData financeData = _context.Set<FinanceData>()
                                               .Include("Enrollment.Onboarding")
@@ -36,7 +36,7 @@ namespace onboarding.Controllers
                                               .Include("Guarantors.Relationship")
                                               .Include("Guarantors.GuarantorDocuments")
                                               .Include("Guarantors.GuarantorDocuments.Document")
-                                              .SingleOrDefault(x => x.Enrollment.ExternalId == token);
+                                              .SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
 
             if (financeData == null)
             {
