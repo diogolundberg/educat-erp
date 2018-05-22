@@ -6,12 +6,12 @@ using onboarding.Validations.Onboarding;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
-using System.Net.Mail;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
 using Hangfire;
 using System;
+using onboarding.Extensions;
 
 namespace onboarding.Controllers
 {
@@ -97,7 +97,7 @@ namespace onboarding.Controllers
                 string messageBody = GetEmailBody("enrollment_invite.html").Replace("{link}", link);
                 string subject = "Link da matrícula";
 
-                BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]));
+                BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"], Request.IsLocal()));
             }
 
             return new OkObjectResult(new
@@ -176,7 +176,7 @@ namespace onboarding.Controllers
                     string messageBody = GetEmailBody("enrollment_invite.html").Replace("{link}", link);
                     string subject = "Link da matrícula";
 
-                    BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]));
+                    BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"], Request.IsLocal()));
                 }
             }
 
