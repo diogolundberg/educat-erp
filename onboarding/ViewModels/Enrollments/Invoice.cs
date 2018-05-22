@@ -9,6 +9,5 @@ namespace onboarding.ViewModels.Enrollments
         public string DueDate { get; set; }
         public string Billet { get; set; }
         public bool Compensated { get; set; }
-        public string Status { get; set; }
     }
 }
