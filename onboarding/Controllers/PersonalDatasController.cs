@@ -175,7 +175,7 @@ namespace onboarding.Controllers
             return new OkObjectResult(new
             {
                 errors,
-                data = _mapper.Map<Form>(personalData)
+                data = _mapper.Map<Record>(personalData)
             });
         }
     }
