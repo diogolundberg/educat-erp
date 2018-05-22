@@ -1,4 +1,5 @@
-﻿using System.Net.Mail;
+﻿using System;
+using System.Net.Mail;
 
 namespace onboarding
 {
@@ -11,7 +12,10 @@ namespace onboarding
 
             SmtpClientHelper smtpClientHelper = new SmtpClientHelper(smtpPort, smtpHost, userName, password);
 
-            //smtpClientHelper.Send(new MailAddress(from), new MailAddress(to), messageBody, subject);
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Development")
+            {
+                smtpClientHelper.Send(new MailAddress(from), new MailAddress(to), messageBody, subject);
+            }
         }
     }
 }
