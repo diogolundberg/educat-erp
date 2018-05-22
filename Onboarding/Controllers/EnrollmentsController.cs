@@ -164,17 +164,14 @@ namespace onboarding.Controllers
                 return Ok();
             }
 
-            PersonalDataViewModel personalData = _mapper.Map<PersonalDataViewModel>(enrollment.PersonalData);
-            personalData.Status = (new PersonalDataStatus(new PersonalDataValidator(_context), enrollment.PersonalData)).GetStatus();
-
-            FinanceDataViewModel financeData = _mapper.Map<FinanceDataViewModel>(enrollment.FinanceData);
-            financeData.Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus();
+            string personalDataStatus = (new PersonalDataStatus(new PersonalDataValidator(_context), enrollment.PersonalData)).GetStatus();
+            string financeDataStatus = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus();
 
             EnrollmentValidator enrollmentValidator = new EnrollmentValidator(_context);
             FluentValidation.Results.ValidationResult enrollmentValidatorResult = enrollmentValidator.Validate(enrollment);
             List<string> messages = enrollmentValidatorResult.Errors.Select(x => x.ErrorMessage).Distinct().ToList();
 
-            if (personalData.Status == "valid" && financeData.Status == "valid" && enrollmentValidatorResult.IsValid)
+            if (personalDataStatus == "valid" && financeDataStatus == "valid" && enrollmentValidatorResult.IsValid)
             {
                 enrollment.SentAt = DateTime.Now;
 
@@ -194,11 +191,11 @@ namespace onboarding.Controllers
             }
             else
             {
-                if (personalData.Status != "valid")
+                if (personalDataStatus != "valid")
                 {
                     messages.Add("Os dados pessoais estão inválidos");
                 }
-                if (financeData.Status != "valid")
+                if (financeDataStatus != "valid")
                 {
                     messages.Add("Os dados financeiros estão inválidos");
                 }

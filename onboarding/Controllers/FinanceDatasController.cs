@@ -191,7 +191,6 @@ namespace onboarding.Controllers
             _context.Entry(financeData).Collection(x => x.Guarantors).Load();
 
             FinanceDataViewModel viewModel = _mapper.Map<FinanceDataViewModel>(financeData);
-            viewModel.Status = (new FinanceDataStatus(new FinanceDataValidator(_context), financeData, new FinanceDataMessagesValidator(_context))).GetStatus();
 
             FinanceDataValidator validator = new FinanceDataValidator(_context);
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
