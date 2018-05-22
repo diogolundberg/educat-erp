@@ -2,13 +2,13 @@ using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using onboarding.Models;
-using onboarding.ViewModels;
+using onboarding.ViewModels.FinanceDatas;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using onboarding.Validations;
 using onboarding.Validations.FinanceData;
-using onboarding.Statuses;
+using onboarding.ViewModels;
 
 namespace onboarding.Controllers
 {
@@ -24,7 +24,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPost("{token}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
-        public IActionResult Update([FromRoute]string token, [FromBody]FinanceDataViewModel obj)
+        public IActionResult Update([FromRoute]string token, [FromBody]Form obj)
         {
             FinanceData financeData = _context.Set<FinanceData>()
                                               .Include("Enrollment.Onboarding")
@@ -190,8 +190,6 @@ namespace onboarding.Controllers
             _context.Entry(financeData).Reload();
             _context.Entry(financeData).Collection(x => x.Guarantors).Load();
 
-            FinanceDataViewModel viewModel = _mapper.Map<FinanceDataViewModel>(financeData);
-
             FinanceDataValidator validator = new FinanceDataValidator(_context);
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
             Hashtable errors = FormatErrors(results);
@@ -203,7 +201,7 @@ namespace onboarding.Controllers
             {
                 messages,
                 errors,
-                data = viewModel
+                data = _mapper.Map<Record>(financeData)
             });
         }
     }

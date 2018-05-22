@@ -1,10 +1,16 @@
 ﻿using onboarding.Validations;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace onboarding.ViewModels
+namespace onboarding.ViewModels.FinanceDatas
 {
-    public class RepresentativeViewModel
+    public class GuarantorViewModel
     {
+        public GuarantorViewModel()
+        {
+            Documents = new HashSet<DocumentViewModel>();
+        }
+
         public int? Id { get; set; }
 
         [Required]
@@ -16,7 +22,6 @@ namespace onboarding.ViewModels
         [Required]
         public string AddressNumber { get; set; }
 
-        [Required]
         public string ComplementAddress { get; set; }
 
         [Required]
@@ -29,7 +34,6 @@ namespace onboarding.ViewModels
         public string Landline { get; set; }
 
         [Required]
-        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
@@ -45,25 +49,13 @@ namespace onboarding.ViewModels
         public int? StateId { get; set; }
 
         [Required]
-        public string Discriminator { get; set; }
-    }
-
-    public class RepresentativeCompanyViewModel : RepresentativeViewModel
-    {
-        [Required]
-        public string Cnpj { get; set; }
-
-        [Required]
-        public string Contact { get; set; }
-    }
-
-    public class RepresentativePersonViewModel : RepresentativeViewModel
-    {
         [Cpf]
-        [Required]
         public string Cpf { get; set; }
 
-        [Required]
         public int? RelationshipId { get; set; }
+
+        [Required]
+        public IEnumerable<DocumentViewModel> Documents { get; set; }
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using onboarding.Models;
 using onboarding.ViewModels;
+using onboarding.ViewModels.FinanceDatas;
 using System.Linq;
 
 namespace onboarding.Bindings

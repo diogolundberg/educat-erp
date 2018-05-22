@@ -19,7 +19,6 @@ namespace onboarding.Bindings
                 .ForMember(x => x.Finished, config => config.MapFrom(x => x.FinishedAt.HasValue))
                 .ForMember(x => x.Deadline, config => config.MapFrom(x => x.Onboarding.EndAt))
                 .ForMember(x => x.Photo, config => config.MapFrom(x => x.Photo))
-                .ForMember(x => x.FinanceData, config => config.MapFrom(x => x.FinanceData))
                 .ForMember(x => x.DaysRemaining, config => config.MapFrom(x => DateTime.Parse(x.Onboarding.EndAt).Subtract(DateTime.Now).Days))
                 .ForMember(x => x.AcademicApproval, config => config.MapFrom(x => new
                 {

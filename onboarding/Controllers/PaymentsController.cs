@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using onboarding.Models;
 using onboarding.ViewModels;
+using onboarding.ViewModels.FinanceDatas;
 using onboarding.ViewModels.Payments;
 using System.Collections.Generic;
 using System.Linq;

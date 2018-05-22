@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using onboarding.ViewModels;
+using onboarding.ViewModels.FinanceDatas;
 using System;
 
 namespace onboarding.JsonFormatter

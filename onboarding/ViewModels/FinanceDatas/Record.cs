@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace onboarding.ViewModels
+namespace onboarding.ViewModels.FinanceDatas
 {
-    public class FinanceDataViewModel
+    public class Record
     {
-        public FinanceDataViewModel()
+        public Record()
         {
             Guarantors = new HashSet<GuarantorViewModel>();
         }

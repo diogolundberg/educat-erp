@@ -14,7 +14,6 @@ namespace onboarding.ViewModels.Enrollments
         public string Photo { get; set; }
         public int? InvoiceId { get; set; }
         public Invoice Invoice { get; set; }
-        public FinanceDataViewModel FinanceData { get; set; }
         public dynamic AcademicApproval { get; set; }
         public dynamic FinanceApproval { get; set; }
     }
