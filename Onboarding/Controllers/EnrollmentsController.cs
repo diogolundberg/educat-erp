@@ -86,25 +86,6 @@ namespace onboarding.Controllers
                 {
                     messages,
                     data = record,
-                    options = new
-                    {
-                        _context.Genders,
-                        _context.MaritalStatuses,
-                        _context.States,
-                        _context.Cities,
-                        _context.Countries,
-                        _context.AddressKinds,
-                        _context.Races,
-                        _context.HighSchoolKinds,
-                        _context.Disabilities,
-                        _context.SpecialNeeds,
-                        Plans = _context.Plans.Select(x => new { x.Id, x.Name, x.Guarantors, x.Value, x.Installments, x.InstallmentValue, x.DueDate }),
-                        _context.PaymentMethod,
-                        PersonalDocuments = _context.Set<PersonalDocumentType>(),
-                        GuarantorDocuments = _context.Set<GuarantorDocumentType>(),
-                        _context.Nationalities,
-                        Relationships = _context.Relationships.Select(x => new { x.Id, x.Name, x.CheckStudentIsRepresentative, x.CheckSpouse })
-                    }
                 };
             }
         }
@@ -193,6 +174,30 @@ namespace onboarding.Controllers
 
                 return new BadRequestObjectResult(new { messages });
             }
+        }
+
+        [HttpOptions(Name = "ONBOARDING/ENROLLMENTS/OPTIONS")]
+        public dynamic Get()
+        {
+            return new
+            {
+                _context.Genders,
+                _context.MaritalStatuses,
+                _context.States,
+                _context.Cities,
+                _context.Countries,
+                _context.AddressKinds,
+                _context.Races,
+                _context.HighSchoolKinds,
+                _context.Disabilities,
+                _context.SpecialNeeds,
+                Plans = _context.Plans.Select(x => new { x.Id, x.Name, x.Guarantors, x.Value, x.Installments, x.InstallmentValue, x.DueDate }),
+                _context.PaymentMethod,
+                PersonalDocuments = _context.Set<PersonalDocumentType>(),
+                GuarantorDocuments = _context.Set<GuarantorDocumentType>(),
+                _context.Nationalities,
+                Relationships = _context.Relationships.Select(x => new { x.Id, x.Name, x.CheckStudentIsRepresentative, x.CheckSpouse })
+            };
         }
     }
 }
