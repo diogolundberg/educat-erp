@@ -29,8 +29,8 @@ namespace onboarding.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/LIST")]
-        public dynamic List(string enrollmentNumber)
+        [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/GET")]
+        public dynamic Get(string enrollmentNumber)
         {
             Enrollment enrollment = _context.Enrollments
                                             .Include("Onboarding")
@@ -78,7 +78,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
-        public dynamic Send(string enrollmentNumber)
+        public dynamic Post(string enrollmentNumber)
         {
             Enrollment enrollment = _context.Enrollments
                                             .Include("Onboarding")
