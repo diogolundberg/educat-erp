@@ -23,6 +23,37 @@ namespace onboarding.Controllers
             _context = databaseContext;
         }
 
+        [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/GET")]
+        public IActionResult GetById([FromRoute]string enrollmentNumber)
+        {
+            FinanceData financeData = _context.Set<FinanceData>()
+                                  .Include("Enrollment.Onboarding")
+                                  .Include("Enrollment")
+                                  .Include("Enrollment.Pendencies")
+                                  .Include("Enrollment.PersonalData")
+                                  .Include("Representative")
+                                  .Include("Guarantors")
+                                  .Include("Guarantors.Relationship")
+                                  .Include("Guarantors.GuarantorDocuments")
+                                  .Include("Guarantors.GuarantorDocuments.Document")
+                                  .SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
+
+            if (financeData == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!financeData.Enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            return new OkObjectResult(new
+            {
+                data = _mapper.Map<Record>(financeData)
+            });
+        }
+
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
         public IActionResult Update([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
