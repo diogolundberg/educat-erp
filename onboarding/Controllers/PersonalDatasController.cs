@@ -1,16 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using onboarding.Models;
-using onboarding.Statuses;
-using onboarding.Validations;
 using onboarding.Validations.PersonalData;
-using onboarding.ViewModels;
+using onboarding.ViewModels.PersonalDatas;
 
 namespace onboarding.Controllers
 {
@@ -25,8 +22,40 @@ namespace onboarding.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/PERSONALDATA/GET")]
+        public IActionResult GetById([FromRoute]string enrollmentNumber)
+        {
+            PersonalData personalData = _context.Set<PersonalData>()
+                                    .Include("Enrollment.Onboarding")
+                                    .Include("Enrollment")
+                                    .Include("Enrollment.Pendencies")
+                                    .Include("Enrollment.FinanceData")
+                                    .Include("Enrollment.FinanceData.Guarantors")
+                                    .Include("Enrollment.FinanceData.Representative")
+                                    .Include("PersonalDataDocuments")
+                                    .Include("PersonalDataSpecialNeeds")
+                                    .Include("PersonalDataDisabilities")
+                                    .Include("PersonalDataDocuments.Document")
+                                    .SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
+
+            if (personalData == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!personalData.Enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            return new OkObjectResult(new
+            {
+                data = _mapper.Map<Record>(personalData)
+            });
+        }
+
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
-        public IActionResult Update([FromRoute]string enrollmentNumber, [FromBody]PersonalDataViewModel obj)
+        public IActionResult Update([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             PersonalData personalData = _context.Set<PersonalData>()
                                                 .Include("Enrollment.Onboarding")
@@ -140,15 +169,13 @@ namespace onboarding.Controllers
             _context.Entry(personalData).Reference(x => x.Gender).Load();
             _context.Entry(personalData).Reference(x => x.HighSchoolGraduationCountry).Load();
 
-            PersonalDataViewModel viewModel = _mapper.Map<PersonalDataViewModel>(personalData);
-
             PersonalDataValidator validator = new PersonalDataValidator(_context);
             Hashtable errors = FormatErrors(validator.Validate(personalData));
 
             return new OkObjectResult(new
             {
                 errors,
-                data = viewModel
+                data = _mapper.Map<Form>(personalData)
             });
         }
     }
