@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using onboarding.Models;
-using onboarding.ViewModels;
-using System;
-using System.Globalization;
+using onboarding.ViewModels.PersonalDatas;
 using System.Linq;
 
 namespace onboarding.Bindings
@@ -11,18 +9,18 @@ namespace onboarding.Bindings
     {
         public PersonalDataProfile()
         {
-            CreateMap<PersonalData, PersonalDataViewModel>()
+            CreateMap<PersonalData, Record>()
             .ForMember(x => x.BirthDate, config => config.MapFrom(x => x.BirthDate))
             .ForMember(x => x.Disabilities, config => config.MapFrom(x => x.PersonalDataDisabilities.Select(o => o.DisabilityId)))
             .ForMember(x => x.SpecialNeeds, config => config.MapFrom(x => x.PersonalDataSpecialNeeds.Select(o => o.SpecialNeedId)))
-            .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => new DocumentViewModel
+            .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => new ViewModels.DocumentViewModel
             {
                 Id = o.Document.Id,
                 Url = o.Document.Url,
                 DocumentTypeId = o.Document.DocumentTypeId
             })));
 
-            CreateMap<PersonalDataViewModel, PersonalData>()
+            CreateMap<Form, PersonalData>()
             .ForMember(x => x.MaritalStatus, config => config.Ignore())
             .ForMember(x => x.Gender, config => config.Ignore())
             .ForMember(x => x.BirthCountry, config => config.Ignore())
