@@ -6,6 +6,7 @@ using onboarding.ViewModels.EnrollmentSummaries;
 using onboarding.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace onboarding.Controllers
 {
@@ -79,6 +80,29 @@ namespace onboarding.Controllers
             {
                 data = data
             });
+        }
+
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTSUMMARIES/POST")]
+        public dynamic Post(string enrollmentNumber)
+        {
+            Enrollment enrollment = _context.Enrollments.Include("Onboarding").Single(x => x.ExternalId == enrollmentNumber);
+
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            enrollment.EnrollmentSummary = DateTime.Now;
+
+            _context.Enrollments.Update(enrollment);
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }
