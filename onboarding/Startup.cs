@@ -73,12 +73,13 @@ namespace onboarding
                                 options.SerializerSettings.Converters.Add(new PolymorphicRepresentativeViewModelConverter());
                                 options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
                             });
-            services.AddTransient<BaseService, BaseService>();
-            services.AddTransient<CardResolver, CardResolver>();
+
+            services.AddScoped(typeof(BaseService<>), typeof(BaseService<>));
+            services.AddScoped<EnrollmentService, EnrollmentService>();
+            services.AddScoped<CardResolver, CardResolver>();
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
             services.AddAutoMapper(config => config.ConstructServicesUsing(serviceProvider.GetService));
-
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

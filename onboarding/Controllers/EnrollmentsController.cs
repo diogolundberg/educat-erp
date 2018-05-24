@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using onboarding.Models;
+using onboarding.Services;
 using onboarding.Statuses;
 using onboarding.Validations;
 using onboarding.Validations.FinanceData;
@@ -18,37 +19,22 @@ namespace onboarding.Controllers
     public class EnrollmentsController : BaseController<Enrollment>
     {
         private readonly IMapper _mapper;
-        private readonly DatabaseContext _context;
+        private DatabaseContext _context;
         private readonly IConfiguration _configuration;
+        private readonly EnrollmentService _enrollmentService;
 
-        public EnrollmentsController(DatabaseContext databaseContext, IMapper mapper, IConfiguration configuration)
+        public EnrollmentsController(EnrollmentService enrollmentService, IMapper mapper, IConfiguration configuration, DatabaseContext context)
         {
-            _configuration = configuration;
-            _context = databaseContext;
             _mapper = mapper;
+            _context = context;
+            _configuration = configuration;
+            _enrollmentService = enrollmentService;
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/GET")]
         public dynamic Get(string enrollmentNumber)
         {
-            Enrollment enrollment = _context.Enrollments
-                                            .Include("Onboarding")
-                                            .Include("Pendencies")
-                                            .Include("Pendencies.Section")
-                                            .Include("PersonalData")
-                                            .Include("PersonalData.PersonalDataDisabilities")
-                                            .Include("PersonalData.PersonalDataSpecialNeeds")
-                                            .Include("PersonalData.PersonalDataDocuments")
-                                            .Include("PersonalData.PersonalDataDocuments.Document")
-                                            .Include("PersonalData.BirthCountry")
-                                            .Include("FinanceData")
-                                            .Include("FinanceData.Plan")
-                                            .Include("FinanceData.Representative")
-                                            .Include("FinanceData.Guarantors")
-                                            .Include("FinanceData.Guarantors.Relationship")
-                                            .Include("FinanceData.Guarantors.GuarantorDocuments")
-                                            .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
-                                            .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+            Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {
@@ -60,29 +46,13 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            return new OkObjectResult(new
-            {
-                data = Mapper.Map<Record>(enrollment),
-            });
+            return new OkObjectResult(new { data = Mapper.Map<Record>(enrollment), });
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
         public dynamic Post(string enrollmentNumber)
         {
-            Enrollment enrollment = _context.Enrollments
-                                            .Include("Onboarding")
-                                            .Include("Pendencies")
-                                            .Include("PersonalData")
-                                            .Include("PersonalData.PersonalDataDisabilities")
-                                            .Include("PersonalData.PersonalDataSpecialNeeds")
-                                            .Include("PersonalData.PersonalDataDocuments")
-                                            .Include("PersonalData.PersonalDataDocuments.Document")
-                                            .Include("FinanceData")
-                                            .Include("FinanceData.Representative")
-                                            .Include("FinanceData.Guarantors")
-                                            .Include("FinanceData.Guarantors.GuarantorDocuments")
-                                            .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
-                                            .Single(x => x.ExternalId == enrollmentNumber);
+            Enrollment enrollment = _enrollmentService.List().Single(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {
@@ -102,9 +72,7 @@ namespace onboarding.Controllers
             if (!enrollment.StartedAt.HasValue)
             {
                 enrollment.StartedAt = DateTime.Now;
-
-                _context.Set<Enrollment>().Update(enrollment);
-                _context.SaveChanges();
+                _enrollmentService.Update(enrollment);
 
                 return Ok();
             }
@@ -118,11 +86,6 @@ namespace onboarding.Controllers
 
             if (personalDataStatus == "valid" && financeDataStatus == "valid" && enrollmentValidatorResult.IsValid)
             {
-                enrollment.SentAt = DateTime.Now;
-
-                _context.Set<Enrollment>().Update(enrollment);
-                _context.SaveChanges();
-
                 string body = GetEmailBody("enrollment_sent.html");
                 string subject = "Sua matricula foi enviada para análise";
                 string messageBody = GetEmailBody("enrollment_sent.html")
@@ -131,6 +94,9 @@ namespace onboarding.Controllers
                                      .Replace("{send_at_hour}", enrollment.SentAt.Value.ToString("HH:mm"));
 
                 BackgroundJob.Enqueue(() => (new EmailHelper()).SendEmail(messageBody, subject, _configuration["EMAIL_SENDER"], enrollment.PersonalData.Email, _configuration["SMTP_USERNAME"], _configuration["SMTP_PASSWORD"]));
+
+                enrollment.SentAt = DateTime.Now;
+                _enrollmentService.Update(enrollment);
 
                 return Ok();
             }
@@ -152,7 +118,7 @@ namespace onboarding.Controllers
         [HttpOptions(Name = "ONBOARDING/ENROLLMENTS/OPTIONS")]
         public dynamic Options()
         {
-            return new
+            return new OkObjectResult(new
             {
                 _context.Genders,
                 _context.MaritalStatuses,
@@ -169,8 +135,8 @@ namespace onboarding.Controllers
                 PersonalDocuments = _context.Set<PersonalDocumentType>(),
                 GuarantorDocuments = _context.Set<GuarantorDocumentType>(),
                 _context.Nationalities,
-                Relationships = _context.Relationships.Select(x => new { x.Id, x.Name, x.CheckStudentIsRepresentative, x.CheckSpouse })
-            };
+                Relationships = _context.Relationships.Select(x => new { x.Id, x.Name, x.CheckStudentIsRepresentative, x.CheckSpouse }),
+            });
         }
     }
 }
