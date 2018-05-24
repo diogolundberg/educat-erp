@@ -21,6 +21,8 @@ using onboarding.JsonFormatter;
 using System.Globalization;
 using Hangfire;
 using onboarding.Filters;
+using onboarding.Services;
+using onboarding.Resolvers;
 
 namespace onboarding
 {
@@ -36,27 +38,16 @@ namespace onboarding
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["ONBOARDING_DATABASE_CONNECTION"]));
-
             services.AddScoped<IRavenClient, RavenClient>((s) =>
             {
-
                 RavenClient rc = new RavenClient(Configuration["SENTRY_API"], s.GetRequiredService<IHttpContextAccessor>())
                 {
                     Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
                 };
-
                 return rc;
             });
-
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-            }));
-
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -70,29 +61,24 @@ namespace onboarding
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SECURITY_KEY"]))
                 };
             });
-
-            services
-                .AddMvc()
-                .AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.Converters.Add(new PolymorphicRepresentativeViewModelConverter());
-                    options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
-                });
-
-            services.Configure<MvcOptions>(options =>
-            {
-                options.Filters.Add(new CorsAuthorizationFilterFactory("MyPolicy"));
-            });
-
+            services.Configure<MvcOptions>(options => { options.Filters.Add(new CorsAuthorizationFilterFactory("MyPolicy")); });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v2", new Info { Title = "ONBOARDING", Version = "v2" });
                 c.CustomSchemaIds(x => x.FullName);
             });
-
             services.AddHangfire(x => x.UseSqlServerStorage(Configuration["ONBOARDING_DATABASE_CONNECTION"]));
+            services.AddMvc().AddJsonOptions(options =>
+                            {
+                                options.SerializerSettings.Converters.Add(new PolymorphicRepresentativeViewModelConverter());
+                                options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                            });
+            services.AddTransient<BaseService, BaseService>();
+            services.AddTransient<CardResolver, CardResolver>();
 
-            services.AddAutoMapper();
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+            services.AddAutoMapper(config => config.ConstructServicesUsing(serviceProvider.GetService));
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -141,9 +127,7 @@ namespace onboarding
             }
 
             app.UseStaticFiles();
-
             app.UseMvc();
-
             app.UseHangfireServer();
             app.UseHangfireDashboard("/dashboard", new DashboardOptions
             {

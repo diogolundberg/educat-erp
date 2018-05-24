@@ -40,9 +40,12 @@ namespace onboarding.Controllers
                                             .Include("PersonalData.PersonalDataSpecialNeeds")
                                             .Include("PersonalData.PersonalDataDocuments")
                                             .Include("PersonalData.PersonalDataDocuments.Document")
+                                            .Include("PersonalData.BirthCountry")
                                             .Include("FinanceData")
+                                            .Include("FinanceData.Plan")
                                             .Include("FinanceData.Representative")
                                             .Include("FinanceData.Guarantors")
+                                            .Include("FinanceData.Guarantors.Relationship")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments")
                                             .Include("FinanceData.Guarantors.GuarantorDocuments.Document")
                                             .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
@@ -57,23 +60,10 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            return new
+            return new OkObjectResult(new
             {
-                data = new List<Records> {
-                    new Records
-                    {
-                        Name = "Dados pessoais",
-                        ResourceId = "PersonalDatas",
-                        Status = (new PersonalDataStatus(new PersonalDataValidator(_context), enrollment.PersonalData)).GetStatus()
-                    },
-                    new Records
-                    {
-                        Name = "Dados financeiros",
-                        ResourceId = "FinanceDatas",
-                        Status = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus()
-                    }
-                }
-            };
+                data = Mapper.Map<Record>(enrollment),
+            });
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]

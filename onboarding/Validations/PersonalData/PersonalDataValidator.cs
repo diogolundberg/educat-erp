@@ -45,8 +45,6 @@ namespace onboarding.Validations.PersonalData
 
             RuleFor(personalData => personalData).Custom((personalData, context) =>
             {
-                databaseContext.Entry(personalData).Reference(x => x.BirthCountry).Load();
-
                 if (personalData.BirthCountry != null)
                 {
                     if (personalData.BirthCountry.HasUF)

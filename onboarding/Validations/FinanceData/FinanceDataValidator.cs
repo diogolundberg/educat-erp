@@ -18,8 +18,8 @@ namespace onboarding.Validations.FinanceData
             RuleFor(financeData => financeData.Representative).SetValidator(new RepresentativeValidator());
             RuleFor(financeData => financeData.Guarantors).SetCollectionValidator(new GuarantorValidator());
 
-            RuleFor(financeData => financeData.PlanId).NotNull().WithName(onboarding.Resources.Models.FinanceData.PlanId);
-            RuleFor(financeData => financeData.PaymentMethodId).NotNull().WithName(onboarding.Resources.Models.FinanceData.PaymentMethodId);
+            RuleFor(financeData => financeData.PlanId).NotNull().WithName(Resources.Models.FinanceData.PlanId);
+            RuleFor(financeData => financeData.PaymentMethodId).NotNull().WithName(Resources.Models.FinanceData.PaymentMethodId);
 
             RuleFor(financeData => financeData.Guarantors).Custom((guarantors, context) =>
             {
@@ -27,15 +27,13 @@ namespace onboarding.Validations.FinanceData
                 {
                     Guarantor guarantor = guarantors.ToArray()[i];
 
-                    databaseContext.Entry(guarantor).Reference(x => x.Relationship).Load();
-
                     foreach (GuarantorDocumentType documentType in _documentTypes)
                     {
                         List<string> errors = Validate(guarantor, documentType);
 
                         foreach (string error in errors)
                         {
-                            context.AddFailure(string.Format("guarantors[{1}].documents.{0}", documentType.Id, i), string.Format(onboarding.Resources.Shared.RequiredDocumentMessage, documentType.Name));
+                            context.AddFailure(string.Format("guarantors[{1}].documents.{0}", documentType.Id, i), string.Format(Resources.Shared.RequiredDocumentMessage, documentType.Name));
                         }
                     }
                 }

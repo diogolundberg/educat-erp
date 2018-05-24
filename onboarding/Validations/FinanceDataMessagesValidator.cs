@@ -15,10 +15,6 @@ namespace onboarding.Validations
         {
             RuleFor(financeData => financeData).Custom((financeData, context) =>
             {
-                databaseContext.Entry(financeData).Reference(x => x.Plan).Load();
-                databaseContext.Entry(financeData).Collection(x => x.Guarantors).Load();
-                databaseContext.Entry(financeData).Reference(x => x.Representative).Load();
-
                 CheckPlan(financeData, context);
                 CheckRepresentative(financeData, context);
             });
