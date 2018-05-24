@@ -31,7 +31,7 @@ namespace onboarding.Resolvers
                     {
                         Name = "Informações da Matrícula",
                         ResourceId = "CourseSummaries",
-                        Status = (new FinanceDataStatus(new FinanceDataValidator(_context), source.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus()
+                        Status = (new CourseSummaryStatus(null, source)).GetStatus()
                     },
                     new Card
                     {
@@ -43,19 +43,19 @@ namespace onboarding.Resolvers
                     {
                         Name = "Enviar para aprovação",
                         ResourceId = "EnrollmentSummaries",
-                        Status = (new FinanceDataStatus(new FinanceDataValidator(_context), source.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus()
+                        Status = (new EnrollmentSummaryStatus(null, source)).GetStatus()
                     },
                     new Card
                     {
                         Name = "Contrato",
                         ResourceId = "Contracts",
-                        Status = (new FinanceDataStatus(new FinanceDataValidator(_context), source.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus()
+                        Status = (new ContractStatus(null, source)).GetStatus()
                     },
                     new Card
                     {
                         Name = "Pagamento",
                         ResourceId = "Payments",
-                        Status = (new FinanceDataStatus(new FinanceDataValidator(_context), source.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus()
+                        Status = (new PaymentStatus(null, source.Invoice)).GetStatus()
                     },
             };
         }

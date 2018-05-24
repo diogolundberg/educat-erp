@@ -37,7 +37,7 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            enrollment.EnrollmentInfo = DateTime.Now;
+            enrollment.EnrollmentSummary = DateTime.Now;
 
             _context.Enrollments.Update(enrollment);
             _context.SaveChanges();
