@@ -76,6 +76,7 @@ namespace onboarding
 
             services.AddScoped(typeof(BaseService<>), typeof(BaseService<>));
             services.AddScoped<EnrollmentService, EnrollmentService>();
+            services.AddScoped<PersonalDataService, PersonalDataService>();
             services.AddScoped<CardResolver, CardResolver>();
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
