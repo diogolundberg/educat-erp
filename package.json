@@ -1,5 +1,5 @@
 {
   "optionalDependencies": {
-    "netlify": "^1.2.0"
+    "netlify-cli": "^1.2.2"
   }
 }
