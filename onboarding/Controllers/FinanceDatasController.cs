@@ -10,6 +10,7 @@ using onboarding.Validations;
 using onboarding.Validations.FinanceData;
 using onboarding.ViewModels;
 using onboarding.Services;
+using onboarding.Statuses;
 
 namespace onboarding.Controllers
 {
@@ -18,12 +19,14 @@ namespace onboarding.Controllers
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
         private readonly FinanceDataService _financeDataService;
+        private readonly EnrollmentStepService _enrollmentStepService;
 
-        public FinanceDatasController(DatabaseContext databaseContext, IMapper mapper, FinanceDataService financeDataService)
+        public FinanceDatasController(DatabaseContext databaseContext, IMapper mapper, FinanceDataService financeDataService, EnrollmentStepService enrollmentStepService)
         {
             _mapper = mapper;
             _context = databaseContext;
             _financeDataService = financeDataService;
+            _enrollmentStepService = enrollmentStepService;
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/GET")]
@@ -75,6 +78,13 @@ namespace onboarding.Controllers
 
             FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
             List<string> messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).Distinct().ToList();
+
+            FinanceDataStatus financeDataStatus = new FinanceDataStatus(validator, financeData, messagesValidator);
+
+            if (financeDataStatus.GetStatus() == "valid")
+            {
+                _enrollmentStepService.Update(enrollmentNumber, "FinanceDatas");
+            }
 
             return new OkObjectResult(new
             {
