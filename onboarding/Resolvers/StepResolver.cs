@@ -17,12 +17,21 @@ namespace onboarding.Resolvers
 
         public IEnumerable<ViewModels.Enrollments.Step> Resolve(Enrollment source, Record destination, IEnumerable<ViewModels.Enrollments.Step> destMember, ResolutionContext context)
         {
-            return _context.Set<Models.Step>().OrderBy(x => x.Order).Select(x => new ViewModels.Enrollments.Step
+            List<ViewModels.Enrollments.Step> steps = new List<ViewModels.Enrollments.Step>();
+
+            foreach (Models.Step step in _context.Set<Models.Step>().OrderBy(x => x.Order))
             {
-                Resource = x.Resource,
-                Name = x.Name,
-                Status = "false"
-            }).ToList();
+                EnrollmentStep enrollmentStep = source.EnrollmentSteps.FirstOrDefault(x => x.StepId == step.Id);
+
+                steps.Add(new ViewModels.Enrollments.Step
+                {
+                    Resource = step.Resource,
+                    Name = step.Name,
+                    Status = enrollmentStep != null ? "valid" : "invalid"
+                });
+            }
+
+            return steps;
         }
     }
 }
