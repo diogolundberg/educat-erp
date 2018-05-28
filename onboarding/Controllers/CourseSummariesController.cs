@@ -41,5 +41,28 @@ namespace onboarding.Controllers
                 data = _mapper.Map<Record>(enrollment)
             });
         }
+
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/COURSESUMMARIES/EDIT")]
+        public IActionResult Post([FromRoute]string enrollmentNumber)
+        {
+            Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            enrollment = _enrollmentService.Update(enrollment);
+
+            return new OkObjectResult(new
+            {
+                data = _mapper.Map<Record>(enrollment)
+            });
+        }
     }
 }
