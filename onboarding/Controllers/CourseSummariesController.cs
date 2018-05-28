@@ -13,12 +13,14 @@ namespace onboarding.Controllers
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
         private readonly EnrollmentService _enrollmentService;
+        private readonly EnrollmentStepService _enrollmentStepService;
 
-        public CourseSummariesController(DatabaseContext databaseContext, IMapper mapper, EnrollmentService enrollmentService)
+        public CourseSummariesController(DatabaseContext databaseContext, IMapper mapper, EnrollmentService enrollmentService, EnrollmentStepService enrollmentStepService)
         {
             _context = databaseContext;
             _mapper = mapper;
             _enrollmentService = enrollmentService;
+            _enrollmentStepService = enrollmentStepService;
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/COURSESUMMARIES/GET")]
@@ -57,7 +59,7 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            enrollment = _enrollmentService.Update(enrollment);
+            _enrollmentStepService.Update(enrollmentNumber, "CourseSummaries");
 
             return new OkObjectResult(new
             {
