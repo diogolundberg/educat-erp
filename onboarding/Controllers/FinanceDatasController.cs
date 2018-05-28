@@ -23,7 +23,7 @@ namespace onboarding.Controllers
         {
             _mapper = mapper;
             _context = databaseContext;
-            _financeDataService = financeDataService
+            _financeDataService = financeDataService;
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/GET")]
