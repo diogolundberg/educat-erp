@@ -78,7 +78,7 @@ namespace onboarding
             services.AddScoped<EnrollmentService, EnrollmentService>();
             services.AddScoped<PersonalDataService, PersonalDataService>();
             services.AddScoped<FinanceDataService, FinanceDataService>();
-            services.AddScoped<CardResolver, CardResolver>();
+            services.AddScoped<StepResolver, StepResolver>();
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
             services.AddAutoMapper(config => config.ConstructServicesUsing(serviceProvider.GetService));
