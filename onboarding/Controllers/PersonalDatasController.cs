@@ -9,6 +9,7 @@ using onboarding.Models;
 using onboarding.Validations.PersonalData;
 using onboarding.ViewModels.PersonalDatas;
 using onboarding.Services;
+using onboarding.Statuses;
 
 namespace onboarding.Controllers
 {
@@ -17,12 +18,14 @@ namespace onboarding.Controllers
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
         private readonly PersonalDataService _personalDataService;
+        private readonly EnrollmentStepService _enrollmentStepService;
 
-        public PersonalDatasController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper, PersonalDataService personalDataService)
+        public PersonalDatasController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper, PersonalDataService personalDataService, EnrollmentStepService enrollmentStepService)
         {
             _context = databaseContext;
             _mapper = mapper;
             _personalDataService = personalDataService;
+            _enrollmentStepService = enrollmentStepService;
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/PERSONALDATA/GET")]
@@ -71,6 +74,13 @@ namespace onboarding.Controllers
 
             PersonalDataValidator validator = new PersonalDataValidator(_context);
             Hashtable errors = FormatErrors(validator.Validate(personalData));
+
+            PersonalDataStatus personalDataStatus = new PersonalDataStatus(validator, personalData);
+
+            if (personalDataStatus.GetStatus() == "valid")
+            {
+                _enrollmentStepService.Update(enrollmentNumber, "PersonalDatas");
+            }
 
             return new OkObjectResult(new
             {
