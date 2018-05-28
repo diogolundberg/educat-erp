@@ -16,6 +16,7 @@ namespace onboarding.Models
         public Enrollment()
         {
             Pendencies = new HashSet<Pendency>();
+            EnrollmentSteps = new HashSet<EnrollmentStep>();
         }
 
         public virtual PersonalData PersonalData { get; set; }
@@ -84,6 +85,8 @@ namespace onboarding.Models
                 return Pendencies.Where(x => x is AcademicPendency).Select(x => (AcademicPendency)x);
             }
         }
+
+        public IEnumerable<EnrollmentStep> EnrollmentSteps { get; set; }
     }
 }
 
