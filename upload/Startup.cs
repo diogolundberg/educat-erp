@@ -81,37 +81,6 @@ namespace Upload
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "UPLOAD V1");
             });
 
-            app.UseExceptionHandler(
-                builder =>
-                {
-                    using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-                    {
-                        IRavenClient ravenClient = serviceScope.ServiceProvider.GetService<IRavenClient>();
-
-                        builder.Run(async context =>
-                        {
-                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                            context.Response.ContentType = "application/json";
-
-                            IExceptionHandlerFeature ex = context.Features.Get<IExceptionHandlerFeature>();
-
-                            if (ex != null)
-                            {
-                                await ravenClient.CaptureAsync(new SentryEvent(ex.Error));
-
-                                var err = JsonConvert.SerializeObject(new Error()
-                                {
-                                    Stacktrace = ex.Error.StackTrace,
-                                    Message = ex.Error.Message
-                                });
-
-                                await context.Response.Body.WriteAsync(Encoding.ASCII.GetBytes(err), 0, err.Length).ConfigureAwait(false);
-                            }
-                        });
-                    }
-                }
-            );
-
             app.UseMvc();
         }
     }

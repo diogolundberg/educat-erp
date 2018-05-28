@@ -96,34 +96,6 @@ namespace onboarding
             app.UseAuthentication();
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v2/swagger.json", "V2"); });
-            app.UseExceptionHandler(
-                builder =>
-                {
-                    using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-                    {
-                        IRavenClient ravenClient = serviceScope.ServiceProvider.GetService<IRavenClient>();
-
-                        builder.Run(async context =>
-                        {
-                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                            context.Response.ContentType = "application/json";
-
-                            IExceptionHandlerFeature ex = context.Features.Get<IExceptionHandlerFeature>();
-
-                            if (ex != null)
-                            {
-                                var err = JsonConvert.SerializeObject(new Error()
-                                {
-                                    Stacktrace = ex.Error.StackTrace,
-                                    Message = ex.Error.Message
-                                });
-
-                                await context.Response.Body.WriteAsync(Encoding.ASCII.GetBytes(err), 0, err.Length).ConfigureAwait(false);
-                            }
-                        });
-                    }
-                }
-            );
 
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
