@@ -7,6 +7,7 @@ using onboarding.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using onboarding.Services;
 
 namespace onboarding.Controllers
 {
@@ -15,12 +16,14 @@ namespace onboarding.Controllers
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
         private readonly IConfiguration _configuration;
+        private readonly EnrollmentStepService _enrollmentStepService;
 
-        public EnrollmentSummariesController(DatabaseContext databaseContext, IMapper mapper, IConfiguration configuration)
+        public EnrollmentSummariesController(DatabaseContext databaseContext, IMapper mapper, IConfiguration configuration, EnrollmentStepService enrollmentStepService)
         {
             _configuration = configuration;
             _context = databaseContext;
             _mapper = mapper;
+            _enrollmentStepService = enrollmentStepService;
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTSUMMARIES/GET")]
@@ -97,10 +100,7 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            enrollment.EnrollmentSummary = DateTime.Now;
-
-            _context.Enrollments.Update(enrollment);
-            _context.SaveChanges();
+            _enrollmentStepService.Update(enrollmentNumber, "EnrollmentSummaries");
 
             return Ok();
         }
