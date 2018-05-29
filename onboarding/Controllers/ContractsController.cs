@@ -5,6 +5,7 @@ using onboarding.Models;
 using System.Collections.Generic;
 using System.Linq;
 using onboarding.Services;
+using onboarding.ViewModels.Contracts;
 
 namespace onboarding.Controllers
 {
@@ -26,7 +27,24 @@ namespace onboarding.Controllers
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/GET")]
         public dynamic Get(string enrollmentNumber)
         {
-            return Ok();
+            Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            Contract contract = enrollment.Contract != null ? enrollment.Contract : new Contract
+            {
+                EnrollmentId = enrollment.Id
+            };
+
+            return Ok(_mapper.Map<Record>(contract));
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/POST")]
