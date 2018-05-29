@@ -14,6 +14,7 @@ namespace onboarding.Services
         {
             return base.List()
                         .Include("Onboarding")
+                        .Include("Contract")
                         .Include("EnrollmentSteps")
                         .Include("Pendencies")
                         .Include("Pendencies.Section")
