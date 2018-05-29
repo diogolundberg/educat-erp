@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using onboarding.Services;
 using onboarding.ViewModels.Contracts;
+using onboarding.Validations.Contract;
+using System.Collections;
+using onboarding.Statuses;
 
 namespace onboarding.Controllers
 {
@@ -15,13 +18,15 @@ namespace onboarding.Controllers
         private readonly IConfiguration _configuration;
         private readonly EnrollmentStepService _enrollmentStepService;
         private readonly EnrollmentService _enrollmentService;
+        private readonly ContractService _contractService;
 
-        public ContractsController(IMapper mapper, IConfiguration configuration, EnrollmentStepService enrollmentStepService, EnrollmentService enrollmentService)
+        public ContractsController(IMapper mapper, IConfiguration configuration, EnrollmentStepService enrollmentStepService, EnrollmentService enrollmentService, ContractService contractService)
         {
             _configuration = configuration;
             _mapper = mapper;
             _enrollmentStepService = enrollmentStepService;
             _enrollmentService = enrollmentService;
+            _contractService = contractService;
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/GET")]
@@ -48,7 +53,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/POST")]
-        public dynamic Post(string enrollmentNumber)
+        public dynamic Post([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -62,9 +67,35 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            _enrollmentStepService.Update(enrollmentNumber, "Contracts");
+            Contract contract = _mapper.Map<Contract>(obj);
 
-            return Ok();
+            if (enrollment.Contract != null)
+            {
+                enrollment.Contract.Signature = contract.Signature;
+                enrollment.Contract.AcceptedAt = contract.AcceptedAt;
+
+                contract = _contractService.Update(enrollment.Contract);
+            }
+            else
+            {
+                contract = _contractService.Add(contract);
+            }
+
+            ContractValidator validator = new ContractValidator();
+            Hashtable errors = FormatErrors(validator.Validate(contract));
+
+            ContractStatus contractStatus = new ContractStatus(validator, contract);
+
+            if (contractStatus.GetStatus() == "valid")
+            {
+                _enrollmentStepService.Update(enrollmentNumber, "Contracts");
+            }
+
+            return new OkObjectResult(new
+            {
+                errors,
+                data = _mapper.Map<Record>(contract)
+            });
         }
     }
 }
