@@ -18,7 +18,7 @@ namespace onboarding.Models
             Pendencies = new HashSet<Pendency>();
             EnrollmentSteps = new HashSet<EnrollmentStep>();
         }
-
+        public virtual Contract Contract { get; set; }
         public virtual PersonalData PersonalData { get; set; }
         public virtual FinanceData FinanceData { get; set; }
         public DateTime? SentAt { get; set; }
