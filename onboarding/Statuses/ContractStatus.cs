@@ -3,15 +3,22 @@ using onboarding.Models;
 
 namespace onboarding.Statuses
 {
-    public class ContractStatus : BaseStatus<Enrollment>
+    public class ContractStatus : BaseStatus<Contract>
     {
-        public ContractStatus(AbstractValidator<Enrollment> validator, Enrollment entity) : base(validator, entity)
+        public ContractStatus(AbstractValidator<Contract> validator, Contract entity) : base(validator, entity)
         {
         }
 
         public override string GetStatus()
         {
-            return "invalid";
+            if(!string.IsNullOrEmpty(_entity.Signature) && _entity.AcceptedAt.HasValue)
+            {
+                return "valid";
+            }
+            else
+            {
+                return "invalid";
+            }
         }
     }
 }
