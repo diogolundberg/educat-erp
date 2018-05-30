@@ -50,8 +50,8 @@ namespace onboarding.Controllers
             });
         }
 
-        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
-        public IActionResult Update([FromRoute]string enrollmentNumber, [FromBody]Form obj)
+        [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
+        public IActionResult Put([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             FinanceData financeData = _financeDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
 
@@ -71,6 +71,41 @@ namespace onboarding.Controllers
             }
 
             financeData = _financeDataService.Update(obj, financeData);
+
+            FinanceDataValidator validator = new FinanceDataValidator(_context);
+            FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
+            Hashtable errors = FormatErrors(results);
+
+            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
+            List<string> messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).Distinct().ToList();
+
+            return new OkObjectResult(new
+            {
+                messages,
+                errors,
+                data = _mapper.Map<Record>(financeData)
+            });
+        }
+
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/CREATE")]
+        public IActionResult Post([FromRoute]string enrollmentNumber, [FromBody]Form obj)
+        {
+            FinanceData financeData = _financeDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
+
+            if (financeData == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!financeData.Enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            if (!financeData.Editable)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentInReview } });
+            }
 
             FinanceDataValidator validator = new FinanceDataValidator(_context);
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
