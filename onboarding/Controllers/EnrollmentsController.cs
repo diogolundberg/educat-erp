@@ -69,14 +69,6 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentInReview } });
             }
 
-            if (!enrollment.StartedAt.HasValue)
-            {
-                enrollment.StartedAt = DateTime.Now;
-                _enrollmentService.Update(enrollment);
-
-                return Ok();
-            }
-
             string personalDataStatus = (new PersonalDataStatus(new PersonalDataValidator(_context), enrollment.PersonalData)).GetStatus();
             string financeDataStatus = (new FinanceDataStatus(new FinanceDataValidator(_context), enrollment.FinanceData, new FinanceDataMessagesValidator(_context))).GetStatus();
 

@@ -22,13 +22,8 @@ namespace onboarding.Models
         public virtual PersonalData PersonalData { get; set; }
         public virtual FinanceData FinanceData { get; set; }
         public DateTime? SentAt { get; set; }
-        public DateTime? AcademicApproval { get; set; }
-        public DateTime? FinanceApproval { get; set; }
-        public DateTime? StartedAt { get; set; }
-        public DateTime? EnrollmentSummary { get; set; }
-        public DateTime? CourseSummary { get; set; }
-        public DateTime? FinishedAt { get; set; }
         public string Photo { get; set; }
+
         public IEnumerable<Pendency> Pendencies { get; set; }
 
         [ForeignKey("Onboarding")]
