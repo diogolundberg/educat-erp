@@ -12,6 +12,7 @@ namespace onboarding.Models
         public string Name { get; set; }
         public string Resource { get; set; }
         public int Order { get; set; }
+        public bool HasApproval { get; set; }
 
         public ICollection<EnrollmentStep> EnrollmentSteps { get; set; }
     }
