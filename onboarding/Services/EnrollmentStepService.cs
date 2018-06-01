@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using onboarding.Models;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace onboarding.Services
@@ -33,6 +35,14 @@ namespace onboarding.Services
                     }
                 }
             }
+        }
+
+        public IEnumerable<EnrollmentStep> GetForHasApprovalAndEnrollmentSentAt()
+        {
+            return List()
+                .Include("Enrollment.PersonalData")
+                .Where(x => x.Step.HasApproval && x.Enrollment.SentAt.HasValue).OrderBy(x => x.Enrollment.SentAt)
+                .ToList();
         }
     }
 }

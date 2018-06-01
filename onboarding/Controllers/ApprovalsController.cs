@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using onboarding.Models;
 using onboarding.Services;
+using onboarding.ViewModels.Approvals;
+using System.Collections.Generic;
 
 namespace onboarding.Controllers
 {
@@ -16,10 +18,11 @@ namespace onboarding.Controllers
             _enrollmentStepService = enrollmentStepService;
         }
 
-        [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/APPROVALS/LIST")]
+        [HttpGet("", Name = "ONBOARDING/APPROVALS/LIST")]
         public IActionResult List()
         {
-            return Ok();
+            IEnumerable<EnrollmentStep> enrollmentSteps = _enrollmentStepService.GetForHasApprovalAndEnrollmentSentAt();
+            return Ok(_mapper.Map<List<Records>>(enrollmentSteps));
         }
     }
 }
