@@ -44,5 +44,14 @@ namespace onboarding.Services
                 .Where(x => x.Step.HasApproval && x.Enrollment.SentAt.HasValue).OrderBy(x => x.Enrollment.SentAt)
                 .ToList();
         }
+
+        public override EnrollmentStep GetById(int id)
+        {
+            return base.List()
+                        .Include("Enrollment")
+                        .Include("Step")
+                        .Include("Enrollment.PersonalData")
+                        .FirstOrDefault(x => x.Id == id);
+        }
     }
 }
