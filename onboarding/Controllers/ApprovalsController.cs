@@ -24,5 +24,18 @@ namespace onboarding.Controllers
             IEnumerable<EnrollmentStep> enrollmentSteps = _enrollmentStepService.GetForHasApprovalAndEnrollmentSentAt();
             return Ok(_mapper.Map<List<Records>>(enrollmentSteps));
         }
+
+        [HttpGet("{id}", Name = "ONBOARDING/APPROVALS/GET")]
+        public IActionResult GetById([FromRoute]int id)
+        {
+            EnrollmentStep enrollmentStep = _enrollmentStepService.GetById(id);
+
+            if(enrollmentStep == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.IsEmpty } });
+            }
+
+            return Ok(_mapper.Map<Record>(enrollmentStep));
+        }
     }
 }
