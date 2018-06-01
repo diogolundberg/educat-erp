@@ -135,6 +135,9 @@
   <data name="HaveSchedulingForOnboarding" xml:space="preserve">
     <value>Já existe um agendamento cadastrado para esse período de matrícula.</value>
   </data>
+  <data name="IsEmpty" xml:space="preserve">
+    <value>Não existe esse registro.</value>
+  </data>
   <data name="OnboardingDeleteBlock" xml:space="preserve">
     <value>Não é possível excluir o período pois existem matriculas iniciadas.</value>
   </data>

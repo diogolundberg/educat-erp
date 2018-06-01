@@ -115,6 +115,15 @@ namespace onboarding.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não existe esse registro..
+        /// </summary>
+        public static string IsEmpty {
+            get {
+                return ResourceManager.GetString("IsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não é possível excluir o período pois existem matriculas iniciadas..
         /// </summary>
         public static string OnboardingDeleteBlock {
