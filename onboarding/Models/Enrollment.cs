@@ -16,18 +16,14 @@ namespace onboarding.Models
         public Enrollment()
         {
             Pendencies = new HashSet<Pendency>();
+            EnrollmentSteps = new HashSet<EnrollmentStep>();
         }
-
+        public virtual Contract Contract { get; set; }
         public virtual PersonalData PersonalData { get; set; }
         public virtual FinanceData FinanceData { get; set; }
         public DateTime? SentAt { get; set; }
-        public DateTime? AcademicApproval { get; set; }
-        public DateTime? FinanceApproval { get; set; }
-        public DateTime? StartedAt { get; set; }
-        public DateTime? EnrollmentSummary { get; set; }
-        public DateTime? CourseSummary { get; set; }
-        public DateTime? FinishedAt { get; set; }
         public string Photo { get; set; }
+
         public IEnumerable<Pendency> Pendencies { get; set; }
 
         [ForeignKey("Onboarding")]
@@ -84,6 +80,8 @@ namespace onboarding.Models
                 return Pendencies.Where(x => x is AcademicPendency).Select(x => (AcademicPendency)x);
             }
         }
+
+        public IEnumerable<EnrollmentStep> EnrollmentSteps { get; set; }
     }
 }
 

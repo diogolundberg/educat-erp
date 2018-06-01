@@ -9,6 +9,8 @@ using System.Collections;
 using onboarding.Validations;
 using onboarding.Validations.FinanceData;
 using onboarding.ViewModels;
+using onboarding.Services;
+using onboarding.Statuses;
 
 namespace onboarding.Controllers
 {
@@ -16,27 +18,21 @@ namespace onboarding.Controllers
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
+        private readonly FinanceDataService _financeDataService;
+        private readonly EnrollmentStepService _enrollmentStepService;
 
-        public FinanceDatasController(DatabaseContext databaseContext, IMapper mapper)
+        public FinanceDatasController(DatabaseContext databaseContext, IMapper mapper, FinanceDataService financeDataService, EnrollmentStepService enrollmentStepService)
         {
             _mapper = mapper;
             _context = databaseContext;
+            _financeDataService = financeDataService;
+            _enrollmentStepService = enrollmentStepService;
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/GET")]
         public IActionResult GetById([FromRoute]string enrollmentNumber)
         {
-            FinanceData financeData = _context.Set<FinanceData>()
-                                  .Include("Enrollment.Onboarding")
-                                  .Include("Enrollment")
-                                  .Include("Enrollment.Pendencies")
-                                  .Include("Enrollment.PersonalData")
-                                  .Include("Representative")
-                                  .Include("Guarantors")
-                                  .Include("Guarantors.Relationship")
-                                  .Include("Guarantors.GuarantorDocuments")
-                                  .Include("Guarantors.GuarantorDocuments.Document")
-                                  .SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
+            FinanceData financeData = _financeDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
 
             if (financeData == null)
             {
@@ -54,20 +50,10 @@ namespace onboarding.Controllers
             });
         }
 
-        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
-        public IActionResult Update([FromRoute]string enrollmentNumber, [FromBody]Form obj)
+        [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
+        public IActionResult Put([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
-            FinanceData financeData = _context.Set<FinanceData>()
-                                              .Include("Enrollment.Onboarding")
-                                              .Include("Enrollment")
-                                              .Include("Enrollment.Pendencies")
-                                              .Include("Enrollment.PersonalData")
-                                              .Include("Representative")
-                                              .Include("Guarantors")
-                                              .Include("Guarantors.Relationship")
-                                              .Include("Guarantors.GuarantorDocuments")
-                                              .Include("Guarantors.GuarantorDocuments.Document")
-                                              .SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
+            FinanceData financeData = _financeDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
 
             if (financeData == null)
             {
@@ -84,142 +70,7 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentInReview } });
             }
 
-            if (obj.Representative is RepresentativePersonViewModel)
-            {
-                RepresentativePerson representativePerson = _mapper.Map<RepresentativePerson>((RepresentativePersonViewModel)obj.Representative);
-                representativePerson.FinanceDataId = financeData.Id;
-
-                if (financeData.Representative == null)
-                {
-                    _context.Set<RepresentativePerson>().Add(representativePerson);
-                }
-                else
-                {
-                    if (financeData.Representative is RepresentativeCompany)
-                    {
-                        _context.Set<RepresentativeCompany>().Remove((RepresentativeCompany)financeData.Representative);
-                        _context.Set<RepresentativePerson>().Add(representativePerson);
-                    }
-                    else
-                    {
-                        representativePerson.Id = financeData.Representative.Id;
-                        _context.Entry(financeData.Representative).CurrentValues.SetValues(representativePerson);
-                    }
-                }
-            }
-            else if (obj.Representative is RepresentativeCompanyViewModel)
-            {
-                RepresentativeCompany representativeCompany = _mapper.Map<RepresentativeCompany>((RepresentativeCompanyViewModel)obj.Representative);
-                representativeCompany.FinanceDataId = financeData.Id;
-
-                if (financeData.Representative == null)
-                {
-                    _context.Set<RepresentativeCompany>().Add(representativeCompany);
-                }
-                else
-                {
-                    if (financeData.Representative is RepresentativePerson)
-                    {
-                        _context.Set<RepresentativePerson>().Remove((RepresentativePerson)financeData.Representative);
-                        _context.Set<RepresentativeCompany>().Add(representativeCompany);
-                    }
-                    else
-                    {
-                        representativeCompany.Id = financeData.Representative.Id;
-                        _context.Entry(financeData.Representative).CurrentValues.SetValues(representativeCompany);
-                    }
-                }
-            }
-
-            foreach (Guarantor guarantor in financeData.Guarantors.ToList())
-            {
-                if (!obj
-                    .Guarantors
-                    .Any(c => c.Id == guarantor.Id))
-                {
-                    _context.Set<GuarantorDocument>().RemoveRange(guarantor.GuarantorDocuments);
-                    _context.Set<Document>().RemoveRange(guarantor.GuarantorDocuments.Select(x => x.Document));
-                    _context.Set<Guarantor>().Remove(guarantor);
-                }
-            }
-            foreach (GuarantorViewModel guarantorViewModel in obj.Guarantors)
-            {
-                Guarantor existingGuarantor = financeData.Guarantors
-                    .Where(c => c.Id == guarantorViewModel.Id)
-                    .SingleOrDefault();
-
-                if (existingGuarantor != null)
-                {
-                    Guarantor guarantor = _mapper.Map<Guarantor>(guarantorViewModel);
-                    guarantor.Id = existingGuarantor.Id;
-                    guarantor.FinanceDataId = financeData.Id;
-                    _context.Entry(existingGuarantor).CurrentValues.SetValues(guarantor);
-
-                    foreach (GuarantorDocument guarantorDocument in existingGuarantor.GuarantorDocuments.ToList())
-                    {
-                        if (!guarantorViewModel
-                            .Documents
-                            .Any(c => c.Id == guarantorDocument.DocumentId))
-                        {
-                            _context.Set<GuarantorDocument>().Remove(guarantorDocument);
-                            _context.Set<Document>().Remove(_context.Set<Document>().Find(guarantorDocument.DocumentId));
-                        }
-                    }
-                    foreach (DocumentViewModel guarantorDocumentViewModel in guarantorViewModel.Documents)
-                    {
-                        GuarantorDocument existingGuarantorDocument = existingGuarantor.GuarantorDocuments
-                            .Where(c => c.DocumentId == guarantorDocumentViewModel.Id)
-                            .SingleOrDefault();
-
-                        if (existingGuarantorDocument != null)
-                        {
-                            GuarantorDocument guarantorDocument = new GuarantorDocument
-                            {
-                                Document = new Document
-                                {
-                                    Id = existingGuarantorDocument.Document.Id,
-                                    Url = guarantorDocumentViewModel.Url,
-                                    DocumentTypeId = guarantorDocumentViewModel.DocumentTypeId,
-                                },
-                                GuarantorId = existingGuarantor.Id
-                            };
-
-                            _context.Entry(existingGuarantorDocument.Document).CurrentValues.SetValues(guarantorDocument.Document);
-                        }
-                        else
-                        {
-                            GuarantorDocument guarantorDocument = new GuarantorDocument
-                            {
-                                Document = new Document
-                                {
-                                    Id = 0,
-                                    Url = guarantorDocumentViewModel.Url,
-                                    DocumentTypeId = guarantorDocumentViewModel.DocumentTypeId
-                                },
-                                GuarantorId = existingGuarantor.Id
-                            };
-
-                            _context.Set<GuarantorDocument>().Add(guarantorDocument);
-                        }
-                    }
-                }
-                else
-                {
-                    Guarantor guarantor = _mapper.Map<Guarantor>(guarantorViewModel);
-                    guarantor.Id = 0;
-                    guarantor.FinanceDataId = financeData.Id;
-                    _context.Set<Guarantor>().Add(guarantor);
-                }
-            }
-
-            financeData.PlanId = obj.PlanId;
-            financeData.PaymentMethodId = obj.PaymentMethodId;
-
-            _context.FinanceDatas.Update(financeData);
-
-            _context.SaveChanges();
-            _context.Entry(financeData).Reload();
-            _context.Entry(financeData).Collection(x => x.Guarantors).Load();
+            financeData = _financeDataService.Update(obj, financeData);
 
             FinanceDataValidator validator = new FinanceDataValidator(_context);
             FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
@@ -227,6 +78,48 @@ namespace onboarding.Controllers
 
             FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
             List<string> messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).Distinct().ToList();
+
+            return new OkObjectResult(new
+            {
+                messages,
+                errors,
+                data = _mapper.Map<Record>(financeData)
+            });
+        }
+
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/CREATE")]
+        public IActionResult Post([FromRoute]string enrollmentNumber, [FromBody]Form obj)
+        {
+            FinanceData financeData = _financeDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
+
+            if (financeData == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!financeData.Enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            if (!financeData.Editable)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentInReview } });
+            }
+
+            FinanceDataValidator validator = new FinanceDataValidator(_context);
+            FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
+            Hashtable errors = FormatErrors(results);
+
+            FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
+            List<string> messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).Distinct().ToList();
+
+            FinanceDataStatus financeDataStatus = new FinanceDataStatus(validator, financeData, messagesValidator);
+
+            if (financeDataStatus.GetStatus() == "valid")
+            {
+                _enrollmentStepService.Update(enrollmentNumber, "FinanceDatas");
+            }
 
             return new OkObjectResult(new
             {

@@ -80,7 +80,7 @@ namespace onboarding.Controllers
             foreach (Enrollment enrollment in onboardingModel.Enrollments)
             {
                 enrollment.ExternalId = onboardingModel.Year + onboardingModel.Semester + Regex.Replace(enrollment.PersonalData.CPF, @"\D", string.Empty);
-                enrollment.StartedAt = DateTime.Now;
+                
                 enrollment.FinanceData = new FinanceData
                 {
                     Representative = new RepresentativePerson()
@@ -126,11 +126,6 @@ namespace onboarding.Controllers
             if (existingOnboarding == null)
             {
                 return new NotFoundObjectResult(new { Messages = new List<string> { onboarding.Resources.Messages.OnboardingNotExisting } });
-            }
-
-            if (existingOnboarding.Enrollments.Any(x => x.StartedAt.HasValue))
-            {
-                return new NotFoundObjectResult(new { Messages = new List<string> { onboarding.Resources.Messages.OnboardingEditBlock } });
             }
 
             Models.Onboarding onboardingModel = _mapper.Map<Models.Onboarding>(obj);
@@ -203,11 +198,6 @@ namespace onboarding.Controllers
             if (existingOnboarding == null)
             {
                 return new NotFoundObjectResult(new { Messages = new List<string> { onboarding.Resources.Messages.OnboardingNotExisting } });
-            }
-
-            if (existingOnboarding.Enrollments.Any(x => x.StartedAt.HasValue))
-            {
-                return new NotFoundObjectResult(new { Messages = new List<string> { onboarding.Resources.Messages.OnboardingDeleteBlock } });
             }
 
             foreach (Enrollment enrollment in existingOnboarding.Enrollments)

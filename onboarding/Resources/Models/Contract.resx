@@ -117,46 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppointmentAlreadyUsed" xml:space="preserve">
-    <value>Horário já agendado.</value>
+  <data name="AcceptedAt" xml:space="preserve">
+    <value>Data de aceitação do contrato</value>
   </data>
-  <data name="AppointmentNotExisting" xml:space="preserve">
-    <value>Horário não existe.</value>
-  </data>
-  <data name="EnrollmentInReview" xml:space="preserve">
-    <value>Estes dados já foram enviados para a análises e não pode ser editados no momento.</value>
-  </data>
-  <data name="EnrollmentLinkIsNotValid" xml:space="preserve">
-    <value>Link para matrícula inválido.</value>
-  </data>
-  <data name="EnrollmentNumberIsNotValid" xml:space="preserve">
-    <value>Número de matrícula inválido.</value>
-  </data>
-  <data name="HaveSchedulingForOnboarding" xml:space="preserve">
-    <value>Já existe um agendamento cadastrado para esse período de matrícula.</value>
-  </data>
-  <data name="IsEmpty" xml:space="preserve">
-    <value>Não existe esse registro.</value>
-  </data>
-  <data name="OnboardingDeleteBlock" xml:space="preserve">
-    <value>Não é possível excluir o período pois existem matriculas iniciadas.</value>
-  </data>
-  <data name="OnboardingDuplicateCpf" xml:space="preserve">
-    <value>Existem cpfs duplicados neste período de matrícula.</value>
-  </data>
-  <data name="OnboardingEditBlock" xml:space="preserve">
-    <value>Não é possível alterar o período pois existem matriculas iniciadas.</value>
-  </data>
-  <data name="OnboardingExisting" xml:space="preserve">
-    <value>Já existe um período de matrícula cadastrado para este semestre e ano.</value>
-  </data>
-  <data name="OnboardingExpired" xml:space="preserve">
-    <value>O prazo para esta matrícula foi encerrado.</value>
-  </data>
-  <data name="OnboardingNotExisting" xml:space="preserve">
-    <value>Esse período de matrícula não existe.</value>
-  </data>
-  <data name="SchedulingNotExisting" xml:space="preserve">
-    <value>Agendamento não existe.</value>
+  <data name="Signature" xml:space="preserve">
+    <value>Assinatura do contrato</value>
   </data>
 </root>

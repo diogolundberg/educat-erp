@@ -12,9 +12,10 @@ using System;
 namespace onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180529144525_change_datetime_for_nullable_contract")]
+    partial class change_datetime_for_nullable_contract
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,9 +187,19 @@ namespace onboarding.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime?>("AcademicApproval");
+
+                    b.Property<DateTime?>("CourseSummary");
+
                     b.Property<DateTime?>("CreatedAt");
 
+                    b.Property<DateTime?>("EnrollmentSummary");
+
                     b.Property<string>("ExternalId");
+
+                    b.Property<DateTime?>("FinanceApproval");
+
+                    b.Property<DateTime?>("FinishedAt");
 
                     b.Property<int?>("InvoiceId");
 
@@ -197,6 +208,8 @@ namespace onboarding.Migrations
                     b.Property<string>("Photo");
 
                     b.Property<DateTime?>("SentAt");
+
+                    b.Property<DateTime?>("StartedAt");
 
                     b.Property<DateTime?>("UpdatedAt");
 
@@ -830,8 +843,6 @@ namespace onboarding.Migrations
                     b.Property<DateTime?>("CreatedAt");
 
                     b.Property<string>("ExternalId");
-
-                    b.Property<bool>("HasApproval");
 
                     b.Property<string>("Name");
 

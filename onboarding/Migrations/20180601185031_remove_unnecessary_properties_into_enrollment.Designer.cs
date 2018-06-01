@@ -12,9 +12,10 @@ using System;
 namespace onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180601185031_remove_unnecessary_properties_into_enrollment")]
+    partial class remove_unnecessary_properties_into_enrollment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -830,8 +831,6 @@ namespace onboarding.Migrations
                     b.Property<DateTime?>("CreatedAt");
 
                     b.Property<string>("ExternalId");
-
-                    b.Property<bool>("HasApproval");
 
                     b.Property<string>("Name");
 

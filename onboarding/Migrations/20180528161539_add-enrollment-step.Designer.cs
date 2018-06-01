@@ -12,9 +12,10 @@ using System;
 namespace onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180528161539_add-enrollment-step")]
+    partial class addenrollmentstep
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,34 +62,6 @@ namespace onboarding.Migrations
                     b.HasIndex("StateId");
 
                     b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("onboarding.Models.Contract", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime?>("AcceptedAt");
-
-                    b.Property<DateTime?>("CreatedAt");
-
-                    b.Property<int?>("EnrollmentId");
-
-                    b.Property<string>("ExternalId");
-
-                    b.Property<string>("Signature");
-
-                    b.Property<string>("URL");
-
-                    b.Property<DateTime?>("UpdatedAt");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EnrollmentId")
-                        .IsUnique()
-                        .HasFilter("[EnrollmentId] IS NOT NULL");
-
-                    b.ToTable("Contracts");
                 });
 
             modelBuilder.Entity("onboarding.Models.Country", b =>
@@ -186,9 +159,19 @@ namespace onboarding.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime?>("AcademicApproval");
+
+                    b.Property<DateTime?>("CourseSummary");
+
                     b.Property<DateTime?>("CreatedAt");
 
+                    b.Property<DateTime?>("EnrollmentSummary");
+
                     b.Property<string>("ExternalId");
+
+                    b.Property<DateTime?>("FinanceApproval");
+
+                    b.Property<DateTime?>("FinishedAt");
 
                     b.Property<int?>("InvoiceId");
 
@@ -197,6 +180,8 @@ namespace onboarding.Migrations
                     b.Property<string>("Photo");
 
                     b.Property<DateTime?>("SentAt");
+
+                    b.Property<DateTime?>("StartedAt");
 
                     b.Property<DateTime?>("UpdatedAt");
 
@@ -831,8 +816,6 @@ namespace onboarding.Migrations
 
                     b.Property<string>("ExternalId");
 
-                    b.Property<bool>("HasApproval");
-
                     b.Property<string>("Name");
 
                     b.Property<int>("Order");
@@ -952,13 +935,6 @@ namespace onboarding.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("onboarding.Models.Contract", b =>
-                {
-                    b.HasOne("onboarding.Models.Enrollment", "Enrollment")
-                        .WithOne("Contract")
-                        .HasForeignKey("onboarding.Models.Contract", "EnrollmentId");
-                });
-
             modelBuilder.Entity("onboarding.Models.Document", b =>
                 {
                     b.HasOne("onboarding.Models.DocumentType", "DocumentType")
@@ -976,7 +952,7 @@ namespace onboarding.Migrations
             modelBuilder.Entity("onboarding.Models.EnrollmentStep", b =>
                 {
                     b.HasOne("onboarding.Models.Enrollment", "Enrollment")
-                        .WithMany("EnrollmentSteps")
+                        .WithMany()
                         .HasForeignKey("EnrollmentId")
                         .OnDelete(DeleteBehavior.Cascade);
 

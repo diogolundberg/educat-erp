@@ -1,5 +1,4 @@
-﻿using onboarding.ViewModels.AcademicApprovals;
-using onboarding.ViewModels.FinanceApprovals;
+﻿using onboarding.Models;
 using System.Collections.Generic;
 
 namespace onboarding.ViewModels.EnrollmentSummaries
@@ -7,8 +6,6 @@ namespace onboarding.ViewModels.EnrollmentSummaries
     public class Record
     {
         public string EnrollmentNumber { get; set; }
-        public IEnumerable<AcademicPendency> AcademicPendencies { get; set; }
-        public IEnumerable<FinancePendency> FinancePendencies { get; set; }
 
         public string Name { get; set; }
         public string AssumedName { get; set; }

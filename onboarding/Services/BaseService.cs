@@ -8,7 +8,7 @@ namespace onboarding.Services
 {
     public class BaseService<TEntity> : IDisposable where TEntity : BaseModel
     {
-        private readonly DatabaseContext _context;
+        public readonly DatabaseContext _context;
 
         public BaseService(DatabaseContext context)
         {

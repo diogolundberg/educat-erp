@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using onboarding.Models;
+using onboarding.Services;
 using onboarding.ViewModels;
 using onboarding.ViewModels.FinanceDatas;
 using onboarding.ViewModels.Payments;
@@ -20,32 +21,44 @@ namespace onboarding.Controllers
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
         private readonly IConfiguration _configuration;
+        private readonly EnrollmentStepService _enrollmentStepService;
+        private readonly EnrollmentService _enrollmentService;
 
-        public PaymentsController(IConfiguration configuration, IMapper mapper, DatabaseContext context)
+        public PaymentsController(IConfiguration configuration, IMapper mapper, DatabaseContext context, EnrollmentStepService enrollmentStepService, EnrollmentService enrollmentService)
         {
             _configuration = configuration;
             _context = context;
             _mapper = mapper;
+            _enrollmentStepService = enrollmentStepService;
+            _enrollmentService = enrollmentService;
         }
 
-        [HttpGet("{id}", Name = "ONBOARDING/PAYMENTS/GET")]
-        public dynamic GetById([FromRoute]int id)
+        [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/GET")]
+        public dynamic GetById([FromRoute]string enrollmentNumber)
         {
+            Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage httpResponseMessage = client.GetAsync(_configuration["FINANCE_HOST"] + "/api/invoices/" + id).Result;
+                HttpResponseMessage httpResponseMessage = client.GetAsync(_configuration["FINANCE_HOST"] + "/api/invoices/" + enrollment.InvoiceId).Result;
                 return JsonConvert.DeserializeObject(httpResponseMessage.Content.ReadAsStringAsync().Result);
             }
         }
 
         [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/EDIT")]
-        public dynamic Edit(string enrollmentNumber)
+        public dynamic Put(string enrollmentNumber)
         {
-            Enrollment enrollment = _context.Enrollments
-                                            .Include("Onboarding")
-                                            .Include("FinanceData.Plan")
-                                            .Include("FinanceData.Representative")
-                                            .SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+            Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment == null)
             {
@@ -89,6 +102,26 @@ namespace onboarding.Controllers
 
                 return resultObj;
             }
+        }
+
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/CREATE")]
+        public IActionResult Post([FromRoute]string enrollmentNumber)
+        {
+            Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+
+            if (enrollment == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            _enrollmentStepService.Update(enrollmentNumber, "Payments");
+
+            return Ok();
         }
     }
 }

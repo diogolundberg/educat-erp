@@ -19,7 +19,7 @@ namespace onboarding.Bindings
                 .ForMember(x => x.OnboardingYear, config => config.MapFrom(x => x.Onboarding.Year))
                 .ForMember(x => x.Photo, config => config.MapFrom(x => x.Photo))
                 .ForMember(x => x.DaysRemaining, config => config.MapFrom(x => DateTime.Parse(x.Onboarding.EndAt).Subtract(DateTime.Now).Days))
-                .ForMember(x => x.Cards, config => config.ResolveUsing<CardResolver>());
+                .ForMember(x => x.Steps, config => config.ResolveUsing<StepResolver>());
         }
     }
 }

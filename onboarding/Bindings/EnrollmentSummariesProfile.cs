@@ -47,22 +47,8 @@ namespace onboarding.Bindings
             .ForMember(x => x.PaymentMethod, config => config.MapFrom(x => x.FinanceData.PaymentMethod.Name))
             .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalData.PersonalDataDocuments.Select(o => new
             {
-                Name = o.Document.DocumentType.Name,
-                Url = o.Document.Url
-            })))
-            .ForMember(x => x.FinancePendencies, config => config.MapFrom(x => x.Pendencies.OfType<Models.FinancePendency>().Select(o => new ViewModels.FinanceApprovals.FinancePendency
-            {
-                Description = o.Description,
-                Id = o.Id,
-                SectionId = o.SectionId,
-                Anchor = o.Section.Anchor
-            })))
-            .ForMember(x => x.AcademicPendencies, config => config.MapFrom(x => x.Pendencies.OfType<Models.AcademicPendency>().Select(o => new ViewModels.AcademicApprovals.AcademicPendency
-            {
-                Description = o.Description,
-                Id = o.Id,
-                SectionId = o.SectionId,
-                Anchor = o.Section.Anchor
+                o.Document.DocumentType.Name,
+                o.Document.Url
             })));
         }
     }

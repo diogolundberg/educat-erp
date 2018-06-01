@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using onboarding.Models;
 using onboarding.Validations.PersonalData;
 using onboarding.ViewModels.PersonalDatas;
+using onboarding.Services;
+using onboarding.Statuses;
 
 namespace onboarding.Controllers
 {
@@ -15,28 +17,21 @@ namespace onboarding.Controllers
     {
         private readonly IMapper _mapper;
         private readonly DatabaseContext _context;
+        private readonly PersonalDataService _personalDataService;
+        private readonly EnrollmentStepService _enrollmentStepService;
 
-        public PersonalDatasController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper)
+        public PersonalDatasController(DatabaseContext databaseContext, IConfiguration configuration, IMapper mapper, PersonalDataService personalDataService, EnrollmentStepService enrollmentStepService)
         {
             _context = databaseContext;
             _mapper = mapper;
+            _personalDataService = personalDataService;
+            _enrollmentStepService = enrollmentStepService;
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/PERSONALDATA/GET")]
         public IActionResult GetById([FromRoute]string enrollmentNumber)
         {
-            PersonalData personalData = _context.Set<PersonalData>()
-                                    .Include("Enrollment.Onboarding")
-                                    .Include("Enrollment")
-                                    .Include("Enrollment.Pendencies")
-                                    .Include("Enrollment.FinanceData")
-                                    .Include("Enrollment.FinanceData.Guarantors")
-                                    .Include("Enrollment.FinanceData.Representative")
-                                    .Include("PersonalDataDocuments")
-                                    .Include("PersonalDataSpecialNeeds")
-                                    .Include("PersonalDataDisabilities")
-                                    .Include("PersonalDataDocuments.Document")
-                                    .SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
+            PersonalData personalData = _personalDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
 
             if (personalData == null)
             {
@@ -54,21 +49,10 @@ namespace onboarding.Controllers
             });
         }
 
-        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
-        public IActionResult Update([FromRoute]string enrollmentNumber, [FromBody]Form obj)
+        [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/PERSONALDATA/CREATE")]
+        public IActionResult Put([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
-            PersonalData personalData = _context.Set<PersonalData>()
-                                                .Include("Enrollment.Onboarding")
-                                                .Include("Enrollment")
-                                                .Include("Enrollment.Pendencies")
-                                                .Include("Enrollment.FinanceData")
-                                                .Include("Enrollment.FinanceData.Guarantors")
-                                                .Include("Enrollment.FinanceData.Representative")
-                                                .Include("PersonalDataDocuments")
-                                                .Include("PersonalDataSpecialNeeds")
-                                                .Include("PersonalDataDisabilities")
-                                                .Include("PersonalDataDocuments.Document")
-                                                .SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
+            PersonalData personalData = _personalDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
 
             if (personalData == null)
             {
@@ -86,88 +70,7 @@ namespace onboarding.Controllers
             }
 
             PersonalData personalDataMapped = _mapper.Map<PersonalData>(obj);
-            _context.Entry(personalData).CurrentValues.SetValues(personalDataMapped);
-
-            foreach (PersonalDataDocument personalDataDocument in personalData.PersonalDataDocuments.ToList())
-            {
-                if (!personalDataMapped
-                    .PersonalDataDocuments
-                    .Any(c => c.Document.Id == personalDataDocument.DocumentId))
-                {
-                    _context.Set<PersonalDataDocument>().Remove(personalDataDocument);
-                    _context.Set<Document>().Remove(_context.Set<Document>().Find(personalDataDocument.DocumentId));
-                }
-            }
-            foreach (PersonalDataDocument personalDataDocument in personalDataMapped.PersonalDataDocuments)
-            {
-                PersonalDataDocument existingPersonalDataDocument = personalData.PersonalDataDocuments
-                    .Where(c => c.DocumentId == personalDataDocument.Document.Id)
-                    .SingleOrDefault();
-
-                if (existingPersonalDataDocument != null)
-                {
-                    personalDataDocument.Document.Id = existingPersonalDataDocument.Document.Id;
-                    _context.Entry(existingPersonalDataDocument.Document).CurrentValues.SetValues(personalDataDocument.Document);
-                }
-                else
-                {
-                    personalDataDocument.PersonalDataId = personalData.Id;
-                    personalDataDocument.Document.Id = 0;
-                    _context.Set<PersonalDataDocument>().Add(personalDataDocument);
-                }
-            }
-
-            foreach (PersonalDataDisability personalDataDisibility in personalData.PersonalDataDisabilities.ToList())
-            {
-                if (!personalDataMapped
-                    .PersonalDataDisabilities
-                    .Any(c => c.DisabilityId == personalDataDisibility.DisabilityId))
-                {
-                    _context.Set<PersonalDataDisability>().Remove(personalDataDisibility);
-                }
-            }
-            foreach (PersonalDataDisability personalDataDisability in personalDataMapped.PersonalDataDisabilities)
-            {
-                PersonalDataDisability existingPersonalDataDisability = personalData.PersonalDataDisabilities
-                    .Where(c => c.DisabilityId == personalDataDisability.DisabilityId)
-                    .SingleOrDefault();
-
-                if (existingPersonalDataDisability == null)
-                {
-                    personalData.PersonalDataDisabilities.Add(personalDataDisability);
-                }
-            }
-
-            foreach (PersonalDataSpecialNeed personalDataSpecialNeed in personalData.PersonalDataSpecialNeeds.ToList())
-            {
-                if (!personalDataMapped
-                    .PersonalDataSpecialNeeds
-                    .Any(c => c.SpecialNeedId == personalDataSpecialNeed.SpecialNeedId))
-                {
-                    _context.Set<PersonalDataSpecialNeed>().Remove(personalDataSpecialNeed);
-                }
-            }
-            foreach (PersonalDataSpecialNeed personalDataSpecialNeed in personalDataMapped.PersonalDataSpecialNeeds)
-            {
-                PersonalDataSpecialNeed existingPersonalDataSpecialNeed = personalData.PersonalDataSpecialNeeds
-                    .Where(c => c.SpecialNeedId == personalDataSpecialNeed.SpecialNeedId)
-                    .SingleOrDefault();
-
-                if (existingPersonalDataSpecialNeed == null)
-                {
-                    personalData.PersonalDataSpecialNeeds.Add(personalDataSpecialNeed);
-                }
-            }
-
-            _context.Entry(personalData).Property(x => x.CPF).IsModified = false;
-            _context.Entry(personalData).Property(x => x.RealName).IsModified = false;
-            _context.Entry(personalData).Property(x => x.Email).IsModified = false;
-
-            _context.SaveChanges();
-            _context.Entry(personalData).Reload();
-            _context.Entry(personalData).Reference(x => x.Nationality).Load();
-            _context.Entry(personalData).Reference(x => x.Gender).Load();
-            _context.Entry(personalData).Reference(x => x.HighSchoolGraduationCountry).Load();
+            personalData = _personalDataService.Update(personalData, personalDataMapped);
 
             PersonalDataValidator validator = new PersonalDataValidator(_context);
             Hashtable errors = FormatErrors(validator.Validate(personalData));
@@ -177,6 +80,38 @@ namespace onboarding.Controllers
                 errors,
                 data = _mapper.Map<Record>(personalData)
             });
+        }
+
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
+        public IActionResult Post([FromRoute]string enrollmentNumber)
+        {
+            PersonalData personalData = _personalDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
+
+            if (personalData == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!personalData.Enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
+            if (!personalData.Editable)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentInReview } });
+            }
+
+            PersonalDataValidator validator = new PersonalDataValidator(_context);
+            Hashtable errors = FormatErrors(validator.Validate(personalData));
+            PersonalDataStatus personalDataStatus = new PersonalDataStatus(validator, personalData);
+
+            if (personalDataStatus.GetStatus() == "valid")
+            {
+                _enrollmentStepService.Update(enrollmentNumber, "PersonalDatas");
+            }
+
+            return Ok();
         }
     }
 }
