@@ -43,7 +43,7 @@
         </div>
       </div>
     </header>
-    <div class="m3 p3" />
+    <div class="m3 p2" />
   </div>
 </template>
 

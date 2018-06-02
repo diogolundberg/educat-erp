@@ -1,5 +1,7 @@
 <template>
-  <div class="px4 flex items-center justify-between">
+  <div
+    class="fixed fill-h px4 pt2 pb4 flex items-center justify-between bg-white
+      shadow2 z2">
     <template v-for="step in steps">
       <StepperItem
         :active="value == step.id"

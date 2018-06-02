@@ -6,6 +6,7 @@
       :steps="steps"
       class="mb4"
       @input="goTo($event)" />
+    <div class="p5" />
     <slot />
   </div>
 </template>
