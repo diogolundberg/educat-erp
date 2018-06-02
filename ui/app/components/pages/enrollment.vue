@@ -3,18 +3,7 @@
     <Header
       :notification-count="pendencies.length"
       notifications
-      @notifications="notifications = !notifications">
-      <div class="flex items-center">
-        <Icon name="clock" />
-        <div class="mx2 px2 border-white-50 border-left inline-block h6">
-          Olá, <strong>{{ enrollment.data.personalData.realName }}</strong><br>
-          <template v-if="enrollment.data.deadline">
-            O seu processo de matrícula se encerra em
-            {{ enrollment.data.daysRemaining }} dias.
-          </template>
-        </div>
-      </div>
-    </Header>
+      @notifications="notifications = !notifications" />
     <Notifications
       v-if="notifications"
       :items="pendencies"
