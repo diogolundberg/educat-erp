@@ -37,11 +37,7 @@
           :error="enrollment.data.personalData.status === 'invalid'"
           title="Seus Dados"
           description="Preencha seus dados pessoais">
-          <Card
-            :complete="enrollment.data.personalData.status === 'valid'"
-            :error="enrollment.data.personalData.status === 'invalid'"
-            title="Seus Dados"
-            @close="step = 0">
+          <div>
             <BaseErrors
               v-model="enrollment.messages.personalData" />
             <div
@@ -280,14 +276,13 @@
                 label="Próximo"
                 @click="savePersonalData" />
             </div>
-          </Card>
+          </div>
         </Step>
         <Step
           :complete="!!enrollment.data.sentAt"
           title="Informações da Matrícula"
           description="Saiba mais sobre seu curso">
-          <Card
-            title="Informações da Matrícula">
+          <div>
             <Fieldset title="Informações Gerais">
               <InfoBox
                 label="Curso"
@@ -342,17 +337,14 @@
                 label="Próximo"
                 @click="step = 3" />
             </div>
-          </Card>
+          </div>
         </Step>
         <Step
           :complete="enrollment.data.financeData.status == 'valid'"
           :error="enrollment.data.financeData.status == 'invalid'"
           title="Dados Financeiros"
           description="Aqui você insere seus dados de pagamento.">
-          <Card
-            :complete="enrollment.data.financeData.status === 'valid'"
-            :error="enrollment.data.financeData.status === 'invalid'"
-            title="Dados Financeiros">
+          <div>
             <BaseErrors
               v-model="enrollment.messages.financeData" />
             <Fieldset title="Dados Financeiros">
@@ -486,15 +478,14 @@
                 label="Próximo"
                 @click="saveFinanceData" />
             </div>
-          </Card>
+          </div>
         </Step>
         <Step
           v-if="!enrollment.data.sentAt"
           title="Enviar para Análise"
           description="Enviar para aprovação da secretaria e departamento
             financeiro">
-          <Card
-            title="Enviar para Análise">
+          <div>
             <BaseErrors
               v-model="enrollment.messages.sendToApproval" />
             <p>Envie seus dados para a secetaria e para o departamento financeiro para
@@ -518,7 +509,7 @@
                 label="Enviar"
                 @click="submitEnrollment" />
             </div>
-          </Card>
+          </div>
         </Step>
         <Step
           v-if="enrollment.data.sentAt"
@@ -526,7 +517,7 @@
           title="Aguardando Aprovação"
           description="A secretaria e o departamento financeiro estão analisando
             seus documentos">
-          <Card title="Dados enviados">
+          <div>
             <BaseErrors
               v-model="enrollment.messages.sendToApproval"
               success />
@@ -536,7 +527,7 @@
               <Animation
                 name="success" />
             </div>
-          </Card>
+          </div>
         </Step>
         <Step
           :complete="enrollment.data.academicApproval.status === 'approved'"
@@ -544,19 +535,16 @@
           title="Aprovação da Secretaria"
           description="A secretaria irá analisar seus documentos para aprovar
             sua matrícula.">
-          <Card
-            v-if="enrollment.data.academicApproval.status === 'inReview'"
-            title="Aprovação da Secretaria">
+          <div
+            v-if="enrollment.data.academicApproval.status === 'inReview'">
             Sua aprovação ainda está pendente.
-          </Card>
-          <Card
-            v-if="enrollment.data.academicApproval.status === 'approved'"
-            title="Matrícula Aprovada pela Secretaria">
+          </div>
+          <div
+            v-if="enrollment.data.academicApproval.status === 'approved'">
             A secretaria já aprovou sua matrícula.
-          </Card>
-          <Card
-            v-if="enrollment.data.academicApproval.status === 'pending'"
-            title="Matrícula Reprovada pela Secretaria">
+          </div>
+          <div
+            v-if="enrollment.data.academicApproval.status === 'pending'">
             A secretaria solicitou ajustes para completar sua matrícula.
             <div class="flex justify-end">
               <Btn
@@ -564,7 +552,7 @@
                 label="Re-enviar"
                 @click="deleteAcademicPendencies" />
             </div>
-          </Card>
+          </div>
         </Step>
         <Step
           :complete="enrollment.data.financeApproval.status === 'approved'"
@@ -572,19 +560,16 @@
           title="Aprovação do Financeiro"
           description="O financeiro irá analisar sua matrícula para aprovar
             sua matrícula.">
-          <Card
-            v-if="enrollment.data.financeApproval.status === 'inReview'"
-            title="Aprovação do Financeiro">
+          <div
+            v-if="enrollment.data.financeApproval.status === 'inReview'">
             Sua aprovação ainda está pendente.
-          </Card>
-          <Card
-            v-if="enrollment.data.financeApproval.status === 'approved'"
-            title="Matrícula Aprovada pelo Financeiro">
+          </div>
+          <div
+            v-if="enrollment.data.financeApproval.status === 'approved'">
             Nosso departamento financeiro já aprovou sua matrícula.
-          </Card>
-          <Card
-            v-if="enrollment.data.financeApproval.status === 'pending'"
-            title="Matrícula Reprovada pelo Financeiro">
+          </div>
+          <div
+            v-if="enrollment.data.financeApproval.status === 'pending'">
             Nosso departamento financeiro solicitou ajustes para completar sua matrícula.
             <div class="flex justify-end">
               <Btn
@@ -592,16 +577,15 @@
                 label="Re-enviar"
                 @click="deleteFinancePendencies" />
             </div>
-          </Card>
+          </div>
         </Step>
         <Step
           :complete="enrollment.data.finished"
           title="Concluir Matrícula"
           description="Conclua sua matrícula.">
-          <Card
+          <div
             v-if="enrollment.data.academicApproval.status === 'approved'
-            && enrollment.data.financeApproval.status === 'approved'"
-            title="Concluir Matrícula">
+            && enrollment.data.financeApproval.status === 'approved'">
             Falta pouco! Clique no botão abaixo para concluir sua matrícula.
             <div class="flex justify-end">
               <Btn
@@ -609,20 +593,18 @@
                 label="Concluir"
                 @click="finishEnrollment" />
             </div>
-          </Card>
-          <Card
-            v-else
-            title="Concluir Matrícula">
+          </div>
+          <div
+            v-else>
             Sua matrícula ainda não foi aprovada! Preencha corretamente os dados
             antes de concluir!
-          </Card>
+          </div>
         </Step>
         <Step
           title="Agende uma Visita"
           description="Após a aprovação da secretaria e do financeiro, é hora
             de agendar um horário para comparecer na CMMG.">
-          <Card
-            title="Agende uma Visita">
+          <div>
             Agende sua visita!
             <AppointmentPicker
               v-model="appointmentDate"
@@ -633,17 +615,16 @@
                 label="Confirmar Data"
                 @click="setAppointment" />
             </div>
-          </Card>
+          </div>
         </Step>
         <Step
           title="Matrícula Concluída!"
           description="Após aprovação da secretaria e financeiro,
           e agendamento da visita, sua matrícula estará concluída.">
-          <Card
-            title="Matrícula Concluída!">
+          <div>
             Após aprovação da secretaria e financeiro,
             e agendamento da visita, sua matrícula estará concluída.
-          </Card>
+          </div>
         </Step>
       </Stepper>
     </Spinner>

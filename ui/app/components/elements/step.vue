@@ -1,17 +1,16 @@
 <template>
-  <div>
+  <div class="mb3">
     <div
-      v-if="!visible || disabled"
       :class="{ pointer: !disabled }"
-      class="px2 py3 mb3 bg-white shadow1 rounded flex items-center"
+      class="px2 py3 bg-white shadow1 rounded flex items-center"
       @click="$parent.goTo(index)">
       <Ball class="mr2">
         {{ index }}
       </Ball>
       <div class="border-right border-silver y3 mr2" />
       <div class="h5 line-height-3 flex-auto">
-        <div>{{ title }}</div>
-        <small class="dim">{{ description }}</small>
+        <div class="green bold h3">{{ title }}</div>
+        <div class="h4 mt1 dim">{{ description }}</div>
       </div>
       <Ball
         v-if="complete"
@@ -31,8 +30,10 @@
     </div>
     <div
       v-if="visible && !disabled"
-      class="py2">
-      <slot />
+      class="shadow1 rounded bg-silver p2">
+      <div class="bg-white p2">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
