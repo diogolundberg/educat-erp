@@ -38,11 +38,11 @@
                 <img
                   v-if="enrollment.data.photo"
                   :src="enrollment.data.photo"
-                  class="rounded border4 border shadow2 x6 y6 bg-white">
+                  class="rounded50 shadow1 x6 y6 bg-white">
                 <img
                   v-if="!enrollment.data.photo"
                   src="../../assets/img/people.svg"
-                  class="rounded border4 border shadow2 x6 y6 bg-white">
+                  class="rounded50 shadow1 x6 y6 bg-white">
               </UploadZone>
             </div>
             <Fieldset id="personal">
