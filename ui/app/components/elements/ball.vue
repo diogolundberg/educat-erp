@@ -1,5 +1,5 @@
 <template>
-  <div class="x2 y2 p4x circle bold h4 center shadow0">
+  <div class="x3 y3 p10x circle bold h4 bg-gray white center shadow1">
     <slot />
     {{ content }}
   </div>

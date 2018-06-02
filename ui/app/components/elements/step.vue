@@ -3,11 +3,12 @@
     <div
       v-if="!visible || disabled"
       :class="{ pointer: !disabled }"
-      class="p2 mb3 bg-white shadow1 rounded flex items-center"
+      class="px2 py3 mb3 bg-white shadow1 rounded flex items-center"
       @click="$parent.goTo(index)">
       <Ball class="mr2">
         {{ index }}
       </Ball>
+      <div class="border-right border-silver y3 mr2" />
       <div class="h5 line-height-3 flex-auto">
         <div>{{ title }}</div>
         <small class="dim">{{ description }}</small>
