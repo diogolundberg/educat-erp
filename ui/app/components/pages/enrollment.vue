@@ -43,6 +43,12 @@
                   v-if="!enrollment.data.photo"
                   src="../../assets/img/people.svg"
                   class="rounded50 shadow1 x6 y6 bg-white">
+                <a
+                  v-if="!enrollment.data.photo"
+                  class="block green my2"
+                  href="#">
+                  Mudar foto
+                </a>
               </UploadZone>
             </div>
             <Fieldset id="personal">
