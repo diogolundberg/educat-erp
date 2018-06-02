@@ -1,9 +1,11 @@
 <template>
   <div
     :class="{ 'inline-block': inline }"
-    class="x3 y3 p10x circle bold h4 bg-gray white center shadow1">
-    <slot />
-    {{ content }}
+    class="x4 y4 p10x circle bold bg-gray white center shadow1">
+    <div class="h2">
+      <slot />
+      {{ content }}
+    </div>
   </div>
 </template>
 
