@@ -12,21 +12,29 @@
         <div class="green bold h3">{{ title }}</div>
         <div class="h4 mt1 dim">{{ description }}</div>
       </div>
-      <Ball
+      <Badge
         v-if="complete"
-        class="bg-green shadow1 p6x">
-        <Icon name="check" />
-      </Ball>
-      <Ball
-        v-if="error"
-        class="bg-red shadow1 p6x">
-        <Icon name="error" />
-      </Ball>
-      <Ball
-        v-if="warning"
-        class="bg-yellow shadow1 p6x">
-        <Icon name="error" />
-      </Ball>
+        success
+        big>
+        Finalizado
+      </Badge>
+      <Badge
+        v-else-if="error"
+        error
+        big>
+        Erro
+      </Badge>
+      <Badge
+        v-else-if="warning"
+        warning
+        big>
+        Atenção
+      </Badge>
+      <Badge
+        v-else
+        big>
+        Não preenchido
+      </Badge>
     </div>
     <div
       v-if="visible && !disabled"
