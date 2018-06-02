@@ -1,5 +1,7 @@
 <template>
-  <div class="x3 y3 p10x circle bold h4 bg-gray white center shadow1">
+  <div
+    :class="{ 'inline-block': inline }"
+    class="x3 y3 p10x circle bold h4 bg-gray white center shadow1">
     <slot />
     {{ content }}
   </div>
@@ -15,6 +17,11 @@
         default: null,
       },
       blank: {
+        type: Boolean,
+        default: false,
+        required: false,
+      },
+      inline: {
         type: Boolean,
         default: false,
         required: false,
