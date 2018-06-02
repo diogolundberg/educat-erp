@@ -601,23 +601,6 @@
           </div>
         </Step>
         <Step
-          title="Agende uma Visita"
-          description="Após a aprovação da secretaria e do financeiro, é hora
-            de agendar um horário para comparecer na CMMG.">
-          <div>
-            Agende sua visita!
-            <AppointmentPicker
-              v-model="appointmentDate"
-              :dates="enrollment.appointments" />
-            <div class="flex justify-end">
-              <Btn
-                primary
-                label="Confirmar Data"
-                @click="setAppointment" />
-            </div>
-          </div>
-        </Step>
-        <Step
           title="Matrícula Concluída!"
           description="Após aprovação da secretaria e financeiro,
           e agendamento da visita, sua matrícula estará concluída.">
