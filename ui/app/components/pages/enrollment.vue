@@ -45,8 +45,7 @@
             <BaseErrors
               v-model="enrollment.messages.personalData" />
             <div
-              slot="title"
-              class="center mb4n mt2">
+              class="center mt2">
               <UploadZone
                 v-model="enrollment.data.photo"
                 prefix="picture"
