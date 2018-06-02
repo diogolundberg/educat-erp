@@ -10,40 +10,40 @@
             :width="32"
             name="menu" />
         </div>
-        <div class="flex-auto flex items-center xs-hide">
+        <div class="flex-auto flex items-center xs-hide p1">
           <div>
             <img
-              :style="{ height: '3rem' }"
+              :style="{ height: '4rem' }"
               src="../../assets/img/logo.svg">
           </div>
-          <h2 class="my0 mx2 px2 thin border-white-50">
-            Matrícula Online
-          </h2>
-        </div>
-
-        <div class="sm-hide">
-          <slot />
         </div>
 
         <div>
-          <a
+          <Ball
             v-if="notifications"
-            :data-badge="notificationCount > 0 && notificationCount"
-            class="pl2 pointer"
-            href="javscript:void(0)"
-            @click.prevent="$emit('notifications')">
-            <Icon name="bell" />
-          </a>
-          <router-link
+            class="mr1"
+            inline>
+            <a
+              :data-badge="notificationCount > 0 && notificationCount"
+              class="pointer"
+              href="javscript:void(0)"
+              @click.prevent="$emit('notifications')">
+              <Icon name="bell" />
+            </a>
+          </Ball>
+          <Ball
             v-if="$store.getters.logged"
-            class="pl2 pointer"
-            to="/logout">
-            <Icon name="logout" />
-          </router-link>
+            inline>
+            <router-link
+              class="pointer"
+              to="/logout">
+              <Icon name="logout" />
+            </router-link>
+          </Ball>
         </div>
       </div>
     </header>
-    <div class="m3 p1" />
+    <div class="m3 p3" />
   </div>
 </template>
 
