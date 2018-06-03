@@ -1,6 +1,13 @@
 <template>
   <span>
+    <div
+      v-if="$slots.default"
+      class="pointer"
+      @click="!disabled && $refs.file.click()">
+      <slot />
+    </div>
     <Btn
+      v-else
       :id="`uploadBtn${_uid}`"
       :disabled="loading || disabled"
       primary

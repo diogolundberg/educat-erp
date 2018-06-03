@@ -17,7 +17,7 @@
       <div
         slot="title"
         class="center mb4n mt2">
-        <UploadZone
+        <UploadButton
           v-model="enrollment.photo"
           class="m3"
           prefix="picture"
@@ -40,7 +40,7 @@
               Não se preocupe, você pode trocar depois
             </small>
           </span>
-        </UploadZone>
+        </UploadButton>
         <h2>Como você quer ser chamado?</h2>
         <div class="my2">
           <InputBox

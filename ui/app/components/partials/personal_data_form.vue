@@ -4,7 +4,7 @@
       v-model="messages" />
     <div
       class="center mt2">
-      <UploadZone
+      <UploadButton
         :value="photo"
         prefix="picture"
         @input="$emit('photo', $event)">
@@ -22,7 +22,7 @@
           href="#">
           Mudar foto
         </a>
-      </UploadZone>
+      </UploadButton>
     </div>
     <Fieldset id="personal">
       <InputBox
