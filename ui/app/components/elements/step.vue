@@ -8,7 +8,8 @@
       :disabled="disabled"
       :complete="complete"
       :error="error"
-      :warning="warning" />
+      :warning="warning"
+      @click="$parent.goTo(index)" />
     <div
       v-if="active && !disabled"
       class="shadow1 rounded bg-silver p2">

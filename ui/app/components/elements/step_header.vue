@@ -5,7 +5,7 @@
       'bg-silver': active,
     }"
     class="px2 py3 bg-white shadow1 rounded flex items-center"
-    @click="$parent.goTo(index)">
+    @click="$emit('click')">
     <Ball
       :class="{ 'bg-yellow green': active, }"
       class="mr2">
