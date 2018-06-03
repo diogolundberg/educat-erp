@@ -32,6 +32,7 @@
           { url: "/enrollments/finance", name: "Pendências Financeiras" },
           { url: "/onboardings", name: "Onboardings" },
           { url: "/v2/academicApprovals", name: "Pendencias Acadêmicas v2" },
+          { url: "/v2/financeApprovals", name: "Pendencias Financeiras v2" },
           { url: "/v2/onboardings", name: "Onboardings v2" },
         ];
       },

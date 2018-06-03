@@ -73,6 +73,26 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: "/v2/financeApprovals",
+      component: lazy("ListPage"),
+      meta: {
+        header: true,
+        title: "Pendências Financeiras",
+        endpoint: "/v2/FinanceApprovals",
+        columns: [
+          { name: "name", title: "Nome" },
+          { name: "cpf", title: "CPF" },
+          { name: "birthDate", title: "Nascimento" },
+          { name: "email", title: "E-mail" },
+          { name: "phoneNumber", title: "Celular" },
+          { name: "plan", title: "Plano" },
+          { name: "updatedAt", title: "Modificado em" },
+          { name: "status", title: "Status" },
+        ],
+      },
+      props: true,
+    },
+    {
       path: "/v2/onboardings",
       component: lazy("ListPage"),
       meta: {
