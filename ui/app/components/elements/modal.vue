@@ -1,7 +1,5 @@
 <template>
-  <transition
-    enter-class="op0 scale0"
-    leave-to-class="op0 scale0">
+  <ScaleTransition>
     <div
       class="fixed fill bg-dim ease flex z4 overflow-scroll"
       @click.self="$emit('hide')">
@@ -9,7 +7,7 @@
         <slot />
       </div>
     </div>
-  </transition>
+  </ScaleTransition>
 </template>
 
 <script>
