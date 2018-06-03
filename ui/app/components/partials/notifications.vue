@@ -3,7 +3,7 @@
     enter-class="right0"
     leave-to-class="right0">
     <aside
-      class="fixed top-0 bottom-0 right-0 pt4 width-1 bg-white black shadow2 z2 ease">
+      class="fixed top-0 bottom-0 right-0 pt6 width-1 bg-white black shadow2 z2 ease">
       <div
         v-if="!items.length"
         class="p2 border-bottom border-silver flex items-center">

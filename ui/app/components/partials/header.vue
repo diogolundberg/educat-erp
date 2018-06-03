@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="fixed top-0 left-0 z3 w100 bg-green-grad white">
+    <header class="fixed top-0 left-0 z4 w100 bg-green-grad white">
       <div class="max-width-4 m-auto flex items-center justify-between p1">
         <div
           v-if="menu"
@@ -18,7 +18,7 @@
           </div>
         </div>
 
-        <div>
+        <div class="p2">
           <Ball
             v-if="notifications"
             class="mr1"

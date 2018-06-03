@@ -7,6 +7,7 @@
     <Notifications
       v-if="notifications"
       :items="pendencies"
+      class="z3"
       @click="notificationClick" />
 
     <EnrollmentWelcome
