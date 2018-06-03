@@ -60,6 +60,8 @@ const router = new VueRouter({
         header: true,
         title: "Pendências Acadêmicas",
         endpoint: "/v2/AcademicApprovals",
+        link: "/v2/academicApprovals",
+        key: "enrollmentNumber",
         columns: [
           { name: "name", title: "Nome" },
           { name: "cpf", title: "CPF" },
@@ -69,6 +71,17 @@ const router = new VueRouter({
           { name: "updatedAt", title: "Modificado em" },
           { name: "status", title: "Status" },
         ],
+      },
+      props: true,
+    },
+    {
+      path: "/v2/academicApprovals/:id",
+      component: lazy("Approval"),
+      meta: {
+        header: true,
+        title: "Pendência Acadêmica",
+        endpoint: "/v2/AcademicApprovals",
+        type: "academic",
       },
       props: true,
     },
