@@ -35,8 +35,9 @@
       this.records = response.data.records;
     },
     methods: {
-      clicked({ id }) {
-        this.$router.push(`${this.$route.meta.link}/${id}`);
+      clicked(record) {
+        const key = record[this.$route.meta.key || "id"];
+        this.$router.push(`${this.$route.meta.link}/${key}`);
       },
     },
   };
