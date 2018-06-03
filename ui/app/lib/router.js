@@ -69,6 +69,36 @@ const router = new VueRouter({
       meta: { header: true },
       props: true,
     },
+
+    // Version 2
+    {
+      path: "/v2/onboardings",
+      component: lazy("ListPage"),
+      meta: {
+        header: true,
+        title: "Onboardings",
+        endpoint: "v2/Onboardings",
+        link: "/v2/onboardings",
+        columns: [
+          { name: "semester", title: "Semestre" },
+          { name: "year", title: "Ano" },
+          { name: "startAt", title: "Inicio" },
+          { name: "endAt", title: "Fim" },
+          { name: "enrollmentCount", title: "Matrículas" },
+        ],
+      },
+      props: true,
+    },
+    {
+      path: "/v2/onboardings/:id",
+      component: lazy("FormPage"),
+      meta: {
+        header: true,
+        item: "onboardings",
+      },
+      props: true,
+    },
+
     {
       path: "/logout",
       beforeEnter(to, from, next) {
