@@ -176,11 +176,6 @@
       return {
         step: 1,
         appointmentDate: null,
-        handicap: [
-          { id: "yes", name: "Sim" },
-          { id: "no", name: "Não" },
-          { id: "unknown", name: "Não disponho da informação" },
-        ],
         discriminators: [
           { id: "RepresentativePerson", name: "CPF" },
           { id: "RepresentativeCompany", name: "CNPJ" },

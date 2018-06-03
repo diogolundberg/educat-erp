@@ -274,5 +274,14 @@
         default: "",
       },
     },
+    computed: {
+      handicap() {
+        return [
+          { id: "yes", name: "Sim" },
+          { id: "no", name: "Não" },
+          { id: "unknown", name: "Não disponho da informação" },
+        ];
+      },
+    },
   };
 </script>
