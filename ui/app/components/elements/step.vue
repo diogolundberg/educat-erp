@@ -1,41 +1,13 @@
 <template>
   <div class="mb3">
-    <div
-      :class="{ pointer: !disabled }"
-      class="px2 py3 bg-white shadow1 rounded flex items-center"
-      @click="$parent.goTo(index)">
-      <Ball class="mr2">
-        {{ index }}
-      </Ball>
-      <div class="border-right border-silver y3 mr2" />
-      <div class="h5 line-height-3 flex-auto">
-        <div class="green bold h3">{{ title }}</div>
-        <div class="h4 mt1 dim">{{ description }}</div>
-      </div>
-      <Badge
-        v-if="complete"
-        success
-        big>
-        Finalizado
-      </Badge>
-      <Badge
-        v-else-if="error"
-        error
-        big>
-        Erro
-      </Badge>
-      <Badge
-        v-else-if="warning"
-        warning
-        big>
-        Atenção
-      </Badge>
-      <Badge
-        v-else
-        big>
-        Não preenchido
-      </Badge>
-    </div>
+    <StepHeader
+      :index="index"
+      :title="title"
+      :description="description"
+      :disabled="disabled"
+      :complete="complete"
+      :error="error"
+      :warning="warning" />
     <div
       v-if="visible && !disabled"
       class="shadow1 rounded bg-silver p2">
