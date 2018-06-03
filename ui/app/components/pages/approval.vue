@@ -313,7 +313,7 @@
           <Btn
             primary
             label="Aprovar"
-            @click="approve(item, true)" />
+            @click="approve(true)" />
           <Btn
             fab
             fixed
@@ -322,12 +322,48 @@
             <icon name="warning" />
           </Btn>
         </template>
+
+        <SideModal
+          v-model="modal"
+          :title="$route.meta.title">
+          <Fieldset
+            class="m2"
+            title="Pendências">
+            <Multi
+              v-model="pendencies"
+              :errors="pendenciesErrors"
+              :default="{ sectionId: null, description: '' }"
+              error-key="pendencies">
+              <template slot-scope="multiScope">
+                <DropDown
+                  v-model="multiScope.item.sectionId"
+                  :errors="multiScope.error.sectionId"
+                  :options="item.options.sections"
+                  label="Documento" />
+                <InputBox
+                  v-model="multiScope.item.description"
+                  :errors="multiScope.error.description"
+                  label="Descrição da Pendência" />
+              </template>
+            </Multi>
+          </Fieldset>
+          <template slot="footer">
+            <Btn
+              primary
+              label="Enviar Pendência"
+              @click="approve" />
+          </template>
+        </SideModal>
       </div>
     </DataForm>
+
+    <ThumbModal :url="modalUrl" />
   </div>
 </template>
 
 <script>
+  import axios from "axios";
+
   export default {
     name: "Approval",
     props: {
@@ -340,11 +376,31 @@
       return {
         modal: false,
         modalUrl: null,
+        pendencies: [],
+        pendenciesErrors: {},
       };
     },
     computed: {
       type() {
         return this.$route.meta.type;
+      },
+      endpoint() {
+        return [
+          this.$store.getters.onboardingEndpoint,
+          this.$route.meta.endpoint,
+        ].join("");
+      },
+    },
+    methods: {
+      async approve(none = false) {
+        const data = {
+          enrollmentNumber: this.id,
+          pendencies: none ? [] : this.pendencies,
+        };
+        await axios.put(`${this.endpoint}/${this.id}`, data);
+        this.notify("Enviado com sucesso!");
+        this.modal = false;
+        this.$router.push(`/v2/${this.type}Approvals`);
       },
     },
   };
