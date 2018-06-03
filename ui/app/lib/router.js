@@ -51,24 +51,6 @@ const router = new VueRouter({
       meta: { header: true },
       props: true,
     },
-    {
-      path: "/scheduling",
-      component: lazy("SchedulingList"),
-      meta: { header: true },
-      props: true,
-    },
-    {
-      path: "/scheduling/new",
-      component: lazy("SchedulingItem"),
-      meta: { header: true },
-      props: true,
-    },
-    {
-      path: "/scheduling/:id",
-      component: lazy("SchedulingItem"),
-      meta: { header: true },
-      props: true,
-    },
 
     // Version 2
     {
