@@ -1,5 +1,15 @@
 <template>
   <div>
+    <BaseErrors
+      v-model="messages" />
+    <p>Envie seus dados para a secetaria e para o departamento financeiro para
+    aprovação.</p>
+    <div class="center">
+      <img
+        :style="{ 'max-width': '8rem' }"
+        src="../../assets/img/card.svg">
+    </div>
+
     <Fieldset title="Dados Gerais">
       <div class="col-12 center mb2">
         <img
@@ -268,6 +278,11 @@
       summary: {
         type: Object,
         required: true,
+      },
+      messages: {
+        type: Array,
+        required: false,
+        default: () => [],
       },
     },
     data() {

@@ -55,20 +55,10 @@
           title="Enviar para Análise"
           description="Enviar para aprovação da secretaria e departamento
             financeiro">
-          <div>
-            <BaseErrors
-              v-model="enrollment.messages.sendToApproval" />
-            <p>Envie seus dados para a secetaria e para o departamento financeiro para
-            aprovação.</p>
-            <div class="center">
-              <img
-                :style="{ 'max-width': '8rem' }"
-                src="../../assets/img/card.svg">
-            </div>
-            <EnrollmentSummary
-              :summary="summary"
-              @submit="submitEnrollment" />
-          </div>
+          <EnrollmentSummary
+            :summary="summary"
+            :messages="enrollment.messages.sendToApproval"
+            @submit="submitEnrollment" />
         </Step>
         <Step
           v-if="enrollment.data.sentAt"
