@@ -185,22 +185,6 @@
           { id: "RepresentativePerson", name: "CPF" },
           { id: "RepresentativeCompany", name: "CNPJ" },
         ],
-        emptyGuarantor: {
-          discriminator: "RepresentativePerson",
-          cpf: "",
-          cnpj: "",
-          name: "",
-          contact: "",
-          relationshipId: null,
-          streetAddress: "",
-          complementAddress: "",
-          neighborhood: "",
-          phoneNumber: "",
-          landline: "",
-          email: "",
-          cityId: null,
-          stateId: null,
-        },
       };
     },
     computed: {

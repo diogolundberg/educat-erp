@@ -167,6 +167,24 @@
         const plan = this.options.plans.find(a => a.id === planId);
         return plan && plan.guarantors;
       },
+      emptyGuarantor() {
+        return {
+          discriminator: "RepresentativePerson",
+          cpf: "",
+          cnpj: "",
+          name: "",
+          contact: "",
+          relationshipId: null,
+          streetAddress: "",
+          complementAddress: "",
+          neighborhood: "",
+          phoneNumber: "",
+          landline: "",
+          email: "",
+          cityId: null,
+          stateId: null,
+        };
+      },
     },
     methods: {
       validationsFor(item) {
