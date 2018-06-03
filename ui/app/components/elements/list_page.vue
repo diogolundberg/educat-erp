@@ -5,6 +5,15 @@
       :value="records"
       :columns="$route.meta.columns"
       @click="clicked" />
+    <div
+      v-if="$route.meta.new"
+      class="right m2">
+      <router-link
+        :to="$route.meta.new"
+        class="btn btn-primary upcase shadow0">
+        Inserir Novo
+      </router-link>
+    </div>
   </div>
 </template>
 

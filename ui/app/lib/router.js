@@ -61,6 +61,7 @@ const router = new VueRouter({
         title: "Onboardings",
         endpoint: "v2/Onboardings",
         link: "/v2/onboardings",
+        new: "/v2/onboardings/new",
         columns: [
           { name: "semester", title: "Semestre" },
           { name: "year", title: "Ano" },
