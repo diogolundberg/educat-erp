@@ -9,6 +9,8 @@ Vue.use(VueX);
 const url1 = process.env.SSO_HOST || "https://cmmg-sso.azurewebsites.net";
 const url2 = process.env.ONBOARDING_HOST || "https://cmmg-onboarding.azurewebsites.net";
 const url3 = process.env.UPLOAD_HOST || "https://cmmg-upload.azurewebsites.net";
+const url4 = process.env.ONBOARDING_V2_HOST ||
+  "https://educat-staging-onboarding-webapp.azurewebsites.net";
 
 export default new VueX.Store({
   state: {
@@ -131,6 +133,8 @@ export default new VueX.Store({
   },
   getters: {
     enrollmentUrl: () => url2,
+    onboardingEndpoint: () => url4,
+    token: state => state.token,
 
     // Agnostic services
     logged: state => !!state.token,
