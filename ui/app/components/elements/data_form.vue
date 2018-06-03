@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <Spinner :active="loading">
     <h2
       v-if="title">
       {{ title }}
@@ -23,7 +23,7 @@
         label="Salvar"
         @click="submitForm" />
     </div>
-  </div>
+  </Spinner>
 </template>
 
 <script>
@@ -48,6 +48,7 @@
     },
     data() {
       return {
+        loading: false,
         item: {},
         errors: {},
         messages: [],
@@ -55,8 +56,10 @@
     },
     async mounted() {
       if (this.id) {
+        this.loading = true;
         const response = await axios.get(`${this.endpoint}/${this.id}`);
         this.item = response.data;
+        this.loading = false;
       }
     },
     methods: {
