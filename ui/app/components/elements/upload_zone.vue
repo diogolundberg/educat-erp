@@ -46,8 +46,9 @@
           return;
         }
 
-        await this.$store.dispatch("presign", `${this.prefix}${file.name}`);
-        const url = this.$store.getters.uploadUrl;
+        const fileName = `${this.prefix}-${new Date().getTime()}-${file.name}`;
+        await this.$store.dispatch("presign", fileName);
+        const url = this.$store.state.uploadUrl;
 
         const headers = {
           "x-ms-blob-type": "BlockBlob",

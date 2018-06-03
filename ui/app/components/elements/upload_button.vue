@@ -73,7 +73,7 @@
 
         this.loading = true;
         this.loaded = 0;
-        const fileName = `${this.prefix}${new Date().getTime()}-${file.name}`;
+        const fileName = `${this.prefix}-${new Date().getTime()}-${file.name}`;
         await this.$store.dispatch("presign", fileName);
         const url = this.$store.state.uploadUrl;
 
