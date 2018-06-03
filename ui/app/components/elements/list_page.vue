@@ -28,14 +28,22 @@
         records: [],
       };
     },
-    async mounted() {
-      const { onboardingEndpoint, token } = this.$store.getters;
-      const url = `${onboardingEndpoint}/${this.$route.meta.endpoint}`;
-      const headers = { Authorization: `Bearer ${token}` };
-      const response = await axios.get(url, { headers });
-      this.records = response.data.records;
+    watch: {
+      "$route.meta"() {
+        this.load();
+      },
+    },
+    mounted() {
+      this.load();
     },
     methods: {
+      async load() {
+        const { onboardingEndpoint, token } = this.$store.getters;
+        const url = `${onboardingEndpoint}/${this.$route.meta.endpoint}`;
+        const headers = { Authorization: `Bearer ${token}` };
+        const response = await axios.get(url, { headers });
+        this.records = response.data.records;
+      },
       clicked(record) {
         const key = record[this.$route.meta.key || "id"];
         this.$router.push(`${this.$route.meta.link}/${key}`);
