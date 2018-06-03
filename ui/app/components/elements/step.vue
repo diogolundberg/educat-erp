@@ -1,6 +1,7 @@
 <template>
   <div class="mb3">
     <StepHeader
+      :active="active"
       :index="index"
       :title="title"
       :description="description"
@@ -9,7 +10,7 @@
       :error="error"
       :warning="warning" />
     <div
-      v-if="visible && !disabled"
+      v-if="active && !disabled"
       class="shadow1 rounded bg-silver p2">
       <div class="bg-white p2">
         <slot />
@@ -48,7 +49,7 @@
       },
     },
     computed: {
-      visible() {
+      active() {
         return this.$parent.value === this.index;
       },
       index() {
