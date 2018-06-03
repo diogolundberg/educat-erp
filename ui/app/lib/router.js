@@ -92,6 +92,8 @@ const router = new VueRouter({
         header: true,
         title: "Pendências Financeiras",
         endpoint: "/v2/FinanceApprovals",
+        link: "/v2/financeApprovals",
+        key: "enrollmentNumber",
         columns: [
           { name: "name", title: "Nome" },
           { name: "cpf", title: "CPF" },
@@ -102,6 +104,17 @@ const router = new VueRouter({
           { name: "updatedAt", title: "Modificado em" },
           { name: "status", title: "Status" },
         ],
+      },
+      props: true,
+    },
+    {
+      path: "/v2/financeApprovals/:id",
+      component: lazy("Approval"),
+      meta: {
+        header: true,
+        title: "Pendência Financeira",
+        endpoint: "/v2/FinanceApprovals",
+        type: "academic",
       },
       props: true,
     },

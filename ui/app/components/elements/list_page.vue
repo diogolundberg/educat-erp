@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ meta }}
     <h2>{{ $route.meta.title }}</h2>
     <List
       :value="records"
