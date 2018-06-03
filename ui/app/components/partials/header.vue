@@ -20,14 +20,13 @@
 
         <div class="p2">
           <Ball
-            v-if="notifications"
             class="mr1"
             inline>
             <a
-              :data-badge="notificationCount > 0 && notificationCount"
+              :data-badge="notifications.length > 0 && notifications.length"
               class="pointer"
               href="javscript:void(0)"
-              @click.prevent="$emit('notifications')">
+              @click.prevent="showNotifications = !showNotifications">
               <Icon name="bell" />
             </a>
           </Ball>
@@ -44,6 +43,11 @@
       </div>
     </header>
     <div class="m3 p2" />
+    <Notifications
+      v-if="showNotifications"
+      :items="notifications"
+      class="z3"
+      @click="$emit('notification', $event)" />
   </div>
 </template>
 
@@ -56,13 +60,14 @@
         default: false,
       },
       notifications: {
-        type: Boolean,
-        default: false,
+        type: Array,
+        default: () => [],
       },
-      notificationCount: {
-        type: Number,
-        default: null,
-      },
+    },
+    data() {
+      return {
+        showNotifications: false,
+      };
     },
   };
 </script>

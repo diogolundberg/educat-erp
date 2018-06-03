@@ -1,14 +1,8 @@
 <template>
   <div>
     <Header
-      :notification-count="pendencies.length"
-      notifications
-      @notifications="notifications = !notifications" />
-    <Notifications
-      v-if="notifications"
-      :items="pendencies"
-      class="z3"
-      @click="notificationClick" />
+      :notifications="pendencies"
+      @notification="notificationClick" />
 
     <EnrollmentWelcome
       v-if="enrollment.data.firstTime"
@@ -623,7 +617,6 @@
       return {
         step: 1,
         agreed: false,
-        notifications: false,
         appointmentDate: null,
         handicap: [
           { id: "yes", name: "Sim" },
