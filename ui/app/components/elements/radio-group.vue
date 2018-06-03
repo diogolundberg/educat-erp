@@ -1,6 +1,12 @@
 <template>
   <span :is="container">
     <label
+      v-for="error in errors"
+      :key="error"
+      class="block red h7">
+      {{ error }}
+    </label>
+    <label
       v-if="label"
       class="block my2 dim">
       {{ label }}
@@ -31,6 +37,11 @@
       },
       options: {
         type: Array,
+        default: () => [],
+      },
+      errors: {
+        type: Array,
+        required: false,
         default: () => [],
       },
       idField: {
