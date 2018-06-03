@@ -6,15 +6,13 @@
       <div class="h6 upcase bold">{{ title }}</div>
       <div class="h4 bold">{{ show ? '-' : '+' }}</div>
     </div>
-    <transition
-      enter-class="op0"
-      leave-to-class="op0">
+    <FadeTransition>
       <div
         v-if="show"
         class="p2 ease truncate">
         <slot />
       </div>
-    </transition>
+    </FadeTransition>
   </div>
 </template>
 
