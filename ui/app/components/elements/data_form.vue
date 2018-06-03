@@ -18,6 +18,7 @@
       :errors="errors" />
     <div class="right-align mx2 mb2">
       <Btn
+        v-if="editable"
         submit
         primary
         label="Salvar"
@@ -44,6 +45,10 @@
         type: String,
         required: false,
         default: null,
+      },
+      editable: {
+        type: Boolean,
+        default: true,
       },
     },
     data() {
