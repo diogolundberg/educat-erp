@@ -24,7 +24,7 @@
           dim: nudge || !allErrors.length,
         }"
         :for="`fld${_uid}`"
-        class="py2 absolute top-0 left-0 bounce h5 noclick">
+        class="py2 absolute top-0 left-0 bounce h5 noclick truncate">
         {{ label }}
       </label>
       <span
