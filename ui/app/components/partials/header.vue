@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="fixed top-0 left-0 z4 w100 bg-green-grad white">
+    <header class="fixed top-0 left-0 y6r z4 w100 bg-green-grad white">
       <div class="max-width-4 m-auto flex items-center justify-between p1">
         <div
           v-if="menu"
@@ -10,15 +10,12 @@
             :width="32"
             name="menu" />
         </div>
-        <div class="flex-auto flex items-center xs-hide p1">
-          <div>
-            <img
-              :style="{ height: '4rem' }"
-              src="../../assets/img/logo.svg">
-          </div>
-        </div>
+        <img
+          class="y4r xs-hide"
+          src="../../assets/img/logo.svg">
 
-        <div class="p2">
+        <div />
+        <div class="m1">
           <Ball
             class="mr1"
             inline>
