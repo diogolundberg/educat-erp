@@ -16,7 +16,9 @@
         <div class="flex-auto overflow-auto">
           <slot />
         </div>
-        <div class="px3 py2 bg-silver right-align">
+        <div
+          v-if="$slots.footer"
+          class="px3 py2 bg-silver right-align">
           <slot name="footer" />
         </div>
       </div>
