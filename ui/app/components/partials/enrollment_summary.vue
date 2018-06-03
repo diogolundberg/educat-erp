@@ -245,6 +245,19 @@
         </Fieldset>
       </div>
     </Fieldset>
+    <Fieldset title="Confirmação">
+      <Checkbox
+        v-model="agreed"
+        class="mb3"
+        label="Confirmo que as informações acima estão corretas" />
+    </Fieldset>
+    <div class="flex justify-end">
+      <Btn
+        :disabled="!agreed"
+        primary
+        label="Enviar"
+        @click="$emit('submit')" />
+    </div>
   </div>
 </template>
 
@@ -256,6 +269,11 @@
         type: Object,
         required: true,
       },
+    },
+    data() {
+      return {
+        agreed: false,
+      };
     },
   };
 </script>

@@ -65,20 +65,9 @@
                 :style="{ 'max-width': '8rem' }"
                 src="../../assets/img/card.svg">
             </div>
-            <EnrollmentSummary :summary="summary" />
-            <Fieldset title="Confirmação">
-              <Checkbox
-                v-model="agreed"
-                class="mb3"
-                label="Confirmo que as informações acima estão corretas" />
-            </Fieldset>
-            <div class="flex justify-end">
-              <Btn
-                :disabled="!agreed"
-                primary
-                label="Enviar"
-                @click="submitEnrollment" />
-            </div>
+            <EnrollmentSummary
+              :summary="summary"
+              @submit="submitEnrollment" />
           </div>
         </Step>
         <Step
@@ -196,7 +185,6 @@
     data() {
       return {
         step: 1,
-        agreed: false,
         appointmentDate: null,
         handicap: [
           { id: "yes", name: "Sim" },
