@@ -42,141 +42,13 @@
           :error="enrollment.data.financeData.status == 'invalid'"
           title="Dados Financeiros"
           description="Aqui você insere seus dados de pagamento.">
-          <div>
-            <BaseErrors
-              v-model="enrollment.messages.financeData" />
-            <Fieldset title="Dados Financeiros">
-              <List
-                v-model="enrollment.options.plans"
-                :columns="[
-                  {name: 'name', title: 'Plano'},
-                  {name: 'value', title: 'Total', css:'right-align'},
-                  {name: 'installments', title: 'Parcelas', css:'right-align'},
-                  {name: 'installmentValue', title: 'Valor da Parcela'},
-                  {name: 'dueDate', title: 'Vencimento'},
-                  {name: 'guarantors', title: 'Fiadores'},
-                ]"
-                :show-filter="false"
-                :disabled="!enrollment.data.financeData.editable"
-                @click="enrollment.data.financeData.planId = $event.id">
-                <template
-                  slot="column-name"
-                  scope="{ row }">
-                  <Radio
-                    :value="enrollment.data.financeData.planId === row.id"
-                    class="mr2" />
-                  {{ row.name }}
-                </template>
-              </List>
-              <DropDown
-                v-model="enrollment.data.financeData.paymentMethodId"
-                :errors="enrollment.errors.financeData.paymentMethodId"
-                :size="6"
-                :options="enrollment.options.paymentMethod"
-                :disabled="!enrollment.data.financeData.editable"
-                label="Meio de Pagamento" />
-            </Fieldset>
-            <Fieldset title="Responsável Financeiro">
-              <InputBox
-                v-model="enrollment.data.financeData.representative.cpf"
-                :errors="enrollment.errors.financeData.representative &&
-                enrollment.errors.financeData.representative.cpf"
-                :size="4"
-                :min-size="14"
-                :disabled="!enrollment.data.financeData.editable || !underage"
-                cpf
-                label="CPF"
-                mask="###.###.###-##"
-                hint="Ex: 000.000.000-00" />
-              <InputBox
-                v-model="enrollment.data.financeData.representative.name"
-                :errors="enrollment.errors.financeData.representative &&
-                enrollment.errors.financeData.representative.name"
-                :size="4"
-                :disabled="!enrollment.data.financeData.editable || !underage"
-                label="Nome completo" />
-              <DropDown
-                v-model="enrollment.data.financeData.representative.relationshipId"
-                :errors="enrollment.errors.financeData.representative &&
-                enrollment.errors.financeData.representative.relationshipId"
-                :size="4"
-                :options="enrollment.options.relationships"
-                :disabled="!enrollment.data.financeData.editable || !underage"
-                label="Relacionamento com o aluno" />
-            </Fieldset>
-            <ContactBlock
-              v-model="enrollment.data.financeData.representative"
-              :errors="enrollment.errors.financeData.representative"
-              :disabled="!enrollment.data.financeData.editable || !underage" />
-            <AddressBlock
-              v-model="enrollment.data.financeData.representative"
-              :errors="enrollment.errors.financeData.representative"
-              :options="enrollment.options"
-              :disabled="!enrollment.data.financeData.editable || !underage" />
-            <Fieldset
-              v-show="guarantorsAmount > 0"
-              title="Fiadores">
-              <Many
-                v-model="enrollment.data.financeData.guarantors"
-                :errors="enrollment.errors.financeData"
-                :default="emptyGuarantor"
-                :disabled="!enrollment.data.financeData.editable"
-                :amount="guarantorsAmount"
-                error-key="guarantors">
-                <template slot-scope="{ item, error }">
-                  <Fieldset
-                    title="Dados Gerais">
-                    <InputBox
-                      v-model="item.cpf"
-                      :errors="error.cpf"
-                      :size="4"
-                      :min-size="14"
-                      :disabled="!enrollment.data.financeData.editable"
-                      cpf
-                      label="CPF"
-                      mask="###.###.###-##"
-                      hint="Ex: 000.000.000-00" />
-                    <InputBox
-                      v-model="item.name"
-                      :errors="error.name"
-                      :size="4"
-                      :disabled="!enrollment.data.financeData.editable"
-                      label="Nome" />
-                    <DropDown
-                      v-model="item.relationshipId"
-                      :errors="error.relationshipId"
-                      :size="4"
-                      :options="enrollment.options.relationships"
-                      :disabled="!enrollment.data.financeData.editable"
-                      label="Relacionamento com o aluno" />
-                  </FieldSet>
-                  <AddressBlock
-                    v-model="item"
-                    :errors="error"
-                    :disabled="!enrollment.data.financeData.editable"
-                    :options="enrollment.options" />
-                  <ContactBlock
-                    v-model="item"
-                    :errors="error"
-                    :disabled="!enrollment.data.financeData.editable" />
-                  <Documents
-                    v-model="item.documents"
-                    :errors="error.documents"
-                    :types="enrollment.options.guarantorDocuments"
-                    :prefix="`onboarding/enrollment/${ id }/financeData/`"
-                    :disabled="!enrollment.data.financeData.editable"
-                    :validations="validationsFor(item)" />
-                </template>
-              </Many>
-            </Fieldset>
-            <div class="flex justify-end">
-              <Btn
-                :disabled="!enrollment.data.financeData.editable"
-                primary
-                label="Próximo"
-                @click="saveFinanceData" />
-            </div>
-          </div>
+          <FinanceDataForm
+            :data="enrollment.data.financeData"
+            :errors="enrollment.errors.financeData"
+            :options="enrollment.options"
+            :messages="enrollment.messages.financeData"
+            :underage="underage"
+            @click="saveFinanceData" />
         </Step>
         <Step
           v-if="!enrollment.data.sentAt"
@@ -363,11 +235,6 @@
       underage() {
         return this.enrollment.underage;
       },
-      guarantorsAmount() {
-        const { planId } = this.enrollment.data.financeData;
-        const plan = this.enrollment.options.plans.find(a => a.id === planId);
-        return plan && plan.guarantors;
-      },
       validations() {
         const matches = (opt, key, val) =>
           this.enrollment.options[opt].filter(a => a[key]).map(a => a.id).includes(val);
@@ -524,20 +391,6 @@
         await this.sleep(100);
         window.location.hash = anchor;
         this.notifications = false;
-      },
-      validationsFor(item) {
-        const matches = (opt, key, val) =>
-          this.enrollment.options[opt].filter(a => a[key]).map(a => a.id).includes(val);
-
-        const isSpouse = matches(
-          "relationships",
-          "checkSpouse",
-          item.relationshipId,
-        );
-
-        return [
-          isSpouse && "Spouse",
-        ];
       },
     },
   };
