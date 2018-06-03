@@ -72,11 +72,18 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: "/v2/onboardings/:id",
-      component: lazy("FormPage"),
+      path: "/v2/onboardings/new",
+      component: lazy("Onboarding"),
       meta: {
         header: true,
-        item: "onboardings",
+      },
+      props: true,
+    },
+    {
+      path: "/v2/onboardings/:id",
+      component: lazy("Onboarding"),
+      meta: {
+        header: true,
       },
       props: true,
     },
