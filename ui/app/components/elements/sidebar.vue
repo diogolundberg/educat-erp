@@ -2,7 +2,8 @@
   <div class="sm-width-1">
     <aside
       :class="{ 'sm-left0': !visible }"
-      class="fixed top-0 bottom-0 left-0 z2 mt6 bg-white shadow2 ease width-1">
+      class="fixed top-0 bottom-0 left-0 z2 mt6 bg-white shadow2 ease width-1
+        overflow-auto">
       <div class="relative border-bottom border-silver">
         <div>
           <img
