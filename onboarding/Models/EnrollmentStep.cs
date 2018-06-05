@@ -18,6 +18,6 @@ namespace onboarding.Models
         public int StepId { get; set; }
         public virtual Step Step { get; set; }
 
-        public IEnumerable<Pendency> Pendencies { get; set; }
+        public virtual ICollection<Pendency> Pendencies { get; set; }
     }
 }
