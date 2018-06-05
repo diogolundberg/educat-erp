@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using onboarding.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,8 +51,23 @@ namespace onboarding.Services
             return base.List()
                         .Include("Enrollment")
                         .Include("Step")
+                        .Include("Pendencies")
                         .Include("Enrollment.PersonalData")
                         .FirstOrDefault(x => x.Id == id);
+        }
+
+        public EnrollmentStep UpdatePendencies(EnrollmentStep enrollmentStep, List<Pendency> list)
+        {
+            enrollmentStep.Pendencies.Clear();
+
+            foreach (Pendency pendency in list)
+            {
+                enrollmentStep.Pendencies.Add(pendency);
+            }
+
+            base.Update(enrollmentStep);
+
+            return enrollmentStep;
         }
     }
 }

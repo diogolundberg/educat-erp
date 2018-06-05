@@ -162,7 +162,7 @@ namespace onboarding.Models
         {
             get
             {
-                return !Enrollment.SentAt.HasValue || Enrollment.AcademicPendencies.Count() > 0;
+                return !Enrollment.SentAt.HasValue;
             }
         }
     }

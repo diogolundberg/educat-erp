@@ -26,9 +26,6 @@ namespace onboarding.Models
             builder.Entity<RepresentativePerson>().HasBaseType<Representative>();
             builder.Entity<RepresentativeCompany>().HasBaseType<Representative>();
 
-            builder.Entity<AcademicPendency>().HasBaseType<Pendency>();
-            builder.Entity<FinancePendency>().HasBaseType<Pendency>();
-
             builder.Entity<AcademicSection>().HasBaseType<Section>();
             builder.Entity<FinanceSection>().HasBaseType<Section>();
         }

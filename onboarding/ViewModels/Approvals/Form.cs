@@ -2,17 +2,12 @@
 
 namespace onboarding.ViewModels.Approvals
 {
-    public class Record
+    public class Form
     {
-        public Record()
+        public Form()
         {
             Pendencies = new HashSet<Pendency>();
         }
-
-        public int Id { get; set; }
-        public string SentAt { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
 
         public ICollection<Pendency> Pendencies { get; set; }
     }

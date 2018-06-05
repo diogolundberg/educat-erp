@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using onboarding.Models;
 
 namespace onboarding.Validations.Contract
 {
