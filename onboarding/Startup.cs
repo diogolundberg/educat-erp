@@ -80,6 +80,7 @@ namespace onboarding
             services.AddScoped<FinanceDataService, FinanceDataService>();
             services.AddScoped<EnrollmentStepService, EnrollmentStepService>();
             services.AddScoped<ContractService, ContractService>();
+            services.AddScoped<SectionService, SectionService>();
             services.AddScoped<StepResolver, StepResolver>();
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
