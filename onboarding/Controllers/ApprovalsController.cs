@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using onboarding.Models;
 using onboarding.Services;
+using onboarding.Validations.Approval;
 using onboarding.ViewModels.Approvals;
 using System.Collections.Generic;
 
@@ -38,8 +40,8 @@ namespace onboarding.Controllers
             return Ok(_mapper.Map<Record>(enrollmentStep));
         }
 
-        [HttpPost("{id}/{resource}", Name = "ONBOARDING/APPROVALS/POST")]
-        public IActionResult Post([FromRoute] int id, [FromRoute]string resource)
+        [HttpPost("{id}", Name = "ONBOARDING/APPROVALS/POST")]
+        public IActionResult Post([FromRoute]int id, [FromBody]Form obj)
         {
             EnrollmentStep enrollmentStep = _enrollmentStepService.GetById(id);
 
@@ -48,7 +50,17 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.IsEmpty } });
             }
 
-            return Ok();
+            EnrollmentStepValidator validator = new EnrollmentStepValidator();
+            ValidationResult validationResult = validator.Validate(_mapper.Map<EnrollmentStep>(obj));
+
+            if (!validationResult.IsValid)
+            {
+                return new BadRequestObjectResult(new { errors = FormatErrors(validationResult) });
+            }
+
+            enrollmentStep = _enrollmentStepService.UpdatePendencies(enrollmentStep, _mapper.Map<List<Pendency>>(obj.Pendencies));
+
+            return Ok(_mapper.Map<Record>(enrollmentStep));
         }
     }
 }
