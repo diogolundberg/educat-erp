@@ -13,11 +13,13 @@ namespace onboarding.Controllers
     {
         private readonly IMapper _mapper;
         private readonly EnrollmentStepService _enrollmentStepService;
+        private readonly SectionService _sectionService;
 
-        public ApprovalsController(IMapper mapper, EnrollmentStepService enrollmentStepService)
+        public ApprovalsController(IMapper mapper, EnrollmentStepService enrollmentStepService, SectionService sectionService)
         {
             _mapper = mapper;
             _enrollmentStepService = enrollmentStepService;
+            _sectionService = sectionService;
         }
 
         [HttpGet("", Name = "ONBOARDING/APPROVALS/LIST")]
@@ -61,6 +63,12 @@ namespace onboarding.Controllers
             enrollmentStep = _enrollmentStepService.UpdatePendencies(enrollmentStep, _mapper.Map<List<Pendency>>(obj.Pendencies));
 
             return Ok(_mapper.Map<Record>(enrollmentStep));
+        }
+
+        [HttpOptions(Name = "ONBOARDING/APPROVALS/OPTIONS")]
+        public IActionResult Options()
+        {
+            return Ok(_sectionService.List());
         }
     }
 }
