@@ -30,12 +30,25 @@ namespace onboarding.Controllers
         {
             EnrollmentStep enrollmentStep = _enrollmentStepService.GetById(id);
 
-            if(enrollmentStep == null)
+            if (enrollmentStep == null)
             {
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.IsEmpty } });
             }
 
             return Ok(_mapper.Map<Record>(enrollmentStep));
+        }
+
+        [HttpPost("{id}/{resource}", Name = "ONBOARDING/APPROVALS/POST")]
+        public IActionResult Post([FromRoute] int id, [FromRoute]string resource)
+        {
+            EnrollmentStep enrollmentStep = _enrollmentStepService.GetById(id);
+
+            if (enrollmentStep == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.IsEmpty } });
+            }
+
+            return Ok();
         }
     }
 }

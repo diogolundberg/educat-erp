@@ -12,9 +12,10 @@ using System;
 namespace onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180605155924_remove_pendencies_and_add_to_enrollment_step")]
+    partial class remove_pendencies_and_add_to_enrollment_step
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace onboarding.Models
 {
-    public abstract class Pendency : BaseModel
+    public class Pendency : BaseModel
     {
         [Required]
         [ForeignKey("Section")]
@@ -17,9 +17,9 @@ namespace onboarding.Models
         [Required]
         public string Description { get; set; }
 
-        [ForeignKey("Enrollment")]
-        public int EnrollmentId { get; set; }
+        [ForeignKey("EnrollmentStep")]
+        public int EnrollmentStepId { get; set; }
 
-        public virtual Enrollment Enrollment { get; set; }
+        public virtual EnrollmentStep EnrollmentStep { get; set; }
     }
 }
