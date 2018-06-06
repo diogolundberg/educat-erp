@@ -21,7 +21,6 @@ namespace onboarding.Services
             return base.List()
                         .Include("Enrollment.Onboarding")
                         .Include("Enrollment")
-                        .Include("Enrollment.Pendencies")
                         .Include("Enrollment.PersonalData")
                         .Include("Representative")
                         .Include("Guarantors")

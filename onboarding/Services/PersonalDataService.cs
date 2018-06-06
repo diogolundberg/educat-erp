@@ -18,7 +18,6 @@ namespace onboarding.Services
                         .Include("HighSchoolGraduationCountry")
                         .Include("Enrollment.Onboarding")
                         .Include("Enrollment")
-                        .Include("Enrollment.Pendencies")
                         .Include("Enrollment.FinanceData")
                         .Include("Enrollment.FinanceData.Guarantors")
                         .Include("Enrollment.FinanceData.Representative")
