@@ -111,7 +111,11 @@ namespace onboarding.Controllers
                 _enrollmentStepService.Update(enrollmentNumber, "PersonalDatas");
             }
 
-            return Ok();
+            return new OkObjectResult(new
+            {
+                errors,
+                data = _mapper.Map<Record>(personalData)
+            });
         }
     }
 }
