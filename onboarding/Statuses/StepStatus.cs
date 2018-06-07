@@ -19,6 +19,10 @@ namespace onboarding.Statuses
             }
             else if(_enrollmentStep != null && _enrollmentStep.Pendencies.Count > 0)
             {
+                return "invalid";
+            }
+            else if (!_enrollmentStep.ApprovedAt.HasValue && _entity.HasApproval)
+            {
                 return "pending";
             }
             else
