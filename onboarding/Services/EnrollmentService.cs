@@ -16,6 +16,8 @@ namespace onboarding.Services
                         .Include("Onboarding")
                         .Include("Contract")
                         .Include("EnrollmentSteps")
+                        .Include("EnrollmentSteps.Pendencies")
+                        .Include("EnrollmentSteps.Pendencies.Section")
                         .Include("PersonalData")
                         .Include("PersonalData.PersonalDataDisabilities")
                         .Include("PersonalData.PersonalDataSpecialNeeds")
