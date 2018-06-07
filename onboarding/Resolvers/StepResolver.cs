@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using onboarding.Models;
+using onboarding.Statuses;
 using onboarding.ViewModels.Enrollments;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace onboarding.Resolvers
                 {
                     Resource = step.Resource,
                     Name = step.Name,
-                    Status = enrollmentStep != null ? "valid" : "invalid",
+                    Status = new StepStatus(null, step, enrollmentStep).GetStatus(),
                     Pendencies = enrollmentStep != null ? enrollmentStep.Pendencies.Select(x => new ViewModels.Pendency
                     {
                         Anchor = x.Section.Anchor,
