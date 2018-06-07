@@ -15,12 +15,15 @@ namespace onboarding.Services
 
         public override IQueryable<EnrollmentStep> List()
         {
-            return base.List().Include("Enrollment").Include("Step");
+            return base.List()
+                .Include("Enrollment")
+                .Include("Pendencies")
+                .Include("Step");
         }
 
         public void Update(string enrollmentNumber, string resource)
         {
-            Enrollment enrollment = _context.Enrollments.Include("EnrollmentSteps").Include("EnrollmentSteps.Step").SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+            Enrollment enrollment = _context.Enrollments.Include("EnrollmentSteps").Include("Pendencies").Include("EnrollmentSteps.Step").SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment != null)
             {
