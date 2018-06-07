@@ -27,7 +27,14 @@ namespace onboarding.Resolvers
                 {
                     Resource = step.Resource,
                     Name = step.Name,
-                    Status = enrollmentStep != null ? "valid" : "invalid"
+                    Status = enrollmentStep != null ? "valid" : "invalid",
+                    Pendencies = enrollmentStep != null ? enrollmentStep.Pendencies.Select(x => new ViewModels.Pendency
+                    {
+                        Anchor = x.Section.Anchor,
+                        Description = x.Description,
+                        Id = x.Id,
+                        SectionId = x.SectionId
+                    }) : new List<ViewModels.Pendency>()
                 });
             }
 
