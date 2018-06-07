@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace onboarding.Models
@@ -19,5 +20,7 @@ namespace onboarding.Models
         public virtual Step Step { get; set; }
 
         public virtual ICollection<Pendency> Pendencies { get; set; }
+
+        public DateTime? ApprovedAt { get; set; }
     }
 }
