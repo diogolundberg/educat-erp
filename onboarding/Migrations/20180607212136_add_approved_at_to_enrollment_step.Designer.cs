@@ -12,9 +12,10 @@ using System;
 namespace onboarding.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180607212136_add_approved_at_to_enrollment_step")]
+    partial class add_approved_at_to_enrollment_step
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
