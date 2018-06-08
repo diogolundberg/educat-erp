@@ -1,4 +1,6 @@
-﻿using onboarding.Models;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using onboarding.Models;
 
 namespace onboarding.Services
 {
@@ -6,6 +8,11 @@ namespace onboarding.Services
     {
         public ContractService(DatabaseContext context) : base(context)
         {
+        }
+
+        public override IQueryable<Contract> List()
+        {
+            return base.List().Include("Enrollment");
         }
     }
 }
