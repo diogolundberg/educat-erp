@@ -29,7 +29,7 @@ namespace onboarding.Controllers
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/PERSONALDATA/GET")]
-        public IActionResult GetById([FromRoute]string enrollmentNumber)
+        public IActionResult Get([FromRoute]string enrollmentNumber)
         {
             PersonalData personalData = _personalDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
 
@@ -45,6 +45,7 @@ namespace onboarding.Controllers
 
             return new OkObjectResult(new
             {
+                errors = personalData.UpdatedAt.HasValue ? FormatErrors(new PersonalDataValidator(_context).Validate(personalData)) : new Hashtable(),
                 data = _mapper.Map<Record>(personalData)
             });
         }
@@ -69,15 +70,11 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentInReview } });
             }
 
-            PersonalData personalDataMapped = _mapper.Map<PersonalData>(obj);
-            personalData = _personalDataService.Update(personalData, personalDataMapped);
-
-            PersonalDataValidator validator = new PersonalDataValidator(_context);
-            Hashtable errors = FormatErrors(validator.Validate(personalData));
+            personalData = _personalDataService.Update(personalData, _mapper.Map<PersonalData>(obj));
 
             return new OkObjectResult(new
             {
-                errors,
+                errors = FormatErrors(new PersonalDataValidator(_context).Validate(personalData)),
                 data = _mapper.Map<Record>(personalData)
             });
         }
@@ -102,18 +99,14 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentInReview } });
             }
 
-            PersonalDataValidator validator = new PersonalDataValidator(_context);
-            Hashtable errors = FormatErrors(validator.Validate(personalData));
-            PersonalDataStatus personalDataStatus = new PersonalDataStatus(validator, personalData);
-
-            if (personalDataStatus.GetStatus() == "valid")
+            if ((new PersonalDataStatus(new PersonalDataValidator(_context), personalData)).GetStatus() == "valid")
             {
                 _enrollmentStepService.Update(enrollmentNumber, "PersonalDatas");
             }
 
             return new OkObjectResult(new
             {
-                errors,
+                errors = FormatErrors(new PersonalDataValidator(_context).Validate(personalData)),
                 data = _mapper.Map<Record>(personalData)
             });
         }
