@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using onboarding.Models;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
