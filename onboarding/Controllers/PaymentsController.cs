@@ -34,7 +34,7 @@ namespace onboarding.Controllers
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/GET")]
-        public dynamic GetById([FromRoute]string enrollmentNumber)
+        public dynamic Get([FromRoute]string enrollmentNumber)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -56,7 +56,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/EDIT")]
-        public dynamic Put(string enrollmentNumber)
+        public dynamic Put([FromRoute]string enrollmentNumber)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
