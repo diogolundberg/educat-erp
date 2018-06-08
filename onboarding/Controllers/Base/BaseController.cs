@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using onboarding.Models;
 using System.Collections;
@@ -42,7 +43,6 @@ namespace onboarding.Controllers
 
             return errors;
         }
-
         protected Hashtable FormatErrors(FluentValidation.Results.ValidationResult results)
         {
             var errors = new Hashtable();
@@ -99,7 +99,6 @@ namespace onboarding.Controllers
 
             return errors;
         }
-
         protected string GetEmailBody(string emailTemplateFile)
         {
             string webRoot = Directory.GetCurrentDirectory();
