@@ -30,7 +30,7 @@ namespace onboarding.Controllers
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/GET")]
-        public dynamic Get(string enrollmentNumber)
+        public dynamic Get([FromRoute]string enrollmentNumber)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -49,11 +49,15 @@ namespace onboarding.Controllers
                 EnrollmentId = enrollment.Id
             };
 
-            return Ok(_mapper.Map<Record>(contract));
+            return new OkObjectResult(new
+            {
+                errors = contract.UpdatedAt.HasValue ? FormatErrors((new ContractValidator()).Validate(contract)) : new Hashtable(),
+                data = _mapper.Map<Record>(contract)
+            });
         }
 
-        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/POST")]
-        public dynamic Post([FromRoute]string enrollmentNumber, [FromBody]Form obj)
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/EDIT")]
+        public dynamic Put([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -81,19 +85,38 @@ namespace onboarding.Controllers
                 contract = _contractService.Add(contract);
             }
 
+            return new OkObjectResult(new
+            {
+                errors = FormatErrors((new ContractValidator()).Validate(contract)),
+                data = _mapper.Map<Record>(contract)
+            });
+        }
+
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/CREATE")]
+        public dynamic Post([FromRoute]string enrollmentNumber, [FromBody]Form obj)
+        {
+            Contract contract = _contractService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
+
+            if (contract == null)
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
+            }
+
+            if (!contract.Enrollment.IsDeadlineValid())
+            {
+                return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
+            }
+
             ContractValidator validator = new ContractValidator();
-            Hashtable errors = FormatErrors(validator.Validate(contract));
 
-            ContractStatus contractStatus = new ContractStatus(validator, contract);
-
-            if (contractStatus.GetStatus() == "valid")
+            if ((new ContractStatus(validator, contract)).GetStatus() == "valid")
             {
                 _enrollmentStepService.Update(enrollmentNumber, "Contracts");
             }
 
             return new OkObjectResult(new
             {
-                errors,
+                errors = FormatErrors(validator.Validate(contract)),
                 data = _mapper.Map<Record>(contract)
             });
         }
