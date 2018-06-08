@@ -29,9 +29,9 @@ namespace onboarding.Controllers
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTSUMMARIES/GET")]
-        public dynamic Get(string enrollmentNumber)
+        public dynamic Get([FromRoute]string enrollmentNumber)
         {
-            Enrollment enrollment = _context.Enrollments
+            Enrollment enrollment = _enrollmentService.List()
                                             .Include("Onboarding")
                                             .Include("Pendencies")
                                             .Include("Pendencies.Section")
@@ -87,8 +87,8 @@ namespace onboarding.Controllers
             });
         }
 
-        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTSUMMARIES/POST")]
-        public dynamic Post(string enrollmentNumber)
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTSUMMARIES/CREATE")]
+        public dynamic Post([FromRoute]string enrollmentNumber)
         {
             Enrollment enrollment = _context.Enrollments.Include("Onboarding").Single(x => x.ExternalId == enrollmentNumber);
 
