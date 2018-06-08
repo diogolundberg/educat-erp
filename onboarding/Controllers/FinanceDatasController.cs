@@ -30,7 +30,7 @@ namespace onboarding.Controllers
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/GET")]
-        public IActionResult GetById([FromRoute]string enrollmentNumber)
+        public IActionResult Get([FromRoute]string enrollmentNumber)
         {
             FinanceData financeData = _financeDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
 
@@ -46,11 +46,13 @@ namespace onboarding.Controllers
 
             return new OkObjectResult(new
             {
+                errors = financeData.UpdatedAt.HasValue ? FormatErrors((new FinanceDataValidator(_context)).Validate(financeData)) : new Hashtable(),
+                messages = financeData.UpdatedAt.HasValue ? ((new FinanceDataMessagesValidator(_context)).Validate(financeData)).Errors.Select(x => x.ErrorMessage).Distinct().ToList() : new List<string>(),
                 data = _mapper.Map<Record>(financeData)
             });
         }
 
-        [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
+        [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/CREATE")]
         public IActionResult Put([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             FinanceData financeData = _financeDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
@@ -70,24 +72,20 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentInReview } });
             }
 
-            financeData = _financeDataService.Update(obj, financeData);
-
             FinanceDataValidator validator = new FinanceDataValidator(_context);
-            FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
-            Hashtable errors = FormatErrors(results);
-
             FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
-            List<string> messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).Distinct().ToList();
+
+            financeData = _financeDataService.Update(obj, financeData);
 
             return new OkObjectResult(new
             {
-                messages,
-                errors,
+                messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).Distinct().ToList(),
+                errors = FormatErrors(validator.Validate(financeData)),
                 data = _mapper.Map<Record>(financeData)
             });
         }
 
-        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/CREATE")]
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/FINANCEDATA/EDIT")]
         public IActionResult Post([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             FinanceData financeData = _financeDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
@@ -108,23 +106,17 @@ namespace onboarding.Controllers
             }
 
             FinanceDataValidator validator = new FinanceDataValidator(_context);
-            FluentValidation.Results.ValidationResult results = validator.Validate(financeData);
-            Hashtable errors = FormatErrors(results);
-
             FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
-            List<string> messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).Distinct().ToList();
 
-            FinanceDataStatus financeDataStatus = new FinanceDataStatus(validator, financeData, messagesValidator);
-
-            if (financeDataStatus.GetStatus() == "valid")
+            if ((new FinanceDataStatus(validator, financeData, messagesValidator)).GetStatus() == "valid")
             {
                 _enrollmentStepService.Update(enrollmentNumber, "FinanceDatas");
             }
 
             return new OkObjectResult(new
             {
-                messages,
-                errors,
+                messages = messagesValidator.Validate(financeData).Errors.Select(x => x.ErrorMessage).Distinct().ToList(),
+                errors = FormatErrors(validator.Validate(financeData)),
                 data = _mapper.Map<Record>(financeData)
             });
         }
