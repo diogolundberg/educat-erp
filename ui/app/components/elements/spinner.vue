@@ -2,7 +2,7 @@
   <div class="relative">
     <div
       v-if="active"
-      class="absolute fill x2 y2 z4 circle spin m-auto border
+      class="absolute fill x2 y2 circle spin m-auto border
         border-top-silver" />
     <div
       :class="{ blur: active }"
