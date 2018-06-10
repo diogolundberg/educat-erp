@@ -17,44 +17,6 @@ const router = new VueRouter({
     },
     {
       path: "/enroll/:id",
-      component: lazy("Enrollment"),
-      meta: { open: true },
-      props: true,
-    },
-    {
-      path: "/enrollments/:type",
-      component: lazy("Enrollments"),
-      meta: { header: true },
-      props: true,
-    },
-    {
-      path: "/enrollments/:type/:id",
-      component: lazy("EnrollmentInfo"),
-      meta: { header: true },
-      props: true,
-    },
-    {
-      path: "/onboardings",
-      component: lazy("OnboardingList"),
-      meta: { header: true },
-      props: true,
-    },
-    {
-      path: "/onboardings/new",
-      component: lazy("OnboardingItem"),
-      meta: { header: true },
-      props: true,
-    },
-    {
-      path: "/onboardings/:id",
-      component: lazy("OnboardingItem"),
-      meta: { header: true },
-      props: true,
-    },
-
-    // Version 2
-    {
-      path: "/v2/enroll/:id",
       component: lazy("Enroll"),
       meta: {
         open: true,
@@ -62,13 +24,13 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: "/v2/approvals",
+      path: "/approvals",
       component: lazy("ListPage"),
       meta: {
         header: true,
         title: "Pendências",
         endpoint: "/v2/approvals",
-        link: "/v2/approvals",
+        link: "/approvals",
         columns: [
           { name: "name", title: "Nome" },
           { name: "email", title: "E-mail" },
@@ -78,7 +40,7 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: "/v2/approvals/:id",
+      path: "/approvals/:id",
       component: lazy("Approval"),
       meta: {
         header: true,
@@ -89,13 +51,13 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: "/v2/onboardings",
+      path: "/onboardings",
       component: lazy("ListPage"),
       meta: {
         header: true,
         title: "Onboardings",
         endpoint: "v2/Onboardings",
-        link: "/v2/onboardings",
+        link: "/onboardings",
         new: "/v2/onboardings/new",
         subkey: ["records"],
         columns: [
@@ -109,7 +71,7 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: "/v2/onboardings/new",
+      path: "/onboardings/new",
       component: lazy("Onboarding"),
       meta: {
         header: true,
@@ -117,7 +79,7 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: "/v2/onboardings/:id",
+      path: "/onboardings/:id",
       component: lazy("Onboarding"),
       meta: {
         header: true,
