@@ -33,9 +33,10 @@
         </Step>
         <Step
           :status="getStep('EnrollmentSummaries').status"
-          title="Contrato"
+          title="Resumo"
           description="">
-          -
+          <EnrollmentSummary
+            :id="id" />
         </Step>
         <Step
           :status="getStep('Contracts').status"
