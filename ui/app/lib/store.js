@@ -18,6 +18,7 @@ export default new VueX.Store({
   },
   getters: {
     enrollmentUrl: () => url2,
+    presignUrl: () => url3,
     onboardingEndpoint: () => url4,
     token: state => state.token,
 

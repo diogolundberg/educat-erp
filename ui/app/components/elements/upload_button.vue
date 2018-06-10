@@ -80,9 +80,11 @@
 
         this.loading = true;
         this.loaded = 0;
+
         const fileName = `${this.prefix}-${new Date().getTime()}-${file.name}`;
-        await this.$store.dispatch("presign", fileName);
-        const url = this.$store.state.uploadUrl;
+        const apiUrl = `${this.$store.getters.presignUrl}/api/Presign`;
+        const response = await axios.post(apiUrl, { fileName });
+        const url = response.data;
 
         const headers = {
           "x-ms-blob-type": "BlockBlob",
