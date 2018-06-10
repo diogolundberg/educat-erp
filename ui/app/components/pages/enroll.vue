@@ -10,26 +10,37 @@
         header
         class="max-width-4 m-auto">
         <Step
+          :status="getStep('PersonalDatas').status"
           title="Seus Dados"
           description="Preencha seus dados pessoais">
           <PersonalDataForm :id="id" />
         </Step>
         <Step
+          :status="getStep('CourseSummaries').status"
           title="Informações da Matrícula"
           description="Saiba mais sobre seu curso">
           -
         </Step>
         <Step
+          :status="getStep('FinanceDatas').status"
           title="Dados Financeiros"
           description="Aqui você insere seus dados de pagamento.">
           -
         </Step>
         <Step
+          :status="getStep('EnrollmentSummaries').status"
           title="Contrato"
           description="">
           -
         </Step>
         <Step
+          :status="getStep('Contracts').status"
+          title="Contrato"
+          description="">
+          -
+        </Step>
+        <Step
+          :status="getStep('Payments').status"
           title="Pagamento"
           description="">
           -
@@ -51,10 +62,16 @@
     data() {
       return {
         step: 1,
+        record: {
+          steps: [],
+        },
         pendencies: [],
       };
     },
     methods: {
+      getStep(resource) {
+        return this.record.steps.find(a => a.resource === resource) || {};
+      },
       async notificationClick(anchor) {
         this.step = 1;
         await this.tick();
