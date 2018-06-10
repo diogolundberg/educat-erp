@@ -80,10 +80,14 @@
         },
       };
     },
+    computed: {
+      baseUrl() {
+        const { onboardingEndpoint } = this.$store.getters;
+        return `${onboardingEndpoint}/v2/Enrollments`;
+      },
+    },
     async mounted() {
-      const { onboardingEndpoint } = this.$store.getters;
-      const url = `${onboardingEndpoint}/v2/Enrollments/${this.id}`;
-      const response = await axios.get(url);
+      const response = await axios.get(`${this.baseUrl}/${this.id}`);
       this.record = response.data.data;
     },
     methods: {
