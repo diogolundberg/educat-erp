@@ -56,7 +56,7 @@ namespace onboarding.Controllers
             });
         }
 
-        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/EDIT")]
+        [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/EDIT")]
         public dynamic Put([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
