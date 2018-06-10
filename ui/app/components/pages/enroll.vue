@@ -21,7 +21,7 @@
           :status="getStep('CourseSummaries').status"
           title="Informações da Matrícula"
           description="Saiba mais sobre seu curso">
-          -
+          <InfoForm />
         </Step>
         <Step
           :status="getStep('FinanceDatas').status"
