@@ -33,8 +33,6 @@ namespace onboarding.Controllers
         {
             Enrollment enrollment = _enrollmentService.List()
                                             .Include("Onboarding")
-                                            .Include("Pendencies")
-                                            .Include("Pendencies.Section")
                                             .Include("PersonalData")
                                             .Include("PersonalData.Gender")
                                             .Include("PersonalData.MaritalStatus")
