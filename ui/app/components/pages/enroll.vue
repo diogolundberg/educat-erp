@@ -49,7 +49,8 @@
           :status="getStep('Payments').status"
           title="Pagamento"
           description="">
-          -
+          <PaymentForm
+            :id="id" />
         </Step>
       </Stepper>
     </Spinner>
