@@ -27,7 +27,9 @@
           :status="getStep('FinanceDatas').status"
           title="Dados Financeiros"
           description="Aqui você insere seus dados de pagamento.">
-          -
+          <FinanceDataForm
+            :id="id"
+            :options="options" />
         </Step>
         <Step
           :status="getStep('EnrollmentSummaries').status"
@@ -70,7 +72,9 @@
           steps: [],
         },
         pendencies: [],
-        options: {},
+        options: {
+          plans: [],
+        },
       };
     },
     async mounted() {
