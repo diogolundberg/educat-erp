@@ -54,13 +54,13 @@ const router = new VueRouter({
 
     // Version 2
     {
-      path: "/v2/academicApprovals",
+      path: "/v2/approvals",
       component: lazy("ListPage"),
       meta: {
         header: true,
         title: "Pendências Acadêmicas",
-        endpoint: "/v2/AcademicApprovals",
-        link: "/v2/academicApprovals",
+        endpoint: "/v2/approvals",
+        link: "/v2/approvals",
         key: "enrollmentNumber",
         columns: [
           { name: "name", title: "Nome" },
@@ -75,45 +75,12 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: "/v2/academicApprovals/:id",
+      path: "/v2/approvals/:id",
       component: lazy("Approval"),
       meta: {
         header: true,
         title: "Pendência Acadêmica",
         endpoint: "/v2/AcademicApprovals",
-        type: "academic",
-      },
-      props: true,
-    },
-    {
-      path: "/v2/financeApprovals",
-      component: lazy("ListPage"),
-      meta: {
-        header: true,
-        title: "Pendências Financeiras",
-        endpoint: "/v2/FinanceApprovals",
-        link: "/v2/financeApprovals",
-        key: "enrollmentNumber",
-        columns: [
-          { name: "name", title: "Nome" },
-          { name: "cpf", title: "CPF" },
-          { name: "birthDate", title: "Nascimento" },
-          { name: "email", title: "E-mail" },
-          { name: "phoneNumber", title: "Celular" },
-          { name: "plan", title: "Plano" },
-          { name: "updatedAt", title: "Modificado em" },
-          { name: "status", title: "Status" },
-        ],
-      },
-      props: true,
-    },
-    {
-      path: "/v2/financeApprovals/:id",
-      component: lazy("Approval"),
-      meta: {
-        header: true,
-        title: "Pendência Financeira",
-        endpoint: "/v2/FinanceApprovals",
         type: "academic",
       },
       props: true,
