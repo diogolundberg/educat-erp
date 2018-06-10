@@ -20,6 +20,7 @@
 
 <script>
   import axios from "axios";
+  import { get } from "lodash";
 
   export default {
     name: "ListPage",
@@ -40,9 +41,10 @@
       async load() {
         const { onboardingEndpoint, token } = this.$store.getters;
         const url = `${onboardingEndpoint}/${this.$route.meta.endpoint}`;
+        const subkey = this.$route.meta.subkey || [];
         const headers = { Authorization: `Bearer ${token}` };
         const response = await axios.get(url, { headers });
-        this.records = response.data.records;
+        this.records = get(response, ["data", ...subkey]);
       },
       clicked(record) {
         const key = record[this.$route.meta.key || "id"];
