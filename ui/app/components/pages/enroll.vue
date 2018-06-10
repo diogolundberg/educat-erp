@@ -78,6 +78,7 @@
       return {
         step: 1,
         record: {
+          onboardingYear: "",
           steps: [],
         },
         pendencies: [],
