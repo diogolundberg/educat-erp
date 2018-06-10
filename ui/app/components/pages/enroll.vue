@@ -87,6 +87,8 @@
       },
     },
     async mounted() {
+      const options = await axios.options(this.baseUrl);
+      this.options = options.data;
       const response = await axios.get(`${this.baseUrl}/${this.id}`);
       this.record = response.data.data;
     },
