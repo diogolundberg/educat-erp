@@ -37,7 +37,7 @@
             label="Meio de Pagamento" />
         </Fieldset>
         <Fieldset
-          v-show="guarantorsAmount > 0"
+          v-show="guarantorsAmountFor(item) > 0"
           title="Fiadores">
           <Many
             v-model="item.guarantors"
