@@ -1,9 +1,9 @@
 <template>
   <div
     :class="{
-      'bg-green': complete && !active,
-      'bg-red': error && !active,
-      'bg-yellow': warning && !active,
+      'bg-green': complete,
+      'bg-red': error,
+      'bg-yellow': warning,
     }"
     class="x1 y1 circle relative"
     @click="$emit('click')">
@@ -14,7 +14,9 @@
         'bg-yellow': warning,
       }"
       class="block w100 h100 bg-gray circle ease" />
-    <div class="absolute left2n x6 pt2 h7 center xs-hide">
+    <div
+      :class="{ 'bold': active }"
+      class="absolute left2n x6 pt2 h7 center xs-hide">
       {{ title }}
     </div>
   </div>
