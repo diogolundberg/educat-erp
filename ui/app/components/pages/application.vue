@@ -28,11 +28,8 @@
     computed: {
       links() {
         return [
-          { url: "/enrollments/academic", name: "Pendências Acadêmicas" },
-          { url: "/enrollments/finance", name: "Pendências Financeiras" },
+          { url: "/approvals", name: "Pendencias" },
           { url: "/onboardings", name: "Onboardings" },
-          { url: "/v2/approvals", name: "Pendencias v2" },
-          { url: "/v2/onboardings", name: "Onboardings v2" },
         ];
       },
     },
