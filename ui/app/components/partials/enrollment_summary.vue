@@ -3,7 +3,8 @@
     <DataForm
       :id="id"
       :endpoint="baseUrl"
-      :sub-key="['data']">
+      :sub-key="['data']"
+      @success="$emit('success')">
       <template slot-scope="{ item, errors }">
         <p>Envie seus dados para a secetaria e para o departamento financeiro para
         aprovação.</p>

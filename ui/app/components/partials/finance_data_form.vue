@@ -3,7 +3,8 @@
     <DataForm
       :id="id"
       :endpoint="baseUrl"
-      :sub-key="['data']">
+      :sub-key="['data']"
+      @success="$emit('success')">
       <template slot-scope="{ item, errors }">
         <Fieldset title="Dados Financeiros">
           <List

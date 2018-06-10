@@ -15,13 +15,15 @@
           description="Preencha seus dados pessoais">
           <PersonalDataForm
             :id="id"
-            :options="options" />
+            :options="options"
+            @success="step = 2" />
         </Step>
         <Step
           :status="getStep('CourseSummaries').status"
           title="Informações da Matrícula"
           description="Saiba mais sobre seu curso">
-          <InfoForm />
+          <InfoForm
+            @click="step = 3" />
         </Step>
         <Step
           :status="getStep('FinanceDatas').status"
@@ -29,21 +31,24 @@
           description="Aqui você insere seus dados de pagamento.">
           <FinanceDataForm
             :id="id"
-            :options="options" />
+            :options="options"
+            @success="step = 4" />
         </Step>
         <Step
           :status="getStep('EnrollmentSummaries').status"
           title="Resumo"
           description="">
           <EnrollmentSummary
-            :id="id" />
+            :id="id"
+            @success="step = 5" />
         </Step>
         <Step
           :status="getStep('Contracts').status"
           title="Contrato"
           description="">
           <ContractForm
-            :id="id" />
+            :id="id"
+            @success="step = 6" />
         </Step>
         <Step
           :status="getStep('Payments').status"
