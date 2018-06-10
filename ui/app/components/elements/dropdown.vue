@@ -88,7 +88,8 @@
       },
       options: {
         type: Array,
-        required: true,
+        required: false,
+        default: () => [],
       },
       idField: {
         type: String,
