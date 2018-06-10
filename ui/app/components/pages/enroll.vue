@@ -13,7 +13,9 @@
           :status="getStep('PersonalDatas').status"
           title="Seus Dados"
           description="Preencha seus dados pessoais">
-          <PersonalDataForm :id="id" />
+          <PersonalDataForm
+            :id="id"
+            :options="options" />
         </Step>
         <Step
           :status="getStep('CourseSummaries').status"
@@ -68,6 +70,7 @@
           steps: [],
         },
         pendencies: [],
+        options: {},
       };
     },
     async mounted() {
