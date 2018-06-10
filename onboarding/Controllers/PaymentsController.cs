@@ -51,7 +51,7 @@ namespace onboarding.Controllers
             using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage httpResponseMessage = client.GetAsync(_configuration["FINANCE_HOST"] + "/api/invoices/" + enrollment.InvoiceId).Result;
-                return JsonConvert.DeserializeObject(httpResponseMessage.Content.ReadAsStringAsync().Result);
+                return new OkObjectResult(new { data = JsonConvert.DeserializeObject(httpResponseMessage.Content.ReadAsStringAsync().Result) });
             }
         }
 

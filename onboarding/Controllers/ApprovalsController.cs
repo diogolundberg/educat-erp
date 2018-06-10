@@ -26,7 +26,10 @@ namespace onboarding.Controllers
         public IActionResult List()
         {
             IEnumerable<EnrollmentStep> enrollmentSteps = _enrollmentStepService.GetForHasApprovalAndEnrollmentSentAt();
-            return Ok(_mapper.Map<List<Records>>(enrollmentSteps));
+            return new OkObjectResult(new
+            {
+                data = _mapper.Map<List<Records>>(enrollmentSteps)
+            });
         }
 
         [HttpGet("{id}", Name = "ONBOARDING/APPROVALS/GET")]
@@ -39,7 +42,10 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.IsEmpty } });
             }
 
-            return Ok(_mapper.Map<Record>(enrollmentStep));
+            return new OkObjectResult(new
+            {
+                data = _mapper.Map<Record>(enrollmentStep)
+            });
         }
 
         [HttpPost("{id}", Name = "ONBOARDING/APPROVALS/POST")]
@@ -62,13 +68,19 @@ namespace onboarding.Controllers
 
             enrollmentStep = _enrollmentStepService.UpdatePendencies(enrollmentStep, _mapper.Map<List<Pendency>>(obj.Pendencies));
 
-            return Ok(_mapper.Map<Record>(enrollmentStep));
+            return new OkObjectResult(new
+            {
+                data = _mapper.Map<Record>(enrollmentStep)
+            });
         }
 
         [HttpOptions(Name = "ONBOARDING/APPROVALS/OPTIONS")]
         public IActionResult Options()
         {
-            return Ok(_sectionService.List());
+            return new OkObjectResult(new
+            {
+                data = _sectionService.List()
+            });
         }
     }
 }

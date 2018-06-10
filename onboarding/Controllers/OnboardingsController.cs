@@ -30,15 +30,17 @@ namespace onboarding.Controllers
         }
 
         [HttpGet("", Name = "ONBOARDING/LIST")]
-        public dynamic GetList()
+        public IActionResult GetList()
         {
             List<Models.Onboarding> onboardings = _context.Onboardings.Include("Enrollments").ToList();
-            List<ViewModels.Onboarding.Records> records = _mapper.Map<List<ViewModels.Onboarding.Records>>(onboardings);
-            return new { records };
+            return new OkObjectResult(new
+            {
+                data = _mapper.Map<List<ViewModels.Onboarding.Records>>(onboardings)
+            });
         }
 
         [HttpGet("{id}", Name = "ONBOARDING")]
-        public dynamic Get(int id)
+        public IActionResult Get(int id)
         {
             Onboarding onboarding = _context.Onboardings.Include("Enrollments.PersonalData").SingleOrDefault(x => x.Id == id);
 
@@ -47,7 +49,10 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { Messages = new List<string> { Resources.Messages.OnboardingNotExisting } });
             }
 
-            return _mapper.Map<ViewModels.Onboarding.Record>(onboarding);
+            return new OkObjectResult(new
+            {
+                data = _mapper.Map<ViewModels.Onboarding.Record>(onboarding)
+            });
         }
 
         [HttpPost("", Name = "ONBOARDING/CREATE")]
@@ -80,7 +85,7 @@ namespace onboarding.Controllers
             foreach (Enrollment enrollment in onboardingModel.Enrollments)
             {
                 enrollment.ExternalId = onboardingModel.Year + onboardingModel.Semester + Regex.Replace(enrollment.PersonalData.CPF, @"\D", string.Empty);
-                
+
                 enrollment.FinanceData = new FinanceData
                 {
                     Representative = new RepresentativePerson()
