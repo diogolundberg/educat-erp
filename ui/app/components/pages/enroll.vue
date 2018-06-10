@@ -51,6 +51,8 @@
 </template>
 
 <script>
+  import axios from "axios";
+
   export default {
     name: "Enroll",
     props: {
@@ -67,6 +69,12 @@
         },
         pendencies: [],
       };
+    },
+    async mounted() {
+      const { onboardingEndpoint } = this.$store.getters;
+      const url = `${onboardingEndpoint}/v2/Enrollments/${this.id}`;
+      const response = await axios.get(url);
+      this.record = response.data.data;
     },
     methods: {
       getStep(resource) {
