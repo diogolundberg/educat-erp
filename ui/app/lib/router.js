@@ -127,6 +127,7 @@ const router = new VueRouter({
         endpoint: "v2/Onboardings",
         link: "/v2/onboardings",
         new: "/v2/onboardings/new",
+        subkey: ["records"],
         columns: [
           { name: "semester", title: "Semestre" },
           { name: "year", title: "Ano" },
