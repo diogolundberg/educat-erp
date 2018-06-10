@@ -96,7 +96,7 @@
             required
             label="País de Origem"
             hint="Ex: Brasil" />
-          <template v-if="birthHasUF">
+          <template v-if="hasUF(item.birthCountryId)">
             <DropDown
               v-model="item.birthStateId"
               :errors="errors.birthStateId"
@@ -272,6 +272,13 @@
       baseUrl() {
         const { onboardingEndpoint } = this.$store.getters;
         return `${onboardingEndpoint}/v2/PersonalDatas`;
+      },
+    },
+    methods: {
+      hasUF(birthCountryId) {
+        const birthCountry = this.options.countries.find(a =>
+          a.id === birthCountryId);
+        return birthCountry && birthCountry.hasUF;
       },
     },
   };

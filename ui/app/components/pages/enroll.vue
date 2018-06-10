@@ -77,6 +77,7 @@
         pendencies: [],
         options: {
           plans: [],
+          countries: [],
         },
       };
     },
