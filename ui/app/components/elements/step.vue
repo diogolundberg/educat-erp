@@ -6,9 +6,9 @@
       :title="title"
       :description="description"
       :disabled="disabled"
-      :complete="complete"
-      :error="error"
-      :warning="warning"
+      :complete="status === 'valid'"
+      :error="status === 'invalid'"
+      :warning="status === 'pending'"
       @click="$parent.goTo(index)" />
     <div
       v-if="active && !disabled"
@@ -36,17 +36,9 @@
         type: Boolean,
         default: false,
       },
-      complete: {
-        type: Boolean,
-        default: false,
-      },
-      error: {
-        type: Boolean,
-        default: false,
-      },
-      warning: {
-        type: Boolean,
-        default: false,
+      status: {
+        type: String,
+        default: "empty",
       },
     },
     computed: {
