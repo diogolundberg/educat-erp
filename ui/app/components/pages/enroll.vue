@@ -42,7 +42,8 @@
           :status="getStep('Contracts').status"
           title="Contrato"
           description="">
-          -
+          <ContractForm
+            :id="id" />
         </Step>
         <Step
           :status="getStep('Payments').status"
