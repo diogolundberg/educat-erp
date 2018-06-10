@@ -238,7 +238,7 @@
             :errors="errors.documents"
             :prefix="`onboarding/enrollment/${ id }/personalData/`"
             :disabled="disabled"
-            :validations="validations" />
+            :validations="validationsFor(item)" />
         </Fieldset>
       </template>
     </DataForm>
@@ -261,6 +261,10 @@
         type: Object,
         default: () => ({}),
       },
+      onboardingYear: {
+        type: String,
+        required: true,
+      },
     },
     computed: {
       handicap() {
@@ -280,6 +284,43 @@
         const birthCountry = this.options.countries.find(a =>
           a.id === birthCountryId);
         return birthCountry && birthCountry.hasUF;
+      },
+      validationsFor(item) {
+        const matches = (opt, key, val) =>
+          this.options[opt].filter(a => a[key]).map(a => a.id).includes(val);
+
+        const isNative = matches(
+          "nationalities",
+          "checkNative",
+          item.nationalityId,
+        );
+        const isForeigner = matches(
+          "nationalities",
+          "checkForeign",
+          item.nationalityId,
+        );
+        const hasDraft = matches(
+          "genders",
+          "checkMilitaryDraft",
+          item.genderId,
+        );
+        const foreignGraduation = matches(
+          "countries",
+          "checkForeignGraduation",
+          item.highSchoolGraduationCountryId,
+        );
+        const gradutionCurrentYear = this.onboardingYear ===
+          item.highSchoolGraduationYear;
+
+        return [
+          "MinorAge",
+          isNative && "Native",
+          isForeigner && "Foreigner",
+          hasDraft && "MilitaryDraft",
+          foreignGraduation && "ForeignGraduation",
+          gradutionCurrentYear && "GraduationYear",
+          !gradutionCurrentYear && "NotGraduationYear",
+        ].filter(a => a);
       },
     },
   };

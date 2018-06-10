@@ -16,6 +16,7 @@
           <PersonalDataForm
             :id="id"
             :options="options"
+            :onboarding-year="record.onboardingYear"
             @success="step = 2" />
         </Step>
         <Step
@@ -83,6 +84,8 @@
         options: {
           plans: [],
           countries: [],
+          nationalities: [],
+          genders: [],
         },
       };
     },
