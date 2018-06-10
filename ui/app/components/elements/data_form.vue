@@ -29,6 +29,7 @@
 
 <script>
   import axios from "axios";
+  import { get } from "lodash";
 
   export default {
     name: "DataForm",
@@ -50,6 +51,11 @@
         type: Boolean,
         default: true,
       },
+      subKey: {
+        type: Array,
+        required: false,
+        default: () => [],
+      },
     },
     data() {
       return {
@@ -63,7 +69,7 @@
       if (this.id) {
         this.loading = true;
         const response = await axios.get(`${this.endpoint}/${this.id}`);
-        this.item = response.data;
+        this.item = get(response, ["data", ...this.subKey]);
         this.loading = false;
       }
     },
