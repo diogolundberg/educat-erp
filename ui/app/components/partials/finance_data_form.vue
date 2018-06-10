@@ -37,6 +37,42 @@
             :disabled="disabled"
             label="Meio de Pagamento" />
         </Fieldset>
+        <Fieldset title="Responsável Financeiro">
+          <InputBox
+            v-model="item.representative.cpf"
+            :errors="errors.representative && errors.representative.cpf"
+            :size="4"
+            :min-size="14"
+            :disabled="disabled"
+            cpf
+            label="CPF"
+            mask="###.###.###-##"
+            hint="Ex: 000.000.000-00" />
+          <InputBox
+            v-model="item.representative.name"
+            :errors="errors.representative && errors.representative.name"
+            :size="4"
+            :disabled="disabled"
+            label="Nome completo" />
+          <DropDown
+            v-model="item.representative.relationshipId"
+            :errors="errors.representative &&
+            errors.representative.relationshipId"
+            :size="4"
+            :options="options.relationships"
+            :disabled="disabled"
+            label="Relacionamento com o aluno" />
+        </Fieldset>
+        <ContactBlock
+          v-model="item.representative"
+          :errors="errors.representative"
+          :disabled="disabled" />
+        <AddressBlock
+          v-model="item.representative"
+          :errors="errors.representative"
+          :options="options"
+          :disabled="disabled" />
+
         <Fieldset
           v-show="guarantorsAmountFor(item) > 0"
           title="Fiadores">
