@@ -1,4 +1,4 @@
-﻿using onboarding.Models;
+﻿using onboarding.ViewModels.FinanceDatas;
 using System.Collections.Generic;
 
 namespace onboarding.ViewModels.EnrollmentSummaries
@@ -42,9 +42,9 @@ namespace onboarding.ViewModels.EnrollmentSummaries
 
         public ICollection<dynamic> Documents { get; set; }
 
-        public Plan Plan { get; set; }
+        public PlanViewModel Plan { get; set; }
         public string PaymentMethod { get; set; }
-        public Representative Representative { get; set; }
-        public ICollection<Guarantor> Guarantors { get; set; }
+        public RepresentativeViewModel Representative { get; set; }
+        public ICollection<GuarantorViewModel> Guarantors { get; set; }
     }
 }
