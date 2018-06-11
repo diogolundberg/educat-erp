@@ -32,7 +32,7 @@ namespace onboarding.Controllers
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/GET")]
-        public dynamic Get(string enrollmentNumber)
+        public IActionResult Get(string enrollmentNumber)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -50,7 +50,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/ENROLLMENTS/EDIT")]
-        public dynamic Post(string enrollmentNumber)
+        public IActionResult Post(string enrollmentNumber)
         {
             Enrollment enrollment = _enrollmentService.List().Single(x => x.ExternalId == enrollmentNumber);
 
@@ -108,7 +108,7 @@ namespace onboarding.Controllers
         }
 
         [HttpOptions(Name = "ONBOARDING/ENROLLMENTS/OPTIONS")]
-        public dynamic Options()
+        public IActionResult Options()
         {
             return new OkObjectResult(new
             {

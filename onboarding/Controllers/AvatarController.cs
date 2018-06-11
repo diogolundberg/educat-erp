@@ -17,7 +17,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/AVATAR")]
-        public dynamic Post([FromRoute]string enrollmentNumber, [FromBody]Form form)
+        public IActionResult Post([FromRoute]string enrollmentNumber, [FromBody]Form form)
         {
             Enrollment enrollment = _context.Enrollments.Include("Onboarding").Single(x => x.ExternalId == enrollmentNumber);
 

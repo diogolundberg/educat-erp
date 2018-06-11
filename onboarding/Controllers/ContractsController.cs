@@ -30,7 +30,7 @@ namespace onboarding.Controllers
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/GET")]
-        public dynamic Get([FromRoute]string enrollmentNumber)
+        public IActionResult Get([FromRoute]string enrollmentNumber)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -57,7 +57,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/EDIT")]
-        public dynamic Put([FromRoute]string enrollmentNumber, [FromBody]Form obj)
+        public IActionResult Put([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -93,7 +93,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/CREATE")]
-        public dynamic Post([FromRoute]string enrollmentNumber, [FromBody]Form obj)
+        public IActionResult Post([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             Contract contract = _contractService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
 

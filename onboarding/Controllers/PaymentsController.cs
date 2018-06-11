@@ -34,7 +34,7 @@ namespace onboarding.Controllers
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/GET")]
-        public dynamic Get([FromRoute]string enrollmentNumber)
+        public IActionResult Get([FromRoute]string enrollmentNumber)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -56,7 +56,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/EDIT")]
-        public dynamic Put([FromRoute]string enrollmentNumber)
+        public IActionResult Put([FromRoute]string enrollmentNumber)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -91,7 +91,7 @@ namespace onboarding.Controllers
 
                 if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
                 {
-                    return JsonConvert.DeserializeObject(httpResponseMessage.Content.ReadAsStringAsync().Result);
+                    return new OkObjectResult(new { data = JsonConvert.DeserializeObject(httpResponseMessage.Content.ReadAsStringAsync().Result) });
                 }
 
                 dynamic resultObj = JsonConvert.DeserializeObject(httpResponseMessage.Content.ReadAsStringAsync().Result);
@@ -100,7 +100,7 @@ namespace onboarding.Controllers
                 _context.Enrollments.Update(enrollment);
                 _context.SaveChanges();
 
-                return resultObj;
+                return new OkObjectResult(new { data = resultObj });
             }
         }
 

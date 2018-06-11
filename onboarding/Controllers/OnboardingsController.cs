@@ -56,7 +56,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPost("", Name = "ONBOARDING/CREATE")]
-        public dynamic Post([FromBody]ViewModels.Onboarding.Form obj)
+        public IActionResult Post([FromBody]ViewModels.Onboarding.Form obj)
         {
             FormValidator formValidator = new FormValidator();
             ValidationResult validationResult = formValidator.Validate(obj);
@@ -111,7 +111,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPut("{id}", Name = "ONBOARDING/EDIT")]
-        public dynamic Put(int id, [FromBody]ViewModels.Onboarding.Form obj)
+        public IActionResult Put(int id, [FromBody]ViewModels.Onboarding.Form obj)
         {
             FormValidator formValidator = new FormValidator();
             ValidationResult validationResult = formValidator.Validate(obj);
@@ -191,7 +191,7 @@ namespace onboarding.Controllers
         }
 
         [HttpDelete("{id}", Name = "ONBOARDING/DELETE")]
-        public dynamic Delete(int id)
+        public IActionResult Delete(int id)
         {
             Models.Onboarding existingOnboarding = _context.Onboardings
                                                            .Include("Enrollments")
