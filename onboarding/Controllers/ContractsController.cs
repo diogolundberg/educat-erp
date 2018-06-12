@@ -111,7 +111,8 @@ namespace onboarding.Controllers
 
             if ((new ContractStatus(validator, contract)).GetStatus() == "valid")
             {
-                _enrollmentStepService.Update(enrollmentNumber, "Contracts");
+                contract.EnrollmentStepId = _enrollmentStepService.Update(enrollmentNumber, "Contracts");
+                _contractService.Update(contract);
             }
 
             return new OkObjectResult(new
