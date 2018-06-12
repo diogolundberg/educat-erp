@@ -23,7 +23,7 @@ namespace onboarding.Services
 
         public int? Update(string enrollmentNumber, string resource)
         {
-            Enrollment enrollment = _context.Enrollments.Include("EnrollmentSteps").Include("Pendencies").Include("EnrollmentSteps.Step").SingleOrDefault(x => x.ExternalId == enrollmentNumber);
+            Enrollment enrollment = _context.Enrollments.Include("EnrollmentSteps").Include("EnrollmentSteps.Step").SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
             if (enrollment != null)
             {
