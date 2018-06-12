@@ -21,7 +21,7 @@ namespace onboarding.Services
                 .Include("Step");
         }
 
-        public void Update(string enrollmentNumber, string resource)
+        public int? Update(string enrollmentNumber, string resource)
         {
             Enrollment enrollment = _context.Enrollments.Include("EnrollmentSteps").Include("Pendencies").Include("EnrollmentSteps.Step").SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -35,10 +35,15 @@ namespace onboarding.Services
 
                     if (step != null)
                     {
-                        Add(new EnrollmentStep { StepId = step.Id, EnrollmentId = enrollment.Id });
+                        enrollmentStep = new EnrollmentStep { StepId = step.Id, EnrollmentId = enrollment.Id };
+                        Add(enrollmentStep);
                     }
                 }
+
+                return enrollmentStep.Id;
             }
+
+            return null;
         }
 
         public IEnumerable<EnrollmentStep> GetForHasApprovalAndEnrollmentSentAt()
