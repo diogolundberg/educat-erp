@@ -56,6 +56,10 @@
         type: Boolean,
         default: false,
       },
+      post: {
+        type: Boolean,
+        default: false,
+      },
       subKey: {
         type: Array,
         required: false,
@@ -82,7 +86,7 @@
       async submitForm() {
         try {
           const url = `${this.endpoint}/${this.id || ""}`;
-          const method = this.id ? "put" : "post";
+          const method = this.id && !this.post ? "put" : "post";
           const response = await axios[method](url, this.item);
           if (response.data.errors && Object.values(response.data.errors).length) {
             const error = new Error();
