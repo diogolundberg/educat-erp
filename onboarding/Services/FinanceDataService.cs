@@ -26,6 +26,7 @@ namespace onboarding.Services
                         .Include("Guarantors")
                         .Include("Guarantors.Relationship")
                         .Include("Guarantors.GuarantorDocuments")
+                        .Include("EnrollmentStep.Pendencies")
                         .Include("Guarantors.GuarantorDocuments.Document");
         }
 

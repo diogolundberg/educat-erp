@@ -8,7 +8,9 @@ namespace onboarding.Bindings
     {
         public FinanceDataProfile()
         {
-            CreateMap<FinanceData, Record>();
+            CreateMap<FinanceData, Record>()
+            .ForMember(x => x.Pendencies, config => config.MapFrom(x => x.EnrollmentStep.Pendencies));
+
             CreateMap<Form, FinanceData>();
         }
     }

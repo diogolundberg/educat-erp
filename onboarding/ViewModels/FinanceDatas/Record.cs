@@ -9,6 +9,7 @@ namespace onboarding.ViewModels.FinanceDatas
         public Record()
         {
             Guarantors = new HashSet<GuarantorViewModel>();
+            Pendencies = new HashSet<Pendency>();
         }
 
         [Required]
@@ -24,5 +25,7 @@ namespace onboarding.ViewModels.FinanceDatas
         [JsonIgnore]
         public string UpdatedAt { get; set; }
         public bool Editable { get; set; }
+        public IEnumerable<Pendency> Pendencies { get; set; }
+
     }
 }
