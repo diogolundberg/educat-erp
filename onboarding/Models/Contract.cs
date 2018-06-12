@@ -12,5 +12,10 @@ namespace onboarding.Models
         public string URL { get; set; }
         public string Signature { get; set; }
         public DateTime? AcceptedAt { get; set; }
+
+        [ForeignKey("EnrollmentStep")]
+        public int? EnrollmentStepId { get; set; }
+
+        public virtual EnrollmentStep EnrollmentStep { get; set; }
     }
 }

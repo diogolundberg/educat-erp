@@ -26,5 +26,7 @@ namespace onboarding.Models
         public virtual PersonalData PersonalData { get; set; }
 
         public virtual FinanceData FinanceData { get; set; }
+
+        public virtual Contract Contracts { get; set; }
     }
 }
