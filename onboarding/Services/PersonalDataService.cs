@@ -15,6 +15,7 @@ namespace onboarding.Services
             return base.List()
                         .Include("Nationality")
                         .Include("Gender")
+                        .Include("EnrollmentStep.Pendencies")
                         .Include("HighSchoolGraduationCountry")
                         .Include("Enrollment.Onboarding")
                         .Include("Enrollment")

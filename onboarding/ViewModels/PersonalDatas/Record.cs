@@ -6,6 +6,14 @@ namespace onboarding.ViewModels.PersonalDatas
 {
     public class Record
     {
+        public Record()
+        {
+            Pendencies = new HashSet<Pendency>();
+            Disabilities = new HashSet<int>();
+            SpecialNeeds = new HashSet<int>();
+            Documents = new HashSet<DocumentViewModel>();
+        }
+
         [Required]
         public int? Id { get; set; }
         [Required]
@@ -69,5 +77,6 @@ namespace onboarding.ViewModels.PersonalDatas
         [JsonIgnore]
         public string UpdatedAt { get; set; }
         public bool Editable { get; set; }
+        public IEnumerable<Pendency> Pendencies { get; set; }
     }
 }

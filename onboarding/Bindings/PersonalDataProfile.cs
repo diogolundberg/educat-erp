@@ -11,6 +11,7 @@ namespace onboarding.Bindings
         {
             CreateMap<PersonalData, Record>()
             .ForMember(x => x.BirthDate, config => config.MapFrom(x => x.BirthDate))
+            .ForMember(x => x.Pendencies, config => config.MapFrom(x => x.EnrollmentStep.Pendencies))
             .ForMember(x => x.Disabilities, config => config.MapFrom(x => x.PersonalDataDisabilities.Select(o => o.DisabilityId)))
             .ForMember(x => x.SpecialNeeds, config => config.MapFrom(x => x.PersonalDataSpecialNeeds.Select(o => o.SpecialNeedId)))
             .ForMember(x => x.Documents, config => config.MapFrom(x => x.PersonalDataDocuments.Select(o => new ViewModels.DocumentViewModel
