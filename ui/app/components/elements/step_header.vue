@@ -32,7 +32,7 @@
       v-else-if="warning"
       warning
       big>
-      Atenção
+      Em análise
     </Badge>
     <Badge
       v-else
