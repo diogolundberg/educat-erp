@@ -6,8 +6,8 @@
       <StepperItem
         :active="value == step.id"
         :complete="step.el.status === 'valid'"
-        :warning="step.el.status === 'invalid'"
-        :error="step.el.status === 'pending'"
+        :warning="step.el.status === 'pending'"
+        :error="step.el.status === 'invalid'"
         :title="step.name"
         :key="step.id"
         class="pointer"
