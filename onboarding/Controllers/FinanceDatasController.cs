@@ -110,7 +110,8 @@ namespace onboarding.Controllers
 
             if ((new FinanceDataStatus(validator, financeData, messagesValidator)).GetStatus() == "valid")
             {
-                _enrollmentStepService.Update(enrollmentNumber, "FinanceDatas");
+                financeData.EnrollmentStepId = _enrollmentStepService.Update(enrollmentNumber, "FinanceDatas");
+                _financeDataService.Update(financeData);
             }
 
             return new OkObjectResult(new
