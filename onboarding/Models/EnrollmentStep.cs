@@ -22,5 +22,7 @@ namespace onboarding.Models
         public virtual ICollection<Pendency> Pendencies { get; set; }
 
         public DateTime? ApprovedAt { get; set; }
+
+        public virtual PersonalData PersonalData { get; set; }
     }
 }
