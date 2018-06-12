@@ -12,7 +12,7 @@ namespace onboarding.Services
 
         public override IQueryable<Contract> List()
         {
-            return base.List().Include("Enrollment");
+            return base.List().Include("Enrollment").Include("EnrollmentStep.Pendencies");
         }
     }
 }

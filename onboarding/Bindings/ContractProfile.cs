@@ -10,6 +10,7 @@ namespace onboarding.Bindings
         public ContractProfile()
         {
             CreateMap<Contract, Record>()
+            .ForMember(x => x.Pendencies, config => config.MapFrom(x => x.EnrollmentStep.Pendencies))
             .ForMember(x => x.AcceptedAt, config => config.MapFrom(x => x.AcceptedAt.Format()));
 
             CreateMap<Form, Contract>()
