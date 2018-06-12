@@ -24,5 +24,7 @@ namespace onboarding.Models
         public DateTime? ApprovedAt { get; set; }
 
         public virtual PersonalData PersonalData { get; set; }
+
+        public virtual FinanceData FinanceData { get; set; }
     }
 }

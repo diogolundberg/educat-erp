@@ -40,5 +40,10 @@ namespace onboarding.Models
                 return !Enrollment.SentAt.HasValue;
             }
         }
+
+        [ForeignKey("EnrollmentStep")]
+        public int? EnrollmentStepId { get; set; }
+
+        public virtual EnrollmentStep EnrollmentStep { get; set; }
     }
 }
