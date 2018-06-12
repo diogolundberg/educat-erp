@@ -19,6 +19,7 @@
     <div class="right-align mx2 mb2">
       <Btn
         v-if="editable"
+        :disabled="disabled"
         submit
         primary
         label="Salvar"
@@ -50,6 +51,10 @@
       editable: {
         type: Boolean,
         default: true,
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
       },
       subKey: {
         type: Array,
