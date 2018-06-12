@@ -101,7 +101,8 @@ namespace onboarding.Controllers
 
             if ((new PersonalDataStatus(new PersonalDataValidator(_context), personalData)).GetStatus() == "valid")
             {
-                _enrollmentStepService.Update(enrollmentNumber, "PersonalDatas");
+                personalData.EnrollmentStepId = _enrollmentStepService.Update(enrollmentNumber, "PersonalDatas");
+                _personalDataService.Update(personalData);
             }
 
             return new OkObjectResult(new
