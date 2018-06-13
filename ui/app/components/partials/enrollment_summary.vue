@@ -5,6 +5,7 @@
       :endpoint="baseUrl"
       :sub-key="['data']"
       :disabled="!agreed"
+      post
       @success="$emit('success')">
       <template slot-scope="{ item, errors }">
         <p>Envie seus dados para a secetaria e para o departamento financeiro para

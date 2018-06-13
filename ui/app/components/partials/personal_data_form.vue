@@ -4,6 +4,7 @@
       :id="id"
       :endpoint="baseUrl"
       :sub-key="['data']"
+      post
       @success="$emit('success')">
       <template slot-scope="{ item, errors }">
         <div class="center mt2">
