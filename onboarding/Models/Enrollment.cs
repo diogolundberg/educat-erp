@@ -18,6 +18,7 @@ namespace onboarding.Models
             EnrollmentSteps = new HashSet<EnrollmentStep>();
         }
 
+        public virtual Payment Payment { get; set; }
         public virtual Contract Contract { get; set; }
         public virtual PersonalData PersonalData { get; set; }
         public virtual FinanceData FinanceData { get; set; }
@@ -27,30 +28,6 @@ namespace onboarding.Models
         [ForeignKey("Onboarding")]
         public int? OnboardingId { get; set; }
         public virtual Onboarding Onboarding { get; set; }
-
-        public int? InvoiceId { get; set; }
-        public Invoice Invoice
-        {
-            get
-            {
-                if (InvoiceId == null)
-                {
-                    return null;
-                }
-
-                using (HttpClient client = new HttpClient())
-                {
-                    HttpResponseMessage httpResponseMessage = client.GetAsync(Environment.GetEnvironmentVariable("FINANCE_HOST") + "/api/invoices/" + InvoiceId).Result;
-
-                    if (!httpResponseMessage.IsSuccessStatusCode)
-                    {
-                        return null;
-                    }
-
-                    return JsonConvert.DeserializeObject<Invoice>(httpResponseMessage.Content.ReadAsStringAsync().Result);
-                }
-            }
-        }
 
         public override string CreateExternalId()
         {

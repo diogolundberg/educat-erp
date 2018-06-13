@@ -77,5 +77,6 @@ namespace onboarding.Models
         public DbSet<Step> Steps { get; set; }
         public DbSet<EnrollmentStep> EnrollmentSteps { get; set; }
         public DbSet<Contract> Contracts { get; set; }
+        public DbSet<Payment> Payments { get; set; }
     }
 }
