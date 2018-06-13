@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using onboarding.Models;
 using onboarding.Services;
+using onboarding.Validations.Payment;
 using onboarding.ViewModels;
 using onboarding.ViewModels.FinanceDatas;
 using onboarding.ViewModels.Payments;
@@ -50,7 +51,7 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            if(enrollment.Payment == null || !enrollment.Payment.InvoiceNumber.HasValue)
+            if (enrollment.Payment == null || !enrollment.Payment.InvoiceNumber.HasValue)
             {
                 _paymentService.Create(enrollment);
             }
@@ -58,8 +59,8 @@ namespace onboarding.Controllers
             return new OkObjectResult(new { data = _mapper.Map<ViewModels.Payments.Record>(enrollment.Payment) });
         }
 
-        [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/EDIT")]
-        public IActionResult Put([FromRoute]string enrollmentNumber)
+        [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/CREATE")]
+        public IActionResult Put([FromRoute]string enrollmentNumber, [FromBody]ViewModels.Payments.Form obj)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -73,10 +74,17 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            return Ok();
+            enrollment.Payment.Url = obj.Url;
+            _paymentService.Update(enrollment.Payment);
+
+            return new OkObjectResult(new
+            {
+                data = _mapper.Map<ViewModels.Payments.Record>(enrollment.Payment),
+                errors = FormatErrors((new PaymentValidator()).Validate(enrollment.Payment)),
+            });
         }
 
-        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/CREATE")]
+        [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/EDIT")]
         public IActionResult Post([FromRoute]string enrollmentNumber)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
