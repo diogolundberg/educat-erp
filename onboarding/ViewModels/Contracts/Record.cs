@@ -14,6 +14,7 @@ namespace onboarding.ViewModels.Contracts
         public string Content { get; set; }
         public string Signature { get; set; }
         public string AcceptedAt { get; set; }
+        public bool Accept { get; set; }
         public IEnumerable<Pendency> Pendencies { get; set; }
     }
 }
