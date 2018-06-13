@@ -73,6 +73,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Onboarding.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Models\Payment.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Payment.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Models\Pendency.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -132,6 +137,10 @@
     <EmbeddedResource Update="Resources\Models\Onboarding.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Onboarding.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Models\Payment.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Payment.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Models\Pendency.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
