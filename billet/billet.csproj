@@ -198,6 +198,7 @@
     <None Include="Properties\PublishProfiles\cmmg-billet - Web Deploy.pubxml" />
     <Content Include="README.md" />
     <None Include="Properties\PublishProfiles\cmmg-billet-development - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\educat-staging-billet-webapp - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
