@@ -95,30 +95,32 @@ namespace onboarding.Controllers
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/CONTRACTS/CREATE")]
         public IActionResult Post([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
-            Contract contract = _contractService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
+            Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
-            if (contract == null)
+            if (enrollment == null)
             {
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentLinkIsNotValid } });
             }
 
-            if (!contract.Enrollment.IsDeadlineValid())
+            if (!enrollment.IsDeadlineValid())
             {
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
+            enrollment.Contract = enrollment.Contract == null ? new Contract() : enrollment.Contract;
+
             ContractValidator validator = new ContractValidator();
 
-            if ((new ContractStatus(validator, contract)).GetStatus() == "valid")
+            if ((new ContractStatus(validator, enrollment.Contract)).GetStatus() == "valid")
             {
-                contract.EnrollmentStepId = _enrollmentStepService.Update(enrollmentNumber, "Contracts");
-                _contractService.Update(contract);
+                enrollment.Contract.EnrollmentStepId = _enrollmentStepService.Update(enrollmentNumber, "Contracts");
+                _contractService.Update(enrollment.Contract);
             }
 
             return new OkObjectResult(new
             {
-                errors = FormatErrors(validator.Validate(contract)),
-                data = _mapper.Map<Record>(contract)
+                errors = FormatErrors(validator.Validate(enrollment.Contract)),
+                data = _mapper.Map<Record>(enrollment.Contract)
             });
         }
     }
