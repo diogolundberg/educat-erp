@@ -17,5 +17,6 @@ namespace onboarding.ViewModels.Payments
         public string Billet { get; set; }
         public ICollection<Item> Items { get; set; }
         public RepresentativeViewModel Representative { get; set; }
+        public bool Compensated { get; set; }
     }
 }
