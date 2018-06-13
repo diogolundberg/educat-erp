@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using System.Net;
 using System.Text;
 using finance.Models;
@@ -35,14 +34,6 @@ namespace finance
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["FINANCE_DATABASE_CONNECTION"]));
-            services.AddScoped<IRavenClient, RavenClient>((s) =>
-            {
-                RavenClient rc = new RavenClient(Configuration["SENTRY_API"], s.GetRequiredService<IHttpContextAccessor>())
-                {
-                    Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
-                };
-                return rc;
-            });
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();

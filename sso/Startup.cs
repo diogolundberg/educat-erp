@@ -19,10 +19,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
-using SharpRaven.Core.Configuration;
-using SharpRaven.Core;
 using Microsoft.AspNetCore.Http;
-using SharpRaven.Core.Data;
 
 namespace SSO
 {
@@ -40,17 +37,6 @@ namespace SSO
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration["SSO_DATABASE_CONNECTION"]));
-
-            services.AddScoped<IRavenClient, RavenClient>((s) =>
-            {
-
-                RavenClient rc = new RavenClient(Configuration["SENTRY_API"], s.GetRequiredService<IHttpContextAccessor>())
-                {
-                    Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
-                };
-
-                return rc;
-            });
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
