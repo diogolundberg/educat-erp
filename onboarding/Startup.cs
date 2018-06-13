@@ -70,6 +70,7 @@ namespace onboarding
             services.AddScoped<ContractService, ContractService>();
             services.AddScoped<SectionService, SectionService>();
             services.AddScoped<StepResolver, StepResolver>();
+            services.AddScoped<PaymentService, PaymentService>();
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
             services.AddAutoMapper(config => config.ConstructServicesUsing(serviceProvider.GetService));

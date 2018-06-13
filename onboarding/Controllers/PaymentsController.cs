@@ -23,14 +23,16 @@ namespace onboarding.Controllers
         private readonly IConfiguration _configuration;
         private readonly EnrollmentStepService _enrollmentStepService;
         private readonly EnrollmentService _enrollmentService;
+        private readonly PaymentService _paymentService;
 
-        public PaymentsController(IConfiguration configuration, IMapper mapper, DatabaseContext context, EnrollmentStepService enrollmentStepService, EnrollmentService enrollmentService)
+        public PaymentsController(IConfiguration configuration, IMapper mapper, DatabaseContext context, EnrollmentStepService enrollmentStepService, EnrollmentService enrollmentService, PaymentService paymentService)
         {
             _configuration = configuration;
             _context = context;
             _mapper = mapper;
             _enrollmentStepService = enrollmentStepService;
             _enrollmentService = enrollmentService;
+            _paymentService = paymentService;
         }
 
         [HttpGet("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/GET")]
@@ -48,7 +50,12 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            return new OkObjectResult(new { data = _enrollmentService.GetInvoice(enrollment) });
+            if(enrollment.Payment == null || !enrollment.Payment.InvoiceNumber.HasValue)
+            {
+                _paymentService.Create(enrollment);
+            }
+
+            return new OkObjectResult(new { data = _mapper.Map<ViewModels.Payments.Record>(enrollment.Payment) });
         }
 
         [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/EDIT")]
