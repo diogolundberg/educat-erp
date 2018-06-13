@@ -48,11 +48,7 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage httpResponseMessage = client.GetAsync(_configuration["FINANCE_HOST"] + "/api/invoices/" + enrollment.InvoiceId).Result;
-                return new OkObjectResult(new { data = JsonConvert.DeserializeObject(httpResponseMessage.Content.ReadAsStringAsync().Result) });
-            }
+            return new OkObjectResult(new { data = _enrollmentService.GetInvoice(enrollment) });
         }
 
         [HttpPut("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/EDIT")]
@@ -70,38 +66,7 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            using (HttpClient client = new HttpClient())
-            {
-                RepresentativeViewModel representative = enrollment.FinanceData.Representative is RepresentativeCompany ?
-                                                        (RepresentativeViewModel)_mapper.Map<RepresentativeCompanyViewModel>(enrollment.FinanceData.Representative)
-                                                        : (RepresentativeViewModel)_mapper.Map<RepresentativePersonViewModel>(enrollment.FinanceData.Representative);
-                representative.Discriminator = enrollment.FinanceData.Representative.GetType().Name;
-
-                Invoice invoice = new Invoice
-                {
-                    InvoiceNumber = "",
-                    Value = enrollment.FinanceData.Plan.Value,
-                    DueDate = "25/12/2018",
-                    Items = new List<Item>() { new Item { EnrollmentNumber = enrollmentNumber } },
-                    Representative = representative
-                };
-
-                StringContent stringContent = new StringContent(JsonConvert.SerializeObject(invoice), Encoding.UTF8, "application/json");
-                HttpResponseMessage httpResponseMessage = client.PostAsync(_configuration["FINANCE_HOST"] + "/api/invoices/", stringContent).Result;
-
-                if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
-                {
-                    return new OkObjectResult(new { data = JsonConvert.DeserializeObject(httpResponseMessage.Content.ReadAsStringAsync().Result) });
-                }
-
-                dynamic resultObj = JsonConvert.DeserializeObject(httpResponseMessage.Content.ReadAsStringAsync().Result);
-
-                enrollment.InvoiceId = resultObj.data.id;
-                _context.Enrollments.Update(enrollment);
-                _context.SaveChanges();
-
-                return new OkObjectResult(new { data = resultObj });
-            }
+            return Ok();
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/CREATE")]
@@ -119,7 +84,7 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            _enrollmentStepService.Update(enrollmentNumber, "Payments");
+            //_enrollmentStepService.Update(enrollmentNumber, "Payments");
 
             return Ok();
         }
