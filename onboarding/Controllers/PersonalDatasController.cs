@@ -99,6 +99,8 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentInReview } });
             }
 
+            personalData = _personalDataService.Update(personalData, _mapper.Map<PersonalData>(obj));
+
             if ((new PersonalDataStatus(new PersonalDataValidator(_context), personalData)).GetStatus() == "valid")
             {
                 personalData.EnrollmentStepId = _enrollmentStepService.Update(enrollmentNumber, "PersonalDatas");

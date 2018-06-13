@@ -86,7 +86,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/PAYMENTS/EDIT")]
-        public IActionResult Post([FromRoute]string enrollmentNumber)
+        public IActionResult Post([FromRoute]string enrollmentNumber, [FromBody]ViewModels.Payments.Form obj)
         {
             Enrollment enrollment = _enrollmentService.List().SingleOrDefault(x => x.ExternalId == enrollmentNumber);
 
@@ -101,6 +101,9 @@ namespace onboarding.Controllers
             }
 
             enrollment.Payment = enrollment.Payment == null ? new Payment() : enrollment.Payment;
+
+            enrollment.Payment.Url = obj.Url;
+            _paymentService.Update(enrollment.Payment);
 
             PaymentValidator validator = new PaymentValidator();
 

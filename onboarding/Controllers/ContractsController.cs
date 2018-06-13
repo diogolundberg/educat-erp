@@ -107,7 +107,19 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            enrollment.Contract = enrollment.Contract == null ? new Contract() : enrollment.Contract;
+            Contract contract = _mapper.Map<Contract>(obj);
+
+            if (enrollment.Contract != null)
+            {
+                enrollment.Contract.Signature = contract.Signature;
+                enrollment.Contract.AcceptedAt = contract.AcceptedAt;
+
+                enrollment.Contract = _contractService.Update(enrollment.Contract);
+            }
+            else
+            {
+                enrollment.Contract = _contractService.Add(enrollment.Contract);
+            }
 
             ContractValidator validator = new ContractValidator();
 

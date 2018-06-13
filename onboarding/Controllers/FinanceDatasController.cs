@@ -105,6 +105,8 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.EnrollmentInReview } });
             }
 
+            financeData = _financeDataService.Update(obj, financeData);
+
             FinanceDataValidator validator = new FinanceDataValidator(_context);
             FinanceDataMessagesValidator messagesValidator = new FinanceDataMessagesValidator(_context);
 
