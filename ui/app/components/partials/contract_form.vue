@@ -3,9 +3,21 @@
     <DataForm
       :id="id"
       :endpoint="baseUrl"
-      :sub-key="['data']">
+      :sub-key="['data']"
+      post
+      @success="$emit('success')">
       <template slot-scope="{ item, errors }">
-        {{ item }}
+        <Fieldset title="Contrato" />
+        <Fieldset title="Assinatura">
+          <div class="col-12">
+            Nos envie uma cópia assinada e escaneada do contrato.
+          </div>
+          <div class="col-12 mt3">
+            <UploadButton v-model="item.signature">
+              <Btn success>Upload</Btn>
+            </UploadButton>
+          </div>
+        </Fieldset>
       </template>
     </DataForm>
   </div>
