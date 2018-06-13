@@ -4,6 +4,11 @@ namespace finance.ViewModels.Invoices
 {
     public class Record
     {
+        public Record()
+        {
+            Items = new HashSet<Item>();
+        }
+
         public int Id { get; set; }
         public string InvoiceNumber { get; set; }
         public decimal Value { get; set; }
