@@ -1,17 +1,24 @@
 ﻿using FluentValidation;
-using onboarding.ViewModels.Enrollments;
+using onboarding.Models;
 
 namespace onboarding.Statuses
 {
-    public class PaymentStatus : BaseStatus<Invoice>
+    public class PaymentStatus : BaseStatus<Payment>
     {
-        public PaymentStatus(AbstractValidator<Invoice> validator, Invoice entity) : base(validator, entity)
+        public PaymentStatus(AbstractValidator<Payment> validator, Payment entity) : base(validator, entity)
         {
         }
 
         public override string GetStatus()
         {
-            return "invalid";
+            if (!string.IsNullOrEmpty(_entity.BilletUrl) && !string.IsNullOrEmpty(_entity.Url))
+            {
+                return "valid";
+            }
+            else
+            {
+                return "invalid";
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using onboarding.Models;
 using onboarding.Services;
+using onboarding.Statuses;
 using onboarding.Validations.Payment;
 using onboarding.ViewModels;
 using onboarding.ViewModels.FinanceDatas;
@@ -99,9 +100,21 @@ namespace onboarding.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { onboarding.Resources.Messages.OnboardingExpired } });
             }
 
-            //_enrollmentStepService.Update(enrollmentNumber, "Payments");
+            enrollment.Payment = enrollment.Payment == null ? new Payment() : enrollment.Payment;
 
-            return Ok();
+            PaymentValidator validator = new PaymentValidator();
+
+            if ((new PaymentStatus(validator, enrollment.Payment)).GetStatus() == "valid")
+            {
+                enrollment.Payment.EnrollmentStepId = _enrollmentStepService.Update(enrollmentNumber, "Payments");
+                _paymentService.Update(enrollment.Payment);
+            }
+
+            return new OkObjectResult(new
+            {
+                errors = FormatErrors(validator.Validate(enrollment.Payment)),
+                data = _mapper.Map<ViewModels.Payments.Record>(enrollment.Payment)
+            });
         }
     }
 }
