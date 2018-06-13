@@ -24,7 +24,8 @@
           title="Informações da Matrícula"
           description="Saiba mais sobre seu curso">
           <InfoForm
-            @click="step = 3" />
+            :id="id"
+            @success="step = 3" />
         </Step>
         <Step
           :status="getStep('FinanceDatas').status"
