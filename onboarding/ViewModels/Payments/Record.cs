@@ -6,15 +6,11 @@ namespace onboarding.ViewModels.Payments
     {
         public Record()
         {
-            Items = new HashSet<Item>();
+            Pendencies = new HashSet<Pendency>();
         }
 
-        public int Id { get; set; }
-        public string InvoiceNumber { get; set; }
-        public decimal Value { get; set; }
-        public string DueDate { get; set; }
-        public string Billet { get; set; }
-        public IEnumerable<Item> Items { get; set; }
-        public bool Compensated { get; set; }
+        public string BilletUrl { get; set; }
+        public string Url { get; set; }
+        public IEnumerable<Pendency> Pendencies { get; set; }
     }
 }

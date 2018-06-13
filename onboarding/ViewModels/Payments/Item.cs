@@ -3,6 +3,6 @@
     public class Item
     {
         public string EnrollmentNumber { get; set; }
-        public int InvoiceId { get; set; }
+        public int InvoiceNumber { get; set; }
     }
 }
