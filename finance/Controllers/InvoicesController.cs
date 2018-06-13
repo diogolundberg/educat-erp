@@ -32,13 +32,13 @@ namespace finance.Controllers
         }
 
         [HttpGet("", Name = "FINANCE/INVOICES/LIST")]
-        public dynamic GetList()
+        public IActionResult GetList()
         {
-            return _mapper.Map<List<Records>>(_context.Invoices.Include("InvoiceItems"));
+            return new OkObjectResult(new { data = _mapper.Map<List<Records>>(_context.Invoices.Include("InvoiceItems")) });
         }
 
         [HttpGet("{id}", Name = "FINANCE/INVOICES/GET")]
-        public dynamic GetById([FromRoute]int id)
+        public IActionResult GetById([FromRoute]int id)
         {
             Invoice obj = _context.Invoices.Include("InvoiceItems").SingleOrDefault(x => x.Id == id);
 
@@ -47,11 +47,11 @@ namespace finance.Controllers
                 return new BadRequestObjectResult(new { messages = new List<string> { finance.Resources.Messages.InvoiceNotExisting } });
             }
 
-            return _mapper.Map<Record>(obj);
+            return new OkObjectResult(new { data = _mapper.Map<Record>(obj) });
         }
 
         [HttpPost(Name = "FINANCE/INVOICES/NEW")]
-        public dynamic Create([FromBody]Form form)
+        public IActionResult Create([FromBody]Form form)
         {
             Invoice invoice = Mapper.Map<Invoice>(form);
 
@@ -75,11 +75,11 @@ namespace finance.Controllers
             _context.Invoices.Add(invoice);
             _context.SaveChanges();
 
-            return new OkObjectResult(new { data = Mapper.Map<Form>(invoice) });
+            return new OkObjectResult(new { data = Mapper.Map<Record>(invoice) });
         }
 
         [HttpPut("{id}", Name = "FINANCE/INVOICES/EDIT")]
-        public dynamic Edit([FromRoute]int id, [FromBody]Form form)
+        public IActionResult Edit([FromRoute]int id, [FromBody]Form form)
         {
             Invoice invoice = Mapper.Map<Invoice>(form);
 
@@ -100,7 +100,7 @@ namespace finance.Controllers
             _context.Invoices.Update(invoice);
             _context.SaveChanges();
 
-            return new OkObjectResult(new { data = Mapper.Map<Form>(invoice) });
+            return new OkObjectResult(new { data = Mapper.Map<Record>(invoice) });
         }
 
         private dynamic GetBilletUrl(Form form)
