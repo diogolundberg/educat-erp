@@ -11,7 +11,7 @@ using System.Text;
 
 namespace onboarding.Services
 {
-    public class PaymentService : BaseService<Enrollment>
+    public class PaymentService : BaseService<Payment>
     {
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
