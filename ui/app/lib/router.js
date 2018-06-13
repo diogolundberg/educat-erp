@@ -31,6 +31,7 @@ const router = new VueRouter({
         title: "Pendências",
         endpoint: "/v2/approvals",
         link: "/approvals",
+        subkey: ["data"],
         columns: [
           { name: "name", title: "Nome" },
           { name: "email", title: "E-mail" },
@@ -59,7 +60,7 @@ const router = new VueRouter({
         endpoint: "v2/Onboardings",
         link: "/onboardings",
         new: "/v2/onboardings/new",
-        subkey: ["records"],
+        subkey: ["data"],
         columns: [
           { name: "semester", title: "Semestre" },
           { name: "year", title: "Ano" },
