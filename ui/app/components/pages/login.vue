@@ -42,7 +42,7 @@
       async login() {
         try {
           await this.$store.dispatch("login", this.params);
-          this.$router.replace("/enrollments/academic");
+          this.$router.replace("/approvals");
         } catch (e) {
           this.errors.base = "Erro ao logar. Tente novamente.";
         }
