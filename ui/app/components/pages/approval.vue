@@ -405,7 +405,7 @@
           enrollmentNumber: this.id,
           pendencies: none ? [] : this.pendencies,
         };
-        await axios.put(`${this.endpoint}/${this.id}`, data);
+        await axios.post(`${this.endpoint}/${this.id}`, data);
         this.notify("Enviado com sucesso!");
         this.modal = false;
         this.$router.push(`/v2/${this.type}Approvals`);
