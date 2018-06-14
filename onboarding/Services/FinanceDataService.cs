@@ -22,6 +22,7 @@ namespace onboarding.Services
                         .Include("Enrollment.Onboarding")
                         .Include("Enrollment")
                         .Include("Enrollment.PersonalData")
+                        .Include("EnrollmentStep.Pendencies")
                         .Include("Representative")
                         .Include("Guarantors")
                         .Include("Guarantors.Relationship")
