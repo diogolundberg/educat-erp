@@ -39,6 +39,11 @@ namespace onboarding.Services
                         Add(enrollmentStep);
                     }
                 }
+                else
+                {
+                    enrollmentStep.Pendencies.Clear();
+                    Update(enrollmentStep);
+                }
 
                 return enrollmentStep.Id;
             }
