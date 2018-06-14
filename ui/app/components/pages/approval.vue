@@ -408,7 +408,7 @@
         await axios.post(`${this.endpoint}/${this.id}`, data);
         this.notify("Enviado com sucesso!");
         this.modal = false;
-        this.$router.push(`/v2/${this.type}Approvals`);
+        this.$router.push("/Approvals");
       },
     },
   };
