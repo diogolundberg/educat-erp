@@ -101,7 +101,7 @@
     methods: {
       success() {
         this.notify("Adicionado com sucesso!");
-        this.$router.push("/onboarding");
+        this.$router.push("/Onboardings");
       },
     },
   };
