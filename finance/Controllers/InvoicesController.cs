@@ -134,7 +134,7 @@ namespace finance.Controllers
                 };
 
                 StringContent stringContent = new StringContent(JsonConvert.SerializeObject(billet), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PostAsync(_configuration["BILLET_HOST"] + "api/billets", stringContent).Result;
+                HttpResponseMessage response = client.PostAsync(_configuration["BILLET_HOST"] + "/api/billets", stringContent).Result;
                 response.EnsureSuccessStatusCode();
                 return JsonConvert.DeserializeObject<dynamic>(response.Content.ReadAsStringAsync().Result);
             }
