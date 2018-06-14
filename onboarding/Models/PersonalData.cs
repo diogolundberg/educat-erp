@@ -162,7 +162,7 @@ namespace onboarding.Models
         {
             get
             {
-                return !Enrollment.SentAt.HasValue || EnrollmentStep.Pendencies.Count() > 0;
+                return !Enrollment.SentAt.HasValue || (EnrollmentStep != null && EnrollmentStep.Pendencies.Count() > 0);
             }
         }
 
