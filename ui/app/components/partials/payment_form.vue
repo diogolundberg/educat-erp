@@ -3,7 +3,8 @@
     <DataForm
       :id="id"
       :endpoint="baseUrl"
-      :sub-key="['data']">
+      :sub-key="['data']"
+      post>
       <template slot-scope="{ item, errors }">
         <Alert
           v-for="(pendency, index) in item.pendencies"
