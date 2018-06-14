@@ -10,6 +10,13 @@
           :key="index"
           :message="pendency.description"
           error />
+        <div>
+          <a
+            :href="item.billetUrl"
+            class="btn btn-primary">
+            Baixar boleto para pagamento
+          </a>
+        </div>
       </template>
     </DataForm>
   </div>
