@@ -3,6 +3,7 @@
     <DataForm
       :id="id"
       :endpoint="endpoint"
+      :sub-key="['data']"
       title="Período de Matrícula"
       @success="success">
       <template slot-scope="{ item, errors }">
