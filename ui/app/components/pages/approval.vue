@@ -338,7 +338,7 @@
                 <DropDown
                   v-model="multiScope.item.sectionId"
                   :errors="multiScope.error.sectionId"
-                  :options="item.options.sections"
+                  :options="sections"
                   label="Documento" />
                 <InputBox
                   v-model="multiScope.item.description"
@@ -376,6 +376,7 @@
       return {
         modal: false,
         modalUrl: null,
+        sections: [],
         pendencies: [],
         pendenciesErrors: {},
       };
@@ -390,6 +391,13 @@
           this.$route.meta.endpoint,
         ].join("");
       },
+    },
+    async mounted() {
+      const { onboardingEndpoint, token } = this.$store.getters;
+      const url = `${onboardingEndpoint}/v2/Approvals`;
+      const headers = { Authorization: `Bearer ${token}` };
+      const response = await axios.options(url, { headers });
+      this.sections = response.data.data;
     },
     methods: {
       async approve(none = false) {
