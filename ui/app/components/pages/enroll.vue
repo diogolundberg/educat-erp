@@ -17,7 +17,7 @@
             :id="id"
             :options="options"
             :onboarding-year="record.onboardingYear"
-            @success="step = 2" />
+            @success="loadSteps(); step = 2" />
         </Step>
         <Step
           :status="getStep('CourseSummaries').status"
@@ -25,7 +25,7 @@
           description="Saiba mais sobre seu curso">
           <InfoForm
             :id="id"
-            @success="step = 3" />
+            @success="loadSteps(); step = 3" />
         </Step>
         <Step
           :status="getStep('FinanceDatas').status"
@@ -34,7 +34,7 @@
           <FinanceDataForm
             :id="id"
             :options="options"
-            @success="step = 4" />
+            @success="loadSteps(); step = 4" />
         </Step>
         <Step
           :status="getStep('EnrollmentSummaries').status"
@@ -42,7 +42,7 @@
           description="">
           <EnrollmentSummary
             :id="id"
-            @success="step = 5" />
+            @success="loadSteps(); step = 5" />
         </Step>
         <Step
           :status="getStep('Contracts').status"
@@ -50,7 +50,7 @@
           description="">
           <ContractForm
             :id="id"
-            @success="step = 6" />
+            @success="loadSteps(); step = 6" />
         </Step>
         <Step
           :status="getStep('Payments').status"
@@ -100,10 +100,13 @@
     async mounted() {
       const options = await axios.options(this.baseUrl);
       this.options = options.data;
-      const response = await axios.get(`${this.baseUrl}/${this.id}`);
-      this.record = response.data.data;
+      this.loadSteps();
     },
     methods: {
+      async loadSteps() {
+        const response = await axios.get(`${this.baseUrl}/${this.id}`);
+        this.record = response.data.data;
+      },
       getStep(resource) {
         return this.record.steps.find(a => a.resource === resource) || {};
       },
