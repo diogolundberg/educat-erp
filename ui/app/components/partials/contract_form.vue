@@ -7,7 +7,14 @@
       post
       @success="$emit('success')">
       <template slot-scope="{ item, errors }">
-        <Fieldset title="Contrato" />
+        <Alert
+          v-for="(pendency, index) in item.pendencies"
+          :key="index"
+          :message="pendency.description"
+          error />
+        <Fieldset title="Contrato">
+          {{ item }}
+        </Fieldset>
         <Fieldset title="Assinatura">
           <div class="col-12">
             Nos envie uma cópia assinada e escaneada do contrato.

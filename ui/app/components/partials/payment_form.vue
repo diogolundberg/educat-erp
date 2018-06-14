@@ -5,7 +5,11 @@
       :endpoint="baseUrl"
       :sub-key="['data']">
       <template slot-scope="{ item, errors }">
-        {{ item }}
+        <Alert
+          v-for="(pendency, index) in item.pendencies"
+          :key="index"
+          :message="pendency.description"
+          error />
       </template>
     </DataForm>
   </div>
