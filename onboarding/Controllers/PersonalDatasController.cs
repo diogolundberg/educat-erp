@@ -80,7 +80,7 @@ namespace onboarding.Controllers
         }
 
         [HttpPost("{enrollmentNumber}", Name = "ONBOARDING/PERSONALDATA/EDIT")]
-        public IActionResult Post([FromRoute]string enrollmentNumber)
+        public IActionResult Post([FromRoute]string enrollmentNumber, [FromBody]Form obj)
         {
             PersonalData personalData = _personalDataService.List().SingleOrDefault(x => x.Enrollment.ExternalId == enrollmentNumber);
 
