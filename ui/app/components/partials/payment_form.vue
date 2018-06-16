@@ -14,9 +14,12 @@
         <div>
           <a
             :href="item.billetUrl"
-            class="btn btn-primary">
+            class="btn btn-primary upcase">
             Baixar boleto para pagamento
           </a>
+          <UploadButton
+            v-model="item.url"
+            label="Enviar Comprovante de Pagamento" />
         </div>
       </template>
     </DataForm>

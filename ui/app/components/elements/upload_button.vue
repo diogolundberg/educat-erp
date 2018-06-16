@@ -2,6 +2,7 @@
   <span>
     <div
       v-if="$slots.default"
+      :class="slotClass"
       class="pointer"
       @click="!disabled && $refs.file.click()">
       <slot />
@@ -10,8 +11,8 @@
       v-else
       :id="`uploadBtn${_uid}`"
       :disabled="loading || disabled"
+      :fab="!label"
       primary
-      fab
       class="relative"
       @click="!disabled && $refs.file.click()">
       <span
@@ -19,7 +20,11 @@
         :style="{ width: `${Math.floor(loaded)}%` }"
         class="absolute fill bg-white op30" />
       <Icon
+        v-if="!label"
         name="upload" />
+      <div v-else>
+        {{ label }}
+      </div>
     </Btn>
     <input
       ref="file"
@@ -62,6 +67,11 @@
       disabled: {
         type: Boolean,
         default: false,
+      },
+      label: {
+        type: String,
+        required: false,
+        default: null,
       },
     },
     data() {
