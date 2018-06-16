@@ -7,22 +7,25 @@
       post
       @success="$emit('success')">
       <template slot-scope="{ item, errors }">
-        <Alert
-          v-for="(pendency, index) in item.pendencies"
-          :key="index"
-          :message="pendency.description"
-          error />
         <Fieldset title="Contrato">
-          {{ item }}
-        </Fieldset>
-        <Fieldset title="Assinatura">
+          <Alert
+            v-for="(pendency, index) in item.pendencies"
+            :key="index"
+            :message="pendency.description"
+            error />
           <div class="col-12">
-            Nos envie uma cópia assinada e escaneada do contrato.
+            Imprima, assine e digitalize o contrato.
+            Logo depois, faça upload a cópia assinada e digitalizada.
           </div>
           <div class="col-12 mt3">
-            <UploadButton v-model="item.signature">
-              <Btn success>Upload</Btn>
-            </UploadButton>
+            <a
+              :href="item.url"
+              class="btn btn-primary upcase">
+              Baixar Contrato
+            </a>
+            <UploadButton
+              v-model="item.signature"
+              label="Enviar contrato assinado" />
           </div>
         </Fieldset>
       </template>
