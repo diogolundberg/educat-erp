@@ -7,12 +7,11 @@
       :disabled="!agreed"
       post
       @success="$emit('success')">
-      <template slot-scope="{ item, errors }">
-        <Alert
-          v-for="(pendency, index) in item.pendencies"
-          :key="index"
-          :message="pendency.description"
-          error />
+      <template slot-scope="{ item, errors, submit }">
+        <AlertGroup
+          :items="item.pendencies"
+          text-key="description"
+          @click="submit" />
         <p>Envie seus dados para a secetaria e para o departamento financeiro para
         aprovação.</p>
         <div class="center">

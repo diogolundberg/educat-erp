@@ -6,13 +6,12 @@
       :sub-key="['data']"
       post
       @success="$emit('success')">
-      <template slot-scope="{ item, errors }">
+      <template slot-scope="{ item, errors, submit }">
         <Fieldset title="Contrato">
-          <Alert
-            v-for="(pendency, index) in item.pendencies"
-            :key="index"
-            :message="pendency.description"
-            error />
+          <AlertGroup
+            :items="item.pendencies"
+            text-key="description"
+            @click="submit" />
           <div class="col-12">
             Imprima, assine e digitalize o contrato.
             Logo depois, faça upload a cópia assinada e digitalizada.

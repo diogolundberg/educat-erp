@@ -5,13 +5,12 @@
       :endpoint="baseUrl"
       :sub-key="['data']"
       post>
-      <template slot-scope="{ item, errors }">
+      <template slot-scope="{ item, errors, submit }">
         <Fieldset title="Boleto">
-          <Alert
-            v-for="(pendency, index) in item.pendencies"
-            :key="index"
-            :message="pendency.description"
-            error />
+          <AlertGroup
+            :items="item.pendencies"
+            text-key="description"
+            @click="submit" />
           <div>
             <a
               :href="item.billetUrl"

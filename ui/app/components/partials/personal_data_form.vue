@@ -6,12 +6,11 @@
       :sub-key="['data']"
       post
       @success="$emit('success')">
-      <template slot-scope="{ item, errors }">
-        <Alert
-          v-for="(pendency, index) in item.pendencies"
-          :key="index"
-          :message="pendency.description"
-          error />
+      <template slot-scope="{ item, errors, submit }">
+        <AlertGroup
+          :items="item.pendencies"
+          text-key="description"
+          @click="submit" />
         <div class="center mt2">
           <UploadButton
             :value="photo"
