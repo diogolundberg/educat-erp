@@ -7,14 +7,31 @@
     class="px2 py3 bg-white shadow1 rounded flex items-center"
     @click="$emit('click')">
     <Ball
-      :class="{ 'bg-yellow green': active, }"
+      :class="{
+        'bg-red-dim': error,
+        'bg-yellow green': active && !error,
+      }"
       class="mr2">
       {{ index }}
     </Ball>
     <div class="border-right border-silver y3 mr2" />
     <div class="h5 line-height-3 flex-auto">
-      <div class="green bold h3">{{ title }}</div>
-      <div class="h4 mt1 dim">{{ description }}</div>
+      <div
+        :class="{
+          'red-dim': error,
+          green: !error,
+        }"
+        class="bold h3">
+        {{ title }}
+      </div>
+      <div
+        :class="{
+          'red-dim': error,
+          dim: !error,
+        }"
+        class="h4 mt1">
+        {{ description }}
+      </div>
     </div>
     <Badge
       v-if="complete"
