@@ -1,8 +1,8 @@
 <template>
   <div class="mb3 shadow1 rounded bg-white">
     <template v-if="title">
-      <div class="p3 bg-brown-grad rounded-top white relative">
-        <h2 class="m0 thin">
+      <div class="px2 py1 bg-green-grad rounded-top yellow-dim relative">
+        <div class="h3 m1">
           {{ title }}
           <Ball
             v-if="complete"
@@ -14,12 +14,7 @@
             class="bg-red shadow1 p6x ml1 inline-block">
             <Icon name="error" />
           </Ball>
-        </h2>
-        <slot name="title" />
-        <div
-          v-if="closeable"
-          class="absolute pointer top-0 right-0 px2 py0 h2"
-          @click="$emit('close')">𐄂</div>
+        </div>
       </div>
     </template>
     <div :class="{ p3: !noPadding }">
