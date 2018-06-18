@@ -13,6 +13,8 @@ $green = rgb(0, 184, 151)
 $red = rgb(255, 80, 70)
 $yellow = rgb(227, 215, 128)
 $brown = rgb(167, 152, 95)
+$red-dim = rgb(230, 100, 110)
+$yellow-dim = rgb(255, 255, 200)
 $blue-grad = linear-gradient(90deg, $blue 0, rgb(0, 144, 206))
 $red-grad = linear-gradient(90deg, $red 0, rgb(249, 131, 140))
 $yellow-grad = linear-gradient(90deg, $yellow 0, rgb(255, 137, 28))
@@ -59,8 +61,14 @@ input:invalid
   background $blue-grad
 .bg-red-grad
   background $red-grad
+.bg-red-dim
+  background $red-dim
+.red-dim
+  color $red-dim
 .bg-yellow-grad
   background $yellow-grad
+.bg-yellow-dim
+  background $yellow-dim
 .bg-green-grad
   background $green-grad
 .bg-brown-grad
