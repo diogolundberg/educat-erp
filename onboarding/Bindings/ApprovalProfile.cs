@@ -11,7 +11,9 @@ namespace onboarding.Bindings
             CreateMap<EnrollmentStep, Records>()
                 .ForMember(x => x.SentAt, config => config.MapFrom(x => x.Enrollment.SentAt.Format()))
                 .ForMember(x => x.Name, config => config.MapFrom(x => x.Enrollment.PersonalData.RealName))
-                .ForMember(x => x.Email, config => config.MapFrom(x => x.Enrollment.PersonalData.Email));
+                .ForMember(x => x.Email, config => config.MapFrom(x => x.Enrollment.PersonalData.Email))
+                .ForMember(x => x.DisplayNameType, config => config.MapFrom(x => x.Step.Name))
+                .ForMember(x => x.Type, config => config.MapFrom(x => x.Step.Resource));
 
             CreateMap<EnrollmentStep, Record>()
                 .ForMember(x => x.SentAt, config => config.MapFrom(x => x.Enrollment.SentAt.Format()))
