@@ -5,6 +5,7 @@
       'btn-primary bg-red': danger,
       'btn-primary bg-yellow': warning,
       'btn-primary bg-green': success,
+      'btn-primary bg-yellow-dim green': yellow,
       'btn-big': big,
       'circle x4 y4': fab,
       'fixed m3 bottom-0 right-0 z2 shadow2': fixed,
@@ -39,6 +40,10 @@
         default: false,
       },
       success: {
+        type: Boolean,
+        default: false,
+      },
+      yellow: {
         type: Boolean,
         default: false,
       },
