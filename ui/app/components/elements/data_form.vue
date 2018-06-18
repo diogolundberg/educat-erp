@@ -15,7 +15,8 @@
     </div>
     <slot
       :item="item"
-      :errors="errors" />
+      :errors="errors"
+      :submit="submitForm" />
     <div class="right-align mx2 mb2">
       <Btn
         v-if="editable"
