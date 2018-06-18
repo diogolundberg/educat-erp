@@ -1,5 +1,11 @@
 <template>
-  <span :class="{ 'fill-white': white, 'fill-black': black }">
+  <span
+    :class="{
+      'fill-white': white,
+      'fill-black': black,
+      'fill-gray': gray,
+      'fill-green': gray,
+  }">
     <svg
       v-if="name === 'warning2'"
       :width="width"
@@ -208,6 +214,14 @@
         default: true,
       },
       black: {
+        type: Boolean,
+        default: false,
+      },
+      gray: {
+        type: Boolean,
+        default: false,
+      },
+      green: {
         type: Boolean,
         default: false,
       },
