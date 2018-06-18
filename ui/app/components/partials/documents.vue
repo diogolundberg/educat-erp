@@ -7,39 +7,51 @@
       class="col-12 sm-col-6 p1">
       <Card
         :title="type.name"
+        green
         no-padding>
-        <div
-          slot="title"
-          class="mb3n right-align">
-          <UploadButton
-            :prefix="`${ prefix }${ type.id }/`"
-            :disabled="disabled"
-            @input="push(type.id, $event)" />
-        </div>
         <BaseErrors
           :value="errorsFor(type.id)" />
-        <div class="py1 px2 divider-bottom">
-          Tipos de arquivo aceitos: PDF e imagens (JPG e PNG).
-        </div>
         <div
           v-for="(doc, index2) in docsFor(type)"
           :key="`${index}_${index2}`"
-          class="divider-bottom flex pointer">
+          class="flex pointer bg-yellow-dim black">
           <div
-            class="py1 px2 flex-auto h-bg-silver"
+            class="py2 px2 flex-auto"
             @click="modalUrl = doc.url">
             {{ type.name }} - {{ index2 + 1 }}
-            <Icon
-              class="mx1"
-              black
-              name="view" />
           </div>
-          <div
-            class="py1 px2 h-bg-silver"
+          <Ball
+            small
+            white
             @click="pop(doc)">
             <Icon
-              black
+              class="mx1"
+              gray
+              name="view" />
+          </Ball>
+          <Ball
+            small
+            white
+            @click="pop(doc)">
+            <Icon
+              gray
               name="trash" />
+          </Ball>
+        </div>
+        <div class="p2 flex">
+          <div>
+            <UploadButton
+              :prefix="`${ prefix }${ type.id }/`"
+              :disabled="disabled"
+              @input="push(type.id, $event)" />
+          </div>
+          <div class="flex-auto ml2">
+            <div>
+              Fazer upload
+            </div>
+            <div class="mt1 gray">
+              Tipos de arquivo aceitos: PDF e imagens (JPG e PNG).
+            </div>
           </div>
         </div>
         <div
